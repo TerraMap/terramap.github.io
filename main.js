@@ -1,10 +1,3 @@
-var statusbar = document.querySelector("#status");
-statusbar.innerText = "Checking File APIs...";
-
-var position = document.querySelector("#position");
-var tileElement = document.querySelector("#tile");
-var accordion = document.querySelector("#accordion");
-
 var canvasContainer = document.querySelector("#canvasContainer");
 var panzoomContainer = document.querySelector("#panzoomContainer");
 
@@ -13,8 +6,6 @@ var overlayCanvas = document.querySelector("#overlayCanvas");
 
 var ctx = canvas.getContext("2d");
 var overlayCtx = overlayCanvas.getContext("2d");
-
-var fileinput = document.querySelector("#file");
 
 var blockSelector = document.querySelector("#blocks");
 
@@ -29,13 +20,15 @@ var panzoom = $("#panzoomContainer").panzoom({
   increment: 0.3,
 });
 
+$("#status").html("Checking File APIs...");
+
 // Check for the various File API support.
 if (window.File && window.FileReader && window.FileList && window.Blob) {
-  fileinput.style.visibility = "visible";
-  fileinput.addEventListener('change', fileNameChanged, false);
-	statusbar.innerText = "Please choose a Terraria .wld file.";
+  $("#file").css("visibility", "visible");
+  $("#file").on('change', fileNameChanged);
+	$("#status").html("Please choose a Terraria .wld file.");
 } else {
-	statusbar.innerText = "The File APIs are not fully supported in this browser.";
+	$("#status").html("The File APIs are not fully supported in this browser.");
 }
 
 resize();
@@ -211,7 +204,7 @@ panzoomContainer.addEventListener('mousemove', function(evt) {
     return;
     
   var mousePos = getMousePos(panzoomContainer, evt);
-  position.innerText = mousePos.x + ',' + (mousePos.y);
+  $("#position").html(mousePos.x + ',' + (mousePos.y));
   
   if(world.tiles) {
     var index = mousePos.x * world.height + mousePos.y;
@@ -221,7 +214,7 @@ panzoomContainer.addEventListener('mousemove', function(evt) {
       
       var text = getTileText(tile);
       
-      tileElement.innerText = text;
+      $("#tile").html(text);
     }
   }
 }, false);
@@ -313,7 +306,7 @@ function fileNameChanged (evt) {
   var worker = new Worker('WorldLoader.js');
   worker.addEventListener('message', function(e) {
     if(e.data.status)
-      statusbar.innerText = e.data.status;
+      $("#status").html(e.data.status);
       
     if(e.data.world) {
       world = e.data.world;
@@ -329,7 +322,7 @@ function fileNameChanged (evt) {
       
       resize();
       
-      accordion.style.display = "block";
+      $("#accordion").css("display", "block");
 
       document.querySelector("#worldVersion").innerText = world.version;
       document.querySelector("#worldName").innerText = world.name;
@@ -488,15 +481,15 @@ function abortRead() {
 function errorHandler(evt) {
   switch (evt.target.error.code) {
   	case evt.target.error.NOT_FOUND_ERR:
-  	statusbar.innerText = 'File Not Found!';
+  	$("#status").html('File Not Found!');
   		break;
   	case evt.target.error.NOT_READABLE_ERR:
-  		statusbar.innerText = 'File is not readable';
+  		$("#status").html('File is not readable');
   		break;
   	case evt.target.error.ABORT_ERR:
   		break; // noop
   	default:
-  	statusbar.innerText = 'An error occurred reading this file.';
+  	$("#status").html('An error occurred reading this file.');
   }
 }
 
