@@ -157,7 +157,7 @@ function resize() {
   // cw=canvas.width;
   // ch=canvas.height;
   
-  drawSelectionIndicator();
+  // drawSelectionIndicator();
 }
 
 function getMousePos(canvas, evt) {
@@ -343,144 +343,149 @@ function getTileText (tile) {
 
 function fileNameChanged (evt) {
   var worker = new Worker('WorldLoader.js');
-  worker.addEventListener('message', function(e) {
-    if(e.data.status)
-      $("#status").html(e.data.status);
-      
-    if(e.data.world) {
-      world = e.data.world;
-    
-      panzoomContainer.width = world.width;
-      panzoomContainer.height = world.height;
-      canvas.width = world.width;
-      canvas.height = world.height;
-      overlayCanvas.width = world.width;
-      overlayCanvas.height = world.height;
-      
-      world.tiles = [];
-      
-      resize();
-      
-      $("#accordion").css("display", "block");
-
-      document.querySelector("#worldVersion").innerText = world.version;
-      document.querySelector("#worldName").innerText = world.name;
-      document.querySelector("#worldId").innerText = world.id;
-      document.querySelector("#worldWidth").innerText = world.width;
-      document.querySelector("#worldHeight").innerText = world.height;
-      document.querySelector("#expertMode").innerText = world.expertMode;
-      document.querySelector("#moonType").innerText = world.moonType;
-      document.querySelector("#spawnX").innerText = world.spawnX;
-      document.querySelector("#spawnY").innerText = world.spawnY;
-      document.querySelector("#worldSurfaceY").innerText = world.worldSurfaceY;
-      document.querySelector("#rockLayerY").innerText = world.rockLayerY;
-      document.querySelector("#gameTime").innerText = world.gameTime;
-      document.querySelector("#isDay").innerText = world.isDay;
-      document.querySelector("#moonPhase").innerText = world.moonPhase;
-      document.querySelector("#bloodMoon").innerText = world.bloodMoon;
-      document.querySelector("#eclipse").innerText = world.eclipse;
-      document.querySelector("#dungeonX").innerText = world.dungeonX;
-      document.querySelector("#dungeonY").innerText = world.dungeonY;
-      document.querySelector("#crimsonWorld").innerText = world.crimsonWorld;
-      document.querySelector("#killedEyeOfCthulu").innerText = world.killedEyeOfCthulu;
-      document.querySelector("#killedEaterOfWorlds").innerText = world.killedEaterOfWorlds;
-      document.querySelector("#killedSkeletron").innerText = world.killedSkeletron;
-      document.querySelector("#killedQueenBee").innerText = world.killedQueenBee;
-      document.querySelector("#killedTheDestroyer").innerText = world.killedTheDestroyer;
-      document.querySelector("#killedTheTwins").innerText = world.killedTheTwins;
-      document.querySelector("#killedSkeletronPrime").innerText = world.killedSkeletronPrime;
-      document.querySelector("#killedAnyHardmodeBoss").innerText = world.killedAnyHardmodeBoss;
-      document.querySelector("#killedPlantera").innerText = world.killedPlantera;
-      document.querySelector("#killedGolem").innerText = world.killedGolem;
-      document.querySelector("#killedSlimeKing").innerText = world.killedSlimeKing;
-      document.querySelector("#savedGoblinTinkerer").innerText = world.savedGoblinTinkerer;
-      document.querySelector("#savedWizard").innerText = world.savedWizard;
-      document.querySelector("#savedMechanic").innerText = world.savedMechanic;
-      document.querySelector("#defeatedGoblinInvasion").innerText = world.defeatedGoblinInvasion;
-      document.querySelector("#killedClown").innerText = world.killedClown;
-      document.querySelector("#defeatedFrostLegion").innerText = world.defeatedFrostLegion;
-      document.querySelector("#defeatedPirates").innerText = world.defeatedPirates;
-      document.querySelector("#brokeAShadowOrb").innerText = world.brokeAShadowOrb;
-      document.querySelector("#meteorSpawned").innerText = world.meteorSpawned;
-      document.querySelector("#shadowOrbsbrokenmod3").innerText = world.shadowOrbsbrokenmod3;
-      document.querySelector("#altarsSmashed").innerText = world.altarsSmashed;
-      document.querySelector("#hardMode").innerText = world.hardMode;
-      document.querySelector("#goblinInvasionDelay").innerText = world.goblinInvasionDelay;
-      document.querySelector("#goblinInvasionSize").innerText = world.goblinInvasionSize;
-      document.querySelector("#goblinInvasionType").innerText = world.goblinInvasionType;
-      document.querySelector("#goblinInvasionX").innerText = world.goblinInvasionX;
-      document.querySelector("#slimeRainTime").innerText = world.slimeRainTime;
-      document.querySelector("#sundialCooldown").innerText = world.sundialCooldown;
-      document.querySelector("#isRaining").innerText = world.isRaining;
-      document.querySelector("#rainTime").innerText = world.rainTime;
-      document.querySelector("#maxRain").innerText = world.maxRain;
-      document.querySelector("#tier1OreID").innerText = world.tier1OreID;
-      document.querySelector("#tier2OreID").innerText = world.tier2OreID;
-      document.querySelector("#tier3OreID").innerText = world.tier3OreID;
-      document.querySelector("#treeStyle").innerText = world.treeStyle;
-      document.querySelector("#corruptionStyle").innerText = world.corruptionStyle;
-      document.querySelector("#jungleStyle").innerText = world.jungleStyle;
-      document.querySelector("#snowStyle").innerText = world.snowStyle;
-      document.querySelector("#hallowStyle").innerText = world.hallowStyle;
-      document.querySelector("#crimsonStyle").innerText = world.crimsonStyle;
-      document.querySelector("#desertStyle").innerText = world.desertStyle;
-      document.querySelector("#oceanStyle").innerText = world.oceanStyle;
-      document.querySelector("#cloudBackground").innerText = world.cloudBackground;
-      document.querySelector("#numberofClouds").innerText = world.numberofClouds;
-      document.querySelector("#windSpeed").innerText = world.windSpeed;
-      document.querySelector("#savedAngler").innerText = world.savedAngler;
-      document.querySelector("#anglerQuest").innerText = world.anglerQuest;
-      document.querySelector("#savedStylist").innerText = world.savedStylist;
-      document.querySelector("#savedTaxCollector").innerText = world.savedTaxCollector;
-      document.querySelector("#invasionSizeStart").innerText = world.invasionSizeStart;
-      document.querySelector("#tempCultistDelay").innerText = world.tempCultistDelay;
-      document.querySelector("#fastForwardTime").innerText = world.fastForwardTime;
-      document.querySelector("#downedFishron").innerText = world.downedFishron;
-      document.querySelector("#downedMartians").innerText = world.downedMartians;
-      document.querySelector("#downedAncientCultist").innerText = world.downedAncientCultist;
-      document.querySelector("#downedMoonlord").innerText = world.downedMoonlord;
-      document.querySelector("#downedHalloweenKing").innerText = world.downedHalloweenKing;
-      document.querySelector("#downedHalloweenTree").innerText = world.downedHalloweenTree;
-      document.querySelector("#downedChristmasIceQueen").innerText = world.downedChristmasIceQueen;
-      document.querySelector("#downedChristmasSantank").innerText = world.downedChristmasSantank;
-      document.querySelector("#downedChristmasTree").innerText = world.downedChristmasTree;
-      document.querySelector("#downedTowerSolar").innerText = world.downedTowerSolar;
-      document.querySelector("#downedTowerVortex").innerText = world.downedTowerVortex;
-      document.querySelector("#downedTowerNebula").innerText = world.downedTowerNebula;
-      document.querySelector("#downedTowerStardust").innerText = world.downedTowerStardust;
-      document.querySelector("#towerActiveSolar").innerText = world.towerActiveSolar;
-      document.querySelector("#towerActiveVortex").innerText = world.towerActiveVortex;
-      document.querySelector("#towerActiveNebula").innerText = world.towerActiveNebula;
-      document.querySelector("#towerActiveStardust").innerText = world.towerActiveStardust;
-      document.querySelector("#lunarApocalypseIsUp").innerText = world.lunarApocalypseIsUp;
-    }
-      
-    // if(e.data.x && e.data.y && e.data.color) {
-    //   // setTimeout( 
-    //   //   function() {
-    //   ctx.fillStyle = e.data.color;
-    //   ctx.fillRect("). e.data.y, 1, 1);
-    //     // }, 0);
-    // }
-    
-    if(e.data.tiles) {
-      var x = e.data.x;
-      
-      for(var i = 0; i < e.data.tiles.length; i++) {
-        var tile = e.data.tiles[i];
-        
-        if(tile) {
-          world.tiles.push(tile);
-          
-          // ctx.fillStyle = tile.color;
-          ctx.fillStyle = getTileColor(i, tile, world);
-          ctx.fillRect(x, i, 1, 1);
-        }
-      }
-    }
-  });
+  worker.addEventListener('message', onWorldLoaderWorkerMessage);
   
   worker.postMessage(evt.target.files[0]);
+}
+
+function onWorldLoaderWorkerMessage(e) {
+  if(e.data.status)
+    $("#status").html(e.data.status);
+    
+  if(e.data.tiles) {
+    var x = e.data.x;
+    
+    for(var i = 0; i < e.data.tiles.length; i++) {
+      var tile = e.data.tiles[i];
+      
+      if(tile) {
+        world.tiles.push(tile);
+        
+        ctx.fillStyle = getTileColor(i, tile, world);
+        ctx.fillRect(x, i, 1, 1);
+      }
+    }
+  }
+  
+  if(e.data.chests) {
+    world.chests = e.data.chests;
+  }
+  
+  if(e.data.signs) {
+    world.signs = e.data.signs;
+  }
+  
+  if(e.data.npcs) {
+    world.npcs = e.data.npcs;
+  }
+  
+  if(e.data.world) {
+    world = e.data.world;
+  
+    panzoomContainer.width = world.width;
+    panzoomContainer.height = world.height;
+    canvas.width = world.width;
+    canvas.height = world.height;
+    overlayCanvas.width = world.width;
+    overlayCanvas.height = world.height;
+    
+    world.tiles = [];
+    
+    resize();
+    
+    $("#accordion").css("display", "block");
+
+    document.querySelector("#worldVersion").innerText = world.version;
+    document.querySelector("#worldName").innerText = world.name;
+    document.querySelector("#worldId").innerText = world.id;
+    document.querySelector("#worldWidth").innerText = world.width;
+    document.querySelector("#worldHeight").innerText = world.height;
+    document.querySelector("#expertMode").innerText = world.expertMode;
+    document.querySelector("#moonType").innerText = world.moonType;
+    document.querySelector("#spawnX").innerText = world.spawnX;
+    document.querySelector("#spawnY").innerText = world.spawnY;
+    document.querySelector("#worldSurfaceY").innerText = world.worldSurfaceY;
+    document.querySelector("#rockLayerY").innerText = world.rockLayerY;
+    document.querySelector("#gameTime").innerText = world.gameTime;
+    document.querySelector("#isDay").innerText = world.isDay;
+    document.querySelector("#moonPhase").innerText = world.moonPhase;
+    document.querySelector("#bloodMoon").innerText = world.bloodMoon;
+    document.querySelector("#eclipse").innerText = world.eclipse;
+    document.querySelector("#dungeonX").innerText = world.dungeonX;
+    document.querySelector("#dungeonY").innerText = world.dungeonY;
+    document.querySelector("#crimsonWorld").innerText = world.crimsonWorld;
+    document.querySelector("#killedEyeOfCthulu").innerText = world.killedEyeOfCthulu;
+    document.querySelector("#killedEaterOfWorlds").innerText = world.killedEaterOfWorlds;
+    document.querySelector("#killedSkeletron").innerText = world.killedSkeletron;
+    document.querySelector("#killedQueenBee").innerText = world.killedQueenBee;
+    document.querySelector("#killedTheDestroyer").innerText = world.killedTheDestroyer;
+    document.querySelector("#killedTheTwins").innerText = world.killedTheTwins;
+    document.querySelector("#killedSkeletronPrime").innerText = world.killedSkeletronPrime;
+    document.querySelector("#killedAnyHardmodeBoss").innerText = world.killedAnyHardmodeBoss;
+    document.querySelector("#killedPlantera").innerText = world.killedPlantera;
+    document.querySelector("#killedGolem").innerText = world.killedGolem;
+    document.querySelector("#killedSlimeKing").innerText = world.killedSlimeKing;
+    document.querySelector("#savedGoblinTinkerer").innerText = world.savedGoblinTinkerer;
+    document.querySelector("#savedWizard").innerText = world.savedWizard;
+    document.querySelector("#savedMechanic").innerText = world.savedMechanic;
+    document.querySelector("#defeatedGoblinInvasion").innerText = world.defeatedGoblinInvasion;
+    document.querySelector("#killedClown").innerText = world.killedClown;
+    document.querySelector("#defeatedFrostLegion").innerText = world.defeatedFrostLegion;
+    document.querySelector("#defeatedPirates").innerText = world.defeatedPirates;
+    document.querySelector("#brokeAShadowOrb").innerText = world.brokeAShadowOrb;
+    document.querySelector("#meteorSpawned").innerText = world.meteorSpawned;
+    document.querySelector("#shadowOrbsbrokenmod3").innerText = world.shadowOrbsbrokenmod3;
+    document.querySelector("#altarsSmashed").innerText = world.altarsSmashed;
+    document.querySelector("#hardMode").innerText = world.hardMode;
+    document.querySelector("#goblinInvasionDelay").innerText = world.goblinInvasionDelay;
+    document.querySelector("#goblinInvasionSize").innerText = world.goblinInvasionSize;
+    document.querySelector("#goblinInvasionType").innerText = world.goblinInvasionType;
+    document.querySelector("#goblinInvasionX").innerText = world.goblinInvasionX;
+    document.querySelector("#slimeRainTime").innerText = world.slimeRainTime;
+    document.querySelector("#sundialCooldown").innerText = world.sundialCooldown;
+    document.querySelector("#isRaining").innerText = world.isRaining;
+    document.querySelector("#rainTime").innerText = world.rainTime;
+    document.querySelector("#maxRain").innerText = world.maxRain;
+    document.querySelector("#tier1OreID").innerText = world.tier1OreID;
+    document.querySelector("#tier2OreID").innerText = world.tier2OreID;
+    document.querySelector("#tier3OreID").innerText = world.tier3OreID;
+    document.querySelector("#treeStyle").innerText = world.treeStyle;
+    document.querySelector("#corruptionStyle").innerText = world.corruptionStyle;
+    document.querySelector("#jungleStyle").innerText = world.jungleStyle;
+    document.querySelector("#snowStyle").innerText = world.snowStyle;
+    document.querySelector("#hallowStyle").innerText = world.hallowStyle;
+    document.querySelector("#crimsonStyle").innerText = world.crimsonStyle;
+    document.querySelector("#desertStyle").innerText = world.desertStyle;
+    document.querySelector("#oceanStyle").innerText = world.oceanStyle;
+    document.querySelector("#cloudBackground").innerText = world.cloudBackground;
+    document.querySelector("#numberofClouds").innerText = world.numberofClouds;
+    document.querySelector("#windSpeed").innerText = world.windSpeed;
+    document.querySelector("#savedAngler").innerText = world.savedAngler;
+    document.querySelector("#anglerQuest").innerText = world.anglerQuest;
+    document.querySelector("#savedStylist").innerText = world.savedStylist;
+    document.querySelector("#savedTaxCollector").innerText = world.savedTaxCollector;
+    document.querySelector("#invasionSizeStart").innerText = world.invasionSizeStart;
+    document.querySelector("#tempCultistDelay").innerText = world.tempCultistDelay;
+    document.querySelector("#fastForwardTime").innerText = world.fastForwardTime;
+    document.querySelector("#downedFishron").innerText = world.downedFishron;
+    document.querySelector("#downedMartians").innerText = world.downedMartians;
+    document.querySelector("#downedAncientCultist").innerText = world.downedAncientCultist;
+    document.querySelector("#downedMoonlord").innerText = world.downedMoonlord;
+    document.querySelector("#downedHalloweenKing").innerText = world.downedHalloweenKing;
+    document.querySelector("#downedHalloweenTree").innerText = world.downedHalloweenTree;
+    document.querySelector("#downedChristmasIceQueen").innerText = world.downedChristmasIceQueen;
+    document.querySelector("#downedChristmasSantank").innerText = world.downedChristmasSantank;
+    document.querySelector("#downedChristmasTree").innerText = world.downedChristmasTree;
+    document.querySelector("#downedTowerSolar").innerText = world.downedTowerSolar;
+    document.querySelector("#downedTowerVortex").innerText = world.downedTowerVortex;
+    document.querySelector("#downedTowerNebula").innerText = world.downedTowerNebula;
+    document.querySelector("#downedTowerStardust").innerText = world.downedTowerStardust;
+    document.querySelector("#towerActiveSolar").innerText = world.towerActiveSolar;
+    document.querySelector("#towerActiveVortex").innerText = world.towerActiveVortex;
+    document.querySelector("#towerActiveNebula").innerText = world.towerActiveNebula;
+    document.querySelector("#towerActiveStardust").innerText = world.towerActiveStardust;
+    document.querySelector("#lunarApocalypseIsUp").innerText = world.lunarApocalypseIsUp;
+  }
 }
 
 function getTileColor(y, tile, world) {

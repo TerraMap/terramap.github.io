@@ -24,7 +24,9 @@ var start = function (file) {
 		var ds = new DataStream(e.target.result);
 		ds.endianness = DataStream.LITTLE_ENDIAN;
 		
-		self.readWorldFile(ds);
+	  var world = {};
+	  
+		readWorldFile(ds, world);
 	};
 
 
@@ -33,13 +35,23 @@ var start = function (file) {
 	fileReader.readAsArrayBuffer(file);
 };
 
-var readWorldFile = function (reader) {
-	var fileReader = new FileReader();
+function readWorldFile(reader, world) {
+  readFileFormatHeader(reader, world);
+  readProperties(reader, world);
+  readTiles(reader, world);
+  readChests(reader, world);
+  readSigns(reader, world);
+  readNpcs(reader, world);
+	
+  self.postMessage( 
+    {
+      'status': "Done.",
+    });
+}
 
+function readFileFormatHeader(reader, world) {
   self.postMessage( {'status': "Reading world version..."});
-	
-	var world = {};
-	
+  
 	world.version = reader.readInt32();
 
   self.postMessage(
@@ -48,14 +60,18 @@ var readWorldFile = function (reader) {
       'version': world.version,
     });
 	
+	// read file metadata
+	// TODO: implement readUint64()
 	reader.readUint32();
 	reader.readUint32();
 
 	world.revision = reader.readUint32();
 
+  // isFavorite
 	reader.readUint32();
 	reader.readUint32();
 
+  // read positions
 	var i = 0;
 
 	var positionsLength = reader.readInt16();
@@ -63,6 +79,7 @@ var readWorldFile = function (reader) {
 		reader.readInt32();
 	}
 
+  // read importances
 	var importanceLength = reader.readInt16();
 	world.importance = new Array(importanceLength);
 	var b = 0;
@@ -80,7 +97,9 @@ var readWorldFile = function (reader) {
 			world.importance[i] = true;
 		}
 	}
+}
 
+function readProperties(reader, world) {
 	world.name = readString(reader);
 
 	world.id = reader.readInt32();
@@ -217,12 +236,12 @@ var readWorldFile = function (reader) {
 	var hellLevel = ((world.height - 230) - world.worldSurfaceY) / 6;
 	hellLevel = hellLevel * 6 + world.worldSurfaceY - 5;
 	world.hellLayerY = hellLevel;
+}
 
+function readTiles(reader, world) {
   self.postMessage(
     {
       'status': "Reading world tiles...",
-      // 'width': world.width,
-      // 'height': world.height,
       'world': world,
     });
     
@@ -344,24 +363,11 @@ var readWorldFile = function (reader) {
 				}
 			}
 
-		// 	tile.color = getTileColor(y, tile, world);
-			
-      // self.postMessage(
-      //   {
-      //     'x': x,
-      //     'y': y,
-      //     'color': color,
-      //   });
-	
-		// 	world.tiles[x][y] = tile;
       tiles.push(tile);
       
 			while (k > 0) {
 				y++;
-				// world.tiles[x][y] = tile;
-				// var newTile = cloneTile(tile);
-				// newTile.color = getTileColor(y, tile, world);
-  		// 	tiles.push(newTile);
+				
   			tiles.push(tile);
   			
 				k--;
@@ -379,35 +385,125 @@ var readWorldFile = function (reader) {
         'tiles': tiles,
       });
 	}
-	
+}
+
+function readChests(reader, world) {
+  var chests = [];
+  
+  var num = reader.readInt16();
+  var num2 = reader.readInt16();
+  var num3;
+  var num4;
+  
+  var maxItems = 40;
+  
+  if(num2 < maxItems) {
+    num3 = num2;
+    num4 = 0;
+  }
+  else {
+    num3 = maxItems;
+    num4 = num2 - maxItems;
+  }
+  
+  for(var i = 0; i < num; i++) {
+    var chest = {};
+    chest.items = [];
+    chest.x = reader.readInt32();
+    chest.y = reader.readInt32();
+    chest.name = readString(reader);
+    
+    var j = 0;
+    var num5 = 0;
+    
+    for(j = 0; j < num3; j++) {
+      num5 = reader.readInt16();
+      
+      if(num5 > 0) {
+        var item = {};
+        item.id = reader.readInt32();
+        item.count = num5;
+        item.prefixId = reader.readUint8();
+        chest.items.push(item);
+      }
+    }
+    
+    for(j = 0; j < num4; j++) {
+      num5 = reader.readInt16();
+      if(num5 > 0) {
+        reader.readInt32();
+        reader.readUint8();
+      }
+    }
+    
+    chests.push(chest);
+  }
+  
+  self.postMessage( 
+  {
+    'chests': chests,
+  });
+}
+
+function readSigns(reader, world) {
+  var signs = [];
+  
+  var num = reader.readInt16();
+  
+  for(var i = 0; i < num; i++) {
+    var sign = {};
+    
+    sign.text = readString(reader);
+    sign.x = reader.readInt32();
+    sign.y = reader.readInt32();
+    
+    signs.push(sign);
+  }
+  
   self.postMessage( 
     {
-      'status': "Done.",
+      'signs': signs,
     });
-};
+}
 
-// function cloneTile(tile) {
-//   var newTile = {};
-// 	newTile.Type = tile.Type;
-// 	newTile.IsActive = tile.IsActive;
-// 	newTile.TextureU = tile.TextureU;
-// 	newTile.TextureV = tile.TextureV;
-// 	newTile.ColorValue = tile.ColorValue;
-// 	newTile.WallType = tile.WallType;
-// 	newTile.IsWallPresent = tile.IsWallPresent;
-// 	newTile.WallColor = tile.WallColor;
-// 	newTile.IsWallColorPresent = tile.IsWallColorPresent;
-// 	newTile.IsActuatorPresent = tile.IsActuatorPresent;
-// 	newTile.IsRedWirePresent = tile.IsRedWirePresent;
-// 	newTile.IsGreenWirePresent = tile.IsGreenWirePresent;
-// 	newTile.IsBlueWirePresent = tile.IsBlueWirePresent;
-// 	newTile.IsLiquidPresent = tile.IsLiquidPresent;
-// 	newTile.IsLiquidLava = tile.IsLiquidLava;
-// 	newTile.IsLiquidHoney = tile.IsLiquidHoney;
-// 	newTile.LiquidAmount = tile.LiquidAmount;
-// 	return newTile;
-// }
-
+function readNpcs(reader, world) {
+  var npcs = [];
+  
+  var num = 0;
+  var flag = reader.readUint8() > 0;
+  
+  var npc;
+  
+  while(flag) {
+    npc = {};
+    npc.type = readString(reader);
+    npc.name = readString(reader);
+    npc.x = reader.readFloat32();
+    npc.y = reader.readFloat32();
+    npc.isHomeless = reader.readUint8() > 0;
+    npc.homeX = reader.readInt32();
+    npc.homeY = reader.readInt32();
+    npcs.push(npc);
+    
+    num++;
+    flag = reader.readUint8() > 0;
+  }
+  
+  flag = reader.readUint8() > 0;
+  while(flag) {
+    npc = {};
+    npc.type = readString(reader);
+    npc.x = reader.readFloat32();
+    npc.y = reader.readFloat32();
+    num++;
+    flag = reader.readUint8();
+  }
+  
+  self.postMessage( 
+    {
+      'npcs': npcs,
+    });
+}
 
 function readString(reader) {
 	var stringLength = 0;
@@ -425,33 +521,3 @@ function readString(reader) {
 
 	return reader.readString(stringLength);
 }
-
-// function getTileColor(y, tile, world) {
-//   if(tile.IsActive) {
-//     return tileColors[tile.Type][0];
-//   }
-  
-//   if (tile.IsWallPresent) {
-//     return wallColors[tile.WallType][0];
-//   }
-  
-//   if (tile.IsLiquidPresent) {
-//     if(tile.IsLiquidLava)
-//       return liquidColors[1];
-//     else if (tile.IsLiquidHoney)
-//       return liquidColors[2];
-//     else
-//       return liquidColors[0];
-//   }
-  
-//   if(y < world.worldSurfaceY)
-//     return '#84AAF8';
-  
-//   if(y < world.rockLayerY)
-//     return '#583D2E';
-    
-//   if(y < world.hellLayerY)
-//     return '#4A433C';
-  
-//   return '#000000';
-// }
