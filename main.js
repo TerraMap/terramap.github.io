@@ -7,6 +7,18 @@ var overlayCanvas = document.querySelector("#overlayCanvas");
 var ctx = canvas.getContext("2d");
 var overlayCtx = overlayCanvas.getContext("2d");
 
+ctx.msImageSmoothingEnabled = false;
+ctx.mozImageSmoothingEnabled = false;
+ctx.webkitImageSmoothingEnabled = false;
+ctx.msImageSmoothingEnabled = false;
+ctx.imageSmoothingEnabled = false;
+	
+overlayCtx.msImageSmoothingEnabled = false;
+overlayCtx.mozImageSmoothingEnabled = false;
+overlayCtx.webkitImageSmoothingEnabled = false;
+overlayCtx.msImageSmoothingEnabled = false;
+overlayCtx.imageSmoothingEnabled = false;
+
 var blockSelector = document.querySelector("#blocks");
 
 var world;
@@ -33,30 +45,31 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
 resize();
 
-// handle scrolling in and out
-panzoom.parent().on('mousewheel.focal', function (e) {
-
-    e.preventDefault();
-
-    var delta = e.delta || e.originalEvent.wheelDelta;
-    var zoomOut = delta ? delta < 0 : e.originalEvent.deltaY > 0;
-
-    var transform = $(panzoomContainer).panzoom('getMatrix');
-    var scale = transform[0];
-  
-    panzoom.panzoom('zoom', zoomOut, {
-        increment   : 0.3 * scale,
-        animate     : true,
-        focal       : e
-    });
-});
-
 for(var idx = 0; idx < settings.Tiles.length; idx++) {
   var tile = settings.Tiles[idx];
   var option = document.createElement("option");
   option.text = tile.Name;
   option.value = idx;
   blockSelector.add(option);
+}
+
+// handle scrolling in and out
+panzoom.parent().on('mousewheel.focal', onMouseWheel);
+
+function onMouseWheel(e) {
+  e.preventDefault();
+
+  var delta = e.delta || e.originalEvent.wheelDelta;
+  var zoomOut = delta ? delta < 0 : e.originalEvent.deltaY > 0;
+
+  var transform = $(panzoomContainer).panzoom('getMatrix');
+  var scale = transform[0];
+
+  panzoom.panzoom('zoom', zoomOut, {
+      increment   : 0.3 * scale,
+      animate     : true,
+      focal       : e
+  });
 }
 
 function previousBlock(e) {
