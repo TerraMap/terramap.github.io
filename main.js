@@ -41,8 +41,11 @@ panzoom.parent().on('mousewheel.focal', function (e) {
     var delta = e.delta || e.originalEvent.wheelDelta;
     var zoomOut = delta ? delta < 0 : e.originalEvent.deltaY > 0;
 
+    var transform = $(panzoomContainer).panzoom('getMatrix');
+    var scale = transform[0];
+  
     panzoom.panzoom('zoom', zoomOut, {
-        increment   : 0.3,
+        increment   : 0.3 * scale,
         animate     : true,
         focal       : e
     });
@@ -56,7 +59,15 @@ for(var idx = 0; idx < settings.Tiles.length; idx++) {
   blockSelector.add(option);
 }
 
+function previousBlock(e) {
+  findBlock(-1);
+}
+
 function nextBlock(e) {
+  findBlock(1);
+}
+
+function findBlock(direction) {
   if(!world)
     return;
     
@@ -64,30 +75,31 @@ function nextBlock(e) {
   var tileSettings = settings.Tiles[selectedIndex];
   
   var x = selectionX;
-  var y = selectionY;
+  var y = selectionY + direction;
   
-  for(var i = x * world.height + y; i < world.tiles.length; i++) {
-    y++;
-    if(y >= world.height) {
-      y = 0;
-      x++;
+  var start = x * world.height + y;
+  
+  for(var i = start; i >= 0 && i < world.tiles.length; i += direction) {
+    var tile = world.tiles[i];
+    if(tile && tile.Type == selectedIndex) {
+      selectionX = x;
+      selectionY = y;
+
+      drawSelectionIndicator();
+      // panzoom.panzoom('pan', (-overlayCanvas.width / 2) - x, (-overlayCanvas.height / 2) - y, { relative: false });
+
+      break;
     }
     
-    var tile = world.tiles[i];
-    if(!tile || tile.Type != selectedIndex)
-      continue;
+    y += direction;
     
-    selectionX = x;
-    selectionY = y;
-  
-    overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
-    overlayCtx.lineWidth=1;
-    overlayCtx.strokeStyle="#FF0000";
-    overlayCtx.strokeRect(selectionX, selectionY, 3, 3);
-    
-    // panzoom.panzoom('pan', (-overlayCanvas.width / 2) - x, (-overlayCanvas.height / 2) - y, { relative: false });
-    
-    break;
+    if(y < 0 || y >= world.height) {
+      if(direction > 0)
+        y = 0;
+      else
+        y = world.height - 1;
+      x += direction;
+    }
   }
 }
 
@@ -145,9 +157,7 @@ function resize() {
   // cw=canvas.width;
   // ch=canvas.height;
   
-  overlayCtx.lineWidth=1;
-  overlayCtx.strokeStyle="#FF0000";
-  overlayCtx.strokeRect(selectionX, selectionY, 3, 3);
+  drawSelectionIndicator();
 }
 
 function getMousePos(canvas, evt) {
@@ -185,14 +195,10 @@ panzoomContainer.addEventListener('mouseup', function(evt) {
   
   var mousePos = getMousePos(panzoomContainer, evt);
   
-  selectionX = mousePos.x - 1;
-  selectionY = mousePos.y - 1;
+  selectionX = mousePos.x;
+  selectionY = mousePos.y;
   
-  overlayCtx.globalAlpha = 1.0;
-  overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
-  overlayCtx.lineWidth=1;
-  overlayCtx.strokeStyle="rgba(255, 0, 0, 1.0)";
-  overlayCtx.strokeRect(selectionX, selectionY, 3, 3);
+  drawSelectionIndicator();
 }, false);
 
 panzoomContainer.addEventListener('mousemove', function(evt) {
@@ -218,6 +224,39 @@ panzoomContainer.addEventListener('mousemove', function(evt) {
     }
   }
 }, false);
+
+function drawSelectionIndicator() {
+  var x = selectionX + 0.5;
+  var y = selectionY + 0.5;
+
+  var lineWidth = 12;
+  var targetWidth = 39;
+  var halfTargetWidth = targetWidth / 2;
+
+  overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+  overlayCtx.lineWidth = lineWidth;
+  overlayCtx.strokeStyle="rgb(255, 0, 0)";
+  overlayCtx.strokeRect(x - halfTargetWidth, y - halfTargetWidth, targetWidth, targetWidth);
+
+  // draw cross-hairs
+  overlayCtx.lineWidth=1;
+  overlayCtx.beginPath();
+  overlayCtx.moveTo(x - halfTargetWidth, y);
+  overlayCtx.lineTo(x - 1, y);
+  overlayCtx.stroke();
+  overlayCtx.beginPath();
+  overlayCtx.moveTo(x + halfTargetWidth, y);
+  overlayCtx.lineTo(x + 1, y);
+  overlayCtx.stroke();
+  overlayCtx.beginPath();
+  overlayCtx.moveTo(x, y - halfTargetWidth);
+  overlayCtx.lineTo(x, y - 1);
+  overlayCtx.stroke();
+  overlayCtx.beginPath();
+  overlayCtx.moveTo(x, y + halfTargetWidth);
+  overlayCtx.lineTo(x, y + 1);
+  overlayCtx.stroke();
+}
 
 function getTileText (tile) {
   var text = "";
