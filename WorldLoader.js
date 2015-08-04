@@ -6,33 +6,21 @@ self.addEventListener('message', function(e) {
 }, false);
 
 var start = function (file) {
-  var fileReader = new FileReader();
+  var fileReader = new FileReaderSync();
 
-	fileReader.onerror = self.errorHandler;
-	fileReader.onprogress = self.updateProgress;
-	fileReader.onabort = function (e) {
-	  self.postMessage({ 'status': "Aborted." });
-	};
+  self.postMessage({ 'status': "Reading world file..."});
+ 
+	var buffer = fileReader.readAsArrayBuffer(file);
 	
-	fileReader.onloadstart = function (e) {
-	  self.postMessage({ 'status': "Loading world file..."});
-	};
+	var ds = new DataStream(buffer);
 	
-	fileReader.onload = function (e) {
-	  self.postMessage({ 'status': "Loaded world file, reading..." });
-			
-		var ds = new DataStream(e.target.result);
-		ds.endianness = DataStream.LITTLE_ENDIAN;
-		
-	  var world = {};
-	  
-		readWorldFile(ds, world);
-	};
-
-
+	ds.endianness = DataStream.LITTLE_ENDIAN;
+	
+	var world = {};
+	
 	self.postMessage({ 'status': "Loading world file..." });
 
-	fileReader.readAsArrayBuffer(file);
+	readWorldFile(ds, world);
 };
 
 function readWorldFile(reader, world) {
