@@ -68,7 +68,34 @@
       </div>
     </div>
     
-    <div class="panel-group col-md-4" id="accordionNpcs" role="tablist" aria-multiselectable="true">
+    <div class="panel-group col-md-4" id="accordionSelectedTile" role="tablist" aria-multiselectable="true" style="display: none;">
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingSelectedTile">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordionSelectedTile" href="#collapseSelectedTile" aria-expanded="false" aria-controls="collapseSelectedTile">
+              Selected Tile Info
+            </a>
+          </h4>
+        </div>
+        <div id="collapseSelectedTile" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSelectedTile">
+          <div class="panel-body">
+            <p id="selectedTileName"></p>
+            <table id="tableSelectedTile" class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th align="left">Item</th>
+                  <th align="left">Count</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="panel-group col-md-4" id="accordionNpcs" role="tablist" aria-multiselectable="true" style="display: none;">
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingNpcs">
           <h4 class="panel-title">
@@ -94,7 +121,7 @@
       </div>
     </div>
                 
-    <div class="panel-group col-md-4" id="accordionWorldProperties" role="tablist" aria-multiselectable="true">
+    <div class="panel-group col-md-4" id="accordionWorldProperties" role="tablist" aria-multiselectable="true" style="display: none;">
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingWorldProperties">
           <h4 class="panel-title">

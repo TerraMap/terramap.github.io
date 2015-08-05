@@ -197,12 +197,68 @@ panzoomContainer.addEventListener('mouseup', function(evt) {
   }
   
   var mousePos = getMousePos(panzoomContainer, evt);
+  var x = mousePos.x;
+  var y = mousePos.y;
   
-  selectionX = mousePos.x;
-  selectionY = mousePos.y;
+  selectionX = x;
+  selectionY = y;
   
   drawSelectionIndicator();
+  
+  var tile = getTileAt(x, y);
+  if(tile) {
+    var tbody = $("#tableSelectedTile").find('tbody');
+    tbody.html("");
+    
+    var text = getTileText(tile);
+    
+    for(var chestIndex = 0; chestIndex < world.chests.length; chestIndex++) {
+      var chest = world.chests[chestIndex];
+      if(chest) {
+        if((chest.x == x || chest.x + 1 == x) && (chest.y == y || chest.y + 1 == y)) {
+          if(chest.name.length > 0)
+            text = text + " - " + chest.name;
+            
+          for(var i = 0; i < chest.items.length; i++) {
+            var item = chest.items[i];
+            var prefix = "";
+            
+            if(item.prefixId > 0 && item.prefixId < settings.ItemPrefix.length)
+              prefix = settings.ItemPrefix[item.prefixId].Name;
+              
+            var itemName = item.id;
+            for(var itemIndex = 0; itemIndex < settings.Items.length; itemIndex++) {
+              var itemSettings = settings.Items[itemIndex];
+              if(itemSettings.Id == item.id) {
+                itemName = itemSettings.Name;
+                break;
+              }
+            }
+            
+            tbody.append($('<tr>')
+              .append($('<td>').text(prefix + " " + itemName))
+              .append($('<td>').text(item.count))
+            );
+          }
+          
+          break;
+        }
+      }
+    }
+        
+    $("#selectedTileName").html(text);  
+  }  
+  
 }, false);
+
+function getTileAt(x, y) {
+  var index = x * world.height + y;
+  if(index >= 0 && index < world.tiles.length) {
+    return world.tiles[index];
+  }
+  
+  return null;
+}
 
 panzoomContainer.addEventListener('mousemove', function(evt) {
   if(evt.which === 1 && leftButtonDown) {
@@ -213,14 +269,15 @@ panzoomContainer.addEventListener('mousemove', function(evt) {
     return;
     
   var mousePos = getMousePos(panzoomContainer, evt);
+  var x = mousePos.x;
+  var y = mousePos.y;
+
   $("#position").html(mousePos.x + ',' + (mousePos.y));
   
   if(world.tiles) {
-    var index = mousePos.x * world.height + mousePos.y;
+    var tile = getTileAt(mousePos.x, mousePos.y);
     
-    if(index >= 0 && index < world.tiles.length) {
-      var tile = world.tiles[index];
-      
+    if(tile) {
       var text = getTileText(tile);
       
       $("#tile").html(text);
@@ -390,6 +447,8 @@ function onWorldLoaderWorkerMessage(e) {
   
   if(e.data.npcs) {
     addNpcs(e.data.npcs);
+    
+    $("#accordionNpcs").css("display", "block");
   }
   
   if(e.data.world) {
@@ -406,7 +465,8 @@ function onWorldLoaderWorkerMessage(e) {
     
     resize();
     
-    $("#accordion").css("display", "block");
+    $("#accordionWorldProperties").css("display", "block");
+    $("#accordionSelectedTile").css("display", "block");
 
     document.querySelector("#worldVersion").innerText = world.version;
     document.querySelector("#worldName").innerText = world.name;
@@ -577,4 +637,3 @@ function updateProgress(evt) {
   //   $scope.$apply();
   // }
 }
-
