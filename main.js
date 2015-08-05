@@ -161,16 +161,6 @@ function resize() {
   panzoomContainer.style.height = height+'px';
   canvas.style.width = width+'px';
   overlayCanvas.style.width = width+'px';
-  // canvas.style.height = height+'px';
-  
-  // var rect = canvas.getBoundingClientRect();
-
-  // offsetX=rect.left;
-  // offsetY=rect.top;
-  // cw=canvas.width;
-  // ch=canvas.height;
-  
-  // drawSelectionIndicator();
 }
 
 function getMousePos(canvas, evt) {
@@ -237,6 +227,12 @@ panzoomContainer.addEventListener('mousemove', function(evt) {
     }
   }
 }, false);
+
+function selectPoint(x, y) {
+  selectionX = x;
+  selectionY = y;
+  drawSelectionIndicator();
+}
 
 function drawSelectionIndicator() {
   var x = selectionX + 0.5;
@@ -365,11 +361,15 @@ function onWorldLoaderWorkerMessage(e) {
   if(e.data.status)
     $("#status").html(e.data.status);
     
+  var x = 0;
+  var i = 0;
+  var tile;
+  
   if(e.data.tiles) {
-    var x = e.data.x;
+    x = e.data.x;
     
-    for(var i = 0; i < e.data.tiles.length; i++) {
-      var tile = e.data.tiles[i];
+    for(i = 0; i < e.data.tiles.length; i++) {
+      tile = e.data.tiles[i];
       
       if(tile) {
         world.tiles.push(tile);
@@ -389,7 +389,7 @@ function onWorldLoaderWorkerMessage(e) {
   }
   
   if(e.data.npcs) {
-    world.npcs = e.data.npcs;
+    addNpcs(e.data.npcs);
   }
   
   if(e.data.world) {
@@ -498,6 +498,26 @@ function onWorldLoaderWorkerMessage(e) {
     document.querySelector("#towerActiveNebula").innerText = world.towerActiveNebula;
     document.querySelector("#towerActiveStardust").innerText = world.towerActiveStardust;
     document.querySelector("#lunarApocalypseIsUp").innerText = world.lunarApocalypseIsUp;
+  }
+}
+
+function addNpcs(npcs) {
+  world.npcs = npcs;
+  
+  var tbody = $("#tableNpcs").find('tbody');
+  
+  for(var i = 0; i < npcs.length; i++) {
+    var npc = npcs[i];
+    
+    tbody.append($('<tr>')
+      .append($('<td>')
+        .append($('<a>')
+          .attr('onclick', 'selectPoint(' + npc.x + ', ' + npc.y + ');')
+          .text(npc.type)
+        )
+      )
+      .append($('<td>').text(npc.name))
+    );
   }
 }
 

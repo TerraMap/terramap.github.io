@@ -34,6 +34,7 @@ function readWorldFile(reader, world) {
   self.postMessage( 
     {
       'status': "Done.",
+      'done': true
     });
 }
 
@@ -466,8 +467,8 @@ function readNpcs(reader, world) {
     npc = {};
     npc.type = readString(reader);
     npc.name = readString(reader);
-    npc.x = reader.readFloat32();
-    npc.y = reader.readFloat32();
+    npc.x = reader.readFloat32() / 16;
+    npc.y = reader.readFloat32() / 16;
     npc.isHomeless = reader.readUint8() > 0;
     npc.homeX = reader.readInt32();
     npc.homeY = reader.readInt32();

@@ -68,18 +68,44 @@
       </div>
     </div>
     
-    <div class="panel-group col-md-4" id="accordion" role="tablist" aria-multiselectable="true" style="display:none;">
+    <div class="panel-group col-md-4" id="accordionNpcs" role="tablist" aria-multiselectable="true">
       <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingOne">
+        <div class="panel-heading" role="tab" id="headingNpcs">
           <h4 class="panel-title">
-            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+            <a role="button" data-toggle="collapse" data-parent="#accordionNpcs" href="#collapseNpcs" aria-expanded="false" aria-controls="collapseNpcs">
+              NPCs
+            </a>
+          </h4>
+        </div>
+        <div id="collapseNpcs" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingNpcs">
+          <div class="panel-body">
+            <table id="tableNpcs" class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th align="left">Occupation</th>
+                  <th align="left">Name</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+                
+    <div class="panel-group col-md-4" id="accordionWorldProperties" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingWorldProperties">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordionWorldProperties" href="#collapseWorldProperties" aria-expanded="false" aria-controls="collapseWorldProperties">
               World Properties
             </a>
           </h4>
         </div>
-        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+        <div id="collapseWorldProperties" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingWorldProperties">
           <div class="panel-body">
-            <table class="table table-striped table-hover">
+            <table id="tableWorldProperties" class="table table-striped table-hover">
               <thead>
                 <tr>
                   <th align="left">Name</th>
