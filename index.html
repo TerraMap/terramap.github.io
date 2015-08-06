@@ -27,7 +27,7 @@
 
 <body onresize="resize()">
   
-  <nav class="navbar navbar-inverse navbar-fixed-top">
+  <nav id="main-navbar" class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -51,7 +51,9 @@
       <button title="Find Previous" onclick="previousBlock()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-chevron-left"></span></button>
       <button title="Find Next" onclick="nextBlock()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-chevron-right"></span></button>
       <button title="Highlight All" onclick="highlightAll()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-screenshot"></span></button>
+      <button title="Clear Highlight" onclick="clearHighlight()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-remove"></span></button>
       <button title="Zoom To Fit" onclick="resetPanZoom()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-fullscreen"></span></button>
+      <button title="Save Map Image" onclick="saveMapImage()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-save"></span></button>
       <!-- <div id="navbar" class="collapse navbar-collapse"> -->
       <!--  <ul class="nav navbar-nav"> -->
       <!--  </ul> -->
@@ -282,6 +284,8 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script src="jquery.mousewheel.js"></script>
   <script src="jquery.panzoom.js"></script>
+  <script src="canvas-toBlob.js"></script>
+  <script src="FileSaver.js"></script>
   <script src="settings.js"></script>
   <script src="MapHelper.js"></script>
   <script src="main.js"></script>

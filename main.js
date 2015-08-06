@@ -53,6 +53,14 @@ for(var idx = 0; idx < settings.Tiles.length; idx++) {
   blockSelector.add(option);
 }
 
+$(window).resize(function () { 
+   $('body').css('padding-top', parseInt($('#main-navbar').css("height"))+10);
+});
+
+$(window).load(function () { 
+   $('body').css('padding-top', parseInt($('#main-navbar').css("height"))+10);         
+});
+
 // handle scrolling in and out
 panzoom.parent().on('mousewheel.focal', onMouseWheel);
 
@@ -116,7 +124,7 @@ function findBlock(direction) {
   }
 }
 
-function highlightAll(e) {
+function highlightAll() {
   if(!world)
     return;
     
@@ -143,6 +151,13 @@ function highlightAll(e) {
       x++;
     }
   }
+  
+  $("#canvas").css("z-index", "0");
+}
+
+function clearHighlight() {
+  overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+  $("#canvas").css("z-index", "2");
 }
 
 function resetPanZoom(e) {
@@ -181,20 +196,47 @@ var leftButtonDown = false;
 var leftButtonDragged = false;
 
 panzoomContainer.addEventListener('mousedown', function(evt) {
-  if(evt.which === 1) leftButtonDown = true;
+  if(evt.which === 1) {
+    leftButtonDown = true;
+  }
+}, false);
+
+panzoomContainer.addEventListener('mousemove', function(evt) {
+  if(evt.which === 1 && leftButtonDown) {
+      leftButtonDragged = true;
+  }
+    
+  if(!world) 
+    return;
+    
+  var mousePos = getMousePos(panzoomContainer, evt);
+  var x = mousePos.x;
+  var y = mousePos.y;
+  
+  $("#position").html(mousePos.x + ',' + (mousePos.y));
+  
+  if(world.tiles) {
+    var tile = getTileAt(mousePos.x, mousePos.y);
+    
+    if(tile) {
+      var text = getTileText(tile);
+      
+      $("#tile").html(text);
+    }
+  }
 }, false);
 
 panzoomContainer.addEventListener('mouseup', function(evt) {  
-  if(evt.which === 1) {
-    leftButtonDown = false;
+  if(evt.which != 1) return;
 
-    if(leftButtonDragged) {
-      leftButtonDragged = false;
-      return;
-    }
-    
+  leftButtonDown = false;
+
+  if(leftButtonDragged) {
     leftButtonDragged = false;
+    return;
   }
+
+  leftButtonDragged = false;
   
   var mousePos = getMousePos(panzoomContainer, evt);
   var x = mousePos.x;
@@ -260,31 +302,6 @@ function getTileAt(x, y) {
   return null;
 }
 
-panzoomContainer.addEventListener('mousemove', function(evt) {
-  if(evt.which === 1 && leftButtonDown) {
-    leftButtonDragged = true;
-  }
-    
-  if(!world) 
-    return;
-    
-  var mousePos = getMousePos(panzoomContainer, evt);
-  var x = mousePos.x;
-  var y = mousePos.y;
-
-  $("#position").html(mousePos.x + ',' + (mousePos.y));
-  
-  if(world.tiles) {
-    var tile = getTileAt(mousePos.x, mousePos.y);
-    
-    if(tile) {
-      var text = getTileText(tile);
-      
-      $("#tile").html(text);
-    }
-  }
-}, false);
-
 function selectPoint(x, y) {
   selectionX = x;
   selectionY = y;
@@ -322,6 +339,8 @@ function drawSelectionIndicator() {
   overlayCtx.moveTo(x, y + halfTargetWidth);
   overlayCtx.lineTo(x, y + 1);
   overlayCtx.stroke();
+  
+  $("#canvas").css("z-index", "0");
 }
 
 function getTileText (tile) {
@@ -611,29 +630,17 @@ function getTileColor(y, tile, world) {
   return '#000000';
 }
 
-function abortRead() {
-	reader.abort();
-}
-
-function errorHandler(evt) {
-  switch (evt.target.error.code) {
-  	case evt.target.error.NOT_FOUND_ERR:
-  	$("#status").html('File Not Found!');
-  		break;
-  	case evt.target.error.NOT_READABLE_ERR:
-  		$("#status").html('File is not readable');
-  		break;
-  	case evt.target.error.ABORT_ERR:
-  		break; // noop
-  	default:
-  	$("#status").html('An error occurred reading this file.');
-  }
-}
-
-function updateProgress(evt) {
-  // // evt is an ProgressEvent.
-  // if (evt.lengthComputable) {
-  //   $scope.percentLoaded = Math.round((evt.loaded / evt.total) * 100);
-  //   $scope.$apply();
-  // }
+function saveMapImage() {
+  var newCanvas = document.createElement("canvas");
+  var newContext = newCanvas.getContext("2d");
+  
+  newCanvas.height = world.height;
+  newCanvas.width = world.width;
+  
+  newContext.drawImage(canvas, 0, 0);
+  newContext.drawImage(overlayCanvas, 0, 0);
+  
+  newCanvas.toBlob(function(blob) {
+    saveAs(blob, world.name + ".png");
+  });
 }
