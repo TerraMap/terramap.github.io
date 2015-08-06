@@ -7,19 +7,19 @@ var overlayCanvas = document.querySelector("#overlayCanvas");
 var ctx = canvas.getContext("2d");
 var overlayCtx = overlayCanvas.getContext("2d");
 
+var blockSelector = document.querySelector("#blocks");
+
 ctx.msImageSmoothingEnabled = false;
 ctx.mozImageSmoothingEnabled = false;
-ctx.webkitImageSmoothingEnabled = false;
+// ctx.webkitImageSmoothingEnabled = false;
 ctx.msImageSmoothingEnabled = false;
 ctx.imageSmoothingEnabled = false;
 	
 overlayCtx.msImageSmoothingEnabled = false;
 overlayCtx.mozImageSmoothingEnabled = false;
-overlayCtx.webkitImageSmoothingEnabled = false;
+// overlayCtx.webkitImageSmoothingEnabled = false;
 overlayCtx.msImageSmoothingEnabled = false;
 overlayCtx.imageSmoothingEnabled = false;
-
-var blockSelector = document.querySelector("#blocks");
 
 var world;
 
@@ -43,15 +43,98 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 	$("#status").html("The File APIs are not fully supported in this browser.");
 }
 
-resize();
+resizeCanvases();
 
+var options = [];
+  
 for(var idx = 0; idx < settings.Tiles.length; idx++) {
   var tile = settings.Tiles[idx];
+
   var option = document.createElement("option");
   option.text = tile.Name;
   option.value = idx;
+  options.push(option);
+
+  if(tile.Frames) {
+    for(var frameIndex = 0; frameIndex < tile.Frames.length; frameIndex++) {
+      var frame = tile.Frames[frameIndex];
+
+      option = document.createElement("option");
+      option.text = tile.Name;
+      option.value = idx;
+
+      var attribute = document.createAttribute("data-u");
+      attribute.value = frame.U;
+      option.setAttributeNode(attribute);
+
+      attribute = document.createAttribute("data-v");
+      attribute.value = frame.V;
+      option.setAttributeNode(attribute);
+
+      if(frame.Name) {
+        option.text += " - " + frame.Name;
+      }
+
+      if(frame.Variety) {
+        option.text += " - " + frame.Variety;
+      }
+
+      options.push(option);
+    }
+  }
+}
+
+options.sort(compareOptions);
+
+for(var idx = 0; idx < options.length; idx++) {
+  var option = options[idx];
+  
   blockSelector.add(option);
 }
+
+function compareOptions(a,b) {
+  if (a.text < b.text)
+    return -1;
+  if (a.text > b.text)
+    return 1;
+  return 0;
+}
+
+// filter blocks
+jQuery.fn.filterByText = function(textbox, selectSingleMatch) {
+    return this.each(function() {
+        var select = this;
+        var options = [];
+        $(select).find('option').each(function() {
+            options.push({value: $(this).val(), text: $(this).text(), u: $(this).attr('data-u'), v: $(this).attr('data-v')});
+        });
+        $(select).data('options', options);
+        $(textbox).bind('change keyup', function() {
+            var options = $(select).empty().data('options');
+            var search = $.trim($(this).val());
+            var regex = new RegExp(search,"gi");
+
+            $.each(options, function(i) {
+                var option = options[i];
+                if(option.text.match(regex) !== null) {
+                  var newOption = $('<option>');
+                  newOption.text(option.text);
+                  newOption.val(option.value);
+                  newOption.attr('data-u', option.u);
+                  newOption.attr('data-v', option.v);
+                  $(select).append(newOption);
+                }
+            });
+            if (selectSingleMatch === true && $(select).children().length === 1) {
+                $(select).children().get(0).selected = true;
+            }
+        });            
+    });
+};
+
+$(function() {
+    $('#blocks').filterByText($('#blocksFilter'), true);
+}); 
 
 $(window).resize(function () { 
    $('body').css('padding-top', parseInt($('#main-navbar').css("height"))+10);
@@ -139,9 +222,6 @@ function highlightAll() {
   if(!world)
     return;
     
-  var selectedIndex = blockSelector.options[blockSelector.selectedIndex].value;
-  var tileSettings = settings.Tiles[selectedIndex];
-  
   var x = 0;
   var y = 0;
   
@@ -168,7 +248,7 @@ function highlightAll() {
     for(j = 0; j < selectedOptions.length; j++) {
       option = selectedOptions[j];
       
-      if(tile && tile.Type == option.value) {
+      if(isTileMatch(tile, option)) {
         overlayCtx.fillStyle = "rgb(255, 255, 255)";
         overlayCtx.fillRect(x, y, 1, 1);
       }
@@ -184,6 +264,42 @@ function highlightAll() {
   $("#canvas").css("z-index", "0");
 }
 
+function isTileMatch(tile, option) {
+  var optionId = option.value;
+
+  if(!tile || tile.Type != optionId)
+    return false;
+
+  var matchingFrame = getTileFrame(tile, option);
+
+  return matchingFrame != null;
+}
+
+function getTileFrame(tile, option) {
+  var optionId = option.value;
+
+  var tileSettings = settings.Tiles[optionId];
+
+  if(!tileSettings || !tileSettings.Frames)
+    return true;
+
+  var matchingFrame;
+
+  var optionU = option.getAttribute("data-u");
+  var optionV = option.getAttribute("data-v");
+
+  for(var i = 0; i < tileSettings.Frames.length; i++) {
+    var frame = tileSettings.Frames[i];
+    
+    if((!optionU && !tile.TextureU) || optionU <= tile.TextureU) {
+      if((!optionV && !tile.TextureV) || optionV <= tile.TextureV)
+        matchingFrame = frame;
+    }
+  }
+
+  return matchingFrame;
+}
+
 function clearHighlight() {
   overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
   $("#canvas").css("z-index", "2");
@@ -193,7 +309,7 @@ function resetPanZoom(e) {
   panzoom.panzoom('reset');  
 }
 
-function resize() {
+function resizeCanvases() {
   var width = window.innerWidth * 0.99;
   
   canvasContainer.height = window.innerHeight;
@@ -215,10 +331,14 @@ function getMousePos(canvas, evt) {
   
   scale = rect.width / panzoomContainer.width;
   
-  return {
+  var mousePos =  {
     x: Math.floor((evt.clientX - rect.left) / scale),
     y: Math.floor((evt.clientY - rect.top) / scale)
   };
+
+  // console.log(evt.clientX + "\t" + evt.clientY + "\t" + rect.left + "\t" + rect.top + "\t" + scale + "\t" + mousePos.x + "\t" + mousePos.y);
+
+  return mousePos;
 }
 
 var leftButtonDown = false;
@@ -511,7 +631,7 @@ function onWorldLoaderWorkerMessage(e) {
     
     world.tiles = [];
     
-    resize();
+    resizeCanvases();
     
     $("#accordionWorldProperties").css("display", "block");
     $("#accordionSelectedTile").css("display", "block");

@@ -25,8 +25,7 @@
   <![endif]-->
 </head>
 
-<body onresize="resize()">
-  
+<body>
   <nav id="main-navbar" class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -68,6 +67,7 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">Choose Blocks</h4>
+          <input id="blocksFilter" type="text" />
         </div>
         <div class="modal-body">
           <select id="blocks" class="form-control" multiple="multiple" size="10"></select>
