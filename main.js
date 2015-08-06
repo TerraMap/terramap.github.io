@@ -92,9 +92,6 @@ function findBlock(direction) {
   if(!world)
     return;
     
-  var selectedIndex = blockSelector.options[blockSelector.selectedIndex].value;
-  var tileSettings = settings.Tiles[selectedIndex];
-  
   var x = selectionX;
   var y = selectionY + direction;
   
@@ -102,25 +99,39 @@ function findBlock(direction) {
   
   for(var i = start; i >= 0 && i < world.tiles.length; i += direction) {
     var tile = world.tiles[i];
-    if(tile && tile.Type == selectedIndex) {
-      selectionX = x;
-      selectionY = y;
 
-      drawSelectionIndicator();
-      // panzoom.panzoom('pan', (-overlayCanvas.width / 2) - x, (-overlayCanvas.height / 2) - y, { relative: false });
-
+    var foundMatch = false;
+      
+    for(var j = 0; j < blockSelector.options.length; j++) {
+      var option = blockSelector.options[j];
+      if(!option.selected)
+        continue;
+      
+      if(tile && tile.Type == option.value) {
+        selectionX = x;
+        selectionY = y;
+  
+        drawSelectionIndicator();
+        // panzoom.panzoom('pan', (-overlayCanvas.width / 2) - x, (-overlayCanvas.height / 2) - y, { relative: false });
+  
+        foundMatch = true;
+        
+        break;
+      }
+      
+      y += direction;
+      
+      if(y < 0 || y >= world.height) {
+        if(direction > 0)
+          y = 0;
+        else
+          y = world.height - 1;
+        x += direction;
+      }
+    }
+    
+    if(foundMatch)
       break;
-    }
-    
-    y += direction;
-    
-    if(y < 0 || y >= world.height) {
-      if(direction > 0)
-        y = 0;
-      else
-        y = world.height - 1;
-      x += direction;
-    }
   }
 }
 
@@ -138,13 +149,31 @@ function highlightAll() {
   overlayCtx.fillStyle = "rgba(0, 0, 0, 0.75)";
   overlayCtx.fillRect(0, 0, overlayCanvas.width, overlayCanvas.height);
   
+  var selectedOptions = [];
+  
+  var j;
+  var option;
+  
+  for(j = 0; j < blockSelector.options.length; j++) {
+    option = blockSelector.options[j];
+    if(!option.selected)
+      continue;
+      
+    selectedOptions.push(option);
+  }
+  
   for(var i = 0; i < world.tiles.length; i++) {
     var tile = world.tiles[i];
-    if(tile && tile.Type == selectedIndex) {
-      overlayCtx.fillStyle = "rgb(255, 255, 255)";
-      overlayCtx.fillRect(x, y, 1, 1);
-    }
     
+    for(j = 0; j < selectedOptions.length; j++) {
+      option = selectedOptions[j];
+      
+      if(tile && tile.Type == option.value) {
+        overlayCtx.fillStyle = "rgb(255, 255, 255)";
+        overlayCtx.fillRect(x, y, 1, 1);
+      }
+    }
+      
     y++;
     if(y >= world.height) {
       y = 0;
