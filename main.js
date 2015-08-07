@@ -62,7 +62,8 @@ for(idx = 0; idx < settings.Tiles.length; idx++) {
   if(tile.Frames) {
     for(var frameIndex = 0; frameIndex < tile.Frames.length; frameIndex++) {
       var frame = tile.Frames[frameIndex];
-
+      frame.isTile = true;
+      
       option = document.createElement("option");
       option.text = tile.Name;
       option.value = idx;
