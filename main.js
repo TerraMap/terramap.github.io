@@ -46,8 +46,10 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 resizeCanvases();
 
 var options = [];
-  
-for(var idx = 0; idx < settings.Tiles.length; idx++) {
+
+var idx = 0;
+
+for(idx = 0; idx < settings.Tiles.length; idx++) {
   var tile = settings.Tiles[idx];
 
   var option = document.createElement("option");
@@ -79,9 +81,20 @@ for(var idx = 0; idx < settings.Tiles.length; idx++) {
         option.text += " - " + frame.Variety;
       }
 
+      option.text += " (Tile)";
+
       options.push(option);
     }
   }
+}
+
+for(idx = 0; idx < settings.Items.length; idx++) {
+  var item = settings.Items[idx];
+
+  var option = document.createElement("option");
+  option.text = item.Name + " (Item)";
+  option.value = "item" + item.Id;
+  options.push(option);
 }
 
 options.sort(compareOptions);
@@ -171,6 +184,33 @@ function nextBlock(e) {
   findBlock(1);
 }
 
+function isTileMatch(tile, selectedInfos, x, y) {
+  if(!tile.info)
+    return false;
+
+  for(var j = 0; j < selectedInfos.length; j++) {
+    var info = selectedInfos[j];
+
+    // check the tile first
+    if(tile.info == info || (!info.parent && tile.Type == info.Id))
+      return true;
+
+    // tile didn't match, see if it's a chest
+    var chest = tile.chest; // getChestAt(x, y);
+    if(chest) {
+      for(var i = 0; i < chest.items.length; i++) {
+        var item = chest.items[i];
+
+        if(info.Id == item.id) {
+          return true;
+        }
+      }
+    }
+  }
+
+  return false;
+}
+
 function findBlock(direction) {
   if(!world)
     return;
@@ -180,43 +220,24 @@ function findBlock(direction) {
   
   var start = x * world.height + y;
   
-  var selectedTileInfos = [];
-  
-  var j;
-  var option;
-  
-  for(j = 0; j < blockSelector.options.length; j++) {
-    option = blockSelector.options[j];
-    if(!option.selected)
-      continue;
-
-    var tileInfo = getTileInfoFromOption(option);
-      
-    selectedTileInfos.push(tileInfo);
-  }
-  
-  if(selectedTileInfos.length > 0) {
+  var selectedInfos = getSelectedInfos();
+    
+  if(selectedInfos.length > 0) {
     for(var i = start; i >= 0 && i < world.tiles.length; i += direction) {
       var tile = world.tiles[i];
 
       var foundMatch = false;
 
-      if(tile.info) {
-        for(j = 0; j < selectedTileInfos.length; j++) {
-          var tileInfo = selectedTileInfos[j];
+      if(isTileMatch(tile, selectedInfos, x, y)) {
+        selectionX = x;
+        selectionY = y;
 
-          if(tile.info == tileInfo || (!tileInfo.parent && tile.Type == tileInfo.Id)) {
-            selectionX = x;
-            selectionY = y;
+        drawSelectionIndicator();
+        // panzoom.panzoom('pan', (-overlayCanvas.width / 2) - x, (-overlayCanvas.height / 2) - y, { relative: false });
 
-            drawSelectionIndicator();
-            // panzoom.panzoom('pan', (-overlayCanvas.width / 2) - x, (-overlayCanvas.height / 2) - y, { relative: false });
+        foundMatch = true;
 
-            foundMatch = true;
-
-            break;
-          }
-        }
+        break;
       }
 
       y += direction;
@@ -246,36 +267,15 @@ function highlightAll() {
   overlayCtx.fillStyle = "rgba(0, 0, 0, 0.75)";
   overlayCtx.fillRect(0, 0, overlayCanvas.width, overlayCanvas.height);
   
-  var selectedTileInfos = [];
+  var selectedInfos = getSelectedInfos();
   
-  var j;
-  var option;
-  
-  for(j = 0; j < blockSelector.options.length; j++) {
-    option = blockSelector.options[j];
-    if(!option.selected)
-      continue;
-
-    var tileInfo = getTileInfoFromOption(option);
-      
-    selectedTileInfos.push(tileInfo);
-  }
-  
-  if(selectedTileInfos.length > 0) {
+  if(selectedInfos.length > 0) {
     for(var i = 0; i < world.tiles.length; i++) {
       var tile = world.tiles[i];
 
-      if(tile.info) {
-        for(j = 0; j < selectedTileInfos.length; j++) {
-          var tileInfo = selectedTileInfos[j];
-
-          if(tile.info == tileInfo || (!tileInfo.parent && tile.Type == tileInfo.Id)) {
-            overlayCtx.fillStyle = "rgb(255, 255, 255)";
-            overlayCtx.fillRect(x, y, 1, 1);
-
-            break;
-          }
-        }
+      if(isTileMatch(tile, selectedInfos)) {
+        overlayCtx.fillStyle = "rgb(255, 255, 255)";
+        overlayCtx.fillRect(x, y, 1, 1);
       }
 
       y++;
@@ -289,10 +289,37 @@ function highlightAll() {
   $("#canvas").css("z-index", "0");
 }
 
+function getSelectedInfos() {
+  var selectedInfos = [];
+  
+  var j;
+  var option;
+  
+  for(j = 0; j < blockSelector.options.length; j++) {
+    option = blockSelector.options[j];
+    if(!option.selected)
+      continue;
+
+    var tileInfo = getTileInfoFromOption(option);
+    
+    if(tileInfo) {
+      selectedInfos.push(tileInfo); 
+    }
+    else {
+      var itemInfo = getItemInfoFromOption(option);
+      if(itemInfo) {
+        selectedInfos.push(itemInfo);
+      }
+    }
+  }
+
+  return selectedInfos;
+}
+
 function getTileInfoFromOption(option) {
   var tileInfo = settings.Tiles[option.value];
-    
-  if(tileInfo.Frames) {
+  
+  if(tileInfo && tileInfo.Frames) {
     for(var frameIndex = 0; frameIndex < tileInfo.Frames.length; frameIndex++) {
       var frame = tileInfo.Frames[frameIndex];
 
@@ -309,6 +336,20 @@ function getTileInfoFromOption(option) {
   }
 
   return tileInfo;
+}
+
+function getItemInfoFromOption(option) {
+  var item;
+
+  for(var i = 0; i < settings.Items.length; i++) {
+    item = settings.Items[i];
+
+    if(option.value == "item" + item.Id) {
+      break;
+    }
+  }
+
+  return item;
 }
 
 function getTileInfo(tile) {
@@ -441,44 +482,51 @@ panzoomContainer.addEventListener('mouseup', function(evt) {
     
     var text = getTileText(tile);
     
-    for(var chestIndex = 0; chestIndex < world.chests.length; chestIndex++) {
-      var chest = world.chests[chestIndex];
-      if(chest) {
-        if((chest.x == x || chest.x + 1 == x) && (chest.y == y || chest.y + 1 == y)) {
-          if(chest.name.length > 0)
-            text = text + " - " + chest.name;
-            
-          for(var i = 0; i < chest.items.length; i++) {
-            var item = chest.items[i];
-            var prefix = "";
-            
-            if(item.prefixId > 0 && item.prefixId < settings.ItemPrefix.length)
-              prefix = settings.ItemPrefix[item.prefixId].Name;
-              
-            var itemName = item.id;
-            for(var itemIndex = 0; itemIndex < settings.Items.length; itemIndex++) {
-              var itemSettings = settings.Items[itemIndex];
-              if(itemSettings.Id == item.id) {
-                itemName = itemSettings.Name;
-                break;
-              }
-            }
-            
-            tbody.append($('<tr>')
-              .append($('<td>').text(prefix + " " + itemName))
-              .append($('<td>').text(item.count))
-            );
+    var chest = tile.chest; // getChestAt(x, y);
+    if(chest) {
+      if(chest.name.length > 0)
+      text = text + " - " + chest.name;
+
+      for(var i = 0; i < chest.items.length; i++) {
+        var item = chest.items[i];
+        var prefix = "";
+
+        if(item.prefixId > 0 && item.prefixId < settings.ItemPrefix.length)
+          prefix = settings.ItemPrefix[item.prefixId].Name;
+
+        var itemName = item.id;
+        for(var itemIndex = 0; itemIndex < settings.Items.length; itemIndex++) {
+          var itemSettings = settings.Items[itemIndex];
+          if(itemSettings.Id == item.id) {
+            itemName = itemSettings.Name;
+            break;
           }
-          
-          break;
         }
-      }
+
+        tbody.append($('<tr>')
+          .append($('<td>').text(prefix + " " + itemName))
+          .append($('<td>').text(item.count))
+        );
+      } 
     }
         
     $("#selectedTileName").html(text);  
   }  
   
 }, false);
+
+// function getChestAt(x, y) {
+//   var chest;
+
+//   for(var chestIndex = 0; chestIndex < world.chests.length; chestIndex++) {
+//     chest = world.chests[chestIndex];
+//     if(chest && (chest.x == x || chest.x + 1 == x) && (chest.y == y || chest.y + 1 == y)) {
+//       break;
+//     }
+//   }
+
+//   return chest;
+// }
 
 function getTileAt(x, y) {
   var index = x * world.height + y;
@@ -628,6 +676,18 @@ function onWorldLoaderWorkerMessage(e) {
   
   if(e.data.chests) {
     world.chests = e.data.chests;
+
+    for(i = 0; i < e.data.chests.length; i++) {
+      var chest = e.data.chests[i];
+
+      var idx = chest.x * world.height + chest.y;
+      world.tiles[idx].chest = chest;
+      world.tiles[idx + 1].chest = chest;
+
+      idx = (chest.x + 1) * world.height + chest.y;
+      world.tiles[idx].chest = chest;
+      world.tiles[idx + 1].chest = chest;
+    }
   }
   
   if(e.data.signs) {
