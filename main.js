@@ -52,6 +52,8 @@ var idx = 0;
 for(idx = 0; idx < settings.Tiles.length; idx++) {
   var tile = settings.Tiles[idx];
 
+  tile.isTile = true;
+
   var option = document.createElement("option");
   option.text = tile.Name;
   option.value = idx;
@@ -91,9 +93,22 @@ for(idx = 0; idx < settings.Tiles.length; idx++) {
 for(idx = 0; idx < settings.Items.length; idx++) {
   var item = settings.Items[idx];
 
+  item.isItem = true;
+
   var option = document.createElement("option");
   option.text = item.Name + " (Item)";
   option.value = "item" + item.Id;
+  options.push(option);
+}
+
+for(idx = 0; idx < settings.Walls.length; idx++) {
+  var wall = settings.Walls[idx];
+
+  wall.isWall = true;
+
+  var option = document.createElement("option");
+  option.text = wall.Name + " (Wall)";
+  option.value = "wall" + wall.Id;
   options.push(option);
 }
 
@@ -185,19 +200,21 @@ function nextBlock(e) {
 }
 
 function isTileMatch(tile, selectedInfos, x, y) {
-  if(!tile.info)
-    return false;
-
   for(var j = 0; j < selectedInfos.length; j++) {
     var info = selectedInfos[j];
 
     // check the tile first
-    if(tile.info == info || (!info.parent && tile.Type == info.Id))
+    if(tile.info && info.isTile && (tile.info == info || (!info.parent && tile.Type == info.Id)))
       return true;
 
-    // tile didn't match, see if it's a chest
+    // check the wall
+    if(info.isWall && tile.WallType == info.Id)
+      return true;
+
+    // see if it's a chest
     var chest = tile.chest; // getChestAt(x, y);
-    if(chest) {
+    if(chest && info.isItem) {
+      // see if the chest contains the item
       for(var i = 0; i < chest.items.length; i++) {
         var item = chest.items[i];
 
@@ -310,6 +327,12 @@ function getSelectedInfos() {
       if(itemInfo) {
         selectedInfos.push(itemInfo);
       }
+      else {
+        var wallInfo = getWallInfoFromOption(option);
+        if(wallInfo) {
+          selectedInfos.push(wallInfo);
+        }
+      }
     }
   }
 
@@ -339,17 +362,27 @@ function getTileInfoFromOption(option) {
 }
 
 function getItemInfoFromOption(option) {
-  var item;
-
   for(var i = 0; i < settings.Items.length; i++) {
-    item = settings.Items[i];
+    var item = settings.Items[i];
 
     if(option.value == "item" + item.Id) {
-      break;
+      return item;
     }
   }
 
-  return item;
+  return null;
+}
+
+function getWallInfoFromOption(option) {
+  for(var i = 0; i < settings.Walls.length; i++) {
+    var wall = settings.Walls[i];
+
+    if(option.value == "wall" + wall.Id) {
+      return wall;
+    }
+  }
+
+  return null;
 }
 
 function getTileInfo(tile) {
