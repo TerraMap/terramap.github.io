@@ -26,37 +26,37 @@
 </head>
 
 <body>
+  
   <nav id="main-navbar" class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-top" aria-expanded="false">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <div class="navbar-brand"><img src="terramap.png" /></div>
-        <div class="navbar-brand">TerraMap</div>
+        <a class="navbar-brand" href="#"><img alt="TerraMap" src="TerraMap16.png" /></a>
+        <a class="navbar-brand" href="#">TerraMap</a>
       </div>
-      <form class="navbar-form navbar-left">
-        <div class="form-group">
-          <input type="file" id="file" name="file" class="form-control" />
-        </div>
-      </form>
-      <button title="Choose Blocks" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myModal">Blocks...</button>
-      <button title="Find Previous" onclick="previousBlock()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-chevron-left"></span></button>
-      <button title="Find Next" onclick="nextBlock()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-chevron-right"></span></button>
-      <button title="Highlight All" onclick="highlightAll()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-screenshot"></span></button>
-      <button title="Clear Highlight" onclick="clearHighlight()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-remove"></span></button>
-      <button title="Zoom To Fit" onclick="resetPanZoom()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-fullscreen"></span></button>
-      <button title="Save Map Image" onclick="saveMapImage()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-save"></span></button>
-      <!--<div class="collapse navbar-collapse">-->
-      <!--</div>-->
-      <!-- <div id="navbar" class="collapse navbar-collapse"> -->
-      <!--  <ul class="nav navbar-nav"> -->
-      <!--  </ul> -->
-      <!-- </div> -->
-      <!-- /.nav-collapse -->
+      
+      <div class="collapse navbar-collapse" id="navbar-top">
+        <ul class="nav navbar-nav">
+          <li><a href="about.html">About</a></li>
+        </ul>
+        <form class="navbar-form navbar-left">
+          <div class="form-group">
+            <input type="file" id="file" name="file" class="form-control" />
+          </div>
+        </form>
+        <button title="Choose Blocks" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myModal">Blocks...</button>
+        <button title="Find Previous" onclick="previousBlock()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-chevron-left"></span></button>
+        <button title="Find Next" onclick="nextBlock()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-chevron-right"></span></button>
+        <button title="Highlight All" onclick="highlightAll()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-screenshot"></span></button>
+        <button title="Clear Highlight" onclick="clearHighlight()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-remove"></span></button>
+        <button title="Zoom To Fit" onclick="resetPanZoom()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-fullscreen"></span></button>
+        <button title="Save Map Image" onclick="saveMapImage()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-save"></span></button>
+      </div>
     </div>
   </nav>
 
@@ -259,41 +259,55 @@
   
   <nav class="navbar navbar-inverse navbar-fixed-bottom">
     <div class="container-fluid">
-      <form class="navbar-form navbar-left">
-        <div class="form-group">
-          <span id="status" class="form-control"></span>
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-bottom" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+
+      <div class="collapse navbar-collapse" id="navbar-bottom">
+        <div class="container-fluid">
+          <form class="navbar-form navbar-left">
+            <div class="form-group">
+              <span id="status" class="form-control"></span>
+            </div>
+            <div class="form-group">
+              <span id="position" class="form-control"></span>
+            </div>
+            <div class="form-group">
+              <span id="tile" class="form-control"></span>
+            </div>
+          </form>
         </div>
-        <div class="form-group">
-          <span id="position" class="form-control"></span>
+        
+        <div class="container-fluid">
+          <p class="navbar-text navbar-left">
+            TerraMap © <a href="https://github.com/jasoncoon">Jason Coon</a> 2015
+          </p>
+          <p class="navbar-text navbar-left">
+            Support TerraMap development:
+          </p>
+          <p class="navbar-text navbar-left">
+            <span class="github-btn">
+              <a href="https://github.com/terramap/terramap.github.io" class="gh-btn">
+                <span class="gh-ico" aria-hidden="true"></span>
+                <span class="gh-text">View Source Code on GitHub</span>
+              </a>
+            </span>
+          </p>
+          <p class="navbar-text navbar-left">
+            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=3FXFSZXHYJ9Y4">
+              <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" alt="Donate via PayPal" title="Donate via PayPal" style="border:none">
+            </a>
+          </p>
+          <p class="navbar-text navbar-left">
+            <a href="https://terramap.codeplex.com">TerraMap for Windows</a>
+          </p>
         </div>
-        <div class="form-group">
-          <span id="tile" class="form-control"></span>
-        </div>
-      </form>
-    </div>
-    <div class="container-fluid">
-      <p class="navbar-text navbar-left">
-        TerraMap Online by <a href="https://github.com/jasoncoon">Jason Coon</a>
-      </p>
-      <p class="navbar-text navbar-left">
-        Support TerraMap development:
-      </p>
-      <p class="navbar-text navbar-left">
-        <span class="github-btn">
-          <a href="https://github.com/terramap/terramap.github.io" class="gh-btn">
-            <span class="gh-ico" aria-hidden="true"></span>
-            <span class="gh-text">View Source Code on GitHub</span>
-          </a>
-        </span>
-      </p>
-      <p class="navbar-text navbar-left">
-        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=3FXFSZXHYJ9Y4">
-          <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" alt="Donate via PayPal" title="Donate via PayPal" style="border:none">
-        </a>
-      </p>
-      <p class="navbar-text navbar-left">
-        <a href="https://terramap.codeplex.com">TerraMap for Windows</a>
-      </p>
+      </div>
     </div>
   </nav>
   
@@ -307,12 +321,12 @@
   <script src="MapHelper.js"></script>
   <script src="main.js"></script>
   <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', 'UA-65896817-1', 'auto');
-    ga('send', 'pageview');
+  //   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  //   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  //   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  //   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  //   ga('create', 'UA-65896817-1', 'auto');
+  //   ga('send', 'pageview');
   </script>
 </body>
 </html>
