@@ -180,30 +180,47 @@ function findBlock(direction) {
   
   var start = x * world.height + y;
   
-  for(var i = start; i >= 0 && i < world.tiles.length; i += direction) {
-    var tile = world.tiles[i];
+  var selectedTileInfos = [];
+  
+  var j;
+  var option;
+  
+  for(j = 0; j < blockSelector.options.length; j++) {
+    option = blockSelector.options[j];
+    if(!option.selected)
+      continue;
 
-    var foundMatch = false;
+    var tileInfo = getTileInfoFromOption(option);
       
-    for(var j = 0; j < blockSelector.options.length; j++) {
-      var option = blockSelector.options[j];
-      if(!option.selected)
-        continue;
-      
-      if(tile && tile.Type == option.value) {
-        selectionX = x;
-        selectionY = y;
+    selectedTileInfos.push(tileInfo);
+  }
   
-        drawSelectionIndicator();
-        // panzoom.panzoom('pan', (-overlayCanvas.width / 2) - x, (-overlayCanvas.height / 2) - y, { relative: false });
-  
-        foundMatch = true;
-        
-        break;
+  if(selectedTileInfos.length > 0) {
+    for(var i = start; i >= 0 && i < world.tiles.length; i += direction) {
+      var tile = world.tiles[i];
+
+      var foundMatch = false;
+
+      if(tile.info) {
+        for(j = 0; j < selectedTileInfos.length; j++) {
+          var tileInfo = selectedTileInfos[j];
+
+          if(tile.info == tileInfo || (!tileInfo.parent && tile.Type == tileInfo.Id)) {
+            selectionX = x;
+            selectionY = y;
+
+            drawSelectionIndicator();
+            // panzoom.panzoom('pan', (-overlayCanvas.width / 2) - x, (-overlayCanvas.height / 2) - y, { relative: false });
+
+            foundMatch = true;
+
+            break;
+          }
+        }
       }
-      
+
       y += direction;
-      
+
       if(y < 0 || y >= world.height) {
         if(direction > 0)
           y = 0;
@@ -211,10 +228,10 @@ function findBlock(direction) {
           y = world.height - 1;
         x += direction;
       }
+
+      if(foundMatch)
+        break;
     }
-    
-    if(foundMatch)
-      break;
   }
 }
 
@@ -229,7 +246,7 @@ function highlightAll() {
   overlayCtx.fillStyle = "rgba(0, 0, 0, 0.75)";
   overlayCtx.fillRect(0, 0, overlayCanvas.width, overlayCanvas.height);
   
-  var selectedOptions = [];
+  var selectedTileInfos = [];
   
   var j;
   var option;
@@ -238,64 +255,85 @@ function highlightAll() {
     option = blockSelector.options[j];
     if(!option.selected)
       continue;
+
+    var tileInfo = getTileInfoFromOption(option);
       
-    selectedOptions.push(option);
+    selectedTileInfos.push(tileInfo);
   }
   
-  for(var i = 0; i < world.tiles.length; i++) {
-    var tile = world.tiles[i];
-    
-    for(j = 0; j < selectedOptions.length; j++) {
-      option = selectedOptions[j];
-      
-      if(isTileMatch(tile, option)) {
-        overlayCtx.fillStyle = "rgb(255, 255, 255)";
-        overlayCtx.fillRect(x, y, 1, 1);
+  if(selectedTileInfos.length > 0) {
+    for(var i = 0; i < world.tiles.length; i++) {
+      var tile = world.tiles[i];
+
+      if(tile.info) {
+        for(j = 0; j < selectedTileInfos.length; j++) {
+          var tileInfo = selectedTileInfos[j];
+
+          if(tile.info == tileInfo || (!tileInfo.parent && tile.Type == tileInfo.Id)) {
+            overlayCtx.fillStyle = "rgb(255, 255, 255)";
+            overlayCtx.fillRect(x, y, 1, 1);
+
+            break;
+          }
+        }
       }
-    }
-      
-    y++;
-    if(y >= world.height) {
-      y = 0;
-      x++;
+
+      y++;
+      if(y >= world.height) {
+        y = 0;
+        x++;
+      }
     }
   }
   
   $("#canvas").css("z-index", "0");
 }
 
-function isTileMatch(tile, option) {
-  var optionId = option.value;
+function getTileInfoFromOption(option) {
+  var tileInfo = settings.Tiles[option.value];
+    
+  if(tileInfo.Frames) {
+    for(var frameIndex = 0; frameIndex < tileInfo.Frames.length; frameIndex++) {
+      var frame = tileInfo.Frames[frameIndex];
 
-  if(!tile || tile.Type != optionId)
-    return false;
+      if(option.getAttribute("data-u") != frame.U)
+        continue;
+      
+      if(option.getAttribute("data-v") != frame.V)
+        continue;
+      
+      frame.parent = tileInfo;
 
-  var matchingFrame = getTileFrame(tile, option);
+      return frame;
+    }
+  }
 
-  return matchingFrame != null;
+  return tileInfo;
 }
 
-function getTileFrame(tile, option) {
-  var optionId = option.value;
+function getTileInfo(tile) {
+  var tileInfo = settings.Tiles[tile.Type];
 
-  var tileSettings = settings.Tiles[optionId];
-
-  if(!tileSettings || !tileSettings.Frames)
-    return true;
+  if(!tileInfo) return tileInfo;
+  
+  if(!tileInfo.Frames)
+    return tileInfo;
 
   var matchingFrame;
 
-  var optionU = option.getAttribute("data-u");
-  var optionV = option.getAttribute("data-v");
-
-  for(var i = 0; i < tileSettings.Frames.length; i++) {
-    var frame = tileSettings.Frames[i];
+  for(var i = 0; i < tileInfo.Frames.length; i++) {
+    var frame = tileInfo.Frames[i];
     
-    if((!optionU && !tile.TextureU) || optionU <= tile.TextureU) {
-      if((!optionV && !tile.TextureV) || optionV <= tile.TextureV)
+    if((!frame.U && !tile.TextureU) || frame.U <= tile.TextureU) {
+      if((!frame.V && !tile.TextureV) || frame.V <= tile.TextureV)
         matchingFrame = frame;
     }
   }
+
+  if(!matchingFrame)
+    return tileInfo;
+
+  matchingFrame.parent = tileInfo;
 
   return matchingFrame;
 }
@@ -493,84 +531,66 @@ function drawSelectionIndicator() {
 }
 
 function getTileText (tile) {
-  var text = "";
+  var text = "Nothing";
   
-  if(tile) {
-    if(tile.Type || tile.Type === 0) {
-      
-      if(tile.Type < settings.Tiles.length) {
-        var tileSettings = settings.Tiles[tile.Type];
-        
-        text = tileSettings.Name;
-        
-        if(tile.TextureU > 0 && tileSettings.Frames) {
-          var frame;
-          
-          for(var i = 0; i < tileSettings.Frames.length; i++) {
-            var temp = tileSettings.Frames[i];
-            
-            if(temp.U <= tile.TextureU)
-              frame = temp;
-            else
-              break;
-          }
-          
-          if(frame) {
-            if(frame.Name) {
-              text = frame.Name;
-              
-              if(frame.Variety)
-                text += " " + frame.Variety;
-            }
-            else if (frame.Variety)
-              text += " " + frame.Variety;
-          }
-        }
-        
-        if(tile.TextureU > 0 && tile.TextureV > 0)
-          text += " (" + tile.Type + ", " + tile.TextureU + ", " + tile.TextureV + ")";
-        else if(tile.TextureU > 0)
-          text += " (" + tile.Type + ", " + tile.TextureU + ")";
-        else
-          text += " (" + tile.Type + ")";
+  if(!tile) {
+    return text;
+  }
+
+  var tileInfo = tile.info;
+
+  if(tileInfo) {
+    if(!tileInfo.parent || !tileInfo.parent.Name) {
+       text = tileInfo.Name;
+    }
+    else if(tileInfo.parent && tileInfo.parent.Name) {
+      text = tileInfo.parent.Name;
+
+      if(tileInfo.Name) {
+        text += " - " + tileInfo.Name;
+
+        if(tileInfo.Variety)
+          text += " - " + tileInfo.Variety;
       }
-      else {
-        text = "Unknown Tile (" + tile.Type + ")";
+      else if (tileInfo.Variety) {
+        text += " - " + tileInfo.Variety;
       }
     }
-    else if (tile.WallType || tile.WallType === 0) {
-      if(tile.WallType < settings.Walls.length) {
-        text = settings.Walls[tile.WallType].Name + " (" + tile.WallType + ")";
-      }
-      else {
-        text = "Unknown Wall (" + tile.WallType + ")";
-      }
+
+    if(tile.TextureU > 0 && tile.TextureV > 0)
+      text += " (" + tile.Type + ", " + tile.TextureU + ", " + tile.TextureV + ")";
+    else if(tile.TextureU > 0)
+      text += " (" + tile.Type + ", " + tile.TextureU + ")";
+    else
+      text += " (" + tile.Type + ")";
+  }
+  else if (tile.WallType || tile.WallType === 0) {
+    if(tile.WallType < settings.Walls.length) {
+      text = settings.Walls[tile.WallType].Name + " (" + tile.WallType + ")";
     }
-    else if (tile.IsLiquidPresent) {
-      text = "Water";
-      
-      if(tile.IsLiquidLava) {
-        text = "Lava";
-      }
-      else if (tile.IsLiquidHoney) {
-        text = "Honey";
-      }
+    else {
+      text = "Unknown Wall (" + tile.WallType + ")";
     }
   }
-  
-  if(!text)
-    text = "Nothing";
-  
-  if(tile) {
-    if(tile.IsRedWirePresent)
-      text += " (Red Wire)";
-      
-    if(tile.IsGreenWirePresent)
-      text += " (Green Wire)";
-      
-    if(tile.IsBlueWirePresent)
-      text += " (Blue Wire)";
+  else if (tile.IsLiquidPresent) {
+    text = "Water";
+
+    if(tile.IsLiquidLava) {
+      text = "Lava";
+    }
+    else if (tile.IsLiquidHoney) {
+      text = "Honey";
+    }
   }
+
+  if(tile.IsRedWirePresent)
+    text += " (Red Wire)";
+
+  if(tile.IsGreenWirePresent)
+    text += " (Green Wire)";
+
+  if(tile.IsBlueWirePresent)
+    text += " (Blue Wire)";
     
   return text;
 }
@@ -597,6 +617,7 @@ function onWorldLoaderWorkerMessage(e) {
       tile = e.data.tiles[i];
       
       if(tile) {
+        tile.info = getTileInfo(tile);
         world.tiles.push(tile);
         
         ctx.fillStyle = getTileColor(i, tile, world);
