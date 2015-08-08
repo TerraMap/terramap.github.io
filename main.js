@@ -47,78 +47,115 @@ resizeCanvases();
 
 var options = [];
 
-var idx = 0;
+addTileSelectOptions();
+addItemSelectOptions();
+addWallSelectOptions();
+sortAndAddSelectOptions();
 
-for(idx = 0; idx < settings.Tiles.length; idx++) {
-  var tile = settings.Tiles[idx];
+addSetListItems();
 
-  tile.isTile = true;
+function addSetListItems() {
+  for(var i = 0; i < sets.length; i++) {
+    var set = sets[i];
 
-  var option = document.createElement("option");
-  option.text = tile.Name;
-  option.value = idx;
-  options.push(option);
-
-  if(tile.Frames) {
-    for(var frameIndex = 0; frameIndex < tile.Frames.length; frameIndex++) {
-      var frame = tile.Frames[frameIndex];
-      frame.isTile = true;
-      
-      option = document.createElement("option");
-      option.text = tile.Name;
-      option.value = idx;
-
-      var attribute = document.createAttribute("data-u");
-      attribute.value = frame.U;
-      option.setAttributeNode(attribute);
-
-      attribute = document.createAttribute("data-v");
-      attribute.value = frame.V;
-      option.setAttributeNode(attribute);
-
-      if(frame.Name) {
-        option.text += " - " + frame.Name;
+    for(var j = 0; j < set.Entries.length; j++) {
+      var entry = set.Entries[j];
+      if(entry.U || entry.V) {
+        var tileInfo = getTileInfoFrom(entry.Id, entry.U, entry.V);
+        if(tileInfo) {
+          set.Entries[j] = tileInfo;
+        }
       }
+    }
 
-      if(frame.Variety) {
-        option.text += " - " + frame.Variety;
+    $("#setList").append('<li><a href="#" onclick="highlightSet(' + i + ')">' + set.Name + '</a></li>');
+  }
+}
+
+function highlightSet(setIndex) {
+  var set = sets[setIndex];
+  
+  highlightInfos(set.Entries);
+}
+
+function sortAndAddSelectOptions() {
+  options.sort(compareOptions);
+
+  for(var i = 0; i < options.length; i++) {
+    var option = options[i];
+
+    blockSelector.add(option);
+  }
+}
+
+function addTileSelectOptions() {
+  for(var i = 0; i < settings.Tiles.length; i++) {
+    var tile = settings.Tiles[i];
+
+    tile.isTile = true;
+
+    var option = document.createElement("option");
+    option.text = tile.Name;
+    option.value = i;
+    options.push(option);
+
+    if(tile.Frames) {
+      for(var frameIndex = 0; frameIndex < tile.Frames.length; frameIndex++) {
+        var frame = tile.Frames[frameIndex];
+        frame.isTile = true;
+
+        option = document.createElement("option");
+        option.text = tile.Name;
+        option.value = i;
+
+        var attribute = document.createAttribute("data-u");
+        attribute.value = frame.U;
+        option.setAttributeNode(attribute);
+
+        attribute = document.createAttribute("data-v");
+        attribute.value = frame.V;
+        option.setAttributeNode(attribute);
+
+        if(frame.Name) {
+          option.text += " - " + frame.Name;
+        }
+
+        if(frame.Variety) {
+          option.text += " - " + frame.Variety;
+        }
+
+        option.text += " (Tile)";
+
+        options.push(option);
       }
-
-      option.text += " (Tile)";
-
-      options.push(option);
     }
   }
 }
 
-for(idx = 0; idx < settings.Items.length; idx++) {
-  var item = settings.Items[idx];
+function addItemSelectOptions() {
+  for(var i = 0; i < settings.Items.length; i++) {
+    var item = settings.Items[i];
 
-  item.isItem = true;
+    item.isItem = true;
 
-  var option = document.createElement("option");
-  option.text = item.Name + " (Item)";
-  option.value = "item" + item.Id;
-  options.push(option);
+    var option = document.createElement("option");
+    option.text = item.Name + " (Item)";
+    option.value = "item" + item.Id;
+    options.push(option);
+  }
 }
 
-for(idx = 0; idx < settings.Walls.length; idx++) {
-  var wall = settings.Walls[idx];
+function addWallSelectOptions() {
+  for(var i = 0; i < settings.Walls.length; i++) {
+    var wall = settings.Walls[i];
 
-  wall.isWall = true;
+    wall.isWall = true;
 
-  var option = document.createElement("option");
-  option.text = wall.Name + " (Wall)";
-  option.value = "wall" + wall.Id;
-  options.push(option);
-}
-
-options.sort(compareOptions);
-
-for(var idx = 0; idx < options.length; idx++) {
-  var option = options[idx];
-  
-  blockSelector.add(option);
+    var option = document.createElement("option");
+    option.text = wall.Name + " (Wall)";
+    option.value = "wall" + wall.Id;
+    options.push(option);
+  }
 }
 
 function compareOptions(a,b) {
@@ -128,6 +165,14 @@ function compareOptions(a,b) {
     return 1;
   return 0;
 }
+
+$('#chooseBlocksModal').on('shown.bs.modal', function () {
+  $('#blocksFilter').focus();
+});
+
+$(document).bind('keydown', 'ctrl+b', function() {
+  $('#chooseBlocksModal').modal();
+});
 
 // filter blocks
 jQuery.fn.filterByText = function(textbox, selectSingleMatch) {
@@ -189,6 +234,29 @@ function onMouseWheel(e) {
       increment   : 0.3 * scale,
       animate     : true,
       focal       : e
+  });
+}
+
+$(document).bind('keydown', 'e', zoomIn);
+$(document).bind('keydown', 'c', zoomOut);
+
+function zoomIn() {
+  var transform = $(panzoomContainer).panzoom('getMatrix');
+  var scale = transform[0];
+
+  panzoom.panzoom('zoom', false, {
+      increment   : 0.3 * scale,
+      animate     : true
+  });
+}
+
+function zoomOut() {
+  var transform = $(panzoomContainer).panzoom('getMatrix');
+  var scale = transform[0];
+
+  panzoom.panzoom('zoom', true, {
+      increment   : 0.3 * scale,
+      animate     : true
   });
 }
 
@@ -278,14 +346,18 @@ function highlightAll() {
   if(!world)
     return;
     
+  var selectedInfos = getSelectedInfos();
+
+  highlightInfos(selectedInfos);
+}
+
+function highlightInfos(selectedInfos) {
   var x = 0;
   var y = 0;
   
   overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
   overlayCtx.fillStyle = "rgba(0, 0, 0, 0.75)";
   overlayCtx.fillRect(0, 0, overlayCanvas.width, overlayCanvas.height);
-  
-  var selectedInfos = getSelectedInfos();
   
   if(selectedInfos.length > 0) {
     for(var i = 0; i < world.tiles.length; i++) {
@@ -341,16 +413,22 @@ function getSelectedInfos() {
 }
 
 function getTileInfoFromOption(option) {
-  var tileInfo = settings.Tiles[option.value];
+  var tileInfo = getTileInfoFrom(option.value, option.getAttribute("data-u"), option.getAttribute("data-v"));
+  
+  return tileInfo;
+}
+
+function getTileInfoFrom(id, u, v) {
+  var tileInfo = settings.Tiles[id];
   
   if(tileInfo && tileInfo.Frames) {
     for(var frameIndex = 0; frameIndex < tileInfo.Frames.length; frameIndex++) {
       var frame = tileInfo.Frames[frameIndex];
 
-      if(option.getAttribute("data-u") != frame.U)
+      if(u != frame.U)
         continue;
       
-      if(option.getAttribute("data-v") != frame.V)
+      if(v != frame.V)
         continue;
       
       frame.parent = tileInfo;
@@ -516,7 +594,7 @@ panzoomContainer.addEventListener('mouseup', function(evt) {
     
     var text = getTileText(tile);
     
-    var chest = tile.chest; // getChestAt(x, y);
+    var chest = tile.chest;
     if(chest) {
       if(chest.name.length > 0)
       text = text + " - " + chest.name;
@@ -543,24 +621,17 @@ panzoomContainer.addEventListener('mouseup', function(evt) {
         );
       } 
     }
-        
+     
+    var sign = tile.sign;
+    if(sign && sign.text) {
+      if(sign.text.length > 0)
+      text = text + " - " + sign.text;
+    }
+       
     $("#selectedTileName").html(text);  
   }  
   
 }, false);
-
-// function getChestAt(x, y) {
-//   var chest;
-
-//   for(var chestIndex = 0; chestIndex < world.chests.length; chestIndex++) {
-//     chest = world.chests[chestIndex];
-//     if(chest && (chest.x == x || chest.x + 1 == x) && (chest.y == y || chest.y + 1 == y)) {
-//       break;
-//     }
-//   }
-
-//   return chest;
-// }
 
 function getTileAt(x, y) {
   var index = x * world.height + y;
@@ -726,6 +797,18 @@ function onWorldLoaderWorkerMessage(e) {
   
   if(e.data.signs) {
     world.signs = e.data.signs;
+
+    for(i = 0; i < e.data.signs.length; i++) {
+      var sign = e.data.signs[i];
+
+      var idx = sign.x * world.height + sign.y;
+      world.tiles[idx].sign = sign;
+      world.tiles[idx + 1].sign = sign;
+
+      idx = (sign.x + 1) * world.height + sign.y;
+      world.tiles[idx].sign = sign;
+      world.tiles[idx + 1].sign = sign;
+    }
   }
   
   if(e.data.npcs) {
