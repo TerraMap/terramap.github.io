@@ -87,183 +87,15 @@
   </div>
 
   <div class="container-fluid">
-    <div id="canvasContainer" style="width: 100%; height: 100%;">
+    <div id="canvasContainer">
       <div id="panzoomContainer">
-        <canvas id="canvas" style="position: absolute; left: 0; top: 0; z-index: 0;">Your browser does not support the HTML5 canvas tag.</canvas>
-        <canvas id="overlayCanvas" style="position: absolute; left: 0; top: 0; z-index: 1;">Your browser does not support the HTML5 canvas tag.</canvas>
+        <canvas id="canvas" style="position: absolute; left: 0; top: 0;"></canvas>
+        <canvas id="overlayCanvas" style="position: absolute; left: 0; top: 0;"></canvas>
+        <canvas id="selectionCanvas" style="position: absolute; left: 0; top: 0;">Your browser does not support the HTML5 canvas tag.</canvas>
       </div>
     </div>
+  </div>
     
-    <div class="panel-group col-md-4" id="accordionSelectedTile" role="tablist" aria-multiselectable="true" style="display: none;">
-      <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingSelectedTile">
-          <h4 class="panel-title">
-            <a role="button" data-toggle="collapse" data-parent="#accordionSelectedTile" href="#collapseSelectedTile" aria-expanded="false" aria-controls="collapseSelectedTile">
-              Selected Tile Info
-            </a>
-          </h4>
-        </div>
-        <div id="collapseSelectedTile" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSelectedTile">
-          <div class="panel-body">
-            <p id="selectedTileName"></p>
-            <table id="tableSelectedTile" class="table table-striped table-hover">
-              <thead>
-                <tr>
-                  <th align="left">Item</th>
-                  <th align="left">Count</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="panel-group col-md-4" id="accordionNpcs" role="tablist" aria-multiselectable="true" style="display: none;">
-      <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingNpcs">
-          <h4 class="panel-title">
-            <a role="button" data-toggle="collapse" data-parent="#accordionNpcs" href="#collapseNpcs" aria-expanded="false" aria-controls="collapseNpcs">
-              NPCs
-            </a>
-          </h4>
-        </div>
-        <div id="collapseNpcs" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingNpcs">
-          <div class="panel-body">
-            <table id="tableNpcs" class="table table-striped table-hover">
-              <thead>
-                <tr>
-                  <th align="left">Occupation</th>
-                  <th align="left">Name</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-                
-    <div class="panel-group col-md-4" id="accordionWorldProperties" role="tablist" aria-multiselectable="true" style="display: none;">
-      <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingWorldProperties">
-          <h4 class="panel-title">
-            <a role="button" data-toggle="collapse" data-parent="#accordionWorldProperties" href="#collapseWorldProperties" aria-expanded="false" aria-controls="collapseWorldProperties">
-              World Properties
-            </a>
-          </h4>
-        </div>
-        <div id="collapseWorldProperties" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingWorldProperties">
-          <div class="panel-body">
-            <table id="tableWorldProperties" class="table table-striped table-hover">
-              <thead>
-                <tr>
-                  <th align="left">Name</th>
-                  <th align="left">Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td>version</td><td><span id="worldVersion"></span></td></tr>
-                <tr><td>name</td><td><span id="worldName"></span></td></tr>
-                <tr><td>id</td><td><span id="worldId"></span></td></tr>
-                <tr><td>width</td><td><span id="worldWidth"></span></td></tr>
-                <tr><td>height</td><td><span id="worldHeight"></span></td></tr>
-                <tr><td>expert Mode</td><td><span id="expertMode"></span></td></tr>
-                <tr><td>moonType</td><td><span id="moonType"></span></td></tr>
-                <tr><td>spawnX</td><td><span id="spawnX"></span></td></tr>
-                <tr><td>spawnY</td><td><span id="spawnY"></span></td></tr>
-                <tr><td>worldSurfaceY</td><td><span id="worldSurfaceY"></span></td></tr>
-                <tr><td>rockLayerY</td><td><span id="rockLayerY"></span></td></tr>
-                <tr><td>gameTime</td><td><span id="gameTime"></span></td></tr>
-                <tr><td>isDay</td><td><span id="isDay"></span></td></tr>
-                <tr><td>moonPhase</td><td><span id="moonPhase"></span></td></tr>
-                <tr><td>bloodMoon</td><td><span id="bloodMoon"></span></td></tr>
-                <tr><td>eclipse</td><td><span id="eclipse"></span></td></tr>
-                <tr><td>dungeonX</td><td><span id="dungeonX"></span></td></tr>
-                <tr><td>dungeonY</td><td><span id="dungeonY"></span></td></tr>
-                <tr><td>crimsonWorld</td><td><span id="crimsonWorld"></span></td></tr>
-                <tr><td>killedEyeOfCthulu</td><td><span id="killedEyeOfCthulu"></span></td></tr>
-                <tr><td>killedEaterOfWorlds</td><td><span id="killedEaterOfWorlds"></span></td></tr>
-                <tr><td>killedSkeletron</td><td><span id="killedSkeletron"></span></td></tr>
-                <tr><td>killedQueenBee</td><td><span id="killedQueenBee"></span></td></tr>
-                <tr><td>killedTheDestroyer</td><td><span id="killedTheDestroyer"></span></td></tr>
-                <tr><td>killedTheTwins</td><td><span id="killedTheTwins"></span></td></tr>
-                <tr><td>killedSkeletronPrime</td><td><span id="killedSkeletronPrime"></span></td></tr>
-                <tr><td>killedAnyHardmodeBoss</td><td><span id="killedAnyHardmodeBoss"></span></td></tr>
-                <tr><td>killedPlantera</td><td><span id="killedPlantera"></span></td></tr>
-                <tr><td>killedGolem</td><td><span id="killedGolem"></span></td></tr>
-                <tr><td>killedSlimeKing</td><td><span id="killedSlimeKing"></span></td></tr>
-                <tr><td>savedGoblinTinkerer</td><td><span id="savedGoblinTinkerer"></span></td></tr>
-                <tr><td>savedWizard</td><td><span id="savedWizard"></span></td></tr>
-                <tr><td>savedMechanic</td><td><span id="savedMechanic"></span></td></tr>
-                <tr><td>defeatedGoblinInvasion</td><td><span id="defeatedGoblinInvasion"></span></td></tr>
-                <tr><td>killedClown</td><td><span id="killedClown"></span></td></tr>
-                <tr><td>defeatedFrostLegion</td><td><span id="defeatedFrostLegion"></span></td></tr>
-                <tr><td>defeatedPirates</td><td><span id="defeatedPirates"></span></td></tr>
-                <tr><td>brokeAShadowOrb</td><td><span id="brokeAShadowOrb"></span></td></tr>
-                <tr><td>meteorSpawned</td><td><span id="meteorSpawned"></span></td></tr>
-                <tr><td>shadowOrbsbrokenmod3</td><td><span id="shadowOrbsbrokenmod3"></span></td></tr>
-                <tr><td>altarsSmashed</td><td><span id="altarsSmashed"></span></td></tr>
-                <tr><td>hardMode</td><td><span id="hardMode"></span></td></tr>
-                <tr><td>goblinInvasionDelay</td><td><span id="goblinInvasionDelay"></span></td></tr>
-                <tr><td>goblinInvasionSize</td><td><span id="goblinInvasionSize"></span></td></tr>
-                <tr><td>goblinInvasionType</td><td><span id="goblinInvasionType"></span></td></tr>
-                <tr><td>goblinInvasionX</td><td><span id="goblinInvasionX"></span></td></tr>
-                <tr><td>slimeRainTime</td><td><span id="slimeRainTime"></span></td></tr>
-                <tr><td>sundialCooldown</td><td><span id="sundialCooldown"></span></td></tr>
-                <tr><td>isRaining</td><td><span id="isRaining"></span></td></tr>
-                <tr><td>rainTime</td><td><span id="rainTime"></span></td></tr>
-                <tr><td>maxRain</td><td><span id="maxRain"></span></td></tr>
-                <tr><td>tier1OreID</td><td><span id="tier1OreID"></span></td></tr>
-                <tr><td>tier2OreID</td><td><span id="tier2OreID"></span></td></tr>
-                <tr><td>tier3OreID</td><td><span id="tier3OreID"></span></td></tr>
-                <tr><td>treeStyle</td><td><span id="treeStyle"></span></td></tr>
-                <tr><td>corruptionStyle</td><td><span id="corruptionStyle"></span></td></tr>
-                <tr><td>jungleStyle</td><td><span id="jungleStyle"></span></td></tr>
-                <tr><td>snowStyle</td><td><span id="snowStyle"></span></td></tr>
-                <tr><td>hallowStyle</td><td><span id="hallowStyle"></span></td></tr>
-                <tr><td>crimsonStyle</td><td><span id="crimsonStyle"></span></td></tr>
-                <tr><td>desertStyle</td><td><span id="desertStyle"></span></td></tr>
-                <tr><td>oceanStyle</td><td><span id="oceanStyle"></span></td></tr>
-                <tr><td>cloudBackground</td><td><span id="cloudBackground"></span></td></tr>
-                <tr><td>numberofClouds</td><td><span id="numberofClouds"></span></td></tr>
-                <tr><td>windSpeed</td><td><span id="windSpeed"></span></td></tr>
-                <tr><td>savedAngler</td><td><span id="savedAngler"></span></td></tr>
-                <tr><td>anglerQuest</td><td><span id="anglerQuest"></span></td></tr>
-                <tr><td>savedStylist</td><td><span id="savedStylist"></span></td></tr>
-                <tr><td>savedTaxCollector</td><td><span id="savedTaxCollector"></span></td></tr>
-                <tr><td>invasionSizeStart</td><td><span id="invasionSizeStart"></span></td></tr>
-                <tr><td>tempCultistDelay</td><td><span id="tempCultistDelay"></span></td></tr>
-                <tr><td>fastForwardTime</td><td><span id="fastForwardTime"></span></td></tr>
-                <tr><td>downedFishron</td><td><span id="downedFishron"></span></td></tr>
-                <tr><td>downedMartians</td><td><span id="downedMartians"></span></td></tr>
-                <tr><td>downedAncientCultist</td><td><span id="downedAncientCultist"></span></td></tr>
-                <tr><td>downedMoonlord</td><td><span id="downedMoonlord"></span></td></tr>
-                <tr><td>downedHalloweenKing</td><td><span id="downedHalloweenKing"></span></td></tr>
-                <tr><td>downedHalloweenTree</td><td><span id="downedHalloweenTree"></span></td></tr>
-                <tr><td>downedChristmasIceQueen</td><td><span id="downedChristmasIceQueen"></span></td></tr>
-                <tr><td>downedChristmasSantank</td><td><span id="downedChristmasSantank"></span></td></tr>
-                <tr><td>downedChristmasTree</td><td><span id="downedChristmasTree"></span></td></tr>
-                <tr><td>downedTowerSolar</td><td><span id="downedTowerSolar"></span></td></tr>
-                <tr><td>downedTowerVortex</td><td><span id="downedTowerVortex"></span></td></tr>
-                <tr><td>downedTowerNebula</td><td><span id="downedTowerNebula"></span></td></tr>
-                <tr><td>downedTowerStardust</td><td><span id="downedTowerStardust"></span></td></tr>
-                <tr><td>towerActiveSolar</td><td><span id="towerActiveSolar"></span></td></tr>
-                <tr><td>towerActiveVortex</td><td><span id="towerActiveVortex"></span></td></tr>
-                <tr><td>towerActiveNebula</td><td><span id="towerActiveNebula"></span></td></tr>
-                <tr><td>towerActiveStardust</td><td><span id="towerActiveStardust"></span></td></tr>
-                <tr><td>lunarApocalypseIsUp</td><td><span id="lunarApocalypseIsUp"></span></td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> <!-- container-fluid -->
-  
   <nav class="navbar navbar-inverse navbar-fixed-bottom">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -277,17 +109,25 @@
 
       <div class="collapse navbar-collapse" id="navbar-bottom">
         <div class="container-fluid">
-          <form class="navbar-form navbar-left">
-            <div class="form-group">
-              <span id="status" class="form-control"></span>
-            </div>
-            <div class="form-group">
-              <span id="position" class="form-control"></span>
-            </div>
-            <div class="form-group">
-              <span id="tile" class="form-control"></span>
-            </div>
-          </form>
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">NPCs <span class="caret"></span></a>
+              <ul id="npcList" class="dropdown-menu scrollable-menu" role="menu">
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">World Properties <span class="caret"></span></a>
+              <ul id="worldPropertyList" class="dropdown-menu scrollable-menu" role="menu">
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="tile">Tile Info</span> <span class="caret"></span></a>
+              <ul id="tileInfoList" class="dropdown-menu scrollable-menu" role="menu">
+              </ul>
+            </li>
+            <li></li>
+          </ul>
+          <p id="status" class="navbar-text navbar-right"></p>
         </div>
         
         <div class="container-fluid">

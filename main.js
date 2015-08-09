@@ -3,23 +3,28 @@ var panzoomContainer = document.querySelector("#panzoomContainer");
 
 var canvas = document.querySelector("#canvas");
 var overlayCanvas = document.querySelector("#overlayCanvas");
+var selectionCanvas = document.querySelector("#selectionCanvas");
 
 var ctx = canvas.getContext("2d");
 var overlayCtx = overlayCanvas.getContext("2d");
+var selectionCtx = selectionCanvas.getContext("2d");
 
 var blockSelector = document.querySelector("#blocks");
 
 ctx.msImageSmoothingEnabled = false;
 ctx.mozImageSmoothingEnabled = false;
-// ctx.webkitImageSmoothingEnabled = false;
 ctx.msImageSmoothingEnabled = false;
 ctx.imageSmoothingEnabled = false;
 	
 overlayCtx.msImageSmoothingEnabled = false;
 overlayCtx.mozImageSmoothingEnabled = false;
-// overlayCtx.webkitImageSmoothingEnabled = false;
 overlayCtx.msImageSmoothingEnabled = false;
 overlayCtx.imageSmoothingEnabled = false;
+
+selectionCtx.msImageSmoothingEnabled = false;
+selectionCtx.mozImageSmoothingEnabled = false;
+selectionCtx.msImageSmoothingEnabled = false;
+selectionCtx.imageSmoothingEnabled = false;
 
 var world;
 
@@ -210,8 +215,12 @@ $(function() {
     $('#blocks').filterByText($('#blocksFilter'), true);
 }); 
 
-$(window).resize(function () { 
-   $('body').css('padding-top', parseInt($('#main-navbar').css("height"))+10);
+$(window).resize(function () {
+  $('body').css('padding-top', parseInt($('#main-navbar').css("height"))+10);
+
+  canvasContainer.height = window.innerHeight;
+  $('#canvasContainer').css("height", window.innerHeight + "px");
+  $('#canvasContainer').css("overflow", "visible");
 });
 
 $(window).load(function () { 
@@ -281,7 +290,7 @@ function isTileMatch(tile, selectedInfos, x, y) {
       return true;
 
     // see if it's a chest
-    var chest = tile.chest; // getChestAt(x, y);
+    var chest = tile.chest;
     if(chest && info.isItem) {
       // see if the chest contains the item
       for(var i = 0; i < chest.items.length; i++) {
@@ -375,8 +384,6 @@ function highlightInfos(selectedInfos) {
       }
     }
   }
-  
-  $("#canvas").css("z-index", "0");
 }
 
 function getSelectedInfos() {
@@ -493,7 +500,10 @@ function getTileInfo(tile) {
 
 function clearHighlight() {
   overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
-  $("#canvas").css("z-index", "2");
+}
+
+function clearSelection() {
+  selectionCtx.clearRect(0, 0, selectionCanvas.width, selectionCanvas.height);
 }
 
 function resetPanZoom(e) {
@@ -503,8 +513,6 @@ function resetPanZoom(e) {
 function resizeCanvases() {
   var width = window.innerWidth * 0.99;
   
-  canvasContainer.height = window.innerHeight;
-  
   var ratio = panzoomContainer.height/panzoomContainer.width;
   var height = width * ratio;
   
@@ -512,6 +520,11 @@ function resizeCanvases() {
   panzoomContainer.style.height = height+'px';
   canvas.style.width = width+'px';
   overlayCanvas.style.width = width+'px';
+  selectionCanvas.style.width = width + 'px';
+
+  canvasContainer.height = window.innerHeight;
+  $('#canvasContainer').css("height", window.innerHeight + "px");
+  $('#canvasContainer').css("overflow", "visible");
 }
 
 function getMousePos(canvas, evt) {
@@ -553,7 +566,7 @@ panzoomContainer.addEventListener('mousemove', function(evt) {
   var x = mousePos.x;
   var y = mousePos.y;
   
-  $("#position").html(mousePos.x + ',' + (mousePos.y));
+  $("#status").html(mousePos.x + ',' + (mousePos.y));
   
   if(world.tiles) {
     var tile = getTileAt(mousePos.x, mousePos.y);
@@ -561,7 +574,7 @@ panzoomContainer.addEventListener('mousemove', function(evt) {
     if(tile) {
       var text = getTileText(tile);
       
-      $("#tile").html(text);
+      $("#status").html(text + " (" + mousePos.x + ", " + mousePos.y + ")");
     }
   }
 }, false);
@@ -589,11 +602,10 @@ panzoomContainer.addEventListener('mouseup', function(evt) {
   
   var tile = getTileAt(x, y);
   if(tile) {
-    var tbody = $("#tableSelectedTile").find('tbody');
-    tbody.html("");
-    
     var text = getTileText(tile);
     
+    $("#tileInfoList").html("");
+
     var chest = tile.chest;
     if(chest) {
       if(chest.name.length > 0)
@@ -615,25 +627,25 @@ panzoomContainer.addEventListener('mouseup', function(evt) {
           }
         }
 
-        tbody.append($('<tr>')
-          .append($('<td>').text(prefix + " " + itemName))
-          .append($('<td>').text(item.count))
-        );
+
+        $("#tileInfoList").append('<li>' + prefix + ' ' + itemName + ' (' + item.count +')</li>');
       } 
     }
      
     var sign = tile.sign;
     if(sign && sign.text) {
       if(sign.text.length > 0)
-      text = text + " - " + sign.text;
+        $("#tileInfoList").append('<li>' + sign.text +'</li>');
     }
        
-    $("#selectedTileName").html(text);  
+    $("#tile").html(text);  
   }  
   
 }, false);
 
 function getTileAt(x, y) {
+  if(!world) return;
+  
   var index = x * world.height + y;
   if(index >= 0 && index < world.tiles.length) {
     return world.tiles[index];
@@ -656,31 +668,29 @@ function drawSelectionIndicator() {
   var targetWidth = 39;
   var halfTargetWidth = targetWidth / 2;
 
-  overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
-  overlayCtx.lineWidth = lineWidth;
-  overlayCtx.strokeStyle="rgb(255, 0, 0)";
-  overlayCtx.strokeRect(x - halfTargetWidth, y - halfTargetWidth, targetWidth, targetWidth);
+  selectionCtx.clearRect(0, 0, selectionCanvas.width, selectionCanvas.height);
+  selectionCtx.lineWidth = lineWidth;
+  selectionCtx.strokeStyle="rgb(255, 0, 0)";
+  selectionCtx.strokeRect(x - halfTargetWidth, y - halfTargetWidth, targetWidth, targetWidth);
 
   // draw cross-hairs
-  overlayCtx.lineWidth=1;
-  overlayCtx.beginPath();
-  overlayCtx.moveTo(x - halfTargetWidth, y);
-  overlayCtx.lineTo(x - 1, y);
-  overlayCtx.stroke();
-  overlayCtx.beginPath();
-  overlayCtx.moveTo(x + halfTargetWidth, y);
-  overlayCtx.lineTo(x + 1, y);
-  overlayCtx.stroke();
-  overlayCtx.beginPath();
-  overlayCtx.moveTo(x, y - halfTargetWidth);
-  overlayCtx.lineTo(x, y - 1);
-  overlayCtx.stroke();
-  overlayCtx.beginPath();
-  overlayCtx.moveTo(x, y + halfTargetWidth);
-  overlayCtx.lineTo(x, y + 1);
-  overlayCtx.stroke();
-  
-  $("#canvas").css("z-index", "0");
+  selectionCtx.lineWidth=1;
+  selectionCtx.beginPath();
+  selectionCtx.moveTo(x - halfTargetWidth, y);
+  selectionCtx.lineTo(x - 1, y);
+  selectionCtx.stroke();
+  selectionCtx.beginPath();
+  selectionCtx.moveTo(x + halfTargetWidth, y);
+  selectionCtx.lineTo(x + 1, y);
+  selectionCtx.stroke();
+  selectionCtx.beginPath();
+  selectionCtx.moveTo(x, y - halfTargetWidth);
+  selectionCtx.lineTo(x, y - 1);
+  selectionCtx.stroke();
+  selectionCtx.beginPath();
+  selectionCtx.moveTo(x, y + halfTargetWidth);
+  selectionCtx.lineTo(x, y + 1);
+  selectionCtx.stroke();
 }
 
 function getTileText (tile) {
@@ -813,8 +823,6 @@ function onWorldLoaderWorkerMessage(e) {
   
   if(e.data.npcs) {
     addNpcs(e.data.npcs);
-    
-    $("#accordionNpcs").css("display", "block");
   }
   
   if(e.data.world) {
@@ -826,124 +834,113 @@ function onWorldLoaderWorkerMessage(e) {
     canvas.height = world.height;
     overlayCanvas.width = world.width;
     overlayCanvas.height = world.height;
+    selectionCanvas.width = world.width;
+    selectionCanvas.height = world.height;
     
     world.tiles = [];
     
     resizeCanvases();
     
-    $("#accordionWorldProperties").css("display", "block");
-    $("#accordionSelectedTile").css("display", "block");
-
-    document.querySelector("#worldVersion").innerText = world.version;
-    document.querySelector("#worldName").innerText = world.name;
-    document.querySelector("#worldId").innerText = world.id;
-    document.querySelector("#worldWidth").innerText = world.width;
-    document.querySelector("#worldHeight").innerText = world.height;
-    document.querySelector("#expertMode").innerText = world.expertMode;
-    document.querySelector("#moonType").innerText = world.moonType;
-    document.querySelector("#spawnX").innerText = world.spawnX;
-    document.querySelector("#spawnY").innerText = world.spawnY;
-    document.querySelector("#worldSurfaceY").innerText = world.worldSurfaceY;
-    document.querySelector("#rockLayerY").innerText = world.rockLayerY;
-    document.querySelector("#gameTime").innerText = world.gameTime;
-    document.querySelector("#isDay").innerText = world.isDay;
-    document.querySelector("#moonPhase").innerText = world.moonPhase;
-    document.querySelector("#bloodMoon").innerText = world.bloodMoon;
-    document.querySelector("#eclipse").innerText = world.eclipse;
-    document.querySelector("#dungeonX").innerText = world.dungeonX;
-    document.querySelector("#dungeonY").innerText = world.dungeonY;
-    document.querySelector("#crimsonWorld").innerText = world.crimsonWorld;
-    document.querySelector("#killedEyeOfCthulu").innerText = world.killedEyeOfCthulu;
-    document.querySelector("#killedEaterOfWorlds").innerText = world.killedEaterOfWorlds;
-    document.querySelector("#killedSkeletron").innerText = world.killedSkeletron;
-    document.querySelector("#killedQueenBee").innerText = world.killedQueenBee;
-    document.querySelector("#killedTheDestroyer").innerText = world.killedTheDestroyer;
-    document.querySelector("#killedTheTwins").innerText = world.killedTheTwins;
-    document.querySelector("#killedSkeletronPrime").innerText = world.killedSkeletronPrime;
-    document.querySelector("#killedAnyHardmodeBoss").innerText = world.killedAnyHardmodeBoss;
-    document.querySelector("#killedPlantera").innerText = world.killedPlantera;
-    document.querySelector("#killedGolem").innerText = world.killedGolem;
-    document.querySelector("#killedSlimeKing").innerText = world.killedSlimeKing;
-    document.querySelector("#savedGoblinTinkerer").innerText = world.savedGoblinTinkerer;
-    document.querySelector("#savedWizard").innerText = world.savedWizard;
-    document.querySelector("#savedMechanic").innerText = world.savedMechanic;
-    document.querySelector("#defeatedGoblinInvasion").innerText = world.defeatedGoblinInvasion;
-    document.querySelector("#killedClown").innerText = world.killedClown;
-    document.querySelector("#defeatedFrostLegion").innerText = world.defeatedFrostLegion;
-    document.querySelector("#defeatedPirates").innerText = world.defeatedPirates;
-    document.querySelector("#brokeAShadowOrb").innerText = world.brokeAShadowOrb;
-    document.querySelector("#meteorSpawned").innerText = world.meteorSpawned;
-    document.querySelector("#shadowOrbsbrokenmod3").innerText = world.shadowOrbsbrokenmod3;
-    document.querySelector("#altarsSmashed").innerText = world.altarsSmashed;
-    document.querySelector("#hardMode").innerText = world.hardMode;
-    document.querySelector("#goblinInvasionDelay").innerText = world.goblinInvasionDelay;
-    document.querySelector("#goblinInvasionSize").innerText = world.goblinInvasionSize;
-    document.querySelector("#goblinInvasionType").innerText = world.goblinInvasionType;
-    document.querySelector("#goblinInvasionX").innerText = world.goblinInvasionX;
-    document.querySelector("#slimeRainTime").innerText = world.slimeRainTime;
-    document.querySelector("#sundialCooldown").innerText = world.sundialCooldown;
-    document.querySelector("#isRaining").innerText = world.isRaining;
-    document.querySelector("#rainTime").innerText = world.rainTime;
-    document.querySelector("#maxRain").innerText = world.maxRain;
-    document.querySelector("#tier1OreID").innerText = world.tier1OreID;
-    document.querySelector("#tier2OreID").innerText = world.tier2OreID;
-    document.querySelector("#tier3OreID").innerText = world.tier3OreID;
-    document.querySelector("#treeStyle").innerText = world.treeStyle;
-    document.querySelector("#corruptionStyle").innerText = world.corruptionStyle;
-    document.querySelector("#jungleStyle").innerText = world.jungleStyle;
-    document.querySelector("#snowStyle").innerText = world.snowStyle;
-    document.querySelector("#hallowStyle").innerText = world.hallowStyle;
-    document.querySelector("#crimsonStyle").innerText = world.crimsonStyle;
-    document.querySelector("#desertStyle").innerText = world.desertStyle;
-    document.querySelector("#oceanStyle").innerText = world.oceanStyle;
-    document.querySelector("#cloudBackground").innerText = world.cloudBackground;
-    document.querySelector("#numberofClouds").innerText = world.numberofClouds;
-    document.querySelector("#windSpeed").innerText = world.windSpeed;
-    document.querySelector("#savedAngler").innerText = world.savedAngler;
-    document.querySelector("#anglerQuest").innerText = world.anglerQuest;
-    document.querySelector("#savedStylist").innerText = world.savedStylist;
-    document.querySelector("#savedTaxCollector").innerText = world.savedTaxCollector;
-    document.querySelector("#invasionSizeStart").innerText = world.invasionSizeStart;
-    document.querySelector("#tempCultistDelay").innerText = world.tempCultistDelay;
-    document.querySelector("#fastForwardTime").innerText = world.fastForwardTime;
-    document.querySelector("#downedFishron").innerText = world.downedFishron;
-    document.querySelector("#downedMartians").innerText = world.downedMartians;
-    document.querySelector("#downedAncientCultist").innerText = world.downedAncientCultist;
-    document.querySelector("#downedMoonlord").innerText = world.downedMoonlord;
-    document.querySelector("#downedHalloweenKing").innerText = world.downedHalloweenKing;
-    document.querySelector("#downedHalloweenTree").innerText = world.downedHalloweenTree;
-    document.querySelector("#downedChristmasIceQueen").innerText = world.downedChristmasIceQueen;
-    document.querySelector("#downedChristmasSantank").innerText = world.downedChristmasSantank;
-    document.querySelector("#downedChristmasTree").innerText = world.downedChristmasTree;
-    document.querySelector("#downedTowerSolar").innerText = world.downedTowerSolar;
-    document.querySelector("#downedTowerVortex").innerText = world.downedTowerVortex;
-    document.querySelector("#downedTowerNebula").innerText = world.downedTowerNebula;
-    document.querySelector("#downedTowerStardust").innerText = world.downedTowerStardust;
-    document.querySelector("#towerActiveSolar").innerText = world.towerActiveSolar;
-    document.querySelector("#towerActiveVortex").innerText = world.towerActiveVortex;
-    document.querySelector("#towerActiveNebula").innerText = world.towerActiveNebula;
-    document.querySelector("#towerActiveStardust").innerText = world.towerActiveStardust;
-    document.querySelector("#lunarApocalypseIsUp").innerText = world.lunarApocalypseIsUp;
+    $("#worldPropertyList").append('<li>Version: ' + world.version + '</li>');
+    $("#worldPropertyList").append('<li>Name: ' + world.name + '</li>');
+    $("#worldPropertyList").append('<li>Id: ' + world.id + '</li>');
+    $("#worldPropertyList").append('<li>Width: ' + world.width + '</li>');
+    $("#worldPropertyList").append('<li>Height: ' + world.height + '</li>');
+    $("#worldPropertyList").append('<li>expertMode: ' + world.expertMode + '</li>');
+    $("#worldPropertyList").append('<li>moonType: ' + world.moonType + '</li>');
+    $("#worldPropertyList").append('<li>spawnX: ' + world.spawnX + '</li>');
+    $("#worldPropertyList").append('<li>spawnY: ' + world.spawnY + '</li>');
+    $("#worldPropertyList").append('<li>SurfaceY: ' + world.worldSurfaceY + '</li>');
+    $("#worldPropertyList").append('<li>rockLayerY: ' + world.rockLayerY + '</li>');
+    $("#worldPropertyList").append('<li>gameTime: ' + world.gameTime + '</li>');
+    $("#worldPropertyList").append('<li>isDay: ' + world.isDay + '</li>');
+    $("#worldPropertyList").append('<li>moonPhase: ' + world.moonPhase + '</li>');
+    $("#worldPropertyList").append('<li>bloodMoon: ' + world.bloodMoon + '</li>');
+    $("#worldPropertyList").append('<li>eclipse: ' + world.eclipse + '</li>');
+    $("#worldPropertyList").append('<li>dungeonX: ' + world.dungeonX + '</li>');
+    $("#worldPropertyList").append('<li>dungeonY: ' + world.dungeonY + '</li>');
+    $("#worldPropertyList").append('<li>crimsonWorld: ' + world.crimsonWorld + '</li>');
+    $("#worldPropertyList").append('<li>killedEyeOfCthulu: ' + world.killedEyeOfCthulu + '</li>');
+    $("#worldPropertyList").append('<li>killedEaterOfWorlds: ' + world.killedEaterOfWorlds + '</li>');
+    $("#worldPropertyList").append('<li>killedSkeletron: ' + world.killedSkeletron + '</li>');
+    $("#worldPropertyList").append('<li>killedQueenBee: ' + world.killedQueenBee + '</li>');
+    $("#worldPropertyList").append('<li>killedTheDestroyer: ' + world.killedTheDestroyer + '</li>');
+    $("#worldPropertyList").append('<li>killedTheTwins: ' + world.killedTheTwins + '</li>');
+    $("#worldPropertyList").append('<li>killedSkeletronPrime: ' + world.killedSkeletronPrime + '</li>');
+    $("#worldPropertyList").append('<li>killedAnyHardmodeBoss: ' + world.killedAnyHardmodeBoss + '</li>');
+    $("#worldPropertyList").append('<li>killedPlantera: ' + world.killedPlantera + '</li>');
+    $("#worldPropertyList").append('<li>killedGolem: ' + world.killedGolem + '</li>');
+    $("#worldPropertyList").append('<li>killedSlimeKing: ' + world.killedSlimeKing + '</li>');
+    $("#worldPropertyList").append('<li>savedGoblinTinkerer: ' + world.savedGoblinTinkerer + '</li>');
+    $("#worldPropertyList").append('<li>savedWizard: ' + world.savedWizard + '</li>');
+    $("#worldPropertyList").append('<li>savedMechanic: ' + world.savedMechanic + '</li>');
+    $("#worldPropertyList").append('<li>defeatedGoblinInvasion: ' + world.defeatedGoblinInvasion + '</li>');
+    $("#worldPropertyList").append('<li>killedClown: ' + world.killedClown + '</li>');
+    $("#worldPropertyList").append('<li>defeatedFrostLegion: ' + world.defeatedFrostLegion + '</li>');
+    $("#worldPropertyList").append('<li>defeatedPirates: ' + world.defeatedPirates + '</li>');
+    $("#worldPropertyList").append('<li>brokeAShadowOrb: ' + world.brokeAShadowOrb + '</li>');
+    $("#worldPropertyList").append('<li>meteorSpawned: ' + world.meteorSpawned + '</li>');
+    $("#worldPropertyList").append('<li>shadowOrbsbrokenmod3: ' + world.shadowOrbsbrokenmod3 + '</li>');
+    $("#worldPropertyList").append('<li>altarsSmashed: ' + world.altarsSmashed + '</li>');
+    $("#worldPropertyList").append('<li>hardMode: ' + world.hardMode + '</li>');
+    $("#worldPropertyList").append('<li>goblinInvasionDelay: ' + world.goblinInvasionDelay + '</li>');
+    $("#worldPropertyList").append('<li>goblinInvasionSize: ' + world.goblinInvasionSize + '</li>');
+    $("#worldPropertyList").append('<li>goblinInvasionType: ' + world.goblinInvasionType + '</li>');
+    $("#worldPropertyList").append('<li>goblinInvasionX: ' + world.goblinInvasionX + '</li>');
+    $("#worldPropertyList").append('<li>slimeRainTime: ' + world.slimeRainTime + '</li>');
+    $("#worldPropertyList").append('<li>sundialCooldown: ' + world.sundialCooldown + '</li>');
+    $("#worldPropertyList").append('<li>isRaining: ' + world.isRaining + '</li>');
+    $("#worldPropertyList").append('<li>rainTime: ' + world.rainTime + '</li>');
+    $("#worldPropertyList").append('<li>maxRain: ' + world.maxRain + '</li>');
+    $("#worldPropertyList").append('<li>tier1OreID: ' + world.tier1OreID + '</li>');
+    $("#worldPropertyList").append('<li>tier2OreID: ' + world.tier2OreID + '</li>');
+    $("#worldPropertyList").append('<li>tier3OreID: ' + world.tier3OreID + '</li>');
+    $("#worldPropertyList").append('<li>treeStyle: ' + world.treeStyle + '</li>');
+    $("#worldPropertyList").append('<li>corruptionStyle: ' + world.corruptionStyle + '</li>');
+    $("#worldPropertyList").append('<li>jungleStyle: ' + world.jungleStyle + '</li>');
+    $("#worldPropertyList").append('<li>snowStyle: ' + world.snowStyle + '</li>');
+    $("#worldPropertyList").append('<li>hallowStyle: ' + world.hallowStyle + '</li>');
+    $("#worldPropertyList").append('<li>crimsonStyle: ' + world.crimsonStyle + '</li>');
+    $("#worldPropertyList").append('<li>desertStyle: ' + world.desertStyle + '</li>');
+    $("#worldPropertyList").append('<li>oceanStyle: ' + world.oceanStyle + '</li>');
+    $("#worldPropertyList").append('<li>cloudBackground: ' + world.cloudBackground + '</li>');
+    $("#worldPropertyList").append('<li>numberofClouds: ' + world.numberofClouds + '</li>');
+    $("#worldPropertyList").append('<li>windSpeed: ' + world.windSpeed + '</li>');
+    $("#worldPropertyList").append('<li>savedAngler: ' + world.savedAngler + '</li>');
+    $("#worldPropertyList").append('<li>anglerQuest: ' + world.anglerQuest + '</li>');
+    $("#worldPropertyList").append('<li>savedStylist: ' + world.savedStylist + '</li>');
+    $("#worldPropertyList").append('<li>savedTaxCollector: ' + world.savedTaxCollector + '</li>');
+    $("#worldPropertyList").append('<li>invasionSizeStart: ' + world.invasionSizeStart + '</li>');
+    $("#worldPropertyList").append('<li>tempCultistDelay: ' + world.tempCultistDelay + '</li>');
+    $("#worldPropertyList").append('<li>fastForwardTime: ' + world.fastForwardTime + '</li>');
+    $("#worldPropertyList").append('<li>downedFishron: ' + world.downedFishron + '</li>');
+    $("#worldPropertyList").append('<li>downedMartians: ' + world.downedMartians + '</li>');
+    $("#worldPropertyList").append('<li>downedAncientCultist: ' + world.downedAncientCultist + '</li>');
+    $("#worldPropertyList").append('<li>downedMoonlord: ' + world.downedMoonlord + '</li>');
+    $("#worldPropertyList").append('<li>downedHalloweenKing: ' + world.downedHalloweenKing + '</li>');
+    $("#worldPropertyList").append('<li>downedHalloweenTree: ' + world.downedHalloweenTree + '</li>');
+    $("#worldPropertyList").append('<li>downedChristmasIceQueen: ' + world.downedChristmasIceQueen + '</li>');
+    $("#worldPropertyList").append('<li>downedChristmasSantank: ' + world.downedChristmasSantank + '</li>');
+    $("#worldPropertyList").append('<li>downedChristmasTree: ' + world.downedChristmasTree + '</li>');
+    $("#worldPropertyList").append('<li>downedTowerSolar: ' + world.downedTowerSolar + '</li>');
+    $("#worldPropertyList").append('<li>downedTowerVortex: ' + world.downedTowerVortex + '</li>');
+    $("#worldPropertyList").append('<li>downedTowerNebula: ' + world.downedTowerNebula + '</li>');
+    $("#worldPropertyList").append('<li>downedTowerStardust: ' + world.downedTowerStardust + '</li>');
+    $("#worldPropertyList").append('<li>towerActiveSolar: ' + world.towerActiveSolar + '</li>');
+    $("#worldPropertyList").append('<li>towerActiveVortex: ' + world.towerActiveVortex + '</li>');
+    $("#worldPropertyList").append('<li>towerActiveNebula: ' + world.towerActiveNebula + '</li>');
+    $("#worldPropertyList").append('<li>towerActiveStardust: ' + world.towerActiveStardust + '</li>');
+    $("#worldPropertyList").append('<li>lunarApocalypseIsUp: ' + world.lunarApocalypseIsUp + '</li>');
   }
 }
 
 function addNpcs(npcs) {
   world.npcs = npcs;
   
-  var tbody = $("#tableNpcs").find('tbody');
-  
   for(var i = 0; i < npcs.length; i++) {
     var npc = npcs[i];
     
-    tbody.append($('<tr>')
-      .append($('<td>')
-        .append($('<a>')
-          .attr('onclick', 'selectPoint(' + npc.x + ', ' + npc.y + ');')
-          .text(npc.type)
-        )
-      )
-      .append($('<td>').text(npc.name))
-    );
+    $("#npcList").append('<li><a href="#" onclick="selectPoint(' + npc.x + ', ' + npc.y + ')">' + npc.name + ' the ' + npc.type + '</a></li>');
   }
 }
 
@@ -986,6 +983,7 @@ function saveMapImage() {
   
   newContext.drawImage(canvas, 0, 0);
   newContext.drawImage(overlayCanvas, 0, 0);
+  newContext.drawImage(selectionCanvas, 0, 0)
   
   newCanvas.toBlob(function(blob) {
     saveAs(blob, world.name + ".png");
