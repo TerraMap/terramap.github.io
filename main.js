@@ -218,8 +218,8 @@ $(function() {
 $(window).resize(function () {
   $('body').css('padding-top', parseInt($('#main-navbar').css("height"))+10);
 
-  canvasContainer.height = window.innerHeight;
-  $('#canvasContainer').css("height", window.innerHeight + "px");
+//   canvasContainer.height = window.innerHeight;
+//   $('#canvasContainer').css("height", window.innerHeight + "px");
   $('#canvasContainer').css("overflow", "visible");
 });
 
@@ -522,8 +522,8 @@ function resizeCanvases() {
   overlayCanvas.style.width = width+'px';
   selectionCanvas.style.width = width + 'px';
 
-  canvasContainer.height = window.innerHeight;
-  $('#canvasContainer').css("height", window.innerHeight + "px");
+//   canvasContainer.height = window.innerHeight;
+//   $('#canvasContainer').css("height", window.innerHeight + "px");
   $('#canvasContainer').css("overflow", "visible");
 }
 

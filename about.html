@@ -56,13 +56,16 @@
       <div class="col-md-12">
         <h1><img alt="TerraMap" src="TerraMap64.png" />TerraMap</h1>
         <p class="lead">TerraMap is an interactive Terraria v1.3 world map viewer that loads quickly and lets you pan, zoom, find blocks, ores, items in chests, dungeons, NPCs, etc.</p>
-        <p><a class="btn btn-primary btn-lg" href="index.html" role="button">Try it now »</a></p>
+        <p>
+          <a class="btn btn-primary btn-lg" href="index.html" role="button">Try it now »</a>
+          <a class="btn btn-default btn-lg" href="https://github.com/TerraMap/terramap.github.io/commits/master" role="button"><span class="gh-ico2" aria-hidden="true"></span>View recent changes. »</a>
+        </p>
       </div>
     </div>
     
     <div class="row">
       <div class="col-md-12">
-        <h3 id="features" style="padding-top: 70px; margin-top: -70px;">Features</h3>
+        <h3 id="features">Features</h3>
             
         <ul>
           <li>Completely read-only, making it completely safe to use, with no risk of corrupting or overwriting your world files.</li>
@@ -77,12 +80,16 @@
           <li>View world properties such as name, version, revision, width, height, moon phase, orbs broken, altars smashed, etc.</li>
         </ul>
         
-        <h3 id="controls" style="padding-top: 70px; margin-top: -70px;">Controls</h3>
+        <h3 id="controls">Controls</h3>
         
         <ul>
           <li>Drag with left mouse button to pan.</li>
           <li>Click with left mouse button to select a tile. Click the 'Selected Tile Info' panel to see the contents of chests, text on signs and gravestones, etc.</li>
           <li>Use mouse wheel to zoom.</li>
+        </ul>
+
+        <h4 id="topToolbar">Top Toolbar</h3>
+        <ul>
           <li>
             <strong>Browse/Choose File</strong> - Open your Terraria world .wld file.
             <ul>
@@ -91,7 +98,8 @@
               <li><strong>Linux</strong> -  ~/.local/share/Terraria/Worlds</li>
             </ul>
           </li>
-          <li><button title="Choose Blocks" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myModal">Blocks...</button> <strong>Choose Blocks</strong> - Choose tiles, items, and walls to find or highlight.</li>
+          <li><button title="Sets" class="btn btn-default navbar-btn">Sets <span class="caret"></span></button> <strong>Sets</strong> - A list of pre-configured sets of blocks (Corruption, Crimons, Hallow, etc). Click the dropdown menu, then click a set to highlight all tiles in the map that match.</li>
+          <li><button title="Choose Blocks" class="btn btn-default navbar-btn">Blocks...</button> <strong>Choose Blocks</strong> - Choose tiles, items, and walls to find or highlight.</li>
           <li><button title="Find Previous" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-chevron-left"></span></button> <strong>Find Previous</strong> - Find tiles that match the options chosen in 'Choose Blocks', starting at the current selection, working backwards (bottom-to-top, right-to-left).</li>
           <li><button title="Find Next" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-chevron-right"></span></button> <strong>Find Next</strong> - Find tiles that match the options chosen in 'Choose Blocks', starting at the current selection, working forwards (top-to-bottom, left-to-right).</li>
           <li><button title="Highlight All" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-screenshot"></span></button> <strong>Highlight All</strong> - Highlights all of the tiles in the map that match the options chosen in 'Choose Blocks'.</li>
@@ -99,8 +107,16 @@
           <li><button title="Zoom To Fit" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-fullscreen"></span></button> <strong>Zoom To Fit</strong> - zooms all of the way out and centers the map.</li>
           <li><button title="Save Map Image" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-save"></span></button> <strong>Save Map Image</strong> - saves the map and any overlay (selection or highlight) to a .png image file.</li>
         </ul>
+
+        <h4 id="bottomToolbar">Bottom Toolbar</h3>
+        <ul>
+          <li><button title="NPCs" class="btn btn-default navbar-btn">NPCs <span class="caret"></span></button> A list of NPCs present in the world. Click the dropdown menu, then click an NPC to highlight them in the map.</li>
+          <li><button title="World Properties" class="btn btn-default navbar-btn">World Properties <span class="caret"></span></button> A list of world properties (version, revision, size, defeated bosses, etc.</li>
+          <li><button title="Selected Tile Info" class="btn btn-default navbar-btn">Selected Tile Info <span class="caret"></span></button> Information about the currently selected tile. Click a tile on the map. If the tile is a chest, sign, gravestone, etc, click the dropdown menu to view its contents and/or text.</li>
+          <li><button title="Hover Tile Info" class="btn btn-default navbar-btn">Hover Tile Info</span></button> Information about the tile the cursor is currently over.</li>
+        </ul>
         
-        <h3 id="background" style="padding-top: 70px; margin-top: -70px;">Background Information</h3>
+        <h3 id="background">Background Information</h3>
         <p>
           TerraMap uses only a single pixel and color for each block, tile, wall, item, etc. It does not use the game's textures. For that, I highly recommend the excellent <a href="http://seancode.com/terrafirma">Terrafirma</a>.
         </p>
