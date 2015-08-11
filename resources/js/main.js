@@ -9,6 +9,9 @@ var ctx = canvas.getContext("2d");
 var overlayCtx = overlayCanvas.getContext("2d");
 var selectionCtx = selectionCanvas.getContext("2d");
 
+// var canvasContextImageData = ctx.createImageData(1,1);
+// var imageData = canvasContextImageData.data;
+
 var blockSelector = document.querySelector("#blocks");
 
 ctx.msImageSmoothingEnabled = false;
@@ -25,6 +28,8 @@ selectionCtx.msImageSmoothingEnabled = false;
 selectionCtx.mozImageSmoothingEnabled = false;
 selectionCtx.msImageSmoothingEnabled = false;
 selectionCtx.imageSmoothingEnabled = false;
+
+var file;
 
 var world;
 
@@ -500,6 +505,7 @@ function getTileInfo(tile) {
 
 function clearHighlight() {
   overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+  selectionCtx.clearRect(0, 0, selectionCanvas.width, selectionCanvas.height);
 }
 
 function clearSelection() {
@@ -759,10 +765,16 @@ function getTileText (tile) {
 }
 
 function fileNameChanged (evt) {
-  var worker = new Worker('WorldLoader.js');
+  file = evt.target.files[0];
+  
+  reloadWorld();
+}
+
+function reloadWorld() {
+  var worker = new Worker('resources/js/WorldLoader.js');
   worker.addEventListener('message', onWorldLoaderWorkerMessage);
   
-  worker.postMessage(evt.target.files[0]);
+  worker.postMessage(file);
 }
 
 function onWorldLoaderWorkerMessage(e) {
@@ -776,15 +788,18 @@ function onWorldLoaderWorkerMessage(e) {
   if(e.data.tiles) {
     x = e.data.x;
     
-    for(i = 0; i < e.data.tiles.length; i++) {
-      tile = e.data.tiles[i];
+    for(y = 0; y < e.data.tiles.length; y++) {
+      tile = e.data.tiles[y];
       
       if(tile) {
         tile.info = getTileInfo(tile);
         world.tiles.push(tile);
         
-        ctx.fillStyle = getTileColor(i, tile, world);
-        ctx.fillRect(x, i, 1, 1);
+        var c = getTileColor(y, tile, world);
+        if(!c) c = {"r": 0, "g": 0, "b": 0 };
+
+        ctx.fillStyle = "rgb(" + c.r + ", " + c.g + ", " + c.b + ")";
+        ctx.fillRect(x, y, 1, 1);
       }
     }
   }
@@ -811,13 +826,13 @@ function onWorldLoaderWorkerMessage(e) {
     for(i = 0; i < e.data.signs.length; i++) {
       var sign = e.data.signs[i];
 
-      var idx = sign.x * world.height + sign.y;
-      world.tiles[idx].sign = sign;
-      world.tiles[idx + 1].sign = sign;
+      var tileIndex = sign.x * world.height + sign.y;
+      world.tiles[tileIndex].sign = sign;
+      world.tiles[tileIndex + 1].sign = sign;
 
-      idx = (sign.x + 1) * world.height + sign.y;
-      world.tiles[idx].sign = sign;
-      world.tiles[idx + 1].sign = sign;
+      tileIndex = (sign.x + 1) * world.height + sign.y;
+      world.tiles[tileIndex].sign = sign;
+      world.tiles[tileIndex + 1].sign = sign;
     }
   }
   
@@ -963,15 +978,15 @@ function getTileColor(y, tile, world) {
   }
   
   if(y < world.worldSurfaceY)
-    return '#84AAF8';
+    return { "r": 132, "g": 170, "b": 248 };
   
   if(y < world.rockLayerY)
-    return '#583D2E';
+    return { "r": 88, "g": 61, "b": 46 };
     
   if(y < world.hellLayerY)
-    return '#4A433C';
+    return { "r": 74, "g": 67, "b": 60 };
   
-  return '#000000';
+  return { "r": 0, "g": 0, "b": 0 };
 }
 
 function saveMapImage() {
@@ -983,7 +998,7 @@ function saveMapImage() {
   
   newContext.drawImage(canvas, 0, 0);
   newContext.drawImage(overlayCanvas, 0, 0);
-  newContext.drawImage(selectionCanvas, 0, 0)
+  newContext.drawImage(selectionCanvas, 0, 0);
   
   newCanvas.toBlob(function(blob) {
     saveAs(blob, world.name + ".png");

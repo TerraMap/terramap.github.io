@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   
   <!-- Custom styles for this template -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="resources/css/styles.css">
   
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
@@ -36,7 +36,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#"><img alt="TerraMap" src="TerraMap16.png" /></a>
+        <a class="navbar-brand" href="#"><img alt="TerraMap" src="resources/images/TerraMap16.png" /></a>
         <a class="navbar-brand" href="#">TerraMap</a>
       </div>
       
@@ -63,6 +63,7 @@
         <button title="Clear Highlight" onclick="clearHighlight()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-remove"></span></button>
         <button title="Zoom To Fit" onclick="resetPanZoom()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-fullscreen"></span></button>
         <button title="Save Map Image" onclick="saveMapImage()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-save"></span></button>
+        <button title="Reload World" onclick="reloadWorld()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-refresh"></span></button>
       </div>
     </div>
   </nav>
@@ -160,22 +161,22 @@
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <script src="jquery.mousewheel.js"></script>
-  <script src="jquery.panzoom.js"></script>
-  <script src="jquery.hotkeys.js"></script>
-  <script src="canvas-toBlob.js"></script>
-  <script src="FileSaver.js"></script>
-  <script src="settings.js"></script>
-  <script src="sets.js"></script>
-  <script src="MapHelper.js"></script>
-  <script src="main.js"></script>
+  <script src="resources/js/jquery.mousewheel.js"></script>
+  <script src="resources/js/jquery.panzoom.js"></script>
+  <script src="resources/js/jquery.hotkeys.js"></script>
+  <script src="resources/js/canvas-toBlob.js"></script>
+  <script src="resources/js/FileSaver.js"></script>
+  <script src="resources/js/settings.js"></script>
+  <script src="resources/js/sets.js"></script>
+  <script src="resources/js/MapHelper.js"></script>
+  <script src="resources/js/main.js"></script>
   <script>
-     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-     ga('create', 'UA-65896817-1', 'auto');
-     ga('send', 'pageview');
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-65896817-1', 'auto');
+    ga('send', 'pageview');
   </script>
 </body>
 </html>
