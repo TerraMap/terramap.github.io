@@ -9,15 +9,15 @@ var start = function (file) {
   var fileReader = new FileReaderSync();
 
   self.postMessage({ 'status': "Reading world file..."});
- 
+
 	var buffer = fileReader.readAsArrayBuffer(file);
-	
+
 	var ds = new DataStream(buffer);
-	
+
 	ds.endianness = DataStream.LITTLE_ENDIAN;
-	
+
 	var world = {};
-	
+
 	self.postMessage({ 'status': "Loading world file..." });
 
 	readWorldFile(ds, world);
@@ -30,8 +30,8 @@ function readWorldFile(reader, world) {
   readChests(reader, world);
   readSigns(reader, world);
   readNpcs(reader, world);
-	
-  self.postMessage( 
+
+  self.postMessage(
     {
       'status': "Done.",
       'done': true
@@ -40,7 +40,7 @@ function readWorldFile(reader, world) {
 
 function readFileFormatHeader(reader, world) {
   self.postMessage( {'status': "Reading world version..."});
-  
+
 	world.version = reader.readInt32();
 
   self.postMessage(
@@ -48,7 +48,7 @@ function readFileFormatHeader(reader, world) {
       'status': "Reading world header...",
       'version': world.version,
     });
-	
+
 	// read file metadata
 	// TODO: implement readUint64()
 	reader.readUint32();
@@ -233,7 +233,7 @@ function readTiles(reader, world) {
       'status': "Reading world tiles...",
       'world': world,
     });
-    
+
   // 	world.tiles = [world.width, world.height];
 	world.totalTileCount = world.width * world.height;
 
@@ -247,13 +247,13 @@ function readTiles(reader, world) {
 	var k = 0;
 	var x = 0;
 	var y = 0;
-  
+
   // world.tiles = new Array(world.width);
+
+  var tiles = [];
 
 	for (x = 0; x < world.width; x++) {
 		// world.tiles[x] = new Array(world.height);
-
-    var tiles = [];
 
 		for (y = 0; y < world.height; y++) {
 			num2 = -1;
@@ -337,6 +337,10 @@ function readTiles(reader, world) {
 				if ((b & 4) == 4) {
 					tile.IsActive = false;
 				}
+        if ((b & 32) == 32)
+        {
+          tile.IsYellowWirePresent = true;
+        }
 			}
 			b4 = (b3 & 192) >> 6;
 			k = 0;
@@ -353,39 +357,42 @@ function readTiles(reader, world) {
 			}
 
       tiles.push(tile);
-      
+
 			while (k > 0) {
 				y++;
-				
+
   			tiles.push(tile);
-  			
+
 				k--;
 			}
 		}
 
 		tilesProcessed += world.height;
 
-    self.postMessage( 
-      {
-        'status': "Reading tile " + tilesProcessed + " of " + world.totalTileCount,
-        // 'tilesProcessed': tilesProcessed,
-        // 'totalTileCount': world.totalTileCount,
-        'x': x,
-        'tiles': tiles,
-      });
+    if(x % 2 == 0) {
+      self.postMessage(
+        {
+          'status': "Reading tile " + tilesProcessed + " of " + world.totalTileCount,
+          // 'tilesProcessed': tilesProcessed,
+          // 'totalTileCount': world.totalTileCount,
+          'x': x,
+          'tiles': tiles,
+        });
+      tiles = [];
+    }
 	}
 }
 
 function readChests(reader, world) {
   var chests = [];
-  
+
   var num = reader.readInt16();
   var num2 = reader.readInt16();
   var num3;
   var num4;
-  
+
   var maxItems = 40;
-  
+
   if(num2 < maxItems) {
     num3 = num2;
     num4 = 0;
@@ -394,20 +401,20 @@ function readChests(reader, world) {
     num3 = maxItems;
     num4 = num2 - maxItems;
   }
-  
+
   for(var i = 0; i < num; i++) {
     var chest = {};
     chest.items = [];
     chest.x = reader.readInt32();
     chest.y = reader.readInt32();
     chest.name = readString(reader);
-    
+
     var j = 0;
     var num5 = 0;
-    
+
     for(j = 0; j < num3; j++) {
       num5 = reader.readInt16();
-      
+
       if(num5 > 0) {
         var item = {};
         item.id = reader.readInt32();
@@ -416,7 +423,7 @@ function readChests(reader, world) {
         chest.items.push(item);
       }
     }
-    
+
     for(j = 0; j < num4; j++) {
       num5 = reader.readInt16();
       if(num5 > 0) {
@@ -424,11 +431,11 @@ function readChests(reader, world) {
         reader.readUint8();
       }
     }
-    
+
     chests.push(chest);
   }
-  
-  self.postMessage( 
+
+  self.postMessage(
   {
     'chests': chests,
   });
@@ -436,20 +443,20 @@ function readChests(reader, world) {
 
 function readSigns(reader, world) {
   var signs = [];
-  
+
   var num = reader.readInt16();
-  
+
   for(var i = 0; i < num; i++) {
     var sign = {};
-    
+
     sign.text = readString(reader);
     sign.x = reader.readInt32();
     sign.y = reader.readInt32();
-    
+
     signs.push(sign);
   }
-  
-  self.postMessage( 
+
+  self.postMessage(
     {
       'signs': signs,
     });
@@ -457,12 +464,12 @@ function readSigns(reader, world) {
 
 function readNpcs(reader, world) {
   var npcs = [];
-  
+
   var num = 0;
   var flag = reader.readUint8() > 0;
-  
+
   var npc;
-  
+
   while(flag) {
     npc = {};
     npc.type = readString(reader);
@@ -473,11 +480,11 @@ function readNpcs(reader, world) {
     npc.homeX = reader.readInt32();
     npc.homeY = reader.readInt32();
     npcs.push(npc);
-    
+
     num++;
     flag = reader.readUint8() > 0;
   }
-  
+
   flag = reader.readUint8() > 0;
   while(flag) {
     npc = {};
@@ -487,8 +494,8 @@ function readNpcs(reader, world) {
     num++;
     flag = reader.readUint8();
   }
-  
-  self.postMessage( 
+
+  self.postMessage(
     {
       'npcs': npcs,
     });

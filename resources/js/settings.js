@@ -19935,7 +19935,34 @@ var settings = {
       "Name": "Lunar Block Stardust",
       "Solid": "true",
       "Framed": "false"
-    }
+    },
+    { "Id": "419", "Name": "Logic Gate Lamp" },
+    { "Id": "420", "Name": "Logic Gate" },
+    { "Id": "421", "Name": "Conveyor Belt Left" },
+    { "Id": "422", "Name": "Conveyor Belt Right" },
+    { "Id": "423", "Name": "Logic Sensor" },
+    { "Id": "424", "Name": "Wire Pipe" },
+    { "Id": "425", "Name": "Announcement Box" },
+    { "Id": "426", "Name": "Team Block Red" },
+    { "Id": "427", "Name": "Team Block Red Platform" },
+    { "Id": "428", "Name": "Weighted Pressure Plate" },
+    { "Id": "429", "Name": "Wire Bulb" },
+    { "Id": "430", "Name": "Team Block Green" },
+    { "Id": "431", "Name": "Team Block Blue" },
+    { "Id": "432", "Name": "Team Block Yellow" },
+    { "Id": "433", "Name": "Team Block Pink" },
+    { "Id": "434", "Name": "Team Block White" },
+    { "Id": "435", "Name": "Team Block Green Platform" },
+    { "Id": "436", "Name": "Team Block Blue Platform" },
+    { "Id": "437", "Name": "Team Block Yellow Platform" },
+    { "Id": "438", "Name": "Team Block Pink Platform" },
+    { "Id": "439", "Name": "Team Block White Platform" },
+    { "Id": "440", "Name": "Gem Locks" },
+    { "Id": "441", "Name": "Fake Containers" },
+    { "Id": "442", "Name": "Projectile Pressure Pad" },
+    { "Id": "443", "Name": "Geyser Trap" },
+    { "Id": "444", "Name": "Bee Hive" },
+    { "Id": "445", "Name": "Pixel Box" }
   ],
   "Walls": [
     {
@@ -36129,6 +36156,135 @@ var settings = {
       "Id": "3601",
       "Name": "Celestial Sigil"
     }
+    ,{ "Id": "3601", "Name": "Celestial Sigil" }
+    ,{ "Id": "3602", "Name": "Logic Gate Lamp Off" }
+    ,{ "Id": "3603", "Name": "Logic Gate AND" }
+    ,{ "Id": "3604", "Name": "Logic Gate OR" }
+    ,{ "Id": "3605", "Name": "Logic Gate NAND" }
+    ,{ "Id": "3606", "Name": "Logic Gate NOR" }
+    ,{ "Id": "3607", "Name": "Logic Gate XOR" }
+    ,{ "Id": "3608", "Name": "Logic Gate NXOR" }
+    ,{ "Id": "3609", "Name": "Conveyor Belt Left" }
+    ,{ "Id": "3610", "Name": "Conveyor Belt Right" }
+    ,{ "Id": "3611", "Name": "Wire Kite" }
+    ,{ "Id": "3612", "Name": "Yellow Wrench" }
+    ,{ "Id": "3613", "Name": "Logic Sensor Sun" }
+    ,{ "Id": "3614", "Name": "Logic Sensor Moon" }
+    ,{ "Id": "3615", "Name": "Logic Sensor Above" }
+    ,{ "Id": "3616", "Name": "Wire Pipe" }
+    ,{ "Id": "3617", "Name": "Announcement Box" }
+    ,{ "Id": "3618", "Name": "Logic Gate Lamp On" }
+    ,{ "Id": "3619", "Name": "Mechanical Lens" }
+    ,{ "Id": "3620", "Name": "Actuation Rod" }
+    ,{ "Id": "3621", "Name": "Team Block Red" }
+    ,{ "Id": "3622", "Name": "Team Block Red Platform" }
+    ,{ "Id": "3623", "Name": "Static Hook" }
+    ,{ "Id": "3624", "Name": "Actuation Accessory" }
+    ,{ "Id": "3625", "Name": "Multicolor Wrench" }
+    ,{ "Id": "3626", "Name": "Weighted Pressure Plate Pink" }
+    ,{ "Id": "3627", "Name": "Engineering Helmet" }
+    ,{ "Id": "3628", "Name": "Companion Cube" }
+    ,{ "Id": "3629", "Name": "Wire Bulb" }
+    ,{ "Id": "3630", "Name": "Weighted Pressure Plate Orange" }
+    ,{ "Id": "3631", "Name": "Weighted Pressure Plate Purple" }
+    ,{ "Id": "3632", "Name": "Weighted Pressure Plate Cyan" }
+    ,{ "Id": "3633", "Name": "Team Block Green" }
+    ,{ "Id": "3634", "Name": "Team Block Blue" }
+    ,{ "Id": "3635", "Name": "Team Block Yellow" }
+    ,{ "Id": "3636", "Name": "Team Block Pink" }
+    ,{ "Id": "3637", "Name": "Team Block White" }
+    ,{ "Id": "3638", "Name": "Team Block Green Platform" }
+    ,{ "Id": "3639", "Name": "Team Block BlueP latform" }
+    ,{ "Id": "3640", "Name": "Team Block Yellow Platform" }
+    ,{ "Id": "3641", "Name": "Team Block Pink Platform" }
+    ,{ "Id": "3642", "Name": "Team Block White Platform" }
+    ,{ "Id": "3643", "Name": "Large Amber" }
+    ,{ "Id": "3644", "Name": "Gem Lock Ruby" }
+    ,{ "Id": "3645", "Name": "Gem Lock Sapphire" }
+    ,{ "Id": "3646", "Name": "Gem Lock Emerald" }
+    ,{ "Id": "3647", "Name": "Gem Lock Topaz" }
+    ,{ "Id": "3648", "Name": "Gem Lock Amethyst" }
+    ,{ "Id": "3649", "Name": "Gem Lock Diamond" }
+    ,{ "Id": "3650", "Name": "Gem Lock Amber" }
+    ,{ "Id": "3651", "Name": "Squirrel Statue" }
+    ,{ "Id": "3652", "Name": "Butterfly Statue" }
+    ,{ "Id": "3653", "Name": "Worm Statue" }
+    ,{ "Id": "3654", "Name": "Firefly Statue" }
+    ,{ "Id": "3655", "Name": "Scorpion Statue" }
+    ,{ "Id": "3656", "Name": "Snail Statue" }
+    ,{ "Id": "3657", "Name": "Grasshopper Statue" }
+    ,{ "Id": "3658", "Name": "Mouse Statue" }
+    ,{ "Id": "3659", "Name": "Duck Statue" }
+    ,{ "Id": "3660", "Name": "Penguin Statue" }
+    ,{ "Id": "3661", "Name": "Frog Statue" }
+    ,{ "Id": "3662", "Name": "Buggy Statue" }
+    ,{ "Id": "3663", "Name": "Logic Gate Lamp Faulty" }
+    ,{ "Id": "3664", "Name": "Portal Gun Station" }
+    ,{ "Id": "3665", "Name": "Fake Chest" }
+    ,{ "Id": "3666", "Name": "Fake Gold Chest" }
+    ,{ "Id": "3667", "Name": "Fake Shadow Chest" }
+    ,{ "Id": "3668", "Name": "Fake Ebonwood Chest" }
+    ,{ "Id": "3669", "Name": "Fake RichMahogany Chest" }
+    ,{ "Id": "3670", "Name": "Fake Pearlwood Chest" }
+    ,{ "Id": "3671", "Name": "Fake Ivy Chest" }
+    ,{ "Id": "3672", "Name": "Fake Ice Chest" }
+    ,{ "Id": "3673", "Name": "Fake Living Wood Chest" }
+    ,{ "Id": "3674", "Name": "Fake Skyware Chest" }
+    ,{ "Id": "3675", "Name": "Fake Shadewood Chest" }
+    ,{ "Id": "3676", "Name": "Fake Web Covered Chest" }
+    ,{ "Id": "3677", "Name": "Fake Lihzahrd Chest" }
+    ,{ "Id": "3678", "Name": "Fake Water Chest" }
+    ,{ "Id": "3679", "Name": "Fake JungleChest" }
+    ,{ "Id": "3680", "Name": "Fake CorruptionChest" }
+    ,{ "Id": "3681", "Name": "Fake CrimsonChest" }
+    ,{ "Id": "3682", "Name": "Fake HallowedChest" }
+    ,{ "Id": "3683", "Name": "Fake FrozenChest" }
+    ,{ "Id": "3684", "Name": "Fake DynastyChest" }
+    ,{ "Id": "3685", "Name": "Fake HoneyChest" }
+    ,{ "Id": "3686", "Name": "Fake SteampunkChest" }
+    ,{ "Id": "3687", "Name": "Fake PalmWoodChest" }
+    ,{ "Id": "3688", "Name": "Fake MushroomChest" }
+    ,{ "Id": "3689", "Name": "Fake BorealWoodChest" }
+    ,{ "Id": "3690", "Name": "Fake SlimeChest" }
+    ,{ "Id": "3691", "Name": "Fake GreenDungeonChest" }
+    ,{ "Id": "3692", "Name": "Fake PinkDungeonChest" }
+    ,{ "Id": "3693", "Name": "Fake BlueDungeonChest" }
+    ,{ "Id": "3694", "Name": "Fake BoneChest" }
+    ,{ "Id": "3695", "Name": "Fake CactusChest" }
+    ,{ "Id": "3696", "Name": "Fake FleshChest" }
+    ,{ "Id": "3697", "Name": "Fake ObsidianChest" }
+    ,{ "Id": "3698", "Name": "Fake PumpkinChest" }
+    ,{ "Id": "3699", "Name": "Fake SpookyChest" }
+    ,{ "Id": "3700", "Name": "Fake GlassChest" }
+    ,{ "Id": "3701", "Name": "Fake MartianChest" }
+    ,{ "Id": "3702", "Name": "Fake MeteoriteChest" }
+    ,{ "Id": "3703", "Name": "Fake GraniteChest" }
+    ,{ "Id": "3704", "Name": "Fake MarbleChest" }
+    ,{ "Id": "3705", "Name": "Fake newchest1" }
+    ,{ "Id": "3706", "Name": "Fake newchest2" }
+    ,{ "Id": "3707", "Name": "Projectile Pressure Pad" }
+    ,{ "Id": "3708", "Name": "Wall Creeper Statue" }
+    ,{ "Id": "3709", "Name": "Unicorn Statue" }
+    ,{ "Id": "3710", "Name": "Drippler Statue" }
+    ,{ "Id": "3711", "Name": "Wraith Statue" }
+    ,{ "Id": "3712", "Name": "Bone Skeleton Statue" }
+    ,{ "Id": "3713", "Name": "Undead Viking Statue" }
+    ,{ "Id": "3714", "Name": "Medusa Statue" }
+    ,{ "Id": "3715", "Name": "Harpy Statue" }
+    ,{ "Id": "3716", "Name": "Pigron Statue" }
+    ,{ "Id": "3717", "Name": "Hoplite Statue" }
+    ,{ "Id": "3718", "Name": "Granite Golem Statue" }
+    ,{ "Id": "3719", "Name": "Zombie Arm Statue" }
+    ,{ "Id": "3720", "Name": "Blood Zombie Statue" }
+    ,{ "Id": "3721", "Name": "Angler Tackle Bag" }
+    ,{ "Id": "3722", "Name": "Geyser Trap" }
+    ,{ "Id": "3723", "Name": "Ultra Bright Campfire" }
+    ,{ "Id": "3724", "Name": "Bone Campfire" }
+    ,{ "Id": "3725", "Name": "Pixel Box" }
+    ,{ "Id": "3726", "Name": "Logic Sensor Water" }
+    ,{ "Id": "3727", "Name": "Logic Sensor Lava" }
+    ,{ "Id": "3728", "Name": "Logic Sensor Honey" }
+    ,{ "Id": "3729", "Name": "Logic Sensor Liquid" }
   ],
   "Npcs": [
     {

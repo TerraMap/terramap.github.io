@@ -8,11 +8,11 @@ function rgb(r, g, b) {
 
 // Decompiled from the Terraria source code
 
-var tileColors = new Array(419);
+var tileColors = new Array(446);
 var liquidColors = new Array(3);
 var wallColors = new Array(225);
 
-for(var i = 0; i < 419; i++) {
+for(var i = 0; i < 446; i++) {
   tileColors[i] = new Array(12);
 }
 
@@ -406,11 +406,19 @@ tileColors[270][0] = rgb(187, 255, 107);
 tileColors[314][0] = rgb(181, 164, 125);
 tileColors[324][0] = rgb(228, 213, 173);
 tileColors[351][0] = rgb(31, 31, 31);
+tileColors[424][0] = rgb(146, 155, 187);
+tileColors[429][0] = rgb(220, 220, 220);
+tileColors[445][0] = rgb(240, 240, 240);
 tileColors[21][0] = rgb(174, 129, 92);
 tileColors[21][1] = rgb(233, 207, 94);
 tileColors[21][2] = rgb(137, 128, 200);
 tileColors[21][3] = rgb(160, 160, 160);
 tileColors[21][4] = rgb(106, 210, 255);
+tileColors[441][0] = rgb(174, 129, 92);
+tileColors[441][1] = rgb(233, 207, 94);
+tileColors[441][2] = rgb(137, 128, 200);
+tileColors[441][3] = rgb(160, 160, 160);
+tileColors[441][4] = rgb(106, 210, 255);
 tileColors[27][0] = rgb(54, 154, 54);
 tileColors[27][1] = rgb(226, 196, 49);
 color = rgb(246, 197, 26);
@@ -574,8 +582,49 @@ tileColors[405][0] = rgb(140, 140, 140);
 tileColors[406][0] = rgb(120, 120, 120);
 tileColors[407][0] = rgb(255, 227, 132);
 tileColors[411][0] = rgb(227, 46, 46);
+tileColors[421][0] = rgb(65, 75, 90);
+tileColors[422][0] = rgb(65, 75, 90);
+tileColors[425][0] = rgb(146, 155, 187);
+tileColors[426][0] = rgb(168, 38, 47);
+tileColors[430][0] = rgb(39, 168, 96);
+tileColors[431][0] = rgb(39, 94, 168);
+tileColors[432][0] = rgb(242, 221, 100);
+tileColors[433][0] = rgb(224, 100, 242);
+tileColors[434][0] = rgb(197, 193, 216);
+tileColors[427][0] = rgb(183, 53, 62);
+tileColors[435][0] = rgb(54, 183, 111);
+tileColors[436][0] = rgb(54, 109, 183);
+tileColors[437][0] = rgb(255, 236, 115);
+tileColors[438][0] = rgb(239, 115, 255);
+tileColors[439][0] = rgb(212, 208, 231);
+tileColors[440][0] = rgb(238, 51, 53);
+tileColors[440][1] = rgb(13, 107, 216);
+tileColors[440][2] = rgb(33, 184, 115);
+tileColors[440][3] = rgb(255, 221, 62);
+tileColors[440][4] = rgb(165, 0, 236);
+tileColors[440][5] = rgb(223, 230, 238);
+tileColors[440][6] = rgb(207, 101, 0);
+tileColors[419][0] = rgb(88, 95, 114);
+tileColors[419][1] = rgb(214, 225, 236);
+tileColors[419][2] = rgb(25, 131, 205);
+tileColors[423][0] = rgb(245, 197, 1);
+tileColors[423][1] = rgb(185, 0, 224);
+tileColors[423][2] = rgb(58, 240, 111);
+tileColors[423][3] = rgb(50, 107, 197);
+tileColors[423][4] = rgb(253, 91, 3);
+tileColors[423][5] = rgb(254, 194, 20);
+tileColors[423][6] = rgb(174, 195, 215);
+tileColors[420][0] = rgb(99, 255, 107);
+tileColors[420][1] = rgb(99, 255, 107);
+tileColors[420][4] = rgb(99, 255, 107);
+tileColors[420][2] = rgb(218, 2, 252);
+tileColors[420][3] = rgb(218, 2, 252);
+tileColors[420][5] = rgb(218, 2, 252);
 tileColors[410][0] = rgb(75, 139, 166);
 tileColors[412][0] = rgb(75, 139, 166);
+tileColors[443][0] = rgb(144, 148, 144);
+tileColors[442][0] = rgb(3, 144, 201);
+tileColors[444][0] = rgb(191, 176, 124);
 
 liquidColors[0] = rgb(9, 61, 191);
 liquidColors[1] = rgb(253, 32, 3);
@@ -846,8 +895,8 @@ for (var m = 0; m < array6.length; m++)
 }
 var color7 = rgb(50, 44, 38);
 var num7 = 0;
-var tileOptionCounts = new Array(419);
-for (var n = 0; n < 419; n++)
+var tileOptionCounts = new Array(446);
+for (var n = 0; n < 446; n++)
 {
   var  array7 = tileColors[n];
   var num8 = 0;
@@ -875,8 +924,8 @@ var colorLookup = new Array(num7);
 colorLookup[0] = rgb(0, 0, 0);
 var num11 = 1;
 var tilePosition = num11;
-tileLookup = new Array(419);
-for (var num12 = 0; num12 < 419; num12++)
+tileLookup = new Array(446);
+for (var num12 = 0; num12 < 446; num12++)
 {
   if (tileOptionCounts[num12] > 0)
   {

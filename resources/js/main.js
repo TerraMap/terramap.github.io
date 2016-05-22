@@ -18,7 +18,7 @@ ctx.msImageSmoothingEnabled = false;
 ctx.mozImageSmoothingEnabled = false;
 ctx.msImageSmoothingEnabled = false;
 ctx.imageSmoothingEnabled = false;
-	
+
 overlayCtx.msImageSmoothingEnabled = false;
 overlayCtx.mozImageSmoothingEnabled = false;
 overlayCtx.msImageSmoothingEnabled = false;
@@ -84,7 +84,7 @@ function addSetListItems() {
 
 function highlightSet(setIndex) {
   var set = sets[setIndex];
-  
+
   highlightInfos(set.Entries);
 }
 
@@ -212,13 +212,13 @@ jQuery.fn.filterByText = function(textbox, selectSingleMatch) {
             if (selectSingleMatch === true && $(select).children().length === 1) {
                 $(select).children().get(0).selected = true;
             }
-        });            
+        });
     });
 };
 
 $(function() {
     $('#blocks').filterByText($('#blocksFilter'), true);
-}); 
+});
 
 $(window).resize(function () {
   $('body').css('padding-top', parseInt($('#main-navbar').css("height"))+10);
@@ -228,8 +228,8 @@ $(window).resize(function () {
   $('#canvasContainer').css("overflow", "visible");
 });
 
-$(window).load(function () { 
-   $('body').css('padding-top', parseInt($('#main-navbar').css("height"))+10);         
+$(window).load(function () {
+   $('body').css('padding-top', parseInt($('#main-navbar').css("height"))+10);
 });
 
 // handle scrolling in and out
@@ -314,14 +314,14 @@ function isTileMatch(tile, selectedInfos, x, y) {
 function findBlock(direction) {
   if(!world)
     return;
-    
+
   var x = selectionX;
   var y = selectionY + direction;
-  
+
   var start = x * world.height + y;
-  
+
   var selectedInfos = getSelectedInfos();
-    
+
   if(selectedInfos.length > 0) {
     for(var i = start; i >= 0 && i < world.tiles.length; i += direction) {
       var tile = world.tiles[i];
@@ -359,7 +359,7 @@ function findBlock(direction) {
 function highlightAll() {
   if(!world)
     return;
-    
+
   var selectedInfos = getSelectedInfos();
 
   highlightInfos(selectedInfos);
@@ -368,11 +368,11 @@ function highlightAll() {
 function highlightInfos(selectedInfos) {
   var x = 0;
   var y = 0;
-  
+
   overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
   overlayCtx.fillStyle = "rgba(0, 0, 0, 0.75)";
   overlayCtx.fillRect(0, 0, overlayCanvas.width, overlayCanvas.height);
-  
+
   if(selectedInfos.length > 0) {
     for(var i = 0; i < world.tiles.length; i++) {
       var tile = world.tiles[i];
@@ -393,19 +393,19 @@ function highlightInfos(selectedInfos) {
 
 function getSelectedInfos() {
   var selectedInfos = [];
-  
+
   var j;
   var option;
-  
+
   for(j = 0; j < blockSelector.options.length; j++) {
     option = blockSelector.options[j];
     if(!option.selected)
       continue;
 
     var tileInfo = getTileInfoFromOption(option);
-    
+
     if(tileInfo) {
-      selectedInfos.push(tileInfo); 
+      selectedInfos.push(tileInfo);
     }
     else {
       var itemInfo = getItemInfoFromOption(option);
@@ -426,23 +426,23 @@ function getSelectedInfos() {
 
 function getTileInfoFromOption(option) {
   var tileInfo = getTileInfoFrom(option.value, option.getAttribute("data-u"), option.getAttribute("data-v"));
-  
+
   return tileInfo;
 }
 
 function getTileInfoFrom(id, u, v) {
   var tileInfo = settings.Tiles[id];
-  
+
   if(tileInfo && tileInfo.Frames) {
     for(var frameIndex = 0; frameIndex < tileInfo.Frames.length; frameIndex++) {
       var frame = tileInfo.Frames[frameIndex];
 
       if(u != frame.U)
         continue;
-      
+
       if(v != frame.V)
         continue;
-      
+
       frame.parent = tileInfo;
 
       return frame;
@@ -480,7 +480,7 @@ function getTileInfo(tile) {
   var tileInfo = settings.Tiles[tile.Type];
 
   if(!tileInfo) return tileInfo;
-  
+
   if(!tileInfo.Frames)
     return tileInfo;
 
@@ -488,7 +488,7 @@ function getTileInfo(tile) {
 
   for(var i = 0; i < tileInfo.Frames.length; i++) {
     var frame = tileInfo.Frames[i];
-    
+
     if((!frame.U && !tile.TextureU) || frame.U <= tile.TextureU) {
       if((!frame.V && !tile.TextureV) || frame.V <= tile.TextureV)
         matchingFrame = frame;
@@ -513,15 +513,15 @@ function clearSelection() {
 }
 
 function resetPanZoom(e) {
-  panzoom.panzoom('reset');  
+  panzoom.panzoom('reset');
 }
 
 function resizeCanvases() {
   var width = window.innerWidth * 0.99;
-  
+
   var ratio = panzoomContainer.height/panzoomContainer.width;
   var height = width * ratio;
-  
+
   panzoomContainer.style.width = width+'px';
   panzoomContainer.style.height = height+'px';
   canvas.style.width = width+'px';
@@ -536,11 +536,11 @@ function resizeCanvases() {
 function getMousePos(canvas, evt) {
   var rect = panzoomContainer.getBoundingClientRect();
   var transform = $(panzoomContainer).panzoom('getMatrix');
-  
+
   var scale = transform[0];
-  
+
   scale = rect.width / panzoomContainer.width;
-  
+
   var mousePos =  {
     x: Math.floor((evt.clientX - rect.left) / scale),
     y: Math.floor((evt.clientY - rect.top) / scale)
@@ -564,28 +564,28 @@ panzoomContainer.addEventListener('mousemove', function(evt) {
   if(evt.which === 1 && leftButtonDown) {
       leftButtonDragged = true;
   }
-    
-  if(!world) 
+
+  if(!world)
     return;
-    
+
   var mousePos = getMousePos(panzoomContainer, evt);
   var x = mousePos.x;
   var y = mousePos.y;
-  
+
   $("#status").html(mousePos.x + ',' + (mousePos.y));
-  
+
   if(world.tiles) {
     var tile = getTileAt(mousePos.x, mousePos.y);
-    
+
     if(tile) {
       var text = getTileText(tile);
-      
+
       $("#status").html(text + " (" + mousePos.x + ", " + mousePos.y + ")");
     }
   }
 }, false);
 
-panzoomContainer.addEventListener('mouseup', function(evt) {  
+panzoomContainer.addEventListener('mouseup', function(evt) {
   if(evt.which != 1) return;
 
   leftButtonDown = false;
@@ -596,20 +596,20 @@ panzoomContainer.addEventListener('mouseup', function(evt) {
   }
 
   leftButtonDragged = false;
-  
+
   var mousePos = getMousePos(panzoomContainer, evt);
   var x = mousePos.x;
   var y = mousePos.y;
-  
+
   selectionX = x;
   selectionY = y;
-  
+
   drawSelectionIndicator();
-  
+
   var tile = getTileAt(x, y);
   if(tile) {
     var text = getTileText(tile);
-    
+
     $("#tileInfoList").html("");
 
     var chest = tile.chest;
@@ -635,28 +635,28 @@ panzoomContainer.addEventListener('mouseup', function(evt) {
 
 
         $("#tileInfoList").append('<li>' + prefix + ' ' + itemName + ' (' + item.count +')</li>');
-      } 
+      }
     }
-     
+
     var sign = tile.sign;
     if(sign && sign.text) {
       if(sign.text.length > 0)
         $("#tileInfoList").append('<li>' + sign.text +'</li>');
     }
-       
-    $("#tile").html(text);  
-  }  
-  
+
+    $("#tile").html(text);
+  }
+
 }, false);
 
 function getTileAt(x, y) {
   if(!world) return;
-  
+
   var index = x * world.height + y;
   if(index >= 0 && index < world.tiles.length) {
     return world.tiles[index];
   }
-  
+
   return null;
 }
 
@@ -701,7 +701,7 @@ function drawSelectionIndicator() {
 
 function getTileText (tile) {
   var text = "Nothing";
-  
+
   if(!tile) {
     return text;
   }
@@ -760,50 +760,55 @@ function getTileText (tile) {
 
   if(tile.IsBlueWirePresent)
     text += " (Blue Wire)";
-    
+
+  if(tile.IsYellowWirePresent)
+    text += " (Yellow Wire)";
+
   return text;
 }
 
 function fileNameChanged (evt) {
   file = evt.target.files[0];
-  
+
   reloadWorld();
 }
 
 function reloadWorld() {
   var worker = new Worker('resources/js/WorldLoader.js');
   worker.addEventListener('message', onWorldLoaderWorkerMessage);
-  
+
   worker.postMessage(file);
 }
 
 function onWorldLoaderWorkerMessage(e) {
   if(e.data.status)
     $("#status").html(e.data.status);
-    
+
   var x = 0;
   var i = 0;
   var tile;
-  
+
   if(e.data.tiles) {
     x = e.data.x;
-    
-    for(y = 0; y < e.data.tiles.length; y++) {
-      tile = e.data.tiles[y];
-      
-      if(tile) {
-        tile.info = getTileInfo(tile);
-        world.tiles.push(tile);
-        
-        var c = getTileColor(y, tile, world);
-        if(!c) c = {"r": 0, "g": 0, "b": 0 };
 
-        ctx.fillStyle = "rgb(" + c.r + ", " + c.g + ", " + c.b + ")";
-        ctx.fillRect(x, y, 1, 1);
-      }
-    }
+		for(x = e.data.x; x <= e.data.x + 1; x++) {
+	    for(y = 0; y < e.data.tiles.length / 2; y++) {
+	      tile = e.data.tiles[y];
+
+	      if(tile) {
+	        tile.info = getTileInfo(tile);
+	        world.tiles.push(tile);
+
+	        var c = getTileColor(y, tile, world);
+	        if(!c) c = {"r": 0, "g": 0, "b": 0 };
+
+	        ctx.fillStyle = "rgb(" + c.r + ", " + c.g + ", " + c.b + ")";
+	        ctx.fillRect(x, y, 1, 1);
+	      }
+	    }
+		}
   }
-  
+
   if(e.data.chests) {
     world.chests = e.data.chests;
 
@@ -819,7 +824,7 @@ function onWorldLoaderWorkerMessage(e) {
       world.tiles[idx + 1].chest = chest;
     }
   }
-  
+
   if(e.data.signs) {
     world.signs = e.data.signs;
 
@@ -835,14 +840,14 @@ function onWorldLoaderWorkerMessage(e) {
       world.tiles[tileIndex + 1].sign = sign;
     }
   }
-  
+
   if(e.data.npcs) {
     addNpcs(e.data.npcs);
   }
-  
+
   if(e.data.world) {
     world = e.data.world;
-  
+
     panzoomContainer.width = world.width;
     panzoomContainer.height = world.height;
     canvas.width = world.width;
@@ -851,11 +856,11 @@ function onWorldLoaderWorkerMessage(e) {
     overlayCanvas.height = world.height;
     selectionCanvas.width = world.width;
     selectionCanvas.height = world.height;
-    
+
     world.tiles = [];
-    
+
     resizeCanvases();
-    
+
     $("#worldPropertyList").append('<li>Version: ' + world.version + '</li>');
     $("#worldPropertyList").append('<li>Name: ' + world.name + '</li>');
     $("#worldPropertyList").append('<li>Id: ' + world.id + '</li>');
@@ -951,10 +956,10 @@ function onWorldLoaderWorkerMessage(e) {
 
 function addNpcs(npcs) {
   world.npcs = npcs;
-  
+
   for(var i = 0; i < npcs.length; i++) {
     var npc = npcs[i];
-    
+
     $("#npcList").append('<li><a href="#" onclick="selectPoint(' + npc.x + ', ' + npc.y + ')">' + npc.name + ' the ' + npc.type + '</a></li>');
   }
 }
@@ -963,11 +968,11 @@ function getTileColor(y, tile, world) {
   if(tile.IsActive) {
     return tileColors[tile.Type][0];
   }
-  
+
   if (tile.IsWallPresent) {
     return wallColors[tile.WallType][0];
   }
-  
+
   if (tile.IsLiquidPresent) {
     if(tile.IsLiquidLava)
       return liquidColors[1];
@@ -976,30 +981,30 @@ function getTileColor(y, tile, world) {
     else
       return liquidColors[0];
   }
-  
+
   if(y < world.worldSurfaceY)
     return { "r": 132, "g": 170, "b": 248 };
-  
+
   if(y < world.rockLayerY)
     return { "r": 88, "g": 61, "b": 46 };
-    
+
   if(y < world.hellLayerY)
     return { "r": 74, "g": 67, "b": 60 };
-  
+
   return { "r": 0, "g": 0, "b": 0 };
 }
 
 function saveMapImage() {
   var newCanvas = document.createElement("canvas");
   var newContext = newCanvas.getContext("2d");
-  
+
   newCanvas.height = world.height;
   newCanvas.width = world.width;
-  
+
   newContext.drawImage(canvas, 0, 0);
   newContext.drawImage(overlayCanvas, 0, 0);
   newContext.drawImage(selectionCanvas, 0, 0);
-  
+
   newCanvas.toBlob(function(blob) {
     saveAs(blob, world.name + ".png");
   });
