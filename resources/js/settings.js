@@ -19962,7 +19962,22 @@ var settings = {
     { "Id": "442", "Name": "Projectile Pressure Pad" },
     { "Id": "443", "Name": "Geyser Trap" },
     { "Id": "444", "Name": "Bee Hive" },
-    { "Id": "445", "Name": "Pixel Box" }
+    { "Id": "445", "Name": "Pixel Box" },
+    { "Id": "446", "Name": "SillyBalloonPink" },
+    { "Id": "447", "Name": "SillyBalloonPurple" },
+    { "Id": "448", "Name": "SillyBalloonGreen" },
+    { "Id": "449", "Name": "SillyStreamerBlue" },
+    { "Id": "450", "Name": "SillyStreamerGreen" },
+    { "Id": "451", "Name": "SillyStreamerPink" },
+    { "Id": "452", "Name": "SillyBalloonMachine" },
+    { "Id": "453", "Name": "SillyBalloonTile" },
+    { "Id": "454", "Name": "Pigronata" },
+    { "Id": "455", "Name": "PartyMonolith" },
+    { "Id": "456", "Name": "PartyBundleOfBalloonTile" },
+    { "Id": "457", "Name": "PartyPresent" },
+    { "Id": "458", "Name": "SandFallBlock" },
+    { "Id": "459", "Name": "SnowFallBlock" },
+    { "Id": "460", "Name": "SnowCloud" }
   ],
   "Walls": [
     {
@@ -21303,7 +21318,13 @@ var settings = {
       "Name": "Lunar Brick Wall",
       "Color": "#FF393734",
       "IsHouse": "True"
-    }
+    },
+    { "Id": "225", "Name": "CogWall" },
+    { "Id": "226", "Name": "SandFall" },
+    { "Id": "227", "Name": "SnowFall" },
+    { "Id": "228", "Name": "SillyBalloonPinkWall" },
+    { "Id": "229", "Name": "SillyBalloonPurpleWall" },
+    { "Id": "230", "Name": "SillyBalloonGreenWall" }
   ],
   "Items": [
     {
@@ -21404,27 +21425,27 @@ var settings = {
     },
     {
       "Id": "-24",
-      "Name": "Yellow Phasesaber"
+      "Name": "Yellow Phasesaber (Old)"
     },
     {
       "Id": "-23",
-      "Name": "White Phasesaber"
+      "Name": "White Phasesaber (Old)"
     },
     {
       "Id": "-22",
-      "Name": "Purple Phasesaber"
+      "Name": "Purple Phasesaber (Old)"
     },
     {
       "Id": "-21",
-      "Name": "Green Phasesaber"
+      "Name": "Green Phasesaber (Old)"
     },
     {
       "Id": "-20",
-      "Name": "Red Phasesaber"
+      "Name": "Red Phasesaber (Old)"
     },
     {
       "Id": "-19",
-      "Name": "Blue Phasesaber"
+      "Name": "Blue Phasesaber (Old)"
     },
     {
       "Id": "-18",
@@ -36163,7 +36184,7 @@ var settings = {
     ,{ "Id": "3605", "Name": "Logic Gate NAND" }
     ,{ "Id": "3606", "Name": "Logic Gate NOR" }
     ,{ "Id": "3607", "Name": "Logic Gate XOR" }
-    ,{ "Id": "3608", "Name": "Logic Gate NXOR" }
+    ,{ "Id": "3608", "Name": "Logic Gate XNOR" }
     ,{ "Id": "3609", "Name": "Conveyor Belt Left" }
     ,{ "Id": "3610", "Name": "Conveyor Belt Right" }
     ,{ "Id": "3611", "Name": "Wire Kite" }
@@ -36285,6 +36306,46 @@ var settings = {
     ,{ "Id": "3727", "Name": "Logic Sensor Lava" }
     ,{ "Id": "3728", "Name": "Logic Sensor Honey" }
     ,{ "Id": "3729", "Name": "Logic Sensor Liquid" }
+    ,{ "Id": "3730", "Name": "Party BundleOf Balloons Accessory" }
+    ,{ "Id": "3731", "Name": "Party Balloon Animal" }
+    ,{ "Id": "3732", "Name": "Party Hat" }
+    ,{ "Id": "3733", "Name": "Flower Boy Hat" }
+    ,{ "Id": "3734", "Name": "Flower Boy Shirt" }
+    ,{ "Id": "3735", "Name": "Flower Boy Pants" }
+    ,{ "Id": "3736", "Name": "Silly Balloon Pink" }
+    ,{ "Id": "3737", "Name": "Silly Balloon Purple" }
+    ,{ "Id": "3738", "Name": "Silly Balloon Green" }
+    ,{ "Id": "3739", "Name": "Silly Streamer Blue" }
+    ,{ "Id": "3740", "Name": "Silly Streamer Green" }
+    ,{ "Id": "3741", "Name": "Silly Streamer Pink" }
+    ,{ "Id": "3742", "Name": "Silly Balloon Machine" }
+    ,{ "Id": "3743", "Name": "Silly Balloon Tied Pink" }
+    ,{ "Id": "3744", "Name": "Silly Balloon Tied Purple" }
+    ,{ "Id": "3745", "Name": "Silly Balloon Tied Green" }
+    ,{ "Id": "3746", "Name": "Pigronata" }
+    ,{ "Id": "3747", "Name": "Party Monolith" }
+    ,{ "Id": "3748", "Name": "Party Bundle Of Balloon Tile" }
+    ,{ "Id": "3749", "Name": "Party Present" }
+    ,{ "Id": "3750", "Name": "Slice Of Cake" }
+    ,{ "Id": "3751", "Name": "Cog Wall" }
+    ,{ "Id": "3752", "Name": "Sand Fall Wall" }
+    ,{ "Id": "3753", "Name": "Snow Fall Wall" }
+    ,{ "Id": "3754", "Name": "Sand Fall Block" }
+    ,{ "Id": "3755", "Name": "Snow Fall Block" }
+    ,{ "Id": "3756", "Name": "Snow Cloud Block" }
+    ,{ "Id": "3757", "Name": "Pedguin Hat" }
+    ,{ "Id": "3758", "Name": "Pedguin Shirt" }
+    ,{ "Id": "3759", "Name": "Pedguin Pants" }
+    ,{ "Id": "3760", "Name": "Silly Balloon Pink Wall" }
+    ,{ "Id": "3761", "Name": "Silly Balloon Purple Wall" }
+    ,{ "Id": "3762", "Name": "Silly Balloon Green Wall" }
+    ,{ "Id": "3763", "Name": "Aviator Sunglasses" }
+    ,{ "Id": "3764", "Name": "Blue Phasesaber" }
+    ,{ "Id": "3765", "Name": "Red Phasesaber" }
+    ,{ "Id": "3766", "Name": "Green Phasesaber" }
+    ,{ "Id": "3767", "Name": "Purple Phasesaber" }
+    ,{ "Id": "3768", "Name": "White Phasesaber" }
+    ,{ "Id": "3769", "Name": "Yellow Phasesaber" }
   ],
   "Npcs": [
     {

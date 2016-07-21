@@ -1,5 +1,5 @@
 # TerraMap
-TerraMap is an interactive Terraria v1.3.1 world map viewer that loads quickly and lets you pan, zoom, find blocks, ores, items in chests, dungeons, NPCs, etc.
+TerraMap is an interactive Terraria v1.3.2 world map viewer that loads quickly and lets you pan, zoom, find blocks, ores, items in chests, dungeons, NPCs, etc.
 
 This is the source code repository.  If you're looking for the web app, you can find it here: https://terramap.github.io
 

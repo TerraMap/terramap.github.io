@@ -221,6 +221,9 @@ function readProperties(reader, world) {
 	world.towerActiveNebula = reader.readUint8() > 0;
 	world.towerActiveStardust = reader.readUint8() > 0;
 	world.lunarApocalypseIsUp = reader.readUint8() > 0;
+  world.partyManual = reader.readUint8() > 0;
+  world.partyGenuine = reader.readUint8() > 0;
+  world.partyCooldown = reader.readInt32();
 
 	var hellLevel = ((world.height - 230) - world.worldSurfaceY) / 6;
 	hellLevel = hellLevel * 6 + world.worldSurfaceY - 5;
