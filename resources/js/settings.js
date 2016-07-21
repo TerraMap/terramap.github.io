@@ -19963,21 +19963,21 @@ var settings = {
     { "Id": "443", "Name": "Geyser Trap" },
     { "Id": "444", "Name": "Bee Hive" },
     { "Id": "445", "Name": "Pixel Box" },
-    { "Id": "446", "Name": "SillyBalloonPink" },
-    { "Id": "447", "Name": "SillyBalloonPurple" },
-    { "Id": "448", "Name": "SillyBalloonGreen" },
-    { "Id": "449", "Name": "SillyStreamerBlue" },
-    { "Id": "450", "Name": "SillyStreamerGreen" },
-    { "Id": "451", "Name": "SillyStreamerPink" },
-    { "Id": "452", "Name": "SillyBalloonMachine" },
-    { "Id": "453", "Name": "SillyBalloonTile" },
+    { "Id": "446", "Name": "Silly Balloon Pink" },
+    { "Id": "447", "Name": "Silly Balloon Purple" },
+    { "Id": "448", "Name": "Silly Balloon Green" },
+    { "Id": "449", "Name": "Silly Streamer Blue" },
+    { "Id": "450", "Name": "Silly Streamer Green" },
+    { "Id": "451", "Name": "Silly Streamer Pink" },
+    { "Id": "452", "Name": "Silly Balloon Machine" },
+    { "Id": "453", "Name": "Silly Balloon Tile" },
     { "Id": "454", "Name": "Pigronata" },
-    { "Id": "455", "Name": "PartyMonolith" },
-    { "Id": "456", "Name": "PartyBundleOfBalloonTile" },
-    { "Id": "457", "Name": "PartyPresent" },
-    { "Id": "458", "Name": "SandFallBlock" },
-    { "Id": "459", "Name": "SnowFallBlock" },
-    { "Id": "460", "Name": "SnowCloud" }
+    { "Id": "455", "Name": "Party Monolith" },
+    { "Id": "456", "Name": "Party Bundle Of Balloon Tile" },
+    { "Id": "457", "Name": "Party Present" },
+    { "Id": "458", "Name": "Sand Fall Block" },
+    { "Id": "459", "Name": "Snow Fall Block" },
+    { "Id": "460", "Name": "Snow Cloud" }
   ],
   "Walls": [
     {
@@ -36306,7 +36306,7 @@ var settings = {
     ,{ "Id": "3727", "Name": "Logic Sensor Lava" }
     ,{ "Id": "3728", "Name": "Logic Sensor Honey" }
     ,{ "Id": "3729", "Name": "Logic Sensor Liquid" }
-    ,{ "Id": "3730", "Name": "Party BundleOf Balloons Accessory" }
+    ,{ "Id": "3730", "Name": "Party Bundle Of Balloons Accessory" }
     ,{ "Id": "3731", "Name": "Party Balloon Animal" }
     ,{ "Id": "3732", "Name": "Party Hat" }
     ,{ "Id": "3733", "Name": "Flower Boy Hat" }
