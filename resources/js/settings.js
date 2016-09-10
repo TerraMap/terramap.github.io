@@ -19977,7 +19977,9 @@ var settings = {
     { "Id": "457", "Name": "Party Present" },
     { "Id": "458", "Name": "Sand Fall Block" },
     { "Id": "459", "Name": "Snow Fall Block" },
-    { "Id": "460", "Name": "Snow Cloud" }
+    { "Id": "460", "Name": "Snow Cloud" },
+    { "Id": "461", "Name": "Sand Drip" },
+    { "Id": "462", "Name": "Desert Spirit Lamp" }
   ],
   "Walls": [
     {
@@ -36346,6 +36348,33 @@ var settings = {
     ,{ "Id": "3767", "Name": "Purple Phasesaber" }
     ,{ "Id": "3768", "Name": "White Phasesaber" }
     ,{ "Id": "3769", "Name": "Yellow Phasesaber" }
+    ,{ "Id": "3770", "Name": "DjinnsCurse" }
+    ,{ "Id": "3771", "Name": "AncientHorn" }
+    ,{ "Id": "3772", "Name": "AntlionClaw" }
+    ,{ "Id": "3773", "Name": "AncientArmorHat" }
+    ,{ "Id": "3774", "Name": "AncientArmorShirt" }
+    ,{ "Id": "3775", "Name": "AncientArmorPants" }
+    ,{ "Id": "3776", "Name": "AncientBattleArmorHat" }
+    ,{ "Id": "3777", "Name": "AncientBattleArmorShirt" }
+    ,{ "Id": "3778", "Name": "AncientBattleArmorPants" }
+    ,{ "Id": "3779", "Name": "SpiritFlame" }
+    ,{ "Id": "3780", "Name": "SandElementalBanner" }
+    ,{ "Id": "3781", "Name": "PocketMirror" }
+    ,{ "Id": "3782", "Name": "MagicSandDropper" }
+    ,{ "Id": "3783", "Name": "AncientBattleArmorMaterial" }
+    ,{ "Id": "3784", "Name": "LamiaPants" }
+    ,{ "Id": "3785", "Name": "LamiaShirt" }
+    ,{ "Id": "3786", "Name": "LamiaHat" }
+    ,{ "Id": "3787", "Name": "SkyFracture" }
+    ,{ "Id": "3788", "Name": "OnyxBlaster" }
+    ,{ "Id": "3789", "Name": "SandsharkBanner" }
+    ,{ "Id": "3790", "Name": "SandsharkCorruptBanner" }
+    ,{ "Id": "3791", "Name": "SandsharkCrimsonBanner" }
+    ,{ "Id": "3792", "Name": "SandsharkHallowedBanner" }
+    ,{ "Id": "3793", "Name": "TumbleweedBanner" }
+    ,{ "Id": "3794", "Name": "AncientCloth" }
+    ,{ "Id": "3795", "Name": "DjinnLamp" }
+    ,{ "Id": "3796", "Name": "MusicBoxSandstorm" }
   ],
   "Npcs": [
     {

@@ -1,18 +1,18 @@
 function rgb(r, g, b) {
-	return {
-		"r": r,
-		"g": g,
-		"b": b
-	};
+  return {
+    "r": r,
+    "g": g,
+    "b": b
+  };
 }
 
 // Decompiled from the Terraria source code
 
-var tileColors = new Array(461);
+var tileColors = new Array(463);
 var liquidColors = new Array(3);
 var wallColors = new Array(231);
 
-for(var i = 0; i < tileColors.length; i++) {
+for (var i = 0; i < tileColors.length; i++) {
   tileColors[i] = new Array(12);
 }
 
@@ -521,6 +521,7 @@ tileColors[227][11] = rgb(198, 19, 78);
 tileColors[373][0] = rgb(9, 61, 191);
 tileColors[374][0] = rgb(253, 32, 3);
 tileColors[375][0] = rgb(255, 156, 12);
+tileColors[461][0] = rgb(255, 222, 100);
 tileColors[323][0] = rgb(182, 141, 86);
 tileColors[325][0] = rgb(129, 125, 93);
 tileColors[326][0] = rgb(9, 61, 191);
@@ -646,13 +647,13 @@ tileColors[457][4] = rgb(229, 219, 234);
 tileColors[458][0] = rgb(211, 198, 111);
 tileColors[459][0] = rgb(190, 223, 232);
 tileColors[460][0] = rgb(141, 163, 181);
+tileColors[462][0] = rgb(231, 178, 28);
 
 liquidColors[0] = rgb(9, 61, 191);
 liquidColors[1] = rgb(253, 32, 3);
 liquidColors[2] = rgb(254, 194, 20);
 
-for (var j = 0; j < wallColors.length; j++)
-{
+for (var j = 0; j < wallColors.length; j++) {
   wallColors[j] = new Array(2);
 }
 
@@ -895,8 +896,7 @@ wallColors[230][0] = rgb(0, 117, 101);
 var array4 = new Array(256);
 var color2 = rgb(50, 40, 255);
 var color3 = rgb(145, 185, 255);
-for (var k = 0; k < array4.length; k++)
-{
+for (var k = 0; k < array4.length; k++) {
   var num = k / array4.length;
   var num2 = 1 - num;
   array4[k] = rgb(50 * num2 + 145 * num, 40 * num2 + 185 * num, 255 * num2 + 255 * num);
@@ -905,8 +905,7 @@ for (var k = 0; k < array4.length; k++)
 var array5 = new Array(256);
 var color4 = rgb(88, 61, 46);
 var color5 = rgb(37, 78, 123);
-for (var l = 0; l < array5.length; l++)
-{
+for (var l = 0; l < array5.length; l++) {
   var num3 = l / 255;
   var num4 = 1 - num3;
   array5[l] = rgb(88 * num4 + 37 * num3, 61 * num4 + 78 * num3, 46 * num4 + 123 * num3);
@@ -914,8 +913,7 @@ for (var l = 0; l < array5.length; l++)
 var array6 = new Array(256);
 var color6 = rgb(74, 67, 60);
 color5 = rgb(53, 70, 97);
-for (var m = 0; m < array6.length; m++)
-{
+for (var m = 0; m < array6.length; m++) {
   var num5 = m / 255;
   var num6 = 1 - num5;
   array6[m] = rgb(74 * num6 + 53 * num5, 67 * num6 + 70 * num5, 60 * num6 + 97 * num5);
@@ -923,24 +921,20 @@ for (var m = 0; m < array6.length; m++)
 var color7 = rgb(50, 44, 38);
 var num7 = 0;
 var tileOptionCounts = new Array(tileColors.length);
-for (var n = 0; n < tileColors.length; n++)
-{
-  var  array7 = tileColors[n];
+for (var n = 0; n < tileColors.length; n++) {
+  var array7 = tileColors[n];
   var num8 = 0;
-  while (num8 < 12 && (array7[num8] != rgb(0, 0, 0)))
-  {
+  while (num8 < 12 && (array7[num8] != rgb(0, 0, 0))) {
     num8++;
   }
   tileOptionCounts[n] = num8;
   num7 += num8;
 }
 wallOptionCounts = new Array(wallColors.length);
-for (var num9 = 0; num9 < wallColors.length; num9++)
-{
-  var  array8 = wallColors[num9];
+for (var num9 = 0; num9 < wallColors.length; num9++) {
+  var array8 = wallColors[num9];
   var num10 = 0;
-  while (num10 < 2 && (array8[num10] != rgb(0, 0, 0)))
-  {
+  while (num10 < 2 && (array8[num10] != rgb(0, 0, 0))) {
     num10++;
   }
   wallOptionCounts[num9] = num10;
@@ -952,65 +946,51 @@ colorLookup[0] = rgb(0, 0, 0);
 var num11 = 1;
 var tilePosition = num11;
 tileLookup = new Array(tileColors.length);
-for (var num12 = 0; num12 < tileColors.length; num12++)
-{
-  if (tileOptionCounts[num12] > 0)
-  {
-    var  arg_5446_0 = tileColors[num12];
+for (var num12 = 0; num12 < tileColors.length; num12++) {
+  if (tileOptionCounts[num12] > 0) {
+    var arg_5446_0 = tileColors[num12];
     tileLookup[num12] = num11;
-    for (var num13 = 0; num13 < tileOptionCounts[num12]; num13++)
-    {
+    for (var num13 = 0; num13 < tileOptionCounts[num12]; num13++) {
       colorLookup[num11] = tileColors[num12][num13];
       num11 += 1;
     }
-  }
-  else
-  {
+  } else {
     tileLookup[num12] = 0;
   }
 }
 wallPosition = num11;
 wallLookup = new Array(wallColors.length);
 wallRangeStart = num11;
-for (var num14 = 0; num14 < wallColors.length; num14++)
-{
-  if (wallOptionCounts[num14] > 0)
-  {
+for (var num14 = 0; num14 < wallColors.length; num14++) {
+  if (wallOptionCounts[num14] > 0) {
     var arg_54DB_0 = wallColors[num14];
     wallLookup[num14] = num11;
-    for (var num15 = 0; num15 < wallOptionCounts[num14]; num15++)
-    {
+    for (var num15 = 0; num15 < wallOptionCounts[num14]; num15++) {
       colorLookup[num11] = wallColors[num14][num15];
       num11 += 1;
     }
-  }
-  else
-  {
+  } else {
     wallLookup[num14] = 0;
   }
 }
 wallRangeEnd = num11;
 liquidPosition = num11;
-for (var num16 = 0; num16 < 3; num16++)
-{
+for (var num16 = 0; num16 < 3; num16++) {
   colorLookup[num11] = liquidColors[num16];
   num11 += 1;
 }
 skyPosition = num11;
-for (var num17 = 0; num17 < 256; num17++)
-{
+for (var num17 = 0; num17 < 256; num17++) {
   colorLookup[num11] = array4[num17];
   num11 += 1;
 }
 dirtPosition = num11;
-for (var num18 = 0; num18 < 256; num18++)
-{
+for (var num18 = 0; num18 < 256; num18++) {
   colorLookup[num11] = array5[num18];
   num11 += 1;
 }
 rockPosition = num11;
-for (var num19 = 0; num19 < 256; num19++)
-{
+for (var num19 = 0; num19 < 256; num19++) {
   colorLookup[num11] = array6[num19];
   num11 += 1;
 }
