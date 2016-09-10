@@ -227,12 +227,13 @@ function readProperties(reader, world) {
 
   world.sandstormHappening = reader.readUint8() > 0;
   world.sandstormTimeLeft = reader.readInt32();
-  world.sandstormSeverity = reader.readUint8();
-  world.sandstormIntendedSeverity = reader.readUint8();
 
-  var hellLevel = ((world.height - 230) - world.worldSurfaceY) / 6;
-  hellLevel = hellLevel * 6 + world.worldSurfaceY - 5;
-  world.hellLayerY = hellLevel;
+  world.sandstormSeverity = reader.readFloat32();
+  world.sandstormIntendedSeverity = reader.readFloat32();
+
+	var hellLevel = ((world.height - 230) - world.worldSurfaceY) / 6;
+	hellLevel = hellLevel * 6 + world.worldSurfaceY - 5;
+	world.hellLayerY = hellLevel;
 }
 
 function readTiles(reader, world) {
