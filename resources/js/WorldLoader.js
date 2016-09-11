@@ -225,6 +225,12 @@ function readProperties(reader, world) {
   world.partyGenuine = reader.readUint8() > 0;
   world.partyCooldown = reader.readInt32();
 
+  var num3 = reader.readInt32();
+  for (var k = 0; k < num3; k++)
+  {
+    reader.readInt32();
+  }
+
   world.sandstormHappening = reader.readUint8() > 0;
   world.sandstormTimeLeft = reader.readInt32();
 

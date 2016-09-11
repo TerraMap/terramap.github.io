@@ -951,6 +951,13 @@ function onWorldLoaderWorkerMessage(e) {
     $("#worldPropertyList").append('<li>towerActiveNebula: ' + world.towerActiveNebula + '</li>');
     $("#worldPropertyList").append('<li>towerActiveStardust: ' + world.towerActiveStardust + '</li>');
     $("#worldPropertyList").append('<li>lunarApocalypseIsUp: ' + world.lunarApocalypseIsUp + '</li>');
+    $("#worldPropertyList").append('<li>partyManual: ' + world.partyManual + '</li>');
+    $("#worldPropertyList").append('<li>partyGenuine: ' + world.partyGenuine + '</li>');
+    $("#worldPropertyList").append('<li>partyCooldown: ' + world.partyCooldown + '</li>');
+    $("#worldPropertyList").append('<li>sandstormHappening: ' + world.sandstormHappening + '</li>');
+    $("#worldPropertyList").append('<li>sandstormTimeLeft: ' + world.sandstormTimeLeft + '</li>');
+    $("#worldPropertyList").append('<li>sandstormSeverity: ' + world.sandstormSeverity + '</li>');
+    $("#worldPropertyList").append('<li>sandstormIntendedSeverity: ' + world.sandstormIntendedSeverity + '</li>');
   }
 }
 

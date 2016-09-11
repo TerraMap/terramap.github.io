@@ -21331,99 +21331,99 @@ var settings = {
   "Items": [
     {
       "Id": "-48",
-      "Name": "Platinum Bow"
+      "Name": "Platinum Bow Old"
     },
     {
       "Id": "-47",
-      "Name": "Platinum Hammer"
+      "Name": "Platinum Hammer Old"
     },
     {
       "Id": "-46",
-      "Name": "Platinum Axe"
+      "Name": "Platinum Axe Old"
     },
     {
       "Id": "-45",
-      "Name": "Platinum Shortsword"
+      "Name": "Platinum Shortsword Old"
     },
     {
       "Id": "-44",
-      "Name": "Platinum Broadsword"
+      "Name": "Platinum Broadsword Old"
     },
     {
       "Id": "-43",
-      "Name": "Platinum Pickaxe"
+      "Name": "Platinum Pickaxe Old"
     },
     {
       "Id": "-42",
-      "Name": "Tungsten Bow"
+      "Name": "Tungsten Bow Old"
     },
     {
       "Id": "-41",
-      "Name": "Tungsten Hammer"
+      "Name": "Tungsten Hammer Old"
     },
     {
       "Id": "-40",
-      "Name": "Tungsten Axe"
+      "Name": "Tungsten Axe Old"
     },
     {
       "Id": "-39",
-      "Name": "Tungsten Shortsword"
+      "Name": "Tungsten Shortsword Old"
     },
     {
       "Id": "-38",
-      "Name": "Tungsten Broadsword"
+      "Name": "Tungsten Broadsword Old"
     },
     {
       "Id": "-37",
-      "Name": "Tungsten Pickaxe"
+      "Name": "Tungsten Pickaxe Old"
     },
     {
       "Id": "-36",
-      "Name": "Lead Bow"
+      "Name": "Lead Bow Old"
     },
     {
       "Id": "-35",
-      "Name": "Lead Hammer"
+      "Name": "Lead Hammer Old"
     },
     {
       "Id": "-34",
-      "Name": "Lead Axe"
+      "Name": "Lead Axe Old"
     },
     {
       "Id": "-33",
-      "Name": "Lead Shortsword"
+      "Name": "Lead Shortsword Old"
     },
     {
       "Id": "-32",
-      "Name": "Lead Broadsword"
+      "Name": "Lead Broadsword Old"
     },
     {
       "Id": "-31",
-      "Name": "Lead Pickaxe"
+      "Name": "Lead Pickaxe Old"
     },
     {
       "Id": "-30",
-      "Name": "Tin Bow"
+      "Name": "Tin Bow Old"
     },
     {
       "Id": "-29",
-      "Name": "Tin Hammer"
+      "Name": "Tin Hammer Old"
     },
     {
       "Id": "-28",
-      "Name": "Tin Axe"
+      "Name": "Tin Axe Old"
     },
     {
       "Id": "-27",
-      "Name": "Tin Shortsword"
+      "Name": "Tin Shortsword Old"
     },
     {
       "Id": "-26",
-      "Name": "Tin Broadsword"
+      "Name": "Tin Broadsword Old"
     },
     {
       "Id": "-25",
-      "Name": "Tin Pickaxe"
+      "Name": "Tin Pickaxe Old"
     },
     {
       "Id": "-24",
@@ -21451,75 +21451,75 @@ var settings = {
     },
     {
       "Id": "-18",
-      "Name": "Copper Bow"
+      "Name": "Copper Bow Old"
     },
     {
       "Id": "-17",
-      "Name": "Copper Hammer"
+      "Name": "Copper Hammer Old"
     },
     {
       "Id": "-16",
-      "Name": "Copper Axe"
+      "Name": "Copper Axe Old"
     },
     {
       "Id": "-15",
-      "Name": "Copper Shortsword"
+      "Name": "Copper Shortsword Old"
     },
     {
       "Id": "-14",
-      "Name": "Copper Broadsword"
+      "Name": "Copper Broadsword Old"
     },
     {
       "Id": "-13",
-      "Name": "Copper Pickaxe"
+      "Name": "Copper Pickaxe Old"
     },
     {
       "Id": "-12",
-      "Name": "Silver Bow"
+      "Name": "Silver Bow Old"
     },
     {
       "Id": "-11",
-      "Name": "Silver Hammer"
+      "Name": "Silver Hammer Old"
     },
     {
       "Id": "-10",
-      "Name": "Silver Axe"
+      "Name": "Silver Axe Old"
     },
     {
       "Id": "-9",
-      "Name": "Silver Shortsword"
+      "Name": "Silver Shortsword Old"
     },
     {
       "Id": "-8",
-      "Name": "Silver Broadsword"
+      "Name": "Silver Broadsword Old"
     },
     {
       "Id": "-7",
-      "Name": "Silver Pickaxe"
+      "Name": "Silver Pickaxe Old"
     },
     {
       "Id": "-6",
-      "Name": "Gold Bow"
+      "Name": "Gold Bow Old"
     },
     {
       "Id": "-5",
-      "Name": "Gold Hammer"
+      "Name": "Gold Hammer Old"
     },
     {
       "Id": "-4",
-      "Name": "Gold Axe"
+      "Name": "Gold Axe Old"
     },
     {
       "Id": "-3",
-      "Name": "Gold Shortsword"
+      "Name": "Gold Shortsword Old"
     },
     {
       "Id": "-2",
-      "Name": "Gold Broadsword"
+      "Name": "Gold Broadsword Old"
     },
     {
       "Id": "-1",
-      "Name": "Gold Pickaxe"
+      "Name": "Gold Pickaxe Old"
     },
     {
       "Id": "0",
@@ -28013,7 +28013,7 @@ var settings = {
     },
     {
       "Id": "1621",
-      "Name": "Bat Banner",
+      "Name": "Cave Bat Banner",
       "Tally": "7"
     },
     {
@@ -28288,7 +28288,7 @@ var settings = {
     },
     {
       "Id": "1676",
-      "Name": "Pirate Banner",
+      "Name": "Pirate Deckhand Banner",
       "Tally": "62"
     },
     {
@@ -28318,7 +28318,7 @@ var settings = {
     },
     {
       "Id": "1682",
-      "Name": "Skeleton Mage Banner",
+      "Name": "Dark Caster Banner",
       "Tally": "68"
     },
     {
@@ -28333,7 +28333,7 @@ var settings = {
     },
     {
       "Id": "1685",
-      "Name": "Spider Banner",
+      "Name": "Wall Creeper Banner",
       "Tally": "71"
     },
     {
@@ -28348,7 +28348,7 @@ var settings = {
     },
     {
       "Id": "1688",
-      "Name": "Tortoise Banner",
+      "Name": "Giant Tortoise Banner",
       "Tally": "74"
     },
     {
@@ -35418,7 +35418,7 @@ var settings = {
     },
     {
       "Id": "3420",
-      "Name": "Stardust Soldier Banner",
+      "Name": "Stargazer Banner",
       "Tally": "216"
     },
     {
@@ -35473,7 +35473,7 @@ var settings = {
     },
     {
       "Id": "3431",
-      "Name": "Solenian Banner",
+      "Name": "Selenian Banner",
       "Tally": "227"
     },
     {
@@ -36180,29 +36180,29 @@ var settings = {
       "Name": "Celestial Sigil"
     }
     ,{ "Id": "3601", "Name": "Celestial Sigil" }
-    ,{ "Id": "3602", "Name": "Logic Gate Lamp Off" }
-    ,{ "Id": "3603", "Name": "Logic Gate AND" }
-    ,{ "Id": "3604", "Name": "Logic Gate OR" }
-    ,{ "Id": "3605", "Name": "Logic Gate NAND" }
-    ,{ "Id": "3606", "Name": "Logic Gate NOR" }
-    ,{ "Id": "3607", "Name": "Logic Gate XOR" }
-    ,{ "Id": "3608", "Name": "Logic Gate XNOR" }
-    ,{ "Id": "3609", "Name": "Conveyor Belt Left" }
-    ,{ "Id": "3610", "Name": "Conveyor Belt Right" }
-    ,{ "Id": "3611", "Name": "Wire Kite" }
+    ,{ "Id": "3602", "Name": "Logic Gate Lamp (Off)" }
+    ,{ "Id": "3603", "Name": "Logic Gate (AND)" }
+    ,{ "Id": "3604", "Name": "Logic Gate (OR)" }
+    ,{ "Id": "3605", "Name": "Logic Gate (NAND)" }
+    ,{ "Id": "3606", "Name": "Logic Gate (NOR)" }
+    ,{ "Id": "3607", "Name": "Logic Gate (XOR)" }
+    ,{ "Id": "3608", "Name": "Logic Gate (XNOR)" }
+    ,{ "Id": "3609", "Name": "Conveyor Belt (Clockwise)" }
+    ,{ "Id": "3610", "Name": "Conveyor Belt (Counter Clockwise)" }
+    ,{ "Id": "3611", "Name": "The Grand Design" }
     ,{ "Id": "3612", "Name": "Yellow Wrench" }
-    ,{ "Id": "3613", "Name": "Logic Sensor Sun" }
-    ,{ "Id": "3614", "Name": "Logic Sensor Moon" }
-    ,{ "Id": "3615", "Name": "Logic Sensor Above" }
-    ,{ "Id": "3616", "Name": "Wire Pipe" }
+    ,{ "Id": "3613", "Name": "Logic Sensor (Day)" }
+    ,{ "Id": "3614", "Name": "Logic Sensor (Night)" }
+    ,{ "Id": "3615", "Name": "Logic Sensor (Player Above)" }
+    ,{ "Id": "3616", "Name": "Junction Box" }
     ,{ "Id": "3617", "Name": "Announcement Box" }
-    ,{ "Id": "3618", "Name": "Logic Gate Lamp On" }
+    ,{ "Id": "3618", "Name": "Logic Gate Lamp (On)" }
     ,{ "Id": "3619", "Name": "Mechanical Lens" }
     ,{ "Id": "3620", "Name": "Actuation Rod" }
-    ,{ "Id": "3621", "Name": "Team Block Red" }
-    ,{ "Id": "3622", "Name": "Team Block Red Platform" }
+    ,{ "Id": "3621", "Name": "Red Team Block" }
+    ,{ "Id": "3622", "Name": "Red Team Platform" }
     ,{ "Id": "3623", "Name": "Static Hook" }
-    ,{ "Id": "3624", "Name": "Actuation Accessory" }
+    ,{ "Id": "3624", "Name": "Presserator" }
     ,{ "Id": "3625", "Name": "Multicolor Wrench" }
     ,{ "Id": "3626", "Name": "Weighted Pressure Plate Pink" }
     ,{ "Id": "3627", "Name": "Engineering Helmet" }
@@ -36241,50 +36241,50 @@ var settings = {
     ,{ "Id": "3660", "Name": "Penguin Statue" }
     ,{ "Id": "3661", "Name": "Frog Statue" }
     ,{ "Id": "3662", "Name": "Buggy Statue" }
-    ,{ "Id": "3663", "Name": "Logic Gate Lamp Faulty" }
+    ,{ "Id": "3663", "Name": "Logic Gate Lamp (Faulty)" }
     ,{ "Id": "3664", "Name": "Portal Gun Station" }
-    ,{ "Id": "3665", "Name": "Fake Chest" }
-    ,{ "Id": "3666", "Name": "Fake Gold Chest" }
-    ,{ "Id": "3667", "Name": "Fake Shadow Chest" }
-    ,{ "Id": "3668", "Name": "Fake Ebonwood Chest" }
-    ,{ "Id": "3669", "Name": "Fake RichMahogany Chest" }
-    ,{ "Id": "3670", "Name": "Fake Pearlwood Chest" }
-    ,{ "Id": "3671", "Name": "Fake Ivy Chest" }
-    ,{ "Id": "3672", "Name": "Fake Ice Chest" }
-    ,{ "Id": "3673", "Name": "Fake Living Wood Chest" }
-    ,{ "Id": "3674", "Name": "Fake Skyware Chest" }
-    ,{ "Id": "3675", "Name": "Fake Shadewood Chest" }
-    ,{ "Id": "3676", "Name": "Fake Web Covered Chest" }
-    ,{ "Id": "3677", "Name": "Fake Lihzahrd Chest" }
-    ,{ "Id": "3678", "Name": "Fake Water Chest" }
-    ,{ "Id": "3679", "Name": "Fake JungleChest" }
-    ,{ "Id": "3680", "Name": "Fake CorruptionChest" }
-    ,{ "Id": "3681", "Name": "Fake CrimsonChest" }
-    ,{ "Id": "3682", "Name": "Fake HallowedChest" }
-    ,{ "Id": "3683", "Name": "Fake FrozenChest" }
-    ,{ "Id": "3684", "Name": "Fake DynastyChest" }
-    ,{ "Id": "3685", "Name": "Fake HoneyChest" }
-    ,{ "Id": "3686", "Name": "Fake SteampunkChest" }
-    ,{ "Id": "3687", "Name": "Fake PalmWoodChest" }
-    ,{ "Id": "3688", "Name": "Fake MushroomChest" }
-    ,{ "Id": "3689", "Name": "Fake BorealWoodChest" }
-    ,{ "Id": "3690", "Name": "Fake SlimeChest" }
-    ,{ "Id": "3691", "Name": "Fake GreenDungeonChest" }
-    ,{ "Id": "3692", "Name": "Fake PinkDungeonChest" }
-    ,{ "Id": "3693", "Name": "Fake BlueDungeonChest" }
-    ,{ "Id": "3694", "Name": "Fake BoneChest" }
-    ,{ "Id": "3695", "Name": "Fake CactusChest" }
-    ,{ "Id": "3696", "Name": "Fake FleshChest" }
-    ,{ "Id": "3697", "Name": "Fake ObsidianChest" }
-    ,{ "Id": "3698", "Name": "Fake PumpkinChest" }
-    ,{ "Id": "3699", "Name": "Fake SpookyChest" }
-    ,{ "Id": "3700", "Name": "Fake GlassChest" }
-    ,{ "Id": "3701", "Name": "Fake MartianChest" }
-    ,{ "Id": "3702", "Name": "Fake MeteoriteChest" }
-    ,{ "Id": "3703", "Name": "Fake GraniteChest" }
-    ,{ "Id": "3704", "Name": "Fake MarbleChest" }
-    ,{ "Id": "3705", "Name": "Fake newchest1" }
-    ,{ "Id": "3706", "Name": "Fake newchest2" }
+    ,{ "Id": "3665", "Name": "Trapped Chest" }
+    ,{ "Id": "3666", "Name": "Trapped Gold Chest" }
+    ,{ "Id": "3667", "Name": "Trapped Shadow Chest" }
+    ,{ "Id": "3668", "Name": "Trapped Ebonwood Chest" }
+    ,{ "Id": "3669", "Name": "Trapped RichMahogany Chest" }
+    ,{ "Id": "3670", "Name": "Trapped Pearlwood Chest" }
+    ,{ "Id": "3671", "Name": "Trapped Ivy Chest" }
+    ,{ "Id": "3672", "Name": "Trapped Ice Chest" }
+    ,{ "Id": "3673", "Name": "Trapped Living Wood Chest" }
+    ,{ "Id": "3674", "Name": "Trapped Skyware Chest" }
+    ,{ "Id": "3675", "Name": "Trapped Shadewood Chest" }
+    ,{ "Id": "3676", "Name": "Trapped Web Covered Chest" }
+    ,{ "Id": "3677", "Name": "Trapped Lihzahrd Chest" }
+    ,{ "Id": "3678", "Name": "Trapped Water Chest" }
+    ,{ "Id": "3679", "Name": "Trapped JungleChest" }
+    ,{ "Id": "3680", "Name": "Trapped CorruptionChest" }
+    ,{ "Id": "3681", "Name": "Trapped CrimsonChest" }
+    ,{ "Id": "3682", "Name": "Trapped HallowedChest" }
+    ,{ "Id": "3683", "Name": "Trapped FrozenChest" }
+    ,{ "Id": "3684", "Name": "Trapped DynastyChest" }
+    ,{ "Id": "3685", "Name": "Trapped HoneyChest" }
+    ,{ "Id": "3686", "Name": "Trapped SteampunkChest" }
+    ,{ "Id": "3687", "Name": "Trapped PalmWoodChest" }
+    ,{ "Id": "3688", "Name": "Trapped MushroomChest" }
+    ,{ "Id": "3689", "Name": "Trapped BorealWoodChest" }
+    ,{ "Id": "3690", "Name": "Trapped SlimeChest" }
+    ,{ "Id": "3691", "Name": "Trapped GreenDungeonChest" }
+    ,{ "Id": "3692", "Name": "Trapped PinkDungeonChest" }
+    ,{ "Id": "3693", "Name": "Trapped BlueDungeonChest" }
+    ,{ "Id": "3694", "Name": "Trapped BoneChest" }
+    ,{ "Id": "3695", "Name": "Trapped CactusChest" }
+    ,{ "Id": "3696", "Name": "Trapped FleshChest" }
+    ,{ "Id": "3697", "Name": "Trapped ObsidianChest" }
+    ,{ "Id": "3698", "Name": "Trapped PumpkinChest" }
+    ,{ "Id": "3699", "Name": "Trapped SpookyChest" }
+    ,{ "Id": "3700", "Name": "Trapped GlassChest" }
+    ,{ "Id": "3701", "Name": "Trapped MartianChest" }
+    ,{ "Id": "3702", "Name": "Trapped MeteoriteChest" }
+    ,{ "Id": "3703", "Name": "Trapped GraniteChest" }
+    ,{ "Id": "3704", "Name": "Trapped MarbleChest" }
+    ,{ "Id": "3705", "Name": "Trapped newchest1" }
+    ,{ "Id": "3706", "Name": "Trapped newchest2" }
     ,{ "Id": "3707", "Name": "Projectile Pressure Pad" }
     ,{ "Id": "3708", "Name": "Wall Creeper Statue" }
     ,{ "Id": "3709", "Name": "Unicorn Statue" }
@@ -36297,23 +36297,23 @@ var settings = {
     ,{ "Id": "3716", "Name": "Pigron Statue" }
     ,{ "Id": "3717", "Name": "Hoplite Statue" }
     ,{ "Id": "3718", "Name": "Granite Golem Statue" }
-    ,{ "Id": "3719", "Name": "Zombie Arm Statue" }
+    ,{ "Id": "3719", "Name": "Armed Zombie Statue" }
     ,{ "Id": "3720", "Name": "Blood Zombie Statue" }
     ,{ "Id": "3721", "Name": "Angler Tackle Bag" }
-    ,{ "Id": "3722", "Name": "Geyser Trap" }
+    ,{ "Id": "3722", "Name": "Geyser" }
     ,{ "Id": "3723", "Name": "Ultra Bright Campfire" }
     ,{ "Id": "3724", "Name": "Bone Campfire" }
     ,{ "Id": "3725", "Name": "Pixel Box" }
-    ,{ "Id": "3726", "Name": "Logic Sensor Water" }
-    ,{ "Id": "3727", "Name": "Logic Sensor Lava" }
-    ,{ "Id": "3728", "Name": "Logic Sensor Honey" }
-    ,{ "Id": "3729", "Name": "Logic Sensor Liquid" }
-    ,{ "Id": "3730", "Name": "Party Bundle Of Balloons Accessory" }
-    ,{ "Id": "3731", "Name": "Party Balloon Animal" }
+    ,{ "Id": "3726", "Name": "Liquid Sensor (Water)" }
+    ,{ "Id": "3727", "Name": "Liquid Sensor (Lava)" }
+    ,{ "Id": "3728", "Name": "Liquid Sensor (Honey)" }
+    ,{ "Id": "3729", "Name": "Liquid Sensor (Any)" }
+    ,{ "Id": "3730", "Name": "Bundled Party Balloons" }
+    ,{ "Id": "3731", "Name": "Balloon Animal" }
     ,{ "Id": "3732", "Name": "Party Hat" }
-    ,{ "Id": "3733", "Name": "Flower Boy Hat" }
-    ,{ "Id": "3734", "Name": "Flower Boy Shirt" }
-    ,{ "Id": "3735", "Name": "Flower Boy Pants" }
+    ,{ "Id": "3733", "Name": "Silly Sunflower Petals" }
+    ,{ "Id": "3734", "Name": "Silly Sunflower Tops" }
+    ,{ "Id": "3735", "Name": "Silly Sunflower Bottoms" }
     ,{ "Id": "3736", "Name": "Silly Balloon Pink" }
     ,{ "Id": "3737", "Name": "Silly Balloon Purple" }
     ,{ "Id": "3738", "Name": "Silly Balloon Green" }
@@ -36325,56 +36325,56 @@ var settings = {
     ,{ "Id": "3744", "Name": "Silly Balloon Tied Purple" }
     ,{ "Id": "3745", "Name": "Silly Balloon Tied Green" }
     ,{ "Id": "3746", "Name": "Pigronata" }
-    ,{ "Id": "3747", "Name": "Party Monolith" }
-    ,{ "Id": "3748", "Name": "Party Bundle Of Balloon Tile" }
+    ,{ "Id": "3747", "Name": "Party Center" }
+    ,{ "Id": "3748", "Name": "Silly Tied Bundle of Balloons" }
     ,{ "Id": "3749", "Name": "Party Present" }
-    ,{ "Id": "3750", "Name": "Slice Of Cake" }
+    ,{ "Id": "3750", "Name": "Slice of Cake" }
     ,{ "Id": "3751", "Name": "Cog Wall" }
-    ,{ "Id": "3752", "Name": "Sand Fall Wall" }
-    ,{ "Id": "3753", "Name": "Snow Fall Wall" }
-    ,{ "Id": "3754", "Name": "Sand Fall Block" }
-    ,{ "Id": "3755", "Name": "Snow Fall Block" }
-    ,{ "Id": "3756", "Name": "Snow Cloud Block" }
-    ,{ "Id": "3757", "Name": "Pedguin Hat" }
-    ,{ "Id": "3758", "Name": "Pedguin Shirt" }
-    ,{ "Id": "3759", "Name": "Pedguin Pants" }
+    ,{ "Id": "3752", "Name": "Sandfall Wall" }
+    ,{ "Id": "3753", "Name": "Snowfall Wall" }
+    ,{ "Id": "3754", "Name": "Sandfall Block" }
+    ,{ "Id": "3755", "Name": "Snowfall Block" }
+    ,{ "Id": "3756", "Name": "Snow Cloud" }
+    ,{ "Id": "3757", "Name": "Pedguin's Hood" }
+    ,{ "Id": "3758", "Name": "Pedguin's Jacket" }
+    ,{ "Id": "3759", "Name": "Pedguin's Trousers" }
     ,{ "Id": "3760", "Name": "Silly Balloon Pink Wall" }
     ,{ "Id": "3761", "Name": "Silly Balloon Purple Wall" }
     ,{ "Id": "3762", "Name": "Silly Balloon Green Wall" }
-    ,{ "Id": "3763", "Name": "Aviator Sunglasses" }
+    ,{ "Id": "3763", "Name": "0x33's Sunglasses" }
     ,{ "Id": "3764", "Name": "Blue Phasesaber" }
     ,{ "Id": "3765", "Name": "Red Phasesaber" }
     ,{ "Id": "3766", "Name": "Green Phasesaber" }
     ,{ "Id": "3767", "Name": "Purple Phasesaber" }
     ,{ "Id": "3768", "Name": "White Phasesaber" }
     ,{ "Id": "3769", "Name": "Yellow Phasesaber" }
-    ,{ "Id": "3770", "Name": "DjinnsCurse" }
-    ,{ "Id": "3771", "Name": "AncientHorn" }
-    ,{ "Id": "3772", "Name": "AntlionClaw" }
-    ,{ "Id": "3773", "Name": "AncientArmorHat" }
-    ,{ "Id": "3774", "Name": "AncientArmorShirt" }
-    ,{ "Id": "3775", "Name": "AncientArmorPants" }
-    ,{ "Id": "3776", "Name": "AncientBattleArmorHat" }
-    ,{ "Id": "3777", "Name": "AncientBattleArmorShirt" }
-    ,{ "Id": "3778", "Name": "AncientBattleArmorPants" }
-    ,{ "Id": "3779", "Name": "SpiritFlame" }
-    ,{ "Id": "3780", "Name": "SandElementalBanner" }
-    ,{ "Id": "3781", "Name": "PocketMirror" }
-    ,{ "Id": "3782", "Name": "MagicSandDropper" }
-    ,{ "Id": "3783", "Name": "AncientBattleArmorMaterial" }
-    ,{ "Id": "3784", "Name": "LamiaPants" }
-    ,{ "Id": "3785", "Name": "LamiaShirt" }
-    ,{ "Id": "3786", "Name": "LamiaHat" }
-    ,{ "Id": "3787", "Name": "SkyFracture" }
-    ,{ "Id": "3788", "Name": "OnyxBlaster" }
-    ,{ "Id": "3789", "Name": "SandsharkBanner" }
-    ,{ "Id": "3790", "Name": "SandsharkCorruptBanner" }
-    ,{ "Id": "3791", "Name": "SandsharkCrimsonBanner" }
-    ,{ "Id": "3792", "Name": "SandsharkHallowedBanner" }
-    ,{ "Id": "3793", "Name": "TumbleweedBanner" }
-    ,{ "Id": "3794", "Name": "AncientCloth" }
-    ,{ "Id": "3795", "Name": "DjinnLamp" }
-    ,{ "Id": "3796", "Name": "MusicBoxSandstorm" }
+    ,{ "Id": "3770", "Name": "Djinn's Curse" }
+    ,{ "Id": "3771", "Name": "Ancient Horn" }
+    ,{ "Id": "3772", "Name": "Mandible Blade" }
+    ,{ "Id": "3773", "Name": "Ancient Headdress" }
+    ,{ "Id": "3774", "Name": "Ancient Garments" }
+    ,{ "Id": "3775", "Name": "Ancient Slacks" }
+    ,{ "Id": "3776", "Name": "Forbidden Mask" }
+    ,{ "Id": "3777", "Name": "Forbidden Robes" }
+    ,{ "Id": "3778", "Name": "Forbidden Treads" }
+    ,{ "Id": "3779", "Name": "Spirit Flame" }
+    ,{ "Id": "3780", "Name": "Sand Elemental Banner" }
+    ,{ "Id": "3781", "Name": "Pocket Mirror" }
+    ,{ "Id": "3782", "Name": "Magic Sand Dropper" }
+    ,{ "Id": "3783", "Name": "Forbidden Fragment" }
+    ,{ "Id": "3784", "Name": "Lamia Tail" }
+    ,{ "Id": "3785", "Name": "Lamia Wraps" }
+    ,{ "Id": "3786", "Name": "Lamia Mask" }
+    ,{ "Id": "3787", "Name": "Sky Fracture" }
+    ,{ "Id": "3788", "Name": "Onyx Blaster" }
+    ,{ "Id": "3789", "Name": "Sand Shark Banner" }
+    ,{ "Id": "3790", "Name": "Bone Biter Banner" }
+    ,{ "Id": "3791", "Name": "Flesh Reaver Banner" }
+    ,{ "Id": "3792", "Name": "Crystal Thresher Banner" }
+    ,{ "Id": "3793", "Name": "Angry Tumbler Banner" }
+    ,{ "Id": "3794", "Name": "Ancient Cloth" }
+    ,{ "Id": "3795", "Name": "Desert Spirit Lamp" }
+    ,{ "Id": "3796", "Name": "Music Box (Sandstorm)" }
   ],
   "Npcs": [
     {
