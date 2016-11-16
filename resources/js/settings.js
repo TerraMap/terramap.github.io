@@ -19979,7 +19979,11 @@ var settings = {
     { "Id": "459", "Name": "Snow Fall Block" },
     { "Id": "460", "Name": "Snow Cloud" },
     { "Id": "461", "Name": "Sand Drip" },
-    { "Id": "462", "Name": "Desert Spirit Lamp" }
+    { "Id": "462", "Name": "Desert Spirit Lamp" },
+    { "Id": "463", "Name": "Defenders Forge" },
+    { "Id": "464", "Name": "War Table" },
+    { "Id": "465", "Name": "War Table Banner" },
+    { "Id": "466", "Name": "Elder Crystal Stand" }
   ],
   "Walls": [
     {
@@ -36375,6 +36379,84 @@ var settings = {
     ,{ "Id": "3794", "Name": "Ancient Cloth" }
     ,{ "Id": "3795", "Name": "Desert Spirit Lamp" }
     ,{ "Id": "3796", "Name": "Music Box (Sandstorm)" }
+    ,{ "Id": "3797", "Name": "Apprentice's Hat" }
+    ,{ "Id": "3798", "Name": "Apprentice's Robe" }
+    ,{ "Id": "3799", "Name": "Apprentice's Trousers" }
+    ,{ "Id": "3800", "Name": "Squire's Great Helm" }
+    ,{ "Id": "3801", "Name": "Squire's Plating" }
+    ,{ "Id": "3802", "Name": "Squire's Greaves" }
+    ,{ "Id": "3803", "Name": "Huntress's Wig" }
+    ,{ "Id": "3804", "Name": "Huntress's Jerkin" }
+    ,{ "Id": "3805", "Name": "Huntress's Pants" }
+    ,{ "Id": "3806", "Name": "Monk's Bushy Brow Bald Cap" }
+    ,{ "Id": "3807", "Name": "Monk's Shirt" }
+    ,{ "Id": "3808", "Name": "Monk's Pants" }
+    ,{ "Id": "3809", "Name": "Apprentice's Scarf" }
+    ,{ "Id": "3810", "Name": "Squire's Shield" }
+    ,{ "Id": "3811", "Name": "Huntress's Buckler" }
+    ,{ "Id": "3812", "Name": "Monk's Belt" }
+    ,{ "Id": "3813", "Name": "Defender's Forge" }
+    ,{ "Id": "3814", "Name": "War Table" }
+    ,{ "Id": "3815", "Name": "War Table Banner" }
+    ,{ "Id": "3816", "Name": "Elder Crystal Stand" }
+    ,{ "Id": "3817", "Name": "Defender Medal" }
+    ,{ "Id": "3818", "Name": "Flameburst Rod" }
+    ,{ "Id": "3819", "Name": "Flameburst Cane" }
+    ,{ "Id": "3820", "Name": "Flameburst Staff" }
+    ,{ "Id": "3821", "Name": "Ale Tosser" }
+    ,{ "Id": "3822", "Name": "Etherian Mana" }
+    ,{ "Id": "3823", "Name": "Brand of the Inferno" }
+    ,{ "Id": "3824", "Name": "Ballista Rod" }
+    ,{ "Id": "3825", "Name": "Ballista Cane" }
+    ,{ "Id": "3826", "Name": "Ballista Staff" }
+    ,{ "Id": "3827", "Name": "Flying Dragon" }
+    ,{ "Id": "3828", "Name": "Elder Crystal" }
+    ,{ "Id": "3829", "Name": "Lightning Aura Rod" }
+    ,{ "Id": "3830", "Name": "Lightning Aura Cane" }
+    ,{ "Id": "3831", "Name": "Lightning Aura Staff" }
+    ,{ "Id": "3832", "Name": "Explosive Trap Rod" }
+    ,{ "Id": "3833", "Name": "Explosive Trap Cane" }
+    ,{ "Id": "3834", "Name": "Explosive Trap Staff" }
+    ,{ "Id": "3835", "Name": "Sleepy Octopod" }
+    ,{ "Id": "3836", "Name": "Ghastly Glaive" }
+    ,{ "Id": "3837", "Name": "Etherian Goblin Bomber Banner" }
+    ,{ "Id": "3838", "Name": "Etherian Goblin Banner" }
+    ,{ "Id": "3839", "Name": "Old One's Skeleton Banner" }
+    ,{ "Id": "3840", "Name": "Drakin Banner" }
+    ,{ "Id": "3841", "Name": "Kobold Glider Banner" }
+    ,{ "Id": "3842", "Name": "Kobold Banner" }
+    ,{ "Id": "3843", "Name": "Wither Beast Banner" }
+    ,{ "Id": "3844", "Name": "Etherian Wyvern Banner" }
+    ,{ "Id": "3845", "Name": "Etherian Javelin Thrower Banner" }
+    ,{ "Id": "3846", "Name": "Etherian Lightning Bug Banner" }
+    ,{ "Id": "3852", "Name": "Tome of Infinite Wisdom" }
+    ,{ "Id": "3854", "Name": "Phantom Phoenix" }
+    ,{ "Id": "3855", "Name": "Gato Egg" }
+    ,{ "Id": "3856", "Name": "Creeper Egg" }
+    ,{ "Id": "3857", "Name": "Dragon Egg" }
+    ,{ "Id": "3858", "Name": "Sky Dragon's Fury" }
+    ,{ "Id": "3859", "Name": "Aerial Bane" }
+    ,{ "Id": "3863", "Name": "Betsy Mask" }
+    ,{ "Id": "3864", "Name": "Dark Mage Mask" }
+    ,{ "Id": "3865", "Name": "Ogre Mask" }
+    ,{ "Id": "3866", "Name": "Betsy Trophy" }
+    ,{ "Id": "3867", "Name": "Dark Mage Trophy" }
+    ,{ "Id": "3868", "Name": "Ogre Trophy" }
+    ,{ "Id": "3869", "Name": "Music Box (Old One's Army)" }
+    ,{ "Id": "3870", "Name": "Betsy's Wrath" }
+    ,{ "Id": "3871", "Name": "Valhalla Knight's Helm" }
+    ,{ "Id": "3872", "Name": "Valhalla Knight's Breastplate" }
+    ,{ "Id": "3873", "Name": "Valhalla Knight's Greaves" }
+    ,{ "Id": "3874", "Name": "Dark Artist's Hat" }
+    ,{ "Id": "3875", "Name": "Dark Artist's Robes" }
+    ,{ "Id": "3876", "Name": "Dark Artist's Leggings" }
+    ,{ "Id": "3877", "Name": "Red Riding Hood" }
+    ,{ "Id": "3878", "Name": "Red Riding Dress" }
+    ,{ "Id": "3879", "Name": "Red Riding Leggings" }
+    ,{ "Id": "3880", "Name": "Shinobi Infiltrator's Helmet" }
+    ,{ "Id": "3881", "Name": "Shinobi Infiltrator's Torso" }
+    ,{ "Id": "3882", "Name": "Shinobi Infiltrator's Pants" }
+    ,{ "Id": "3883", "Name": "Betsy's Wings" }
   ],
   "Npcs": [
     {
