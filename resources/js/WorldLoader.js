@@ -91,6 +91,17 @@ function readFileFormatHeader(reader, world) {
 function readProperties(reader, world) {
   world.name = readString(reader);
 
+  world.seed = readString(reader);
+
+  // world.worldGeneratorVersion
+  reader.readUint32();
+  reader.readUint32();
+
+  // UUID
+  for (i = 0; i < 16; i++) {
+    reader.readUint8();
+  }
+
   world.id = reader.readInt32();
 
   world.left = reader.readInt32();
@@ -236,6 +247,11 @@ function readProperties(reader, world) {
 
   world.sandstormSeverity = reader.readFloat32();
   world.sandstormIntendedSeverity = reader.readFloat32();
+
+  world.savedBartender = reader.readUint8() > 0;
+  world.downedInvasionTier1 = reader.readUint8() > 0;
+  world.downedInvasionTier2 = reader.readUint8() > 0;
+  world.downedInvasionTier3 = reader.readUint8() > 0;
 
 	var hellLevel = ((world.height - 230) - world.worldSurfaceY) / 6;
 	hellLevel = hellLevel * 6 + world.worldSurfaceY - 5;
