@@ -1,5 +1,6 @@
 importScripts('MapHelper.js');
 importScripts('DataStream.js');
+importScripts('settings.js');
 
 self.addEventListener('message', function (e) {
   self.start(e.data);
@@ -492,6 +493,18 @@ function readSigns(reader, world) {
     });
 }
 
+function getNpcType(id) {
+  var npc = settings.Npcs.find(function (element) {
+    return element.Id == id;
+  });
+
+  if(npc) {
+    return npc.Name;
+  }
+
+  return "";
+}
+
 function readNpcs(reader, world) {
   var npcs = [];
 
@@ -502,7 +515,8 @@ function readNpcs(reader, world) {
 
   while (flag) {
     npc = {};
-    npc.type = readString(reader);
+    npc.spriteId = reader.readInt32();
+    npc.type = getNpcType(npc.spriteId);
     npc.name = readString(reader);
     npc.x = reader.readFloat32() / 16;
     npc.y = reader.readFloat32() / 16;

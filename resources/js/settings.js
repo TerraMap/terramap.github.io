@@ -1652,6 +1652,16 @@ var settings = {
         {
           "U": 36, "V": 1890,
           "Variety": "Marble Door C"
+        },
+        { "U": 54, "V": 0,
+          "Variety": "Crystal Door A"
+        },
+        { "U": 72, "V": 0,
+          "Variety": "Crystal Door B"
+        },
+        {
+          "U":90, "V": 0,
+          "Variety": "Crystal Door C"
         }
       ]
     },
@@ -2012,7 +2022,13 @@ var settings = {
           "U": 36, "V": 1890,
           "Variety": "Marble Door",
           "Anchor": "Door Left"
-        }
+        },
+        {
+          "U":72, "V": 0,
+          "Variety": "Crystal Door",
+          "Anchor": "Door Right"
+        },
+        { "U": 108, "V": 0, "Variety": "Crystal Door", "Anchor": "Door Left" }
       ]
     },
     {
@@ -2664,7 +2680,9 @@ var settings = {
           "U": 18, "V": 1400,
           "Name": "Marble Chair",
           "Anchor": "Right"
-        }
+        },
+        { "U": 0, "V": 1440, "Name": "Crystal Chair", "Anchor": "Left" },
+        { "U": 18, "V": 1440, "Name": "Crystal Chair", "Anchor": "Right" }
       ]
     },
     {
@@ -2860,7 +2878,9 @@ var settings = {
           "U": 1080, "V": 0,
           "Name": "Work Bench",
           "Variety": "Marble"
-        }
+        },
+        { "U": 1116, "V": 0, "Variety": "Crystal" },
+        { "U": 1152, "V": 0, "Variety": "Golden" }
       ]
     },
     {
@@ -6924,7 +6944,169 @@ var settings = {
           "U": 468, "V": 522,
           "Name": "Stair",
           "Variety": "Marble Inverted Left"
-        }
+        },
+        { "U": 0, "V": 540, "Name": "Platform", "Variety": "Crystal Flat" },
+         { "U": 18, "V": 540, "Name": "Platform", "Variety": "Crystal Endcap Right" },
+         { "U": 36, "V": 540, "Name": "Platform", "Variety": "Crystal Endcap Left" },
+         { "U": 54, "V": 540, "Name": "Platform", "Variety": "Crystal Attach Left" },
+         { "U": 72, "V": 540, "Name": "Platform", "Variety": "Crystal Attach Right" },
+         { "U": 90, "V": 540, "Name": "Platform", "Variety": "Crystal Single" },
+         { "U": 108, "V": 540, "Name": "Platform", "Variety": "Crystal Attach Left Endcap" },
+         { "U": 126, "V": 540, "Name": "Platform", "Variety": "Crystal Attach Right Endcap" },
+         { "U": 144, "V": 540, "Name": "Stair", "Variety": "Crystal Up-Right Riser" },
+         { "U": 162, "V": 540, "Name": "Stair", "Variety": "Crystal Up-Right Stringer" },
+         { "U": 180, "V": 540, "Name": "Stair", "Variety": "Crystal Up-Left Riser" },
+         { "U": 198, "V": 540, "Name": "Stair", "Variety": "Crystal Up-Left Stringer" },
+         { "U": 216, "V": 540, "Name": "Stair", "Variety": "Crystal Top Landing R" },
+         { "U": 234, "V": 540, "Name": "Stair", "Variety": "Crystal Top Landing L" },
+         { "U": 252, "V": 540, "Name": "Stair", "Variety": "Crystal Top Landing L-R" },
+         { "U": 270, "V": 540, "Name": "Stair", "Variety": "Crystal Top Landing R Endcap" },
+         { "U": 288, "V": 540, "Name": "Stair", "Variety": "Crystal Top Landing L Endcap" },
+         { "U": 306, "V": 540, "Name": "Stair", "Variety": "Crystal Bottom Landing R" },
+         { "U": 324, "V": 540, "Name": "Stair", "Variety": "Crystal Bottom Landing L" },
+         { "U": 342, "V": 540, "Name": "Stair", "Variety": "Crystal Inset Up-Right 1" },
+         { "U": 360, "V": 540, "Name": "Stair", "Variety": "Crystal Inset Up-Left 1" },
+         { "U": 378, "V": 540, "Name": "Stair", "Variety": "Crystal Inset Up-Right 2" },
+         { "U": 396, "V": 540, "Name": "Stair", "Variety": "Crystal Inset Up-Left 2" },
+         { "U": 414, "V": 540, "Name": "Stair", "Variety": "Crystal Inset Up-Right 3" },
+         { "U": 432, "V": 540, "Name": "Stair", "Variety": "Crystal Inset Up-Left 3" },
+         { "U": 450, "V": 540, "Name": "Stair", "Variety": "Crystal Inverted Right" },
+         { "U": 468, "V": 540, "Name": "Stair", "Variety": "Crystal Inverted Left" },
+         { "U": 0, "V": 558, "Name": "Platform", "Variety": "Golden Flat" },
+         { "U": 18, "V": 558, "Name": "Platform", "Variety": "Golden Endcap Right" },
+         { "U": 36, "V": 558, "Name": "Platform", "Variety": "Golden Endcap Left" },
+         { "U": 54, "V": 558, "Name": "Platform", "Variety": "Golden Attach Left" },
+         { "U": 72, "V": 558, "Name": "Platform", "Variety": "Golden Attach Right" },
+         { "U": 90, "V": 558, "Name": "Platform", "Variety": "Golden Single" },
+         { "U": 108, "V": 558, "Name": "Platform", "Variety": "Golden Attach Left Endcap" },
+         { "U": 126, "V": 558, "Name": "Platform", "Variety": "Golden Attach Right Endcap" },
+         { "U": 144, "V": 558, "Name": "Stair", "Variety": "Golden Up-Right Riser" },
+         { "U": 162, "V": 558, "Name": "Stair", "Variety": "Golden Up-Right Stringer" },
+         { "U": 180, "V": 558, "Name": "Stair", "Variety": "Golden Up-Left Riser" },
+         { "U": 198, "V": 558, "Name": "Stair", "Variety": "Golden Up-Left Stringer" },
+         { "U": 216, "V": 558, "Name": "Stair", "Variety": "Golden Top Landing R" },
+         { "U": 234, "V": 558, "Name": "Stair", "Variety": "Golden Top Landing L" },
+         { "U": 252, "V": 558, "Name": "Stair", "Variety": "Golden Top Landing L-R" },
+         { "U": 270, "V": 558, "Name": "Stair", "Variety": "Golden Top Landing R Endcap" },
+         { "U": 288, "V": 558, "Name": "Stair", "Variety": "Golden Top Landing L Endcap" },
+         { "U": 306, "V": 558, "Name": "Stair", "Variety": "Golden Bottom Landing R" },
+         { "U": 324, "V": 558, "Name": "Stair", "Variety": "Golden Bottom Landing L" },
+         { "U": 342, "V": 558, "Name": "Stair", "Variety": "Golden Inset Up-Right 1" },
+         { "U": 360, "V": 558, "Name": "Stair", "Variety": "Golden Inset Up-Left 1" },
+         { "U": 378, "V": 558, "Name": "Stair", "Variety": "Golden Inset Up-Right 2" },
+         { "U": 396, "V": 558, "Name": "Stair", "Variety": "Golden Inset Up-Left 2" },
+         { "U": 414, "V": 558, "Name": "Stair", "Variety": "Golden Inset Up-Right 3" },
+         { "U": 432, "V": 558, "Name": "Stair", "Variety": "Golden Inset Up-Left 3" },
+         { "U": 450, "V": 558, "Name": "Stair", "Variety": "Golden Inverted Right" },
+         { "U": 468, "V": 558, "Name": "Stair", "Variety": "Golden Inverted Left" },
+         { "U": 0, "V": 576, "Name": "Platform", "Variety": "Dynasty Flat" },
+         { "U": 18, "V": 576, "Name": "Platform", "Variety": "Dynasty Endcap Right" },
+         { "U": 36, "V": 576, "Name": "Platform", "Variety": "Dynasty Endcap Left" },
+         { "U": 54, "V": 576, "Name": "Platform", "Variety": "Dynasty Attach Left" },
+         { "U": 72, "V": 576, "Name": "Platform", "Variety": "Dynasty Attach Right" },
+         { "U": 90, "V": 576, "Name": "Platform", "Variety": "Dynasty Single" },
+         { "U": 108, "V": 576, "Name": "Platform", "Variety": "Dynasty Attach Left Endcap" },
+         { "U": 126, "V": 576, "Name": "Platform", "Variety": "Dynasty Attach Right Endcap" },
+         { "U": 144, "V": 576, "Name": "Stair", "Variety": "Dynasty Up-Right Riser" },
+         { "U": 162, "V": 576, "Name": "Stair", "Variety": "Dynasty Up-Right Stringer" },
+         { "U": 180, "V": 576, "Name": "Stair", "Variety": "Dynasty Up-Left Riser" },
+         { "U": 198, "V": 576, "Name": "Stair", "Variety": "Dynasty Up-Left Stringer" },
+         { "U": 216, "V": 576, "Name": "Stair", "Variety": "Dynasty Top Landing R" },
+         { "U": 234, "V": 576, "Name": "Stair", "Variety": "Dynasty Top Landing L" },
+         { "U": 252, "V": 576, "Name": "Stair", "Variety": "Dynasty Top Landing L-R" },
+         { "U": 270, "V": 576, "Name": "Stair", "Variety": "Dynasty Top Landing R Endcap" },
+         { "U": 288, "V": 576, "Name": "Stair", "Variety": "Dynasty Top Landing L Endcap" },
+         { "U": 306, "V": 576, "Name": "Stair", "Variety": "Dynasty Bottom Landing R" },
+         { "U": 324, "V": 576, "Name": "Stair", "Variety": "Dynasty Bottom Landing L" },
+         { "U": 342, "V": 576, "Name": "Stair", "Variety": "Dynasty Inset Up-Right 1" },
+         { "U": 360, "V": 576, "Name": "Stair", "Variety": "Dynasty Inset Up-Left 1" },
+         { "U": 378, "V": 576, "Name": "Stair", "Variety": "Dynasty Inset Up-Right 2" },
+         { "U": 396, "V": 576, "Name": "Stair", "Variety": "Dynasty Inset Up-Left 2" },
+         { "U": 414, "V": 576, "Name": "Stair", "Variety": "Dynasty Inset Up-Right 3" },
+         { "U": 432, "V": 576, "Name": "Stair", "Variety": "Dynasty Inset Up-Left 3" },
+         { "U": 450, "V": 576, "Name": "Stair", "Variety": "Dynasty Inverted Right" },
+         { "U": 468, "V": 576, "Name": "Stair", "Variety": "Dynasty Inverted Left" },
+         { "U": 0, "V": 592, "Name": "Platform", "Variety": "Lihzahrd Flat" },
+         { "U": 18, "V": 592, "Name": "Platform", "Variety": "Lihzahrd Endcap Right" },
+         { "U": 36, "V": 592, "Name": "Platform", "Variety": "Lihzahrd Endcap Left" },
+         { "U": 54, "V": 592, "Name": "Platform", "Variety": "Lihzahrd Attach Left" },
+         { "U": 72, "V": 592, "Name": "Platform", "Variety": "Lihzahrd Attach Right" },
+         { "U": 90, "V": 592, "Name": "Platform", "Variety": "Lihzahrd Single" },
+         { "U": 108, "V": 592, "Name": "Platform", "Variety": "Lihzahrd Attach Left Endcap" },
+         { "U": 126, "V": 592, "Name": "Platform", "Variety": "Lihzahrd Attach Right Endcap" },
+         { "U": 144, "V": 592, "Name": "Stair", "Variety": "Lihzahrd Up-Right Riser" },
+         { "U": 162, "V": 592, "Name": "Stair", "Variety": "Lihzahrd Up-Right Stringer" },
+         { "U": 180, "V": 592, "Name": "Stair", "Variety": "Lihzahrd Up-Left Riser" },
+         { "U": 198, "V": 592, "Name": "Stair", "Variety": "Lihzahrd Up-Left Stringer" },
+         { "U": 216, "V": 592, "Name": "Stair", "Variety": "Lihzahrd Top Landing R" },
+         { "U": 234, "V": 592, "Name": "Stair", "Variety": "Lihzahrd Top Landing L" },
+         { "U": 252, "V": 592, "Name": "Stair", "Variety": "Lihzahrd Top Landing L-R" },
+         { "U": 270, "V": 592, "Name": "Stair", "Variety": "Lihzahrd Top Landing R Endcap" },
+         { "U": 288, "V": 592, "Name": "Stair", "Variety": "Lihzahrd Top Landing L Endcap" },
+         { "U": 306, "V": 592, "Name": "Stair", "Variety": "Lihzahrd Bottom Landing R" },
+         { "U": 324, "V": 592, "Name": "Stair", "Variety": "Lihzahrd Bottom Landing L" },
+         { "U": 342, "V": 592, "Name": "Stair", "Variety": "Lihzahrd Inset Up-Right 1" },
+         { "U": 360, "V": 592, "Name": "Stair", "Variety": "Lihzahrd Inset Up-Left 1" },
+         { "U": 378, "V": 592, "Name": "Stair", "Variety": "Lihzahrd Inset Up-Right 2" },
+         { "U": 396, "V": 592, "Name": "Stair", "Variety": "Lihzahrd Inset Up-Left 2" },
+         { "U": 414, "V": 592, "Name": "Stair", "Variety": "Lihzahrd Inset Up-Right 3" },
+         { "U": 432, "V": 592, "Name": "Stair", "Variety": "Lihzahrd Inset Up-Left 3" },
+         { "U": 450, "V": 592, "Name": "Stair", "Variety": "Lihzahrd Inverted Right" },
+         { "U": 468, "V": 592, "Name": "Stair", "Variety": "Lihzahrd Inverted Left" },
+         { "U": 0, "V": 610, "Name": "Platform", "Variety": "Flesh Flat" },
+         { "U": 18, "V": 610, "Name": "Platform", "Variety": "Flesh Endcap Right" },
+         { "U": 36, "V": 610, "Name": "Platform", "Variety": "Flesh Endcap Left" },
+         { "U": 54, "V": 610, "Name": "Platform", "Variety": "Flesh Attach Left" },
+         { "U": 72, "V": 610, "Name": "Platform", "Variety": "Flesh Attach Right" },
+         { "U": 90, "V": 610, "Name": "Platform", "Variety": "Flesh Single" },
+         { "U": 108, "V": 610, "Name": "Platform", "Variety": "Flesh Attach Left Endcap" },
+         { "U": 126, "V": 610, "Name": "Platform", "Variety": "Flesh Attach Right Endcap" },
+         { "U": 144, "V": 610, "Name": "Stair", "Variety": "Flesh Up-Right Riser" },
+         { "U": 162, "V": 610, "Name": "Stair", "Variety": "Flesh Up-Right Stringer" },
+         { "U": 180, "V": 610, "Name": "Stair", "Variety": "Flesh Up-Left Riser" },
+         { "U": 198, "V": 610, "Name": "Stair", "Variety": "Flesh Up-Left Stringer" },
+         { "U": 216, "V": 610, "Name": "Stair", "Variety": "Flesh Top Landing R" },
+         { "U": 234, "V": 610, "Name": "Stair", "Variety": "Flesh Top Landing L" },
+         { "U": 252, "V": 610, "Name": "Stair", "Variety": "Flesh Top Landing L-R" },
+         { "U": 270, "V": 610, "Name": "Stair", "Variety": "Flesh Top Landing R Endcap" },
+         { "U": 288, "V": 610, "Name": "Stair", "Variety": "Flesh Top Landing L Endcap" },
+         { "U": 306, "V": 610, "Name": "Stair", "Variety": "Flesh Bottom Landing R" },
+         { "U": 324, "V": 610, "Name": "Stair", "Variety": "Flesh Bottom Landing L" },
+         { "U": 342, "V": 610, "Name": "Stair", "Variety": "Flesh Inset Up-Right 1" },
+         { "U": 360, "V": 610, "Name": "Stair", "Variety": "Flesh Inset Up-Left 1" },
+         { "U": 378, "V": 610, "Name": "Stair", "Variety": "Flesh Inset Up-Right 2" },
+         { "U": 396, "V": 610, "Name": "Stair", "Variety": "Flesh Inset Up-Left 2" },
+         { "U": 414, "V": 610, "Name": "Stair", "Variety": "Flesh Inset Up-Right 3" },
+         { "U": 432, "V": 610, "Name": "Stair", "Variety": "Flesh Inset Up-Left 3" },
+         { "U": 450, "V": 610, "Name": "Stair", "Variety": "Flesh Inverted Right" },
+         { "U": 468, "V": 610, "Name": "Stair", "Variety": "Flesh Inverted Left" },
+         { "U": 0, "V": 628, "Name": "Platform", "Variety": "Frozen Flat" },
+         { "U": 18, "V": 628, "Name": "Platform", "Variety": "Frozen Endcap Right" },
+         { "U": 36, "V": 628, "Name": "Platform", "Variety": "Frozen Endcap Left" },
+         { "U": 54, "V": 628, "Name": "Platform", "Variety": "Frozen Attach Left" },
+         { "U": 72, "V": 628, "Name": "Platform", "Variety": "Frozen Attach Right" },
+         { "U": 90, "V": 628, "Name": "Platform", "Variety": "Frozen Single" },
+         { "U": 108, "V": 628, "Name": "Platform", "Variety": "Frozen Attach Left Endcap" },
+         { "U": 126, "V": 628, "Name": "Platform", "Variety": "Frozen Attach Right Endcap" },
+         { "U": 144, "V": 628, "Name": "Stair", "Variety": "Frozen Up-Right Riser" },
+         { "U": 162, "V": 628, "Name": "Stair", "Variety": "Frozen Up-Right Stringer" },
+         { "U": 180, "V": 628, "Name": "Stair", "Variety": "Frozen Up-Left Riser" },
+         { "U": 198, "V": 628, "Name": "Stair", "Variety": "Frozen Up-Left Stringer" },
+         { "U": 216, "V": 628, "Name": "Stair", "Variety": "Frozen Top Landing R" },
+         { "U": 234, "V": 628, "Name": "Stair", "Variety": "Frozen Top Landing L" },
+         { "U": 252, "V": 628, "Name": "Stair", "Variety": "Frozen Top Landing L-R" },
+         { "U": 270, "V": 628, "Name": "Stair", "Variety": "Frozen Top Landing R Endcap" },
+         { "U": 288, "V": 628, "Name": "Stair", "Variety": "Frozen Top Landing L Endcap" },
+         { "U": 306, "V": 628, "Name": "Stair", "Variety": "Frozen Bottom Landing R" },
+         { "U": 324, "V": 628, "Name": "Stair", "Variety": "Frozen Bottom Landing L" },
+         { "U": 342, "V": 628, "Name": "Stair", "Variety": "Frozen Inset Up-Right 1" },
+         { "U": 360, "V": 628, "Name": "Stair", "Variety": "Frozen Inset Up-Left 1" },
+         { "U": 378, "V": 628, "Name": "Stair", "Variety": "Frozen Inset Up-Right 2" },
+         { "U": 396, "V": 628, "Name": "Stair", "Variety": "Frozen Inset Up-Left 2" },
+         { "U": 414, "V": 628, "Name": "Stair", "Variety": "Frozen Inset Up-Right 3" },
+         { "U": 432, "V": 628, "Name": "Stair", "Variety": "Frozen Inset Up-Left 3" },
+         { "U": 450, "V": 628, "Name": "Stair", "Variety": "Frozen Inverted Right" },
+         { "U": 468, "V": 628, "Name": "Stair", "Variety": "Frozen Inverted Left" }
       ]
     },
     {
@@ -8081,7 +8263,9 @@ var settings = {
           "U": 18, "V": 638,
           "Name": "Marble Candle",
           "Variety": "Off"
-        }
+        },
+         { "U": 0, "V": 654, "Name": "Crystal Candle", "Variety": "On" },
+         { "U": 18, "V": 654, "Name": "Crystal Candle", "Variety": "Off" }
       ]
     },
     {
@@ -8462,7 +8646,9 @@ var settings = {
           "U": 54, "V": 1944,
           "Name": "Marble Chandelier",
           "Variety": "Off"
-        }
+        },
+        { "U": 108, "V": 0, "Name": "Crystal Chandelier", "Variety": "On" },
+        { "U": 162, "V": 0, "Name": "Crystal Chandelier", "Variety": "Off" }
       ]
     },
     {
@@ -8562,7 +8748,9 @@ var settings = {
           "U": 36, "V": 288,
           "Name": "Jack 'O Lantern 9",
           "Variety": "Off"
-        }
+        },
+         { "U": 0, "V": 1332, "Name": "Crystal Lantern", "Variety": "On" },
+         { "U": 18, "V": 1332, "Name": "Crystal Lantern", "Variety": "Off" }
       ]
     },
     {
@@ -9898,7 +10086,9 @@ var settings = {
           "U": 72, "V": 1080,
           "Name": "Marble Bed",
           "Variety": "Right"
-        }
+        },
+         { "U": 0, "V": 1116, "Name": "Crystal Bed", "Variety": "Left" },
+         { "U": 72, "V": 1116, "Name": "Crystal Bed", "Variety": "Right" }
       ]
     },
     {
@@ -10268,7 +10458,9 @@ var settings = {
         {
           "U": 1566, "V": 0,
           "Variety": "Marble"
-        }
+        },
+         { "U": 1620, "V": 0, "Variety": "Crystal" },
+         { "U": 1674, "V": 0, "Variety": "Dynasty" }
       ]
     },
     {
@@ -10391,7 +10583,11 @@ var settings = {
         {
           "U": 1458, "V": 0,
           "Variety": "Marble"
-        }
+        },
+        { "U": 1512, "V": 0, "Variety": "Crystal" },
+        { "U": 1566, "V": 0, "Variety": "Dynasty" },
+        { "U": 1620, "V": 0, "Variety": "Frozen" },
+        { "U": 1674, "V": 0, "Variety": "Living Wood" }
       ]
     },
     {
@@ -10533,7 +10729,9 @@ var settings = {
         {
           "U": 1728, "V": 0,
           "Variety": "Marble Sofa"
-        }
+        },
+        { "U": 1782, "V": 0, "Variety": "Crystal Sofa" },
+        { "U": 1826, "V": 0, "Variety": "Dynasty Sofa" }
       ]
     },
     {
@@ -10853,7 +11051,9 @@ var settings = {
           "U": 0, "V": 1080,
           "Variety": "Marble Bathtub",
           "Anchor": "Left"
-        }
+        },
+         { "U": 72, "V": 1116, "Name": "Crystal Bathtub", "Variety": "Left" },
+         { "U": 0, "V": 1116, "Name": "Crystal Bathtub", "Variety": "Right" }
       ]
     },
     {
@@ -12563,7 +12763,9 @@ var settings = {
           "U": 18, "V": 1620,
           "Name": "Marble Lamp",
           "Variety": "Off"
-        }
+        },
+        { "U": 0, "V": 1674, "Name": "Crystal Lamp", "Variety": "On" },
+        { "U": 18, "V": 1674, "Name": "Crystal Lamp", "Variety": "Off" }
       ]
     },
     {
@@ -12955,7 +13157,9 @@ var settings = {
           "U": 36, "V": 1080,
           "Name": "Marble Candelabra",
           "Variety": "Off"
-        }
+        },
+        { "U": 0, "V": 1116, "Name": "Crystal Candelabra", "Variety": "On" },
+        { "U": 36, "V": 1116, "Name": "Crystal Candelabra", "Variety": "Off" }
       ]
     },
     {
@@ -13094,7 +13298,8 @@ var settings = {
         {
           "U": 1674, "V": 0,
           "Variety": "Marble Bookcase"
-        }
+        },
+         { "U": 1728, "V": 0, "Variety": "Crystal Bookcase" }
       ]
     },
     {
@@ -13254,7 +13459,12 @@ var settings = {
         {
           "U": 972, "V": 0,
           "Name": "Marble Clock"
-        }
+        },
+        { "U": 1008, "V": 0, "Name": "Crystal Clock" },
+        { "U": 1044, "V": 0, "Name": "Sunplate Clock" },
+        { "U": 1080, "V": 0, "Name": "Blue Dungeon Clock" },
+        { "U": 1116, "V": 0, "Name": "Green Dungeon Clock" },
+        { "U": 1152, "V": 0, "Name": "Pink Dungeon Clock" }
       ]
     },
     {
@@ -15202,12 +15412,42 @@ var settings = {
       "Light": "true"
     },
     {
-      "Name": "Sink",
-      "Color": "#FFB5C2D9",
-      "Placement": "floor",
-      "Framed": "false",
-      "Size": "2,2",
-      "Id": "172"
+      "Id": "172", "Color": "#FFB5C2D9", "Name": "Sink", "Framed": "true", "Size": "2,2", "Placement": "floor",
+      "Frames": [
+        { "U": 0, "V": 0, "Name": "Wooden Sink" },
+        { "U": 0, "V": 38, "Name": "Ebonwood Sink" },
+        { "U": 0, "V": 76, "Name": "Rich Mahogany Sink" },
+        { "U": 0, "V": 114, "Name": "Pearlwood Sink" },
+        { "U": 0, "V": 152, "Name": "Bone Sink" },
+        { "U": 0, "V": 190, "Name": "Flesh Sink" },
+        { "U": 0, "V": 228, "Name": "Living Wood Sink" },
+        { "U": 0, "V": 266, "Name": "Skyware Sink" },
+        { "U": 0, "V": 304, "Name": "Shadewood Sink" },
+        { "U": 0, "V": 342, "Name": "Lihzahrd Sink" },
+        { "U": 0, "V": 380, "Name": "Blue Dungeon Sink" },
+        { "U": 0, "V": 418, "Name": "Green Dungeon Sink" },
+        { "U": 0, "V": 456, "Name": "Pink Dungeon Sink" },
+        { "U": 0, "V": 494, "Name": "Obsidian Sink" },
+        { "U": 0, "V": 532, "Name": "Metal Sink" },
+        { "U": 0, "V": 570, "Name": "Glass Sink" },
+        { "U": 0, "V": 608, "Name": "Golden Sink" },
+        { "U": 0, "V": 646, "Name": "Honey Sink" },
+        { "U": 0, "V": 684, "Name": "Steampunk Sink" },
+        { "U": 0, "V": 722, "Name": "Pumpkin Sink" },
+        { "U": 0, "V": 760, "Name": "Spooky Sink" },
+        { "U": 0, "V": 798, "Name": "Frozen Sink" },
+        { "U": 0, "V": 836, "Name": "Dynasty Sink" },
+        { "U": 0, "V": 874, "Name": "Palm Wood Sink" },
+        { "U": 0, "V": 912, "Name": "Mushroom Sink" },
+        { "U": 0, "V": 950, "Name": "Boreal Wood Sink" },
+        { "U": 0, "V": 988, "Name": "Slime Sink" },
+        { "U": 0, "V": 1026, "Name": "Cactus Sink" },
+        { "U": 0, "V": 1064, "Name": "Martian Sink" },
+        { "U": 0, "V": 1102, "Name": "Meteorite Sink" },
+        { "U": 0, "V": 1140, "Name": "Granite Sink" },
+        { "U": 0, "V": 1178, "Name": "Marble Sink" },
+        { "U": 0, "V": 1216, "Name": "Crystal Sink" }
+      ]
     },
     {
       "Color": "#FFFDDD03",
@@ -36459,141 +36699,30 @@ var settings = {
     ,{ "Id": "3883", "Name": "Betsy's Wings" }
   ],
   "Npcs": [
-    {
-      "Id": "17",
-      "Name": "Merchant",
-      "Frames": "25"
-    },
-    {
-      "Id": "18",
-      "Name": "Nurse",
-      "Frames": "23"
-    },
-    {
-      "Id": "19",
-      "Name": "Arms Dealer",
-      "Frames": "25"
-    },
-    {
-      "Id": "20",
-      "Name": "Dryad",
-      "Frames": "21"
-    },
-    {
-      "Id": "22",
-      "Name": "Guide",
-      "Frames": "26"
-    },
-    {
-      "Id": "37",
-      "Name": "Old Man",
-      "Frames": "21"
-    },
-    {
-      "Id": "38",
-      "Name": "Demolitionist",
-      "Frames": "25"
-    },
-    {
-      "Id": "54",
-      "Name": "Clothier",
-      "Frames": "23"
-    },
-    {
-      "Id": "107",
-      "Name": "Goblin Tinkerer",
-      "Frames": "25"
-    },
-    {
-      "Id": "108",
-      "Name": "Wizard",
-      "Frames": "23"
-    },
-    {
-      "Id": "124",
-      "Name": "Mechanic",
-      "Frames": "23"
-    },
-    {
-      "Id": "142",
-      "Name": "Santa Claus",
-      "Frames": "25"
-    },
-    {
-      "Id": "160",
-      "Name": "Truffle",
-      "Frames": "23"
-    },
-    {
-      "Id": "178",
-      "Name": "Steampunker",
-      "Frames": "23"
-    },
-    {
-      "Id": "207",
-      "Name": "Dye Trader",
-      "Frames": "25"
-    },
-    {
-      "Id": "208",
-      "Name": "Party Girl",
-      "Frames": "23"
-    },
-    {
-      "Id": "209",
-      "Name": "Cyborg",
-      "Frames": "26"
-    },
-    {
-      "Id": "227",
-      "Name": "Painter",
-      "Frames": "25"
-    },
-    {
-      "Id": "228",
-      "Name": "Witch Doctor",
-      "Frames": "26"
-    },
-    {
-      "Id": "229",
-      "Name": "Pirate",
-      "Frames": "26"
-    },
-    {
-      "Id": "353",
-      "Name": "Stylist",
-      "Frames": "23"
-    },
-    {
-      "Id": "369",
-      "Name": "Angler",
-      "Frames": "23"
-    },
-    {
-      "Id": "441",
-      "Name": "Tax Collector",
-      "Frames": "25"
-    },
-    {
-      "Id": "422",
-      "Name": "Vortex Pillar",
-      "Frames": "1"
-    },
-    {
-      "Id": "493",
-      "Name": "Stardust Pillar",
-      "Frames": "1"
-    },
-    {
-      "Id": "507",
-      "Name": "Nebula Pillar",
-      "Frames": "1"
-    },
-    {
-      "Id": "517",
-      "Name": "Solar Pillar",
-      "Frames": "1"
-    }
+    { "Id": 17,    "Name": "Merchant"        },
+    { "Id": 18,    "Name": "Nurse"           },
+    { "Id": 19,    "Name": "Arms Dealer"     },
+    { "Id": 20,    "Name": "Dryad"           },
+    { "Id": 22,    "Name": "Guide"           },
+    { "Id": 37,    "Name": "Old Man"         },
+    { "Id": 38,    "Name": "Demolitionist"   },
+    { "Id": 54,    "Name": "Clothier"        },
+    { "Id": 107,   "Name": "Goblin Tinkerer" },
+    { "Id": 108,   "Name": "Wizard"          },
+    { "Id": 124,   "Name": "Mechanic"        },
+    { "Id": 142,   "Name": "Santa Claus"     },
+    { "Id": 160,   "Name": "Truffle"         },
+    { "Id": 178,   "Name": "Steampunker"     },
+    { "Id": 207,   "Name": "Dye Trader"      },
+    { "Id": 208,   "Name": "Party Girl"      },
+    { "Id": 209,   "Name": "Cyborg"          },
+    { "Id": 227,   "Name": "Painter"         },
+    { "Id": 228,   "Name": "Witch Doctor"    },
+    { "Id": 229,   "Name": "Pirate"          },
+    { "Id": 353,   "Name": "Stylist"         },
+    { "Id": 369,   "Name": "Angler"          },
+    { "Id": 441,   "Name": "Tax Collector"   },
+    { "Id": 550,   "Name": "Tavernkeep"      }
   ],
   "ItemPrefix": [
     {

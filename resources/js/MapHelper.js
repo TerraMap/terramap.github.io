@@ -8,7 +8,7 @@ function rgb(r, g, b) {
 
 // Decompiled from the Terraria source code
 
-var tileColors = new Array(463);
+var tileColors = new Array(470);
 var liquidColors = new Array(3);
 var wallColors = new Array(231);
 
@@ -275,6 +275,7 @@ tileColors[11][0] = color;
 tileColors[10][0] = color;
 color = rgb(191, 142, 111);
 tileColors[14][0] = color;
+tileColors[469][0] = color;
 tileColors[15][0] = color;
 tileColors[18][0] = color;
 tileColors[19][0] = color;
@@ -414,11 +415,11 @@ tileColors[21][1] = rgb(233, 207, 94);
 tileColors[21][2] = rgb(137, 128, 200);
 tileColors[21][3] = rgb(160, 160, 160);
 tileColors[21][4] = rgb(106, 210, 255);
-tileColors[441][0] = rgb(174, 129, 92);
-tileColors[441][1] = rgb(233, 207, 94);
-tileColors[441][2] = rgb(137, 128, 200);
-tileColors[441][3] = rgb(160, 160, 160);
-tileColors[441][4] = rgb(106, 210, 255);
+tileColors[441][0] = tileColors[21][0];
+tileColors[441][1] = tileColors[21][1];
+tileColors[441][2] = tileColors[21][2];
+tileColors[441][3] = tileColors[21][3];
+tileColors[441][4] = tileColors[21][4];
 tileColors[27][0] = rgb(54, 154, 54);
 tileColors[27][1] = rgb(226, 196, 49);
 color = rgb(246, 197, 26);
@@ -548,6 +549,10 @@ tileColors[350][0] = rgb(55, 97, 155);
 tileColors[352][0] = rgb(238, 97, 94);
 tileColors[354][0] = rgb(141, 107, 89);
 tileColors[355][0] = rgb(141, 107, 89);
+tileColors[463][0] = rgb(155, 214, 240);
+tileColors[464][0] = rgb(233, 183, 128);
+tileColors[465][0] = rgb(51, 84, 195);
+tileColors[466][0] = rgb(205, 153, 73);
 tileColors[356][0] = rgb(233, 203, 24);
 tileColors[357][0] = rgb(168, 178, 204);
 tileColors[367][0] = rgb(168, 178, 204);
@@ -648,6 +653,10 @@ tileColors[458][0] = rgb(211, 198, 111);
 tileColors[459][0] = rgb(190, 223, 232);
 tileColors[460][0] = rgb(141, 163, 181);
 tileColors[462][0] = rgb(231, 178, 28);
+tileColors[467][0] = rgb(129, 56, 121);
+tileColors[467][1] = rgb(255, 249, 59);
+tileColors[468][0] = tileColors[467][0];
+tileColors[468][1] = tileColors[467][1];
 
 liquidColors[0] = rgb(9, 61, 191);
 liquidColors[1] = rgb(253, 32, 3);

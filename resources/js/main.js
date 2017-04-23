@@ -967,7 +967,12 @@ function addNpcs(npcs) {
   for(var i = 0; i < npcs.length; i++) {
     var npc = npcs[i];
 
-    $("#npcList").append('<li><a href="#" onclick="selectPoint(' + npc.x + ', ' + npc.y + ')">' + npc.name + ' the ' + npc.type + '</a></li>');
+    var npcText = npc.name;
+    if(npc.type != npc.name) {
+      npcText += " the " + npc.type;
+    }
+
+    $("#npcList").append('<li><a href="#" onclick="selectPoint(' + npc.x + ', ' + npc.y + ')">' + npcText + '</a></li>');
   }
 }
 
