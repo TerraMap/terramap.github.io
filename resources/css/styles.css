@@ -1,6 +1,6 @@
 body {
   padding-top: 70px;
-  padding-bottom: 70px;
+  padding-bottom: 145px;
 }
 
 footer {
@@ -84,10 +84,10 @@ canvas {
 }
 .scrollable-menu::-webkit-scrollbar {
     -webkit-appearance: none;
-    width: 4px;        
-}    
+    width: 4px;
+}
 .scrollable-menu::-webkit-scrollbar-thumb {
     border-radius: 3px;
     background-color: lightgray;
-    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.75);        
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.75);
 }
