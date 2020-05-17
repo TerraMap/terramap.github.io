@@ -113,7 +113,8 @@ function readProperties(reader, world) {
   world.height = reader.readInt32();
   world.width = reader.readInt32();
 
-  world.expertMode = reader.readUint8() > 0;
+  world.gameMode = reader.readInt32();
+  world.drunkMode = reader.readUint8() > 0;
 
   // creation time (Int64)
   reader.readInt32();
@@ -200,13 +201,15 @@ function readProperties(reader, world) {
   world.anglerQuest = reader.readInt32();
   world.savedStylist = reader.readUint8() > 0;
   world.savedTaxCollector = reader.readUint8() > 0;
+  world.savedGolfer = reader.readUint8() > 0;
+
   world.invasionSizeStart = reader.readInt32();
   world.tempCultistDelay = reader.readInt32();
 
   var num1 = reader.readInt16();
   for (var j = 0; j < num1; j++) {
     if (j < 540) {
-      //this.NpcKillCount[j] = reader.ReadInt32();
+      //this.NpcKillCount[j] = reader.readInt32();
       reader.readInt32();
     }
     else {
@@ -215,6 +218,7 @@ function readProperties(reader, world) {
   }
 
   world.fastForwardTime = reader.readUint8() > 0;
+
   world.downedFishron = reader.readUint8() > 0;
   world.downedMartians = reader.readUint8() > 0;
   world.downedAncientCultist = reader.readUint8() > 0;
@@ -228,18 +232,19 @@ function readProperties(reader, world) {
   world.downedTowerVortex = reader.readUint8() > 0;
   world.downedTowerNebula = reader.readUint8() > 0;
   world.downedTowerStardust = reader.readUint8() > 0;
+
   world.towerActiveSolar = reader.readUint8() > 0;
   world.towerActiveVortex = reader.readUint8() > 0;
   world.towerActiveNebula = reader.readUint8() > 0;
   world.towerActiveStardust = reader.readUint8() > 0;
   world.lunarApocalypseIsUp = reader.readUint8() > 0;
+
   world.partyManual = reader.readUint8() > 0;
   world.partyGenuine = reader.readUint8() > 0;
   world.partyCooldown = reader.readInt32();
 
   var num3 = reader.readInt32();
-  for (var k = 0; k < num3; k++)
-  {
+  for (var k = 0; k < num3; k++) {
     reader.readInt32();
   }
 
@@ -250,13 +255,68 @@ function readProperties(reader, world) {
   world.sandstormIntendedSeverity = reader.readFloat32();
 
   world.savedBartender = reader.readUint8() > 0;
+
   world.downedInvasionTier1 = reader.readUint8() > 0;
   world.downedInvasionTier2 = reader.readUint8() > 0;
   world.downedInvasionTier3 = reader.readUint8() > 0;
 
-	var hellLevel = ((world.height - 230) - world.worldSurfaceY) / 6;
-	hellLevel = hellLevel * 6 + world.worldSurfaceY - 5;
-	world.hellLayerY = hellLevel;
+  // v1.4 Journey's End new stuff
+  // world bg stuff
+  if (world.version > 194) {
+    reader.readUint8();
+  }
+  if (world.version >= 215) {
+    reader.readUint8();
+  }
+  // tree bg stuff
+  if (world.version > 195) {
+    reader.readUint8();
+    reader.readUint8();
+    reader.readUint8();
+  }
+  if (world.version >= 204) {
+    world.combatBookWasUsed = reader.readUint8() > 0;
+  }
+  // tempLanternNight stuff
+  if (world.version >= 207) {
+    reader.readInt32();
+    reader.readUint8() > 0;
+    reader.readUint8() > 0;
+    reader.readUint8() > 0;
+  }
+  // tree tops info
+  var num = reader.readInt32();
+  num2 = 0;
+  while (num2 < num && num2 < 13) {
+    reader.readInt32();
+    num2++;
+  }
+  if (world.version >= 212) {
+    //forceHalloweenForToday
+    reader.readUint8() > 0;
+    // forceXMasForToday
+    reader.readUint8() > 0;
+  }
+  if (world.version >= 216) {
+    world.savedOreTiers = {};
+    world.savedOreTiers.copper = reader.readInt32();
+    world.savedOreTiers.iron = reader.readInt32();
+    world.savedOreTiers.silver = reader.readInt32();
+    world.savedOreTiers.gold = reader.readInt32();
+  }
+  if (world.version >= 217) {
+    world.boughtCat = reader.readUint8() > 0;
+    world.boughtDog = reader.readUint8() > 0;
+    world.boughtBunny = reader.readUint8() > 0;
+  }
+  if (world.version >= 223) {
+    world.downedEmpressOfLight = reader.readUint8() > 0;
+    world.downedQueenSlime = reader.readUint8() > 0;
+  }
+
+  var hellLevel = ((world.height - 230) - world.worldSurfaceY) / 6;
+  hellLevel = hellLevel * 6 + world.worldSurfaceY - 5;
+  world.hellLayerY = hellLevel;
 }
 
 function readTiles(reader, world) {
@@ -467,9 +527,9 @@ function readChests(reader, world) {
   }
 
   self.postMessage(
-  {
-    'chests': chests,
-  });
+    {
+      'chests': chests,
+    });
 }
 
 function readSigns(reader, world) {
@@ -498,7 +558,7 @@ function getNpcType(id) {
     return element.Id == id;
   });
 
-  if(npc) {
+  if (npc) {
     return npc.Name;
   }
 
@@ -523,6 +583,9 @@ function readNpcs(reader, world) {
     npc.isHomeless = reader.readUint8() > 0;
     npc.homeX = reader.readInt32();
     npc.homeY = reader.readInt32();
+    if (world.version >= 213 && reader.readUint8() > 0) {
+      npc.townVariation = reader.readInt32();
+    }
     npcs.push(npc);
 
     num++;
