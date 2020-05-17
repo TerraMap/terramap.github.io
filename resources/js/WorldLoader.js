@@ -432,6 +432,11 @@ function readTiles(reader, world) {
         if ((b & 32) == 32) {
           tile.IsYellowWirePresent = true;
         }
+        if ((b & 64) == 64)
+        {
+          b4 = reader.readUint8();
+          tile.WallType = (b4 << 8 | tile.WallType);
+        }
       }
       b4 = (b3 & 192) >> 6;
       k = 0;
