@@ -551,18 +551,19 @@ function getMousePos(canvas, evt) {
   return mousePos;
 }
 
-var leftButtonDown = false;
-var leftButtonDragged = false;
+var buttonDown = false;
+var buttonDragged = false;
 
-panzoomContainer.addEventListener('mousedown', function(evt) {
-  if(evt.which === 1) {
-    leftButtonDown = true;
-  }
-}, false);
+panzoomContainer.addEventListener('mousedown', evt => {
+  // if(evt.which === 1) {
+  buttonDown = true;
+  // }
+});
 
-panzoomContainer.addEventListener('mousemove', function(evt) {
-  if(evt.which === 1 && leftButtonDown) {
-      leftButtonDragged = true;
+panzoomContainer.addEventListener('mousemove', evt => {
+  // if(evt.which === 1 && buttonDown) {
+  if(buttonDown) {
+    buttonDragged = true;
   }
 
   if(!world)
@@ -583,19 +584,19 @@ panzoomContainer.addEventListener('mousemove', function(evt) {
       $("#status").html(text + " (" + mousePos.x + ", " + mousePos.y + ")");
     }
   }
-}, false);
+});
 
-panzoomContainer.addEventListener('mouseup', function(evt) {
-  if(evt.which != 1) return;
+panzoomContainer.addEventListener('mouseup', evt => {
+  // if(evt.which != 1) return;
 
-  leftButtonDown = false;
+  buttonDown = false;
 
-  if(leftButtonDragged) {
-    leftButtonDragged = false;
+  if(buttonDragged) {
+    buttonDragged = false;
     return;
   }
 
-  leftButtonDragged = false;
+  buttonDragged = false;
 
   var mousePos = getMousePos(panzoomContainer, evt);
   var x = mousePos.x;
@@ -647,7 +648,7 @@ panzoomContainer.addEventListener('mouseup', function(evt) {
     $("#tile").html(text);
   }
 
-}, false);
+});
 
 function getTileAt(x, y) {
   if(!world) return;
