@@ -115,6 +115,7 @@ function readProperties(reader, world) {
 
   world.gameMode = reader.readInt32();
   world.drunkMode = reader.readUint8() > 0;
+  world.goodMode = reader.readUint8() > 0;
 
   // creation time (Int64)
   reader.readInt32();
