@@ -20225,7 +20225,15 @@ var settings = {
     { "Id": "465", "Name": "War Table Banner" },
     { "Id": "466", "Name": "Elder Crystal Stand" },
     
-    { "Id": "467", "Name": "Chest (Group 2)" },
+    { "Id": "467", "Name": "Chest (Group 2)",
+      "Frames": [
+        {
+          "U": 486, "V": 0,
+          "Name": "Desert Chest",
+          "Variety": "Locked"
+        }
+      ]
+    },
     { "Id": "468", "Name": "Trapped Chests (Group 2)" },
     { "Id": "469", "Name": "Crystal Table" },
 
@@ -37667,7 +37675,7 @@ var settings = {
     ,{ "Name":"ExoticEasternChewToy", "Id": "4604" }
     ,{ "Name":"BedazzledNectar", "Id": "4605" }
     ,{ "Name":"MusicBoxJungleNight", "Id": "4606" }
-    ,{ "Name":"StormTigerStaff", "Id": "4607" }
+    ,{ "Name":"Desert Tiger Staff", "Id": "4607" }
     ,{ "Name":"ChumBucket", "Id": "4608" }
     ,{ "Name":"GardenGnome", "Id": "4609" }
     ,{ "Name":"KiteBoneSerpent", "Id": "4610" }
