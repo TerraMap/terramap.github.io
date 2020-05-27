@@ -551,21 +551,7 @@ function getMousePos(canvas, evt) {
   return mousePos;
 }
 
-var buttonDown = false;
-var buttonDragged = false;
-
-panzoomContainer.addEventListener('mousedown', evt => {
-  // if(evt.which === 1) {
-  buttonDown = true;
-  // }
-});
-
 panzoomContainer.addEventListener('mousemove', evt => {
-  // if(evt.which === 1 && buttonDown) {
-  if(buttonDown) {
-    buttonDragged = true;
-  }
-
   if(!world)
     return;
 
@@ -586,18 +572,9 @@ panzoomContainer.addEventListener('mousemove', evt => {
   }
 });
 
-panzoomContainer.addEventListener('mouseup', evt => {
-  // if(evt.which != 1) return;
-
-  buttonDown = false;
-
-  if(buttonDragged) {
-    buttonDragged = false;
-    return;
-  }
-
-  buttonDragged = false;
-
+$("#panzoomContainer").on('panzoomend', function(evt, panzoom, matrix, changed) {
+  if (changed) return;
+    
   var mousePos = getMousePos(panzoomContainer, evt);
   var x = mousePos.x;
   var y = mousePos.y;
