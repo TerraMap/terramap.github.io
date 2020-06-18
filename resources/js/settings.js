@@ -15831,6 +15831,24 @@ var settings = {
           "U": 954, "V": 0,
           "Variety": "White 3"
         },
+        { "U": 972, "V": 0, "Variety": "Sandstone 1" },
+        { "U": 990, "V": 0, "Variety": "Sandstone 2" },
+        { "U": 1008, "V": 0, "Variety": "Sandstone 3" },
+        { "U": 1026, "V": 0, "Variety": "Sandstone 4" },
+        { "U": 1044, "V": 0, "Variety": "Sandstone 5" },
+        { "U": 1062, "V": 0, "Variety": "Sandstone 6" },
+        { "U": 1080, "V": 0, "Variety": "Granite 1" },
+        { "U": 1098, "V": 0, "Variety": "Granite 2" },
+        { "U": 1116, "V": 0, "Variety": "Granite 3" },
+        { "U": 1134, "V": 0, "Variety": "Granite 4" },
+        { "U": 1152, "V": 0, "Variety": "Granite 5" },
+        { "U": 1170, "V": 0, "Variety": "Granite 6" },
+        { "U": 1188, "V": 0, "Variety": "Marble 1" },
+        { "U": 1206, "V": 0, "Variety": "Marble 2" },
+        { "U": 1224, "V": 0, "Variety": "Marble 3" },
+        { "U": 1242, "V": 0, "Variety": "Marble 4" },
+        { "U": 1260, "V": 0, "Variety": "Marble 5" },
+        { "U": 1278, "V": 0, "Variety": "Marble 6" },
         {
           "U": 0, "V": 18,
           "Variety": "Stone 1"
@@ -16158,7 +16176,25 @@ var settings = {
         {
           "U": 1458, "V": 18,
           "Variety": "Stony Moss 6"
-        }
+        },
+        { "U": 1476, "V": 18, "Variety": "Sandstone 1" },
+        { "U": 1512, "V": 18, "Variety": "Sandstone 2" },
+        { "U": 1548, "V": 18, "Variety": "Sandstone 3" },
+        { "U": 1584, "V": 18, "Variety": "Sandstone 4" },
+        { "U": 1620, "V": 18, "Variety": "Sandstone 5" },
+        { "U": 1656, "V": 18, "Variety": "Sandstone 6" },
+        { "U": 1692, "V": 18, "Variety": "Granite 1" },
+        { "U": 1728, "V": 18, "Variety": "Granite 2" },
+        { "U": 1764, "V": 18, "Variety": "Granite 3" },
+        { "U": 1800, "V": 18, "Variety": "Granite 4" },
+        { "U": 1836, "V": 18, "Variety": "Granite 5" },
+        { "U": 1872, "V": 18, "Variety": "Granite 6" },
+        { "U": 0, "V": 54, "Variety": "Marble 1" },
+        { "U": 36, "V": 54, "Variety": "Marble 2" },
+        { "U": 72, "V": 54, "Variety": "Marble 3" },
+        { "U": 108, "V": 54, "Variety": "Marble 4" },
+        { "U": 144, "V": 54, "Variety": "Marble 5" },
+        { "U": 180, "V": 54, "Variety": "Marble 6" }
       ]
     },
     {
@@ -16432,7 +16468,25 @@ var settings = {
         {
           "U": 1512, "V": 0,
           "Name": "Peg"
-        }
+        },
+        { "U": 1566, "V": 0, Name="Sandstone 1" },
+        { "U": 1620, "V": 0, Name="Sandstone 2" },
+        { "U": 1674, "V": 0, Name="Sandstone 3" },
+        { "U": 1728, "V": 0, Name="Sandstone 4" },
+        { "U": 1782, "V": 0, Name="Sandstone 5" },
+        { "U": 1836, "V": 0, Name="Sandstone 6" },
+        { "U": 0, "V": 36, Name="Granite 1" },
+        { "U": 54, "V": 36, Name="Granite 2" },
+        { "U": 108, "V": 36, Name="Granite 3" },
+        { "U": 162, "V": 36, Name="Granite 4" },
+        { "U": 216, "V": 36, Name="Granite 5" },
+        { "U": 270, "V": 36, Name="Granite 6" },
+        { "U": 324, "V": 36, Name="Marble 1" },
+        { "U": 378, "V": 36, Name="Marble 2" },
+        { "U": 432, "V": 36, Name="Marble 3" },
+        { "U": 486, "V": 36, Name="Marble 4" },
+        { "U": 540, "V": 36, Name="Marble 5" },
+        { "U": 594, "V": 36, Name="Marble 6" },
       ]
     },
     {
@@ -20290,7 +20344,24 @@ var settings = {
         }
       ]
     },
-    { "Id": "468", "Name": "Trapped Chests (Group 2)" },
+
+    { "Id": "468", "Name": "Trapped Chests (Group 2)",
+      "Frames": [
+        { "U": 0,   "V": 0, "Name": "Trapped Crystal" },
+        { "U": 36,  "V": 0, "Name": "Trapped Golden" },
+        { "U": 72,  "V": 0, "Name": "Trapped Spider" },
+        { "U": 108, "V": 0, "Name": "Trapped Lesion" },
+        { "U": 144, "V": 0, "Name": "Trapped Dead Man's" },
+        { "U": 180, "V": 0, "Name": "Trapped Solar" },
+        { "U": 216, "V": 0, "Name": "Trapped Vortex" },
+        { "U": 252, "V": 0, "Name": "Trapped Nebula" },
+        { "U": 288, "V": 0, "Name": "Trapped Stardust" },
+        { "U": 324, "V": 0, "Name": "Trapped Golf" },
+        { "U": 360, "V": 0, "Name": "Trapped Sandstone" },
+        { "U": 396, "V": 0, "Name": "Trapped Bamboo" },
+        { "U": 432, "V": 0, "Name": "Trapped Desert" },
+        { "U": 468, "V": 0, "Name": "Trapped Desert", "Variety": "Locked" }
+      ] },
     { "Id": "469", "Name": "Crystal Table" },
 
     { "Name": "Display Doll", "Id": "470" },
