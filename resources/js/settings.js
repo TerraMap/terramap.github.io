@@ -13480,68 +13480,136 @@ var settings = {
           "Variety": "Armor Statue"
         },
         {
+          "U": 0, "V": 54,
+          "Variety": "Scorpion Statue"
+        },
+        {
           "U": 36, "V": 0,
           "Variety": "Angel Statue"
+        },
+        {
+          "U": 36, "V": 54,
+          "Variety": "Snail Statue"
         },
         {
           "U": 72, "V": 0,
           "Variety": "Star Statue"
         },
         {
+          "U": 72, "V": 54,
+          "Variety": "Grasshopper Statue"
+        },
+        {
           "U": 108, "V": 0,
           "Variety": "Sword Statue"
+        },
+        {
+          "U": 108, "V": 54,
+          "Variety": "Mouse Statue"
         },
         {
           "U": 144, "V": 0,
           "Variety": "Slime Statue"
         },
         {
+          "U": 144, "V": 54,
+          "Variety": "Duck Statue"
+        },
+        {
           "U": 180, "V": 0,
           "Variety": "Goblin Statue"
+        },
+        {
+          "U": 180, "V": 54,
+          "Variety": "Penguin Statue"
         },
         {
           "U": 216, "V": 0,
           "Variety": "Shield Statue"
         },
         {
+          "U": 216, "V": 54,
+          "Variety": "Frog Statue"
+        },
+        {
           "U": 252, "V": 0,
           "Variety": "Bat Statue"
+        },
+        {
+          "U": 252, "V": 54,
+          "Variety": "Buggy Statue"
         },
         {
           "U": 288, "V": 0,
           "Variety": "Fish Statue"
         },
         {
+          "U": 288, "V": 54,
+          "Variety": "Wall Creeper Statue"
+        },
+        {
           "U": 324, "V": 0,
           "Variety": "Bunny Statue"
+        },
+        {
+          "U": 324, "V": 54,
+          "Variety": "Unicorn Statue"
         },
         {
           "U": 360, "V": 0,
           "Variety": "Skeleton Statue"
         },
         {
+          "U": 360, "V": 54,
+          "Variety": "Drippler Statue"
+        },
+        {
           "U": 396, "V": 0,
           "Variety": "Reaper Statue"
+        },
+        {
+          "U": 396, "V": 54,
+          "Variety": "Wraith Statue"
         },
         {
           "U": 432, "V": 0,
           "Variety": "Woman Statue"
         },
         {
+          "U": 432, "V": 54,
+          "Variety": "Bone Skeleton Statue"
+        },
+        {
           "U": 468, "V": 0,
           "Variety": "Imp Statue"
+        },
+        {
+          "U": 468, "V": 54,
+          "Variety": "Undead Viking Statue"
         },
         {
           "U": 504, "V": 0,
           "Variety": "Gargoyle Statue"
         },
         {
+          "U": 504, "V": 54,
+          "Variety": "Medusa Statue"
+        },
+        {
           "U": 540, "V": 0,
           "Variety": "Gloom Statue"
         },
         {
+          "U": 540, "V": 54,
+          "Variety": "Harpy Statue"
+        },
+        {
           "U": 576, "V": 0,
           "Variety": "Hornet Statue"
+        },
+        {
+          "U": 576, "V": 54,
+          "Variety": "Pigron Statue"
         },
         {
           "U": 612, "V": 0,
@@ -13552,12 +13620,24 @@ var settings = {
           "Variety": "Crab Statue"
         },
         {
+          "U": 648, "V": 54,
+          "Variety": "Granite Golem Statue"
+        },
+        {
           "U": 684, "V": 0,
           "Variety": "Hammer Statue"
         },
         {
+          "U": 684, "V": 54,
+          "Variety": "Armed Zombie Statue"
+        },
+        {
           "U": 720, "V": 0,
           "Variety": "Potion Statue"
+        },
+        {
+          "U": 720, "V": 54,
+          "Variety": "Blood Zombie Statue"
         },
         {
           "U": 756, "V": 0,
