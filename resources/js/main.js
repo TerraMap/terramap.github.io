@@ -379,7 +379,7 @@ function highlightInfos(selectedInfos) {
 
       if(isTileMatch(tile, selectedInfos)) {
         overlayCtx.fillStyle = "rgb(255, 255, 255)";
-        overlayCtx.fillRect(x, y, 1, 1);
+        overlayCtx.fillRect(x / 2, y, 0.5, 1);
       }
 
       y++;
@@ -630,7 +630,7 @@ $("#panzoomContainer").on('panzoomend', function(evt, panzoom, matrix, changed) 
 function getTileAt(x, y) {
   if(!world) return;
 
-  var index = x * world.height + y;
+  var index = 2 * x * world.height + y;
   if(index >= 0 && index < world.tiles.length) {
     return world.tiles[index];
   }
@@ -770,7 +770,7 @@ function onWorldLoaderWorkerMessage(e) {
     x = e.data.x;
 
 		for(x = e.data.x; x <= e.data.x + 1; x++) {
-	    for(y = 0; y < e.data.tiles.length / 2; y++) {
+	    for(y = 0; y < e.data.tiles.length; y++) {
 	      tile = e.data.tiles[y];
 
 	      if(tile) {
