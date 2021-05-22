@@ -748,6 +748,8 @@ function getTileText (tile) {
 function fileNameChanged (evt) {
   file = evt.target.files[0];
 
+  $("#help").hide();
+
   reloadWorld();
 }
 

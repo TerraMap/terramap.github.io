@@ -488,7 +488,7 @@ function readTiles(reader, world) {
 
         if (x % 2 == 0) {
             self.postMessage({
-                'status': "Reading tile " + tilesProcessed + " of " + world.totalTileCount,
+                'status': "Reading tile " + tilesProcessed.toLocaleString() + " of " + world.totalTileCount.toLocaleString(),
                 // 'tilesProcessed': tilesProcessed,
                 // 'totalTileCount': world.totalTileCount,
                 'x': x,
