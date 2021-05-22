@@ -124,6 +124,9 @@ function readProperties(reader, world) {
         if (world.version >= 227) {
             world.getGoodWorld = reader.readUint8();
         }
+        if (world.version >= 238) {
+            world.tenthAnniversaryWorld = reader.readUint8();
+        }
     } else {
         if (world.version >= 112) {
             world.expertMode = world.gameMode = (reader.readUint8() ? 1 : 0);
