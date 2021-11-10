@@ -764,17 +764,12 @@ function onWorldLoaderWorkerMessage(e) {
   if(e.data.status)
     $("#status").html(e.data.status);
 
-  var x = 0;
-  var i = 0;
-  var tile;
-
   if(e.data.tiles) {
-    x = e.data.x;
-
-		for(x = e.data.x; x <= e.data.x + 1; x++) {
-	    for(y = 0; y < e.data.tiles.length / 2; y++) {
-	      tile = e.data.tiles[y];
-
+	  let xlimit = e.data.x + e.data.tiles.length / world.height;
+	  let i = 0;
+	  for(let x = e.data.x; x < xlimit; x++) {
+	    for(let y = 0; y < world.height; y++) {
+	      let tile = e.data.tiles[i++];
 	      if(tile) {
 	        tile.info = getTileInfo(tile);
 	        world.tiles.push(tile);
