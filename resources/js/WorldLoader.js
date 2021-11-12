@@ -486,12 +486,12 @@ function readTiles(reader, world) {
 
         tilesProcessed += world.height;
 
-        if (x % 2 == 0) {
+        if (x % 2 == 1) {
             self.postMessage({
                 'status': "Reading tile " + tilesProcessed.toLocaleString() + " of " + world.totalTileCount.toLocaleString(),
                 // 'tilesProcessed': tilesProcessed,
                 // 'totalTileCount': world.totalTileCount,
-                'x': x,
+                'x': x - 1,
                 'tiles': tiles,
             });
             tiles = [];
