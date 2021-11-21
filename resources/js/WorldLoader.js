@@ -138,6 +138,13 @@ function readProperties(reader, world) {
         }
     }
 
+    if (world.version >= 239) {
+        world.dontStarveWorld = reader.readUint8();
+    }
+    if (world.version >= 241) {
+        world.notTheBeesWorld = reader.readUint8();
+    }
+
     // creation time (Int64)
     reader.readInt32();
     reader.readInt32();
