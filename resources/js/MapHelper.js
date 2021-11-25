@@ -8,7 +8,7 @@ function rgb(r, g, b) {
 
 // Decompiled from the Terraria source code
 
-var tileColors = new Array(624);
+var tileColors = new Array(625);
 var liquidColors = new Array(3);
 var wallColors = new Array(316);
 
@@ -715,6 +715,7 @@ tileColors[548][1] = color;
 tileColors[613][0] = color;
 tileColors[614][0] = color;
 tileColors[623][0] = rgb(220, 210, 245);
+tileColors[624][0] = rgb(255, 0, 0);
 
 liquidColors[0] = rgb(9, 61, 191);
 liquidColors[1] = rgb(253, 32, 3);
