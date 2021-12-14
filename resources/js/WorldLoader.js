@@ -346,6 +346,9 @@ function readProperties(reader, world) {
         world.downedEmpressOfLight = reader.readUint8() > 0;
         world.downedQueenSlime = reader.readUint8() > 0;
     }
+    if (world.version >= 240) {
+        world.downedDeerclops = reader.readUint8() > 0;
+    }
 
     var hellLevel = ((world.height - 230) - world.worldSurfaceY) / 6;
     hellLevel = hellLevel * 6 + world.worldSurfaceY - 5;
@@ -495,7 +498,7 @@ function readTiles(reader, world) {
 
         if (x % 2 == 1) {
             self.postMessage({
-                'status': "Reading tile " + tilesProcessed.toLocaleString() + " of " + world.totalTileCount.toLocaleString(),
+                'status': `Reading tile ${tilesProcessed.toLocaleString()} of ${world.totalTileCount.toLocaleString()}`,
                 // 'tilesProcessed': tilesProcessed,
                 // 'totalTileCount': world.totalTileCount,
                 'x': x - 1,
@@ -583,9 +586,7 @@ function readSigns(reader, world) {
 }
 
 function getNpcType(id) {
-    var npc = settings.Npcs.find(function(element) {
-        return element.Id == id;
-    });
+    var npc = settings.Npcs.find((element) => element.Id === id);
 
     if (npc) {
         return npc.Name;
