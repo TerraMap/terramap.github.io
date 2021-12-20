@@ -705,14 +705,6 @@ function getTileText (tile) {
     else
       text = `${text} (${tile.Type})`;
   }
-  else if (tile.WallType || tile.WallType === 0) {
-    if(tile.WallType < settings.Walls.length) {
-      text = `${settings.Walls[tile.WallType].Name} (${tile.WallType})`;
-    }
-    else {
-      text = `Unknown Wall (${tile.WallType})`;
-    }
-  }
   else if (tile.IsLiquidPresent) {
     text = "Water";
 
@@ -721,6 +713,14 @@ function getTileText (tile) {
     }
     else if (tile.IsLiquidHoney) {
       text = "Honey";
+    }
+  }
+  else if (tile.WallType || tile.WallType === 0) {
+    if(tile.WallType < settings.Walls.length) {
+      text = `${settings.Walls[tile.WallType].Name} (${tile.WallType})`;
+    }
+    else {
+      text = `Unknown Wall (${tile.WallType})`;
     }
   }
 
@@ -863,10 +863,6 @@ function getTileColor(y, tile, world) {
     return tileColors[tile.Type][0];
   }
 
-  if (tile.IsWallPresent) {
-    return wallColors[tile.WallType][0];
-  }
-
   if (tile.IsLiquidPresent) {
     if(tile.IsLiquidLava)
       return liquidColors[1];
@@ -875,6 +871,11 @@ function getTileColor(y, tile, world) {
     else
       return liquidColors[0];
   }
+
+  if (tile.IsWallPresent) {
+    return wallColors[tile.WallType][0];
+  }
+
 
   if(y < world.worldSurfaceY)
     return { "r": 132, "g": 170, "b": 248 };
