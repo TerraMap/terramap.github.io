@@ -145,6 +145,16 @@ function readProperties(reader, world) {
         world.notTheBeesWorld = reader.readUint8();
     }
 
+    if (world.version >= 249) {
+        world.remixWorld = reader.readUint8();
+    }
+    if (world.version >= 266) {
+        world.noTrapsWorld = reader.readUint8();
+    }
+    if (world.version >= 267) {
+        world.zenithWorld = reader.readUint8();
+    }
+
     // creation time (Int64)
     reader.readInt32();
     reader.readInt32();
@@ -195,6 +205,7 @@ function readProperties(reader, world) {
     world.shadowOrbsbrokenmod3 = reader.readUint8();
     world.altarsSmashed = reader.readInt32();
     world.hardMode = reader.readUint8() > 0;
+    world.afterPartyOfDoom = reader.readUint8() > 0;
     world.goblinInvasionDelay = reader.readInt32();
     world.goblinInvasionSize = reader.readInt32();
     world.goblinInvasionType = reader.readInt32();
@@ -239,7 +250,7 @@ function readProperties(reader, world) {
 
     let killedMobs = reader.readInt16();
     for (var j = 0; j < killedMobs; j++) {
-        if (j < 540) {
+        if (j < 688) {
             //this.NpcKillCount[j] = reader.readInt32();
             reader.readInt32();
         } else {
@@ -348,6 +359,39 @@ function readProperties(reader, world) {
     }
     if (world.version >= 240) {
         world.downedDeerclops = reader.readUint8() > 0;
+    }
+
+    if (world.version >= 250) {
+        world.unlockedSlimeBlueSpawn = reader.readUint8() > 0;
+    }
+
+    if (world.version >= 251) {
+        world.unlockedMerchantSpawn = reader.readUint8() > 0;
+        world.unlockedDemolitionistSpawn = reader.readUint8() > 0;
+        world.unlockedPartyGirlSpawn = reader.readUint8() > 0;
+        world.unlockedDyeTraderSpawn = reader.readUint8() > 0;
+        world.unlockedTruffleSpawn = reader.readUint8() > 0;
+        world.unlockedArmsDealerSpawn = reader.readUint8() > 0;
+        world.unlockedNurseSpawn = reader.readUint8() > 0;
+        world.unlockedPrincessSpawn = reader.readUint8() > 0;
+    }
+
+    if (world.version >= 259) world.combatBookVolumeTwoWasUsed = reader.readUint8() > 0;
+    if (world.version >= 260) world.peddlersSatchelWasUsed = reader.readUint8() > 0;
+    if (world.version >= 261)
+    {
+      reader.readUint8() > 0;
+      reader.readUint8() > 0;
+      reader.readUint8() > 0;
+      reader.readUint8() > 0;
+      reader.readUint8() > 0;
+      reader.readUint8() > 0;
+      reader.readUint8() > 0;
+    }
+    if (world.version >= 264)
+    {
+      reader.readUint8() > 0;
+      //reader.ReadByte();
     }
 
     var hellLevel = ((world.height - 230) - world.worldSurfaceY) / 6;
