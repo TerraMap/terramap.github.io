@@ -391,7 +391,7 @@ function readProperties(reader, world) {
     if (world.version >= 264)
     {
       reader.readUint8() > 0;
-      //reader.ReadByte();
+      reader.readUint8();
     }
 
     var hellLevel = ((world.height - 230) - world.worldSurfaceY) / 6;
