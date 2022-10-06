@@ -234,15 +234,20 @@ panzoom.parent().on('mousewheel.focal', onMouseWheel);
 
 function onMouseWheel(e) {
   e.preventDefault();
+  
+  const delta = e.delta || e.originalEvent.wheelDelta;
+  const zoomOut = delta ? delta < 0 : e.originalEvent.deltaY > 0;
 
-  var delta = e.delta || e.originalEvent.wheelDelta;
-  var zoomOut = delta ? delta < 0 : e.originalEvent.deltaY > 0;
+  const isTouchPad = Math.abs(delta) < 120;
+  const multiplier = isTouchPad ? 0.025 : 0.3;
 
-  var transform = $(panzoomContainer).panzoom('getMatrix');
-  var scale = transform[0];
+  // console.log({ isTouchPad, multiplier, delta, zoomOut });
+
+  const transform = $(panzoomContainer).panzoom('getMatrix');
+  const scale = transform[0];
 
   panzoom.panzoom('zoom', zoomOut, {
-      increment   : 0.3 * scale,
+      increment   : multiplier * scale,
       animate     : true,
       focal       : e
   });
