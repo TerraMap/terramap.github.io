@@ -33,6 +33,11 @@ var sets = [
         "isTile": true
       },
       {
+        "Id": "352",
+        "Name": "Crimtane Thorns",
+        "isTile": true
+      },
+      {
         "Id": "399",
         "Name": "Crimson Hardened Sand",
         "isTile": true
@@ -64,7 +69,7 @@ var sets = [
       },
       {
         "Id": "32",
-        "Name": "Corrupted Vines",
+        "Name": "Corruption Thorns",
         "isTile": true
       },
       {
@@ -85,6 +90,11 @@ var sets = [
       {
         "Id": "400",
         "Name": "Corrupt Sandstone",
+        "isTile": true
+      },
+      {
+        "Id": "636",
+        "Name": "Corrupt Vines",
         "isTile": true
       }
     ]
