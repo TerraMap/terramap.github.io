@@ -432,11 +432,18 @@ function readTiles(reader, world) {
             let b = 0;
             let tile = {};
             let b3 = reader.readUint8();
+            let flag = false;
             if ((b3 & 1) == 1) {
+                flag = true;
                 b2 = reader.readUint8();
-                if ((b2 & 1) == 1) {
-                    b = reader.readUint8();
-                }
+            }
+            let flag2 = false;
+            if (flag && (b2 & 1) == 1) {
+                flag2 = true;
+                b = reader.readUint8();
+            }
+            if (flag2 && (b & 1) == 1) {
+                b4 = reader.readUint8();
             }
             b4 = 0;
             if ((b3 & 2) == 2) {
@@ -478,6 +485,9 @@ function readTiles(reader, world) {
             if (b4 !== 0) {
                 tile.IsLiquidPresent = true;
                 tile.LiquidAmount = reader.readUint8();
+                if ((b & 128) == 128) {
+                    tile.Shimmer = true;
+                }
                 if (b4 > 1) {
                     if (b4 == 2) {
                         tile.IsLiquidLava = true;
@@ -642,6 +652,13 @@ function getNpcType(id) {
 function readNpcs(reader, world) {
     var npcs = [];
 
+    if (world.version >= 268) {
+        let num = reader.readInt32();
+        while(num-- > 0) {
+            reader.readint32();
+        }
+    }
+
     var num = 0;
     var flag = reader.readUint8() > 0;
 
@@ -669,6 +686,7 @@ function readNpcs(reader, world) {
     flag = reader.readUint8() > 0;
     while (flag) {
         npc = {};
+        reader.readint32();
         npc.type = readString(reader);
         npc.x = reader.readFloat32();
         npc.y = reader.readFloat32();
