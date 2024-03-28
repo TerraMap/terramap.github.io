@@ -195,5 +195,25 @@ var sets = [
         "isItem": true
       }
     ]
-  }
+  },
+  {
+    "Name": "Item-summoning statues",
+    "Entries": [
+      {
+        "Id": "473",
+        "Name": "Heart Statue",
+        "isItem": true
+      },
+      {
+        "Id": "438",
+        "Name": "Star Statue",
+        "isTile": true
+      },
+      {
+        "Id": "453",
+        "Name": "Bomb Statue",
+        "isItem": true
+      },
+    ]
+  }  
 ]
