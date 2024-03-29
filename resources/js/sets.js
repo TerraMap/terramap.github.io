@@ -1,50 +1,10 @@
 var sets = [
   {
-    "Name": "Crimson Blocks",
+    "Name": "Chests",
     "Entries": [
       {
-        "Id": "199",
-        "Name": "Flesh Grass",
-        "isTile": true
-      },
-      {
-        "Id": "200",
-        "Name": "Red Ice",
-        "isTile": true
-      },
-      {
-        "Id": "201",
-        "Name": "Flesh Weeds",
-        "isTile": true
-      },
-      {
-        "Id": "203",
-        "Name": " Block",
-        "isTile": true
-      },
-      {
-        "Id": "205",
-        "Name": "Crimstone Vines",
-        "isTile": true
-      },
-      {
-        "Id": "234",
-        "Name": "Crimsand",
-        "isTile": true
-      },
-      {
-        "Id": "352",
-        "Name": "Crimtane Thorns",
-        "isTile": true
-      },
-      {
-        "Id": "399",
-        "Name": "Crimson Hardened Sand",
-        "isTile": true
-      },
-      {
-        "Id": "401",
-        "Name": "Crimson Sandstone",
+        "Id": "21",
+        "Name": "Chest",
         "isTile": true
       }
     ]
@@ -100,6 +60,77 @@ var sets = [
     ]
   },
   {
+    "Name": "Crimson Blocks",
+    "Entries": [
+      {
+        "Id": "199",
+        "Name": "Flesh Grass",
+        "isTile": true
+      },
+      {
+        "Id": "200",
+        "Name": "Red Ice",
+        "isTile": true
+      },
+      {
+        "Id": "201",
+        "Name": "Flesh Weeds",
+        "isTile": true
+      },
+      {
+        "Id": "203",
+        "Name": " Block",
+        "isTile": true
+      },
+      {
+        "Id": "205",
+        "Name": "Crimstone Vines",
+        "isTile": true
+      },
+      {
+        "Id": "234",
+        "Name": "Crimsand",
+        "isTile": true
+      },
+      {
+        "Id": "352",
+        "Name": "Crimtane Thorns",
+        "isTile": true
+      },
+      {
+        "Id": "399",
+        "Name": "Crimson Hardened Sand",
+        "isTile": true
+      },
+      {
+        "Id": "401",
+        "Name": "Crimson Sandstone",
+        "isTile": true
+      }
+    ]
+  },
+  {
+    "Name": "Enchanted Items",
+    "Entries": [
+      {
+        "Id": "55",
+        "Name": "Enchanted Boomerang",
+        "isItem": true
+      },
+      {
+        "Id": "187",
+        "Name": "3x2 Decos - Enchanted Sword",
+        "U": 918, "V": 0,
+        "isTile": true
+      },
+      {
+        "Id": "989",
+        "Name": "Enchanted Sword",
+        "isItem": true
+      }
+    ]
+  },
+  {
     "Name": "Hallow Blocks",
     "Entries": [
       {
@@ -145,12 +176,28 @@ var sets = [
     ]
   },
   {
-    "Name": "Chests",
+    "Name": "Item Spawning Statues",
     "Entries": [
       {
-        "Id": "21",
-        "Name": "Chest",
-        "isTile": true
+        "Id": "105",
+        "Name": "Bomb Statue",
+        "isItem": true,
+        "U": 612,
+        "V": 0
+      },
+      {
+        "Id": "105",
+        "Name": "Heart Statue",
+        "isItem": true,
+        "U": 1332,
+        "V": 0
+      },
+      {
+        "Id": "105",
+        "Name": "Star Statue",
+        "isTile": true,
+        "U": 72,
+        "V": 0
       }
     ]
   },
@@ -174,46 +221,5 @@ var sets = [
         "isItem": true
       }
     ]
-  },
-  {
-    "Name": "Enchanted Items",
-    "Entries": [
-      {
-        "Id": "55",
-        "Name": "Enchanted Boomerang",
-        "isItem": true
-      },
-      {
-        "Id": "187",
-        "Name": "3x2 Decos - Enchanted Sword",
-        "U": 918, "V": 0,
-        "isTile": true
-      },
-      {
-        "Id": "989",
-        "Name": "Enchanted Sword",
-        "isItem": true
-      }
-    ]
-  },
-  {
-    "Name": "Item-summoning statues",
-    "Entries": [
-      {
-        "Id": "473",
-        "Name": "Heart Statue",
-        "isItem": true
-      },
-      {
-        "Id": "438",
-        "Name": "Star Statue",
-        "isTile": true
-      },
-      {
-        "Id": "453",
-        "Name": "Bomb Statue",
-        "isItem": true
-      },
-    ]
-  }  
+  }
 ]

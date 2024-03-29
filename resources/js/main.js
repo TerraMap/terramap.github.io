@@ -85,6 +85,42 @@ function addSetListItems() {
 function highlightSet(setIndex) {
   var set = sets[setIndex];
 
+  var selectedValues = [];
+
+  // clear and set selectedInfos
+  for(j = 0; j < blockSelector.options.length; j++) {
+    option = blockSelector.options[j];
+    
+    var tileInfo = getTileInfoFromOption(option);
+
+    if (
+      tileInfo &&
+      set.Entries.some(
+        (entry) =>
+          ((entry.Id && entry.Id === tileInfo.Id) ||
+            (entry.parent &&
+              tileInfo.parent &&
+              entry.parent.Id === tileInfo.parent.Id)) &&
+          (!entry.U || entry.U === tileInfo.U) &&
+          (!entry.V || entry.V === tileInfo.V)
+      )
+    ) {
+      // if (option.prop) option.prop("selected", true);
+      option.selected = true;
+      selectedValues.push(tileInfo.Id);
+      // console.log({ tileInfo, option, set });
+    } else {
+      if (option.prop) option.prop("selected", false);
+      option.selected = false;
+    }
+  }
+
+  // console.log({blockSelector});
+
+  console.log({set});
+
+  // blockSelector.val(selectedValues);
+
   highlightInfos(set.Entries);
 }
 
