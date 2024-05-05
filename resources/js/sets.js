@@ -212,6 +212,13 @@ var sets = [
       },
       {
         "Id": "105",
+        "Name": "Bomb Statue",
+        "isItem": true,
+        "U": 612,
+        "V": 162
+      },
+      {
+        "Id": "105",
         "Name": "Heart Statue",
         "isItem": true,
         "U": 1332,
@@ -219,10 +226,24 @@ var sets = [
       },
       {
         "Id": "105",
+        "Name": "Heart Statue",
+        "isItem": true,
+        "U": 1332,
+        "V": 162
+      },
+      {
+        "Id": "105",
         "Name": "Star Statue",
         "isTile": true,
         "U": 72,
         "V": 0
+      },
+      {
+        "Id": "105",
+        "Name": "Star Statue",
+        "isTile": true,
+        "U": 72,
+        "V": 162
       }
     ]
   },

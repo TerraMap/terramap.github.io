@@ -16098,6 +16098,498 @@ var settings = {
           Variety: "Left",
         },
         {
+          U: 36,
+          V: 0,
+          Name: "Angel Statue",
+          Variety: "Left",
+        },
+        {
+          U: 72,
+          V: 0,
+          Name: "Star Statue",
+          Variety: "Left",
+        },
+        {
+          U: 108,
+          V: 0,
+          Name: "Sword Statue",
+          Variety: "Left",
+        },
+        {
+          U: 144,
+          V: 0,
+          Name: "Slime Statue",
+          Variety: "Left",
+        },
+        {
+          U: 180,
+          V: 0,
+          Name: "Goblin Statue",
+          Variety: "Left",
+        },
+        {
+          U: 216,
+          V: 0,
+          Name: "Shield Statue",
+          Variety: "Left",
+        },
+        {
+          U: 252,
+          V: 0,
+          Name: "Bat Statue",
+          Variety: "Left",
+        },
+        {
+          U: 288,
+          V: 0,
+          Name: "Fish Statue",
+          Variety: "Left",
+        },
+        {
+          U: 324,
+          V: 0,
+          Name: "Bunny Statue",
+          Variety: "Left",
+        },
+        {
+          U: 360,
+          V: 0,
+          Name: "Skeleton Statue",
+          Variety: "Left",
+        },
+        {
+          U: 396,
+          V: 0,
+          Name: "Reaper Statue",
+          Variety: "Left",
+        },
+        {
+          U: 432,
+          V: 0,
+          Name: "Woman Statue",
+          Variety: "Left",
+        },
+        {
+          U: 468,
+          V: 0,
+          Name: "Imp Statue",
+          Variety: "Left",
+        },
+        {
+          U: 504,
+          V: 0,
+          Name: "Gargoyle Statue",
+          Variety: "Left",
+        },
+        {
+          U: 540,
+          V: 0,
+          Name: "Gloom Statue",
+          Variety: "Left",
+        },
+        {
+          U: 576,
+          V: 0,
+          Name: "Hornet Statue",
+          Variety: "Left",
+        },
+        {
+          U: 612,
+          V: 0,
+          Name: "Bomb Statue",
+          Variety: "Left",
+        },
+        {
+          U: 648,
+          V: 0,
+          Name: "Crab Statue",
+          Variety: "Left",
+        },
+        {
+          U: 684,
+          V: 0,
+          Name: "Hammer Statue",
+          Variety: "Left",
+        },
+        {
+          U: 720,
+          V: 0,
+          Name: "Potion Statue",
+          Variety: "Left",
+        },
+        {
+          U: 756,
+          V: 0,
+          Name: "Spear Statue",
+          Variety: "Left",
+        },
+        {
+          U: 792,
+          V: 0,
+          Name: "Cross Statue",
+          Variety: "Left",
+        },
+        {
+          U: 828,
+          V: 0,
+          Name: "Jellyfish Statue",
+          Variety: "Left",
+        },
+        {
+          U: 864,
+          V: 0,
+          Name: "Bow Statue",
+          Variety: "Left",
+        },
+        {
+          U: 900,
+          V: 0,
+          Name: "Boomerang Statue",
+          Variety: "Left",
+        },
+        {
+          U: 936,
+          V: 0,
+          Name: "Boot Statue",
+          Variety: "Left",
+        },
+        {
+          U: 972,
+          V: 0,
+          Name: "Chest Statue",
+          Variety: "Left",
+        },
+        {
+          U: 1008,
+          V: 0,
+          Name: "Bird Statue",
+          Variety: "Left",
+        },
+        {
+          U: 1044,
+          V: 0,
+          Name: "Axe Statue",
+          Variety: "Left",
+        },
+        {
+          U: 1080,
+          V: 0,
+          Name: "Corrupt Statue",
+          Variety: "Left",
+        },
+        {
+          U: 1116,
+          V: 0,
+          Name: "Tree Statue",
+          Variety: "Left",
+        },
+        {
+          U: 1152,
+          V: 0,
+          Name: "Anvil Statue",
+          Variety: "Left",
+        },
+        {
+          U: 1188,
+          V: 0,
+          Name: "Pickaxe Statue",
+          Variety: "Left",
+        },
+        {
+          U: 1224,
+          V: 0,
+          Name: "Mushroom Statue",
+          Variety: "Left",
+        },
+        {
+          U: 1260,
+          V: 0,
+          Name: "Eyeball Statue",
+          Variety: "Left",
+        },
+        {
+          U: 1296,
+          V: 0,
+          Name: "Pillar Statue",
+          Variety: "Left",
+        },
+        {
+          U: 1332,
+          V: 0,
+          Name: "Heart Statue",
+          Variety: "Left",
+        },
+        {
+          U: 1368,
+          V: 0,
+          Name: "Pot Statue",
+          Variety: "Left",
+        },
+        {
+          U: 1404,
+          V: 0,
+          Name: "Sunflower Statue",
+          Variety: "Left",
+        },
+        {
+          U: 1440,
+          V: 0,
+          Name: "King Statue",
+          Variety: "Left",
+        },
+        {
+          U: 1476,
+          V: 0,
+          Name: "Queen Statue",
+          Variety: "Left",
+        },
+        {
+          U: 1512,
+          V: 0,
+          Name: "Piranha Statue",
+          Variety: "Left",
+        },
+        {
+          U: 1548,
+          V: 0,
+          Name: "Lihzahrd Statue",
+          Variety: "Left",
+        },
+        {
+          U: 1584,
+          V: 0,
+          Name: "Lihzahrd Watcher Statue",
+          Variety: "Left",
+        },
+        {
+          U: 1620,
+          V: 0,
+          Name: "Lihzahrd Guardian Statue",
+          Variety: "Left",
+        },
+        {
+          U: 1656,
+          V: 0,
+          Name: "Blue Dungeon Vase",
+          Variety: "Left",
+        },
+        {
+          U: 1692,
+          V: 0,
+          Name: "Green Dungeon Vase",
+          Variety: "Left",
+        },
+        {
+          U: 1728,
+          V: 0,
+          Name: "Pink Dungeon Vase",
+          Variety: "Left",
+        },
+        {
+          U: 1764,
+          V: 0,
+          Name: "Obsidian Vase",
+          Variety: "Left",
+        },
+        {
+          U: 1800,
+          V: 0,
+          Name: "Shark Statue",
+          Variety: "Left",
+        },
+        {
+          U: 1836,
+          V: 0,
+          Name: "Squirrel Statue",
+          Variety: "Left",
+        },
+        {
+          U: 1872,
+          V: 0,
+          Name: "Butterfly Statue",
+          Variety: "Left",
+        },
+        {
+          U: 1908,
+          V: 0,
+          Name: "Worm Statue",
+          Variety: "Left",
+        },
+        {
+          U: 1944,
+          V: 0,
+          Name: "Firefly Statue",
+          Variety: "Left",
+        },
+        {
+          U: 0,
+          V: 54,
+          Name: "Scorpion Statue",
+          Variety: "Left",
+        },
+        {
+          U: 36,
+          V: 54,
+          Name: "Snail Statue",
+          Variety: "Left",
+        },
+        {
+          U: 72,
+          V: 54,
+          Name: "Grasshopper Statue",
+          Variety: "Left",
+        },
+        {
+          U: 108,
+          V: 54,
+          Name: "Mouse Statue",
+          Variety: "Left",
+        },
+        {
+          U: 144,
+          V: 54,
+          Name: "Duck Statue",
+          Variety: "Left",
+        },
+        {
+          U: 180,
+          V: 54,
+          Name: "Penguin Statue",
+          Variety: "Left",
+        },
+        {
+          U: 216,
+          V: 54,
+          Name: "Frog Statue",
+          Variety: "Left",
+        },
+        {
+          U: 252,
+          V: 54,
+          Name: "Buggy Statue",
+          Variety: "Left",
+        },
+        {
+          U: 288,
+          V: 54,
+          Name: "Wall Creeper Statue",
+          Variety: "Left",
+        },
+        {
+          U: 324,
+          V: 54,
+          Name: "Unicorn Statue",
+          Variety: "Left",
+        },
+        {
+          U: 360,
+          V: 54,
+          Name: "Drippler Statue",
+          Variety: "Left",
+        },
+        {
+          U: 396,
+          V: 54,
+          Name: "Wraith Statue",
+          Variety: "Left",
+        },
+        {
+          U: 432,
+          V: 54,
+          Name: "Bone Skeleton Statue",
+          Variety: "Left",
+        },
+        {
+          U: 468,
+          V: 54,
+          Name: "Undead Viking Statue",
+          Variety: "Left",
+        },
+        {
+          U: 504,
+          V: 54,
+          Name: "Medusa Statue",
+          Variety: "Left",
+        },
+        {
+          U: 540,
+          V: 54,
+          Name: "Harpy Statue",
+          Variety: "Left",
+        },
+        {
+          U: 576,
+          V: 54,
+          Name: "Pigron Statue",
+          Variety: "Left",
+        },
+        {
+          U: 612,
+          V: 54,
+          Name: "Hoplite Statue",
+          Variety: "Left",
+        },
+        {
+          U: 648,
+          V: 54,
+          Name: "Granite Golem Statue",
+          Variety: "Left",
+        },
+        {
+          U: 684,
+          V: 54,
+          Name: "Armed Zombie Statue",
+          Variety: "Left",
+        },
+        {
+          U: 720,
+          V: 54,
+          Name: "Blood Zombie Statue",
+          Variety: "Left",
+        },
+        {
+          U: 756,
+          V: 54,
+          Name: "Owl Statue",
+          Variety: "Left",
+        },
+        {
+          U: 792,
+          V: 54,
+          Name: "Seagull Statue",
+          Variety: "Left",
+        },
+        {
+          U: 828,
+          V: 54,
+          Name: "Dragonfly Statue",
+          Variety: "Left",
+        },
+        {
+          U: 864,
+          V: 54,
+          Name: "Turtle Statue",
+          Variety: "Left",
+        },
+        {
+          U: 900,
+          V: 54,
+          Name: "Macaw Statue",
+          Variety: "Left",
+        },
+        {
+          U: 936,
+          V: 54,
+          Name: "Toucan Statue",
+          Variety: "Left",
+        },
+        {
+          U: 972,
+          V: 54,
+          Name: "Cockatiel Statue",
+          Variety: "Left",
+        },
+        {
           U: 0,
           V: 162,
           Name: "Armor Statue",
@@ -16105,21 +16597,9 @@ var settings = {
         },
         {
           U: 36,
-          V: 0,
-          Name: "Angel Statue",
-          Variety: "Left",
-        },
-        {
-          U: 36,
           V: 162,
           Name: "Angel Statue",
           Variety: "Right",
-        },
-        {
-          U: 72,
-          V: 0,
-          Name: "Star Statue",
-          Variety: "Left",
         },
         {
           U: 72,
@@ -16129,21 +16609,9 @@ var settings = {
         },
         {
           U: 108,
-          V: 0,
-          Name: "Sword Statue",
-          Variety: "Left",
-        },
-        {
-          U: 108,
           V: 162,
           Name: "Sword Statue",
           Variety: "Right",
-        },
-        {
-          U: 144,
-          V: 0,
-          Name: "Slime Statue",
-          Variety: "Left",
         },
         {
           U: 144,
@@ -16153,21 +16621,9 @@ var settings = {
         },
         {
           U: 180,
-          V: 0,
-          Name: "Goblin Statue",
-          Variety: "Left",
-        },
-        {
-          U: 180,
           V: 162,
           Name: "Goblin Statue",
           Variety: "Right",
-        },
-        {
-          U: 216,
-          V: 0,
-          Name: "Shield Statue",
-          Variety: "Left",
         },
         {
           U: 216,
@@ -16177,21 +16633,9 @@ var settings = {
         },
         {
           U: 252,
-          V: 0,
-          Name: "Bat Statue",
-          Variety: "Left",
-        },
-        {
-          U: 252,
           V: 162,
           Name: "Bat Statue",
           Variety: "Right",
-        },
-        {
-          U: 288,
-          V: 0,
-          Name: "Fish Statue",
-          Variety: "Left",
         },
         {
           U: 288,
@@ -16201,21 +16645,9 @@ var settings = {
         },
         {
           U: 324,
-          V: 0,
-          Name: "Bunny Statue",
-          Variety: "Left",
-        },
-        {
-          U: 324,
           V: 162,
           Name: "Bunny Statue",
           Variety: "Right",
-        },
-        {
-          U: 360,
-          V: 0,
-          Name: "Skeleton Statue",
-          Variety: "Left",
         },
         {
           U: 360,
@@ -16225,21 +16657,9 @@ var settings = {
         },
         {
           U: 396,
-          V: 0,
-          Name: "Reaper Statue",
-          Variety: "Left",
-        },
-        {
-          U: 396,
           V: 162,
           Name: "Reaper Statue",
           Variety: "Right",
-        },
-        {
-          U: 432,
-          V: 0,
-          Name: "Woman Statue",
-          Variety: "Left",
         },
         {
           U: 432,
@@ -16249,21 +16669,9 @@ var settings = {
         },
         {
           U: 468,
-          V: 0,
-          Name: "Imp Statue",
-          Variety: "Left",
-        },
-        {
-          U: 468,
           V: 162,
           Name: "Imp Statue",
           Variety: "Right",
-        },
-        {
-          U: 504,
-          V: 0,
-          Name: "Gargoyle Statue",
-          Variety: "Left",
         },
         {
           U: 504,
@@ -16273,21 +16681,9 @@ var settings = {
         },
         {
           U: 540,
-          V: 0,
-          Name: "Gloom Statue",
-          Variety: "Left",
-        },
-        {
-          U: 540,
           V: 162,
           Name: "Gloom Statue",
           Variety: "Right",
-        },
-        {
-          U: 576,
-          V: 0,
-          Name: "Hornet Statue",
-          Variety: "Left",
         },
         {
           U: 576,
@@ -16297,21 +16693,9 @@ var settings = {
         },
         {
           U: 612,
-          V: 0,
-          Name: "Bomb Statue",
-          Variety: "Left",
-        },
-        {
-          U: 612,
           V: 162,
           Name: "Bomb Statue",
           Variety: "Right",
-        },
-        {
-          U: 648,
-          V: 0,
-          Name: "Crab Statue",
-          Variety: "Left",
         },
         {
           U: 648,
@@ -16321,21 +16705,9 @@ var settings = {
         },
         {
           U: 684,
-          V: 0,
-          Name: "Hammer Statue",
-          Variety: "Left",
-        },
-        {
-          U: 684,
           V: 162,
           Name: "Hammer Statue",
           Variety: "Right",
-        },
-        {
-          U: 720,
-          V: 0,
-          Name: "Potion Statue",
-          Variety: "Left",
         },
         {
           U: 720,
@@ -16345,21 +16717,9 @@ var settings = {
         },
         {
           U: 756,
-          V: 0,
-          Name: "Spear Statue",
-          Variety: "Left",
-        },
-        {
-          U: 756,
           V: 162,
           Name: "Spear Statue",
           Variety: "Right",
-        },
-        {
-          U: 792,
-          V: 0,
-          Name: "Cross Statue",
-          Variety: "Left",
         },
         {
           U: 792,
@@ -16369,21 +16729,9 @@ var settings = {
         },
         {
           U: 828,
-          V: 0,
-          Name: "Jellyfish Statue",
-          Variety: "Left",
-        },
-        {
-          U: 828,
           V: 162,
           Name: "Jellyfish Statue",
           Variety: "Right",
-        },
-        {
-          U: 864,
-          V: 0,
-          Name: "Bow Statue",
-          Variety: "Left",
         },
         {
           U: 864,
@@ -16393,21 +16741,9 @@ var settings = {
         },
         {
           U: 900,
-          V: 0,
-          Name: "Boomerang Statue",
-          Variety: "Left",
-        },
-        {
-          U: 900,
           V: 162,
           Name: "Boomerang Statue",
           Variety: "Right",
-        },
-        {
-          U: 936,
-          V: 0,
-          Name: "Boot Statue",
-          Variety: "Left",
         },
         {
           U: 936,
@@ -16417,21 +16753,9 @@ var settings = {
         },
         {
           U: 972,
-          V: 0,
-          Name: "Chest Statue",
-          Variety: "Left",
-        },
-        {
-          U: 972,
           V: 162,
           Name: "Chest Statue",
           Variety: "Right",
-        },
-        {
-          U: 1008,
-          V: 0,
-          Name: "Bird Statue",
-          Variety: "Left",
         },
         {
           U: 1008,
@@ -16441,21 +16765,9 @@ var settings = {
         },
         {
           U: 1044,
-          V: 0,
-          Name: "Axe Statue",
-          Variety: "Left",
-        },
-        {
-          U: 1044,
           V: 162,
           Name: "Axe Statue",
           Variety: "Right",
-        },
-        {
-          U: 1080,
-          V: 0,
-          Name: "Corrupt Statue",
-          Variety: "Left",
         },
         {
           U: 1080,
@@ -16465,21 +16777,9 @@ var settings = {
         },
         {
           U: 1116,
-          V: 0,
-          Name: "Tree Statue",
-          Variety: "Left",
-        },
-        {
-          U: 1116,
           V: 162,
           Name: "Tree Statue",
           Variety: "Right",
-        },
-        {
-          U: 1152,
-          V: 0,
-          Name: "Anvil Statue",
-          Variety: "Left",
         },
         {
           U: 1152,
@@ -16489,21 +16789,9 @@ var settings = {
         },
         {
           U: 1188,
-          V: 0,
-          Name: "Pickaxe Statue",
-          Variety: "Left",
-        },
-        {
-          U: 1188,
           V: 162,
           Name: "Pickaxe Statue",
           Variety: "Right",
-        },
-        {
-          U: 1224,
-          V: 0,
-          Name: "Mushroom Statue",
-          Variety: "Left",
         },
         {
           U: 1224,
@@ -16513,21 +16801,9 @@ var settings = {
         },
         {
           U: 1260,
-          V: 0,
-          Name: "Eyeball Statue",
-          Variety: "Left",
-        },
-        {
-          U: 1260,
           V: 162,
           Name: "Eyeball Statue",
           Variety: "Right",
-        },
-        {
-          U: 1296,
-          V: 0,
-          Name: "Pillar Statue",
-          Variety: "Left",
         },
         {
           U: 1296,
@@ -16537,21 +16813,9 @@ var settings = {
         },
         {
           U: 1332,
-          V: 0,
-          Name: "Heart Statue",
-          Variety: "Left",
-        },
-        {
-          U: 1332,
           V: 162,
           Name: "Heart Statue",
           Variety: "Right",
-        },
-        {
-          U: 1368,
-          V: 0,
-          Name: "Pot Statue",
-          Variety: "Left",
         },
         {
           U: 1368,
@@ -16561,21 +16825,9 @@ var settings = {
         },
         {
           U: 1404,
-          V: 0,
-          Name: "Sunflower Statue",
-          Variety: "Left",
-        },
-        {
-          U: 1404,
           V: 162,
           Name: "Sunflower Statue",
           Variety: "Right",
-        },
-        {
-          U: 1440,
-          V: 0,
-          Name: "King Statue",
-          Variety: "Left",
         },
         {
           U: 1440,
@@ -16585,21 +16837,9 @@ var settings = {
         },
         {
           U: 1476,
-          V: 0,
-          Name: "Queen Statue",
-          Variety: "Left",
-        },
-        {
-          U: 1476,
           V: 162,
           Name: "Queen Statue",
           Variety: "Right",
-        },
-        {
-          U: 1512,
-          V: 0,
-          Name: "Piranha Statue",
-          Variety: "Left",
         },
         {
           U: 1512,
@@ -16609,21 +16849,9 @@ var settings = {
         },
         {
           U: 1548,
-          V: 0,
-          Name: "Lihzahrd Statue",
-          Variety: "Left",
-        },
-        {
-          U: 1548,
           V: 162,
           Name: "Lihzahrd Statue",
           Variety: "Right",
-        },
-        {
-          U: 1584,
-          V: 0,
-          Name: "Lihzahrd Watcher Statue",
-          Variety: "Left",
         },
         {
           U: 1584,
@@ -16633,21 +16861,9 @@ var settings = {
         },
         {
           U: 1620,
-          V: 0,
-          Name: "Lihzahrd Guardian Statue",
-          Variety: "Left",
-        },
-        {
-          U: 1620,
           V: 162,
           Name: "Lihzahrd Guardian Statue",
           Variety: "Right",
-        },
-        {
-          U: 1656,
-          V: 0,
-          Name: "Blue Dungeon Vase",
-          Variety: "Left",
         },
         {
           U: 1656,
@@ -16657,21 +16873,9 @@ var settings = {
         },
         {
           U: 1692,
-          V: 0,
-          Name: "Green Dungeon Vase",
-          Variety: "Left",
-        },
-        {
-          U: 1692,
           V: 162,
           Name: "Green Dungeon Vase",
           Variety: "Right",
-        },
-        {
-          U: 1728,
-          V: 0,
-          Name: "Pink Dungeon Vase",
-          Variety: "Left",
         },
         {
           U: 1728,
@@ -16681,21 +16885,9 @@ var settings = {
         },
         {
           U: 1764,
-          V: 0,
-          Name: "Obsidian Vase",
-          Variety: "Left",
-        },
-        {
-          U: 1764,
           V: 162,
           Name: "Obsidian Vase",
           Variety: "Right",
-        },
-        {
-          U: 1800,
-          V: 0,
-          Name: "Shark Statue",
-          Variety: "Left",
         },
         {
           U: 1800,
@@ -16705,21 +16897,9 @@ var settings = {
         },
         {
           U: 1836,
-          V: 0,
-          Name: "Squirrel Statue",
-          Variety: "Left",
-        },
-        {
-          U: 1836,
           V: 162,
           Name: "Squirrel Statue",
           Variety: "Right",
-        },
-        {
-          U: 1872,
-          V: 0,
-          Name: "Butterfly Statue",
-          Variety: "Left",
         },
         {
           U: 1872,
@@ -16729,21 +16909,9 @@ var settings = {
         },
         {
           U: 1908,
-          V: 0,
-          Name: "Worm Statue",
-          Variety: "Left",
-        },
-        {
-          U: 1908,
           V: 162,
           Name: "Worm Statue",
           Variety: "Right",
-        },
-        {
-          U: 1944,
-          V: 0,
-          Name: "Firefly Statue",
-          Variety: "Left",
         },
         {
           U: 1944,
@@ -16753,21 +16921,9 @@ var settings = {
         },
         {
           U: 0,
-          V: 54,
-          Name: "Scorpion Statue",
-          Variety: "Left",
-        },
-        {
-          U: 0,
           V: 216,
           Name: "Scorpion Statue",
           Variety: "Right",
-        },
-        {
-          U: 36,
-          V: 54,
-          Name: "Snail Statue",
-          Variety: "Left",
         },
         {
           U: 36,
@@ -16777,21 +16933,9 @@ var settings = {
         },
         {
           U: 72,
-          V: 54,
-          Name: "Grasshopper Statue",
-          Variety: "Left",
-        },
-        {
-          U: 72,
           V: 216,
           Name: "Grasshopper Statue",
           Variety: "Right",
-        },
-        {
-          U: 108,
-          V: 54,
-          Name: "Mouse Statue",
-          Variety: "Left",
         },
         {
           U: 108,
@@ -16801,21 +16945,9 @@ var settings = {
         },
         {
           U: 144,
-          V: 54,
-          Name: "Duck Statue",
-          Variety: "Left",
-        },
-        {
-          U: 144,
           V: 216,
           Name: "Duck Statue",
           Variety: "Right",
-        },
-        {
-          U: 180,
-          V: 54,
-          Name: "Penguin Statue",
-          Variety: "Left",
         },
         {
           U: 180,
@@ -16825,21 +16957,9 @@ var settings = {
         },
         {
           U: 216,
-          V: 54,
-          Name: "Frog Statue",
-          Variety: "Left",
-        },
-        {
-          U: 216,
           V: 216,
           Name: "Frog Statue",
           Variety: "Right",
-        },
-        {
-          U: 252,
-          V: 54,
-          Name: "Buggy Statue",
-          Variety: "Left",
         },
         {
           U: 252,
@@ -16849,21 +16969,9 @@ var settings = {
         },
         {
           U: 288,
-          V: 54,
-          Name: "Wall Creeper Statue",
-          Variety: "Left",
-        },
-        {
-          U: 288,
           V: 216,
           Name: "Wall Creeper Statue",
           Variety: "Right",
-        },
-        {
-          U: 324,
-          V: 54,
-          Name: "Unicorn Statue",
-          Variety: "Left",
         },
         {
           U: 324,
@@ -16873,21 +16981,9 @@ var settings = {
         },
         {
           U: 360,
-          V: 54,
-          Name: "Drippler Statue",
-          Variety: "Left",
-        },
-        {
-          U: 360,
           V: 216,
           Name: "Drippler Statue",
           Variety: "Right",
-        },
-        {
-          U: 396,
-          V: 54,
-          Name: "Wraith Statue",
-          Variety: "Left",
         },
         {
           U: 396,
@@ -16897,21 +16993,9 @@ var settings = {
         },
         {
           U: 432,
-          V: 54,
-          Name: "Bone Skeleton Statue",
-          Variety: "Left",
-        },
-        {
-          U: 432,
           V: 216,
           Name: "Bone Skeleton Statue",
           Variety: "Right",
-        },
-        {
-          U: 468,
-          V: 54,
-          Name: "Undead Viking Statue",
-          Variety: "Left",
         },
         {
           U: 468,
@@ -16921,21 +17005,9 @@ var settings = {
         },
         {
           U: 504,
-          V: 54,
-          Name: "Medusa Statue",
-          Variety: "Left",
-        },
-        {
-          U: 504,
           V: 216,
           Name: "Medusa Statue",
           Variety: "Right",
-        },
-        {
-          U: 540,
-          V: 54,
-          Name: "Harpy Statue",
-          Variety: "Left",
         },
         {
           U: 540,
@@ -16945,21 +17017,9 @@ var settings = {
         },
         {
           U: 576,
-          V: 54,
-          Name: "Pigron Statue",
-          Variety: "Left",
-        },
-        {
-          U: 576,
           V: 216,
           Name: "Pigron Statue",
           Variety: "Right",
-        },
-        {
-          U: 612,
-          V: 54,
-          Name: "Hoplite Statue",
-          Variety: "Left",
         },
         {
           U: 612,
@@ -16969,21 +17029,9 @@ var settings = {
         },
         {
           U: 648,
-          V: 54,
-          Name: "Granite Golem Statue",
-          Variety: "Left",
-        },
-        {
-          U: 648,
           V: 216,
           Name: "Granite Golem Statue",
           Variety: "Right",
-        },
-        {
-          U: 684,
-          V: 54,
-          Name: "Armed Zombie Statue",
-          Variety: "Left",
         },
         {
           U: 684,
@@ -16993,21 +17041,9 @@ var settings = {
         },
         {
           U: 720,
-          V: 54,
-          Name: "Blood Zombie Statue",
-          Variety: "Left",
-        },
-        {
-          U: 720,
           V: 216,
           Name: "Blood Zombie Statue",
           Variety: "Right",
-        },
-        {
-          U: 756,
-          V: 54,
-          Name: "Owl Statue",
-          Variety: "Left",
         },
         {
           U: 756,
@@ -17017,21 +17053,9 @@ var settings = {
         },
         {
           U: 792,
-          V: 54,
-          Name: "Seagull Statue",
-          Variety: "Left",
-        },
-        {
-          U: 792,
           V: 216,
           Name: "Seagull Statue",
           Variety: "Right",
-        },
-        {
-          U: 828,
-          V: 54,
-          Name: "Dragonfly Statue",
-          Variety: "Left",
         },
         {
           U: 828,
@@ -17041,21 +17065,9 @@ var settings = {
         },
         {
           U: 864,
-          V: 54,
-          Name: "Turtle Statue",
-          Variety: "Left",
-        },
-        {
-          U: 864,
           V: 216,
           Name: "Turtle Statue",
           Variety: "Right",
-        },
-        {
-          U: 900,
-          V: 54,
-          Name: "Macaw Statue",
-          Variety: "Left",
         },
         {
           U: 900,
@@ -17065,21 +17077,9 @@ var settings = {
         },
         {
           U: 936,
-          V: 54,
-          Name: "Toucan Statue",
-          Variety: "Left",
-        },
-        {
-          U: 936,
           V: 216,
           Name: "Toucan Statue",
           Variety: "Right",
-        },
-        {
-          U: 972,
-          V: 54,
-          Name: "Cockatiel Statue",
-          Variety: "Left",
         },
         {
           U: 972,
