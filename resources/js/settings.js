@@ -43283,5 +43283,3 @@ var settings = {
     },
   ],
 };
-
-console.log("lol");
