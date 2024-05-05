@@ -6,6 +6,11 @@ var sets = [
         "Id": "21",
         "Name": "Chest",
         "isTile": true
+      },
+      {
+        "Id": "467",
+        "Name": "Chest (Group 2)",
+        "isTile": true
       }
     ]
   },
@@ -55,6 +60,11 @@ var sets = [
       {
         "Id": "636",
         "Name": "Corrupt Vines",
+        "isTile": true
+      },
+      {
+        "Id": "661",
+        "Name": "CorruptJungleGrass",
         "isTile": true
       }
     ]
@@ -106,6 +116,11 @@ var sets = [
         "Id": "401",
         "Name": "Crimson Sandstone",
         "isTile": true
+      },
+      {
+        "Id": "662",
+        "Name": "CrimsonJungleGrass",
+        "isTile": true
       }
     ]
   },
@@ -136,6 +151,11 @@ var sets = [
       {
         "Id": "109",
         "Name": "Hallowed Grass",
+        "isTile": true
+      },
+      {
+        "Id": "110",
+        "Name": "Hallowed Plants",
         "isTile": true
       },
       {
@@ -171,6 +191,11 @@ var sets = [
       {
         "Id": "403",
         "Name": "Hallow Sandstone",
+        "isTile": true
+      },
+      {
+        "Id": "492",
+        "Name": "Golf Grass Hallowed",
         "isTile": true
       }
     ]
