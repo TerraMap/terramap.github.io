@@ -35,6 +35,7 @@ function readWorldFile(reader, world) {
     readChests(reader, world);
     readSigns(reader, world);
     readNpcs(reader, world);
+    readTileEntities(reader, world);
 
     self.postMessage({
         'status': "Done.",
@@ -696,6 +697,93 @@ function readNpcs(reader, world) {
 
     self.postMessage({
         'npcs': npcs,
+    });
+}
+
+function readTileEntity(reader) {
+    let tileType = reader.readUint8();
+    if (tileType < 0 || tileType > 7) {
+        return null;
+    }
+    let tileEntity = {};
+    tileEntity.type = tileType;
+    tileEntity.id = reader.readInt32();
+    tileEntity.position = {x:reader.readInt16(), y:reader.readInt16()};
+    switch (tileType) {
+        case 0: // target dummy
+            reader.readInt16();
+            break;
+        case 1: // item frame
+        case 4: // weapon rack
+        case 6: // plate
+            tileEntity.item = {}
+            tileEntity.item.id = reader.readInt16();
+            tileEntity.item.prefixId = reader.readUint8();
+            tileEntity.item.count = reader.readInt16();
+            break;
+        case 2: // logic sensor
+            tileEntity.logicCheckType = reader.readUint8();
+            tileEntity.on = reader.readUint8() > 0;
+            break;
+        case 3: // (wo)mannequin
+            tileEntity.items = Array(8)
+            tileEntity.dyes = Array(8);
+            let itemBitmask = reader.readUint8();
+            let dyeBitmask = reader.readUint8();
+            for (let i = 0; i < 8; i++) {
+                tileEntity.items[i] = {};
+                if (((itemBitmask >> i) & 1) === 1) {
+                    tileEntity.items[i].id = reader.readInt16();
+                    tileEntity.items[i].prefixId = reader.readUint8();
+                    tileEntity.items[i].count = reader.readInt16();
+                }
+            }
+            for (let j = 0; j < 8; j++) {
+                tileEntity.dyes[j] = {};
+                if (((dyeBitmask >> j) & 1) === 1) {
+                    tileEntity.dyes[j].id = reader.readInt16();
+                    tileEntity.dyes[j].prefixId = reader.readUint8();
+                    tileEntity.dyes[j].count = reader.readInt16();
+                }
+            }
+            break;
+        case 5: // hat rack
+            tileEntity.items = Array(2)
+            tileEntity.dyes = Array(2);
+            let bitmask = reader.readUint8();
+            for (let i = 0; i < 2; i++) {
+                tileEntity.items[i] = {};
+                if (((bitmask >> i) & 1) === 1) {
+                    tileEntity.items[i].id = reader.readInt16();
+                    tileEntity.items[i].prefixId = reader.readUint8();
+                    tileEntity.items[i].count = reader.readInt16();
+                }
+            }
+            for (let j = 0; j < 2; j++) {
+                tileEntity.dyes[j] = {};
+                if (((bitmask >> (j+2)) & 1) === 1) {
+                    tileEntity.dyes[j].id = reader.readInt16();
+                    tileEntity.dyes[j].prefixId = reader.readUint8();
+                    tileEntity.dyes[j].count = reader.readInt16();
+                }
+            }
+            break;
+        case 7: // pylon
+            break;
+    }
+    return tileEntity;
+}
+
+function readTileEntities(reader, world) {
+    /** @type{Map<{x:int,y:int}, any>}*/
+    let byPosition = new Map();
+    let count = reader.readInt32();
+    for (let i = 0; i < count; i++) {
+        let tileEntity = readTileEntity(reader);
+        byPosition.set(tileEntity.position, tileEntity);
+    }
+    self.postMessage({
+        'tileEntities': byPosition,
     });
 }
 
