@@ -344,6 +344,31 @@ function isTileMatch(tile, selectedInfos, x, y) {
         }
       }
     }
+
+    // check if the tile entity contains it
+    let tileEntity = tile.tileEntity;
+    if (tileEntity && info.isItem) {
+      switch (tileEntity.type) {
+        case 1: // item frame
+        case 4: // weapon rack
+        case 6: // plate
+          if (info.Id == tileEntity.item.id) {
+            return true;
+          }
+          break;
+        case 3: // (wo)mannequin
+        case 5: // hat rack
+          for (let i = 0; i < tileEntity.items.length; i++) {
+            if (info.Id == tileEntity.items[i].id) {
+              return true;
+            }
+            if (info.Id == tileEntity.dyes[i].id) {
+              return true;
+            }
+          }
+          break;
+      }
+    }
   }
 
   return false;

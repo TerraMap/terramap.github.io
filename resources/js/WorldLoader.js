@@ -731,7 +731,9 @@ function readTileEntity(reader) {
             let itemBitmask = reader.readUint8();
             let dyeBitmask = reader.readUint8();
             for (let i = 0; i < 8; i++) {
-                tileEntity.items[i] = {};
+                tileEntity.items[i] = {
+                    id: 0
+                };
                 if (((itemBitmask >> i) & 1) === 1) {
                     tileEntity.items[i].id = reader.readInt16();
                     tileEntity.items[i].prefixId = reader.readUint8();
@@ -739,7 +741,9 @@ function readTileEntity(reader) {
                 }
             }
             for (let j = 0; j < 8; j++) {
-                tileEntity.dyes[j] = {};
+                tileEntity.dyes[j] = {
+                    id: 0
+                };
                 if (((dyeBitmask >> j) & 1) === 1) {
                     tileEntity.dyes[j].id = reader.readInt16();
                     tileEntity.dyes[j].prefixId = reader.readUint8();
@@ -752,7 +756,9 @@ function readTileEntity(reader) {
             tileEntity.dyes = Array(2);
             let bitmask = reader.readUint8();
             for (let i = 0; i < 2; i++) {
-                tileEntity.items[i] = {};
+                tileEntity.items[i] = {
+                    id: 0
+                };
                 if (((bitmask >> i) & 1) === 1) {
                     tileEntity.items[i].id = reader.readInt16();
                     tileEntity.items[i].prefixId = reader.readUint8();
@@ -760,7 +766,9 @@ function readTileEntity(reader) {
                 }
             }
             for (let j = 0; j < 2; j++) {
-                tileEntity.dyes[j] = {};
+                tileEntity.dyes[j] = {
+                    id: 0
+                };
                 if (((bitmask >> (j+2)) & 1) === 1) {
                     tileEntity.dyes[j].id = reader.readInt16();
                     tileEntity.dyes[j].prefixId = reader.readUint8();
