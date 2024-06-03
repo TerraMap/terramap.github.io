@@ -344,6 +344,31 @@ function isTileMatch(tile, selectedInfos, x, y) {
         }
       }
     }
+
+    // check if the tile entity contains it
+    let tileEntity = tile.tileEntity;
+    if (tileEntity && info.isItem) {
+      switch (tileEntity.type) {
+        case 1: // item frame
+        case 4: // weapon rack
+        case 6: // plate
+          if (info.Id == tileEntity.item.id) {
+            return true;
+          }
+          break;
+        case 3: // (wo)mannequin
+        case 5: // hat rack
+          for (let i = 0; i < tileEntity.items.length; i++) {
+            if (info.Id == tileEntity.items[i].id) {
+              return true;
+            }
+            if (info.Id == tileEntity.dyes[i].id) {
+              return true;
+            }
+          }
+          break;
+      }
+    }
   }
 
   return false;
@@ -586,6 +611,23 @@ function getMousePos(canvas, evt) {
   return mousePos;
 }
 
+function getItemText(item) {
+  let prefix = "";
+
+  if(item.prefixId > 0 && item.prefixId < settings.ItemPrefix.length)
+    prefix = settings.ItemPrefix[item.prefixId].Name;
+
+  let itemName = item.id;
+  for(let itemIndex = 0; itemIndex < settings.Items.length; itemIndex++) {
+    let itemSettings = settings.Items[itemIndex];
+    if(Number(itemSettings.Id) === item.id) {
+      itemName = itemSettings.Name;
+      break;
+    }
+  }
+  return `${prefix} ${itemName} (${item.count})`;
+}
+
 panzoomContainer.addEventListener('mousemove', evt => {
   if(!world)
     return;
@@ -631,23 +673,32 @@ $("#panzoomContainer").on('panzoomend', function(evt, panzoom, matrix, changed) 
       text = `${text} - ${chest.name}`;
 
       for(var i = 0; i < chest.items.length; i++) {
-        var item = chest.items[i];
-        var prefix = "";
+        let item = chest.items[i];
+        let itemText = getItemText(item);
 
-        if(item.prefixId > 0 && item.prefixId < settings.ItemPrefix.length)
-          prefix = settings.ItemPrefix[item.prefixId].Name;
+        $("#tileInfoList").append(`<li>${itemText}</li>`);
+      }
+    }
 
-        var itemName = item.id;
-        for(var itemIndex = 0; itemIndex < settings.Items.length; itemIndex++) {
-          var itemSettings = settings.Items[itemIndex];
-          if(itemSettings.Id == item.id) {
-            itemName = itemSettings.Name;
-            break;
+    let tileEntity = tile.tileEntity;
+    if (tileEntity) {
+      switch (tileEntity.type) {
+        case 3: // mannequin
+        case 5: // hat rack
+          let items = tileEntity.items;
+          let dyes = tileEntity.dyes;
+          let itemLength = items.length;
+          for (let i = 0; i < itemLength; i++) {
+            let item = items[i];
+            if (item.id > 0) {
+              $("#tileInfoList").append(`<li>${getItemText(item)}</li>`);
+            }
+            let dye = dyes[i];
+            if (dye.id > 0) {
+              $("#tileInfoList").append(`<li>${getItemText(dye)}</li>`);
+            }
           }
-        }
-
-
-        $("#tileInfoList").append(`<li>${prefix} ${itemName} (${item.count})</li>`);
+          break;
       }
     }
 
@@ -745,6 +796,23 @@ function getTileText (tile) {
       text = `${text} (${tile.Type}, ${tile.TextureU})`;
     else
       text = `${text} (${tile.Type})`;
+    if (tile.tileEntity) {
+      let tileEntity = tile.tileEntity;
+      switch (tileEntity.type) {
+        case 1: // item frame
+        case 4: // weapon rack
+        case 6: // plate
+          let item = tileEntity.item;
+          let itemText = getItemText(item);
+          text = `${text} - ${itemText}`;
+          break;
+        case 2: // logic sensor
+          let checkType = tile.info.CheckTypes[tileEntity.logicCheckType];
+          let on = tileEntity.on ? "On" : "Off";
+          text = `${text} - ${checkType}, ${on}`;
+          break;
+      }
+    }
   }
   else if (tile.WallType || tile.WallType === 0) {
     if(tile.WallType < settings.Walls.length) {
@@ -860,6 +928,28 @@ function onWorldLoaderWorkerMessage(e) {
 
   if(e.data.npcs) {
     addNpcs(e.data.npcs);
+  }
+
+  if (e.data.tileEntities) {
+    for (const [pos, entity] of e.data.tileEntities.entries()) {
+      let idx = pos.x * world.height + pos.y;
+      let tile = world.tiles[idx];
+      if (tile) {
+        let size = tile.info.Size;
+        let sizeX = 1;
+        let sizeY = 1;
+        if (size) {
+          sizeX = size[0] - '0';
+          sizeY = size[2] - '0';
+        }
+        for (let x = 0; x < sizeX; x++) {
+          for (let y = 0; y < sizeY; y++) {
+            let idx = (pos.x+x) * world.height + pos.y+y;
+            world.tiles[idx].tileEntity = entity;
+          }
+        }
+      }
+    }
   }
 
   if(e.data.world) {

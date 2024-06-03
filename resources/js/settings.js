@@ -24484,7 +24484,20 @@ var settings = {
     { Id: "420", Name: "Logic Gate" },
     { Id: "421", Name: "Conveyor Belt Left" },
     { Id: "422", Name: "Conveyor Belt Right" },
-    { Id: "423", Name: "Logic Sensor" },
+    {
+      Id: "423",
+      Name: "Logic Sensor",
+      CheckTypes: [
+        "None",
+        "Day",
+        "Night",
+        "PlayerAbove",
+        "Water",
+        "Lava",
+        "Honey",
+        "Liquid"
+      ]
+    },
     { Id: "424", Name: "Wire Pipe" },
     { Id: "425", Name: "Announcement Box" },
     { Id: "426", Name: "Team Block Red" },
@@ -24634,12 +24647,24 @@ var settings = {
     },
     { Id: "469", Name: "Crystal Table" },
 
-    { Name: "Display Doll", Id: "470" },
-    { Name: "Weapons Rack 2", Id: "471" },
+    {
+      Name: "Display Doll",
+      Size: "2,3",
+      Id: "470"
+    },
+    {
+      Name: "Weapons Rack 2",
+      Size: "3,3",
+      Id: "471"
+    },
     { Name: "Iron Brick", Id: "472" },
     { Name: "Lead Brick", Id: "473" },
     { Name: "Lesion Block", Id: "474" },
-    { Name: "Hat Rack", Id: "475" },
+    {
+      Name: "Hat Rack",
+      Size: "3,4",
+      Id: "475"
+    },
     { Name: "Golf Cup", Id: "476" },
     { Name: "Mowed Golf Grass", Id: "477" },
     { Name: "Crimstone Brick", Id: "478" },
