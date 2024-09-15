@@ -41969,7 +41969,7 @@ var settings = {
     { Name: "GameMasterPants", Id: "4322" },
     { Name: "StarPrincessCrown", Id: "4323" },
     { Name: "StarPrincessDress", Id: "4324" },
-    { Name: "BloodFishingRod", Id: "4325" },
+    { Name: "Chum Caster", Id: "4325" },
     { Name: "FoodPlatter", Id: "4326" },
     { Name: "BlackDragonflyJar", Id: "4327" },
     { Name: "BlueDragonflyJar", Id: "4328" },
