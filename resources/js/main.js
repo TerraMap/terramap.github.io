@@ -141,7 +141,7 @@ function addTileSelectOptions() {
     tile.isTile = true;
 
     var option = document.createElement("option");
-    option.text = tile.Name;
+    option.text = `${tile.Name} (Tile ${i})`;
     option.value = i;
     options.push(option);
 
@@ -163,14 +163,14 @@ function addTileSelectOptions() {
         option.setAttributeNode(attribute);
 
         if(frame.Name) {
-          option.text = `${option.text} - ${frame.Name}`;
+          option.text = `${frame.Name} - ${option.text}`;
         }
 
         if(frame.Variety) {
-          option.text = `${option.text} - ${frame.Variety}`;
+          option.text = `${frame.Variety} - ${option.text}`;
         }
 
-        option.text += " (Tile)";
+        option.text += ` (Tile ${i})`;
 
         options.push(option);
       }
@@ -185,7 +185,7 @@ function addItemSelectOptions() {
     item.isItem = true;
 
     var option = document.createElement("option");
-    option.text = `${item.Name} (Item)`;
+    option.text = `${item.Name} (Item ${item.Id})`;
     option.value = `item${item.Id}`;
     options.push(option);
   }
