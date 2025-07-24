@@ -656,7 +656,7 @@ function readNpcs(reader, world) {
     if (world.version >= 268) {
         let num = reader.readInt32();
         while(num-- > 0) {
-            reader.readint32();
+            reader.readInt32();
         }
     }
 
@@ -687,7 +687,7 @@ function readNpcs(reader, world) {
     flag = reader.readUint8() > 0;
     while (flag) {
         npc = {};
-        reader.readint32();
+        reader.readInt32();
         npc.type = readString(reader);
         npc.x = reader.readFloat32();
         npc.y = reader.readFloat32();
