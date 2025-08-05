@@ -1,12 +1,14 @@
-#include "Reader.h"
-#include "World.h"
+#include "WorldLoader.h"
 
+#include "Reader.h"
 #include <chrono>
 #include <format>
 
-#ifndef __EMSCRIPTEN__
-void printWorld(World &world);
-#endif
+bool isValidWorldSize(const World &world)
+{
+    return world.width > 0 && world.height > 0 && world.width < 33600 &&
+           world.height < 9600;
+}
 
 std::string parseBinaryTime(uint64_t ticks)
 {
@@ -46,6 +48,9 @@ void readProperties(Reader &r, World &world)
     world.bottom = r.getUint32();
     world.height = r.getUint32();
     world.width = r.getUint32();
+    if (!isValidWorldSize(world)) {
+        return;
+    }
     if (world.version >= 209) {
         world.gameMode = r.getUint32();
         if (world.version >= 222) {
@@ -290,223 +295,90 @@ void readProperties(Reader &r, World &world)
     world.moondialCooldown = r.getUint8();
 }
 
-void readWorldFile(const std::string &data)
+void readTiles(Reader &r, World &world)
+{
+    world.initTiles();
+    for (int x = 0; x < world.width; ++x) {
+        for (int y = 0, rle = 0; y < world.height; ++y) {
+            Tile &tile = world.getTile(x, y);
+            if (rle > 0) {
+                tile = world.getTile(x, y - 1);
+                --rle;
+                continue;
+            }
+            std::array flags{0, 0, 0, 0};
+            for (auto &flag : flags) {
+                flag = r.getUint8();
+                if ((flag & 0x01) == 0) {
+                    break;
+                }
+            }
+            if ((flags[0] & 0x02) == 0) {
+                tile.blockId = -1;
+            } else {
+                if ((flags[0] & 0x20) == 0) {
+                    tile.blockId = r.getUint8();
+                } else {
+                    tile.blockId = r.getUint16();
+                }
+                if (world.framedTiles[tile.blockId]) {
+                    tile.frameX = r.getUint16();
+                    tile.frameY = r.getUint16();
+                }
+                if ((flags[2] & 0x08) != 0) {
+                    tile.blockPaint = r.getUint8();
+                }
+                tile.slope = static_cast<Slope>((flags[1] >> 4) & 0x07);
+            }
+            if ((flags[0] & 0x04) == 0) {
+                tile.wallId = 0;
+            } else {
+                tile.wallId = r.getUint8();
+                if ((flags[2] & 0x10) != 0) {
+                    tile.wallPaint = r.getUint8();
+                }
+            }
+            if ((flags[0] & 0x18) == 0x08) {
+                tile.liquid =
+                    (flags[2] & 0x80) == 0 ? Liquid::water : Liquid::shimmer;
+            } else if ((flags[0] & 0x18) == 0x10) {
+                tile.liquid = Liquid::lava;
+            } else if ((flags[0] & 0x18) == 0x18) {
+                tile.liquid = Liquid::honey;
+            }
+            if (tile.liquid != Liquid::none) {
+                tile.liquidAmount = r.getUint8();
+            }
+            if ((flags[2] & 0x40) != 0) {
+                tile.wallId |= r.getUint8() << 8;
+            }
+            tile.wireRed = (flags[1] & 0x02) != 0;
+            tile.wireBlue = (flags[1] & 0x04) != 0;
+            tile.wireGreen = (flags[1] & 0x08) != 0;
+            tile.wireYellow = (flags[2] & 0x20) != 0;
+            tile.actuator = (flags[2] & 0x02) != 0;
+            tile.actuated = (flags[2] & 0x04) != 0;
+            tile.echoCoatBlock = (flags[3] & 0x02) != 0;
+            tile.echoCoatWall = (flags[3] & 0x04) != 0;
+            tile.illuminantBlock = (flags[3] & 0x08) != 0;
+            tile.illuminantWall = (flags[3] & 0x10) != 0;
+            if ((flags[0] & 0x40) != 0) {
+                rle = r.getUint8();
+            } else if ((flags[0] & 0x80) != 0) {
+                rle = r.getUint16();
+            }
+        }
+    }
+}
+
+World readWorldFile(const std::string &data)
 {
     Reader r{data};
     World world{};
     readProperties(r, world);
-
-#ifndef __EMSCRIPTEN__
-    printWorld(world);
-#endif
+    if (!isValidWorldSize(world)) {
+        return world;
+    }
+    readTiles(r, world);
+    return world;
 }
-
-#ifndef __EMSCRIPTEN__
-#include <fstream>
-#include <iostream>
-#include <sstream>
-
-int main()
-{
-    std::ifstream in("/path/to/Test_World.wld", std::ios::binary);
-    std::ostringstream sstr;
-    sstr << in.rdbuf();
-    std::string data{sstr.str()};
-    readWorldFile(data);
-}
-
-#define DUMP(field) std::cout << #field " " << world.field << '\n'
-#define DUMP_ARRAY(field)                                                      \
-    do {                                                                       \
-        std::cout << #field " [";                                              \
-        for (auto val : world.field) {                                         \
-            std::cout << val << ',';                                           \
-        };                                                                     \
-        std::cout << "]\n";                                                    \
-    } while (0)
-
-void printWorld(World &world)
-{
-    DUMP(version);
-    DUMP(revision);
-    DUMP(isFavorite);
-    DUMP(framedTiles.size());
-
-    DUMP(name);
-    DUMP(seed);
-    DUMP(generatorVersion);
-    DUMP(guid);
-    DUMP(id);
-    DUMP(left);
-    DUMP(right);
-    DUMP(top);
-    DUMP(bottom);
-    DUMP(height);
-    DUMP(width);
-    DUMP(gameMode);
-    DUMP(drunkWorld);
-    DUMP(forTheWorthy);
-    DUMP(celebrationmk10);
-    DUMP(theConstant);
-    DUMP(notTheBees);
-    DUMP(dontDigUp);
-    DUMP(noTraps);
-    DUMP(getFixedBoi);
-    DUMP(creationTime);
-
-    DUMP(moonType);
-    DUMP_ARRAY(treeStyleCoords);
-    DUMP_ARRAY(treeStyles);
-    DUMP_ARRAY(caveStyleCoords);
-    DUMP_ARRAY(caveStyles);
-    DUMP(iceStyle);
-    DUMP(jungleStyle);
-    DUMP(underworldStyle);
-    DUMP_ARRAY(spawn);
-    DUMP(undergroundLevel);
-    DUMP(cavernLevel);
-    DUMP(gameTime);
-    DUMP(isDay);
-    DUMP(moonPhase);
-    DUMP(bloodMoon);
-    DUMP(eclipse);
-    DUMP_ARRAY(dungeon);
-    DUMP(isCrimson);
-
-    DUMP(downedEyeOfCthulu);
-    DUMP(downedEaterOfWorlds);
-    DUMP(downedSkeletron);
-    DUMP(downedQueenBee);
-    DUMP(downedTheDestroyer);
-    DUMP(downedTheTwins);
-    DUMP(downedSkeletronPrime);
-    DUMP(downedAnyHardmodeBoss);
-    DUMP(downedPlantera);
-    DUMP(downedGolem);
-    DUMP(downedSlimeKing);
-    DUMP(savedGoblinTinkerer);
-    DUMP(savedWizard);
-    DUMP(savedMechanic);
-    DUMP(defeatedGoblinInvasion);
-    DUMP(downedClown);
-    DUMP(defeatedFrostLegion);
-    DUMP(defeatedPirates);
-
-    DUMP(brokeAShadowOrb);
-    DUMP(meteorSpawned);
-    DUMP(shadowOrbsBroken);
-    DUMP(altarsSmashed);
-    DUMP(hardMode);
-    DUMP(partyOfDoom);
-    DUMP(goblinInvasionDelay);
-    DUMP(goblinInvasionSize);
-    DUMP(goblinInvasionType);
-    DUMP(goblinInvasionX);
-    DUMP(slimeRainTime);
-    DUMP(sundialCooldown);
-    DUMP(raining);
-    DUMP(rainTimeLeft);
-    DUMP(maxRain);
-    DUMP(cobaltVariant);
-    DUMP(mythrilVariant);
-    DUMP(adamantiteVariant);
-    DUMP(forestStyle1);
-    DUMP(corruptionStyle);
-    DUMP(undergroundJungleStyle);
-    DUMP(snowStyle);
-    DUMP(hallowStyle);
-    DUMP(crimsonStyle);
-    DUMP(desertStyle);
-    DUMP(oceanStyle);
-    DUMP(cloudBackground);
-    DUMP(numberOfClouds);
-    DUMP(windSpeed);
-
-    DUMP_ARRAY(anglersFinishedDailyQuest);
-    DUMP(savedAngler);
-    DUMP(anglerQuest);
-    DUMP(savedStylist);
-    DUMP(savedTaxCollector);
-    DUMP(savedGolfer);
-    DUMP(invasionStartSize);
-    DUMP(cultistDelay);
-    DUMP(enemyKillTallies.size());
-    DUMP(fastForwardTimeToDawn);
-
-    DUMP(downedFishron);
-    DUMP(downedMartians);
-    DUMP(downedLunaticCultist);
-    DUMP(downedMoonlord);
-    DUMP(downedHalloweenPumpking);
-    DUMP(downedHalloweenMourningWood);
-    DUMP(downedChristmasIceQueen);
-    DUMP(downedChristmasSantaNK1);
-    DUMP(downedChristmasEverscream);
-    DUMP(downedTowerSolar);
-    DUMP(downedTowerVortex);
-    DUMP(downedTowerNebula);
-    DUMP(downedTowerStardust);
-    DUMP(towerActiveSolar);
-    DUMP(towerActiveVortex);
-    DUMP(towerActiveNebula);
-    DUMP(towerActiveStardust);
-    DUMP(lunarApocalypseIsUp);
-
-    DUMP(partyManual);
-    DUMP(partyGenuine);
-    DUMP(partyCooldown);
-    DUMP_ARRAY(partyingNPCs);
-    DUMP(sandstormActive);
-    DUMP(sandstormTimeLeft);
-    DUMP(sandstormSeverity);
-    DUMP(sandstormIntendedSeverity);
-    DUMP(savedBartender);
-    DUMP(downedInvasionTier1);
-    DUMP(downedInvasionTier2);
-    DUMP(downedInvasionTier3);
-    DUMP(mushroomStyle);
-    DUMP(underworldStyle2);
-    DUMP(forestStyle2);
-    DUMP(forestStyle3);
-    DUMP(forestStyle4);
-    DUMP(combatBookUsed);
-    DUMP(lanternNightCooldown);
-    DUMP(lanternNightGenuine);
-    DUMP(lanternNightManual);
-    DUMP(lanternNightNextIsGenuine);
-    DUMP_ARRAY(treeTopVariations);
-    DUMP(forceHalloween);
-    DUMP(forceChristmas);
-    DUMP(copperVariant);
-    DUMP(ironVariant);
-    DUMP(silverVariant);
-    DUMP(goldVariant);
-    DUMP(boughtCat);
-    DUMP(boughtDog);
-    DUMP(boughtBunny);
-
-    DUMP(downedEmpressOfLight);
-    DUMP(downedQueenSlime);
-    DUMP(downedDeerclops);
-    DUMP(unlockedSlimeBlue);
-    DUMP(unlockedMerchant);
-    DUMP(unlockedDemolitionist);
-    DUMP(unlockedPartyGirl);
-    DUMP(unlockedDyeTrader);
-    DUMP(unlockedTruffle);
-    DUMP(unlockedArmsDealer);
-    DUMP(unlockedNurse);
-    DUMP(unlockedPrincess);
-    DUMP(combatBookVolumeTwoUsed);
-    DUMP(peddlersSatchelUsed);
-    DUMP(unlockedSlimeGreen);
-    DUMP(unlockedSlimeOld);
-    DUMP(unlockedSlimePurple);
-    DUMP(unlockedSlimeRainbow);
-    DUMP(unlockedSlimeRed);
-    DUMP(unlockedSlimeYellow);
-    DUMP(unlockedSlimeCopper);
-    DUMP(fastForwardTimeToDusk);
-    DUMP(moondialCooldown);
-}
-#endif

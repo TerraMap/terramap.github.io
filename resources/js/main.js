@@ -33,6 +33,8 @@ var file;
 
 var world;
 
+var worker = null;
+
 var selectionX = 0;
 var selectionY = 0;
 
@@ -864,8 +866,10 @@ function fileNameChanged (evt) {
 }
 
 function reloadWorld() {
-  var worker = new Worker('resources/js/WorldLoader.js');
-  worker.addEventListener('message', onWorldLoaderWorkerMessage);
+  if (worker === null) {
+    worker = new Worker('wasm/src/build/terramap.js');
+    worker.addEventListener('message', onWorldLoaderWorkerMessage);
+  }
 
   worker.postMessage(file);
 }
@@ -973,10 +977,14 @@ function onWorldLoaderWorkerMessage(e) {
     Object.keys(world).filter(key => {
       const value = world[key];
       const type = typeof value;
-      return type === 'string' || type === 'number' || type === 'boolean' || type === 'bigint';
+      return type === 'string' || type === 'number' || type === 'boolean' || type === 'bigint' || (
+        Array.isArray(value) && value.length < 5
+      );
     }).sort()
     .forEach(key => 
-      $("#worldPropertyList").append(`<li>${key}: ${world[key]}</li>`)
+      $("#worldPropertyList").append(
+        `<li>${key}: ${Array.isArray(world[key]) ? JSON.stringify(world[key]) : world[key]}</li>`
+      )
     );
   }
 }

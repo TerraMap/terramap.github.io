@@ -1,13 +1,19 @@
 #ifndef WORLD_H
 #define WORLD_H
 
+#include "Tile.h"
 #include <array>
 #include <string>
 #include <vector>
 
 class World
 {
+    std::vector<Tile> tiles;
+
 public:
+    void initTiles();
+    Tile &getTile(int x, int y);
+
     int version;
     int revision;
     bool isFavorite;
