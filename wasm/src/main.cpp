@@ -1,3 +1,4 @@
+#include "TileColor.h"
 #include "WorldLoader.h"
 
 #ifdef __EMSCRIPTEN__
@@ -229,13 +230,36 @@ public:
         world = readWorldFile(data);
         return dumpWorld(world);
     }
+
+    void renderToCanvas()
+    {
+        std::vector<uint32_t> pixels;
+        pixels.reserve(world.width * world.height);
+        for (int y = 0; y < world.height; ++y) {
+            for (int x = 0; x < world.width; ++x) {
+                pixels.push_back(getTileColor(x, y, world).abgr);
+            }
+        }
+        EM_ASM_(
+            {
+                const data = HEAPU8.slice($0, $0 + $1 * $2 * 4);
+                const ctx = self['ctx'];
+                const imageData = ctx.getImageData(0, 0, $1, $2);
+                imageData.data.set(data);
+                ctx.putImageData(imageData, 0, 0);
+            },
+            pixels.data(),
+            world.width,
+            world.height);
+    }
 };
 
 EMSCRIPTEN_BINDINGS(terramap)
 {
-    emscripten::class_<Loader>("Loader").constructor().function(
-        "loadWorldFile",
-        &Loader::loadWorldFile);
+    emscripten::class_<Loader>("Loader")
+        .constructor()
+        .function("loadWorldFile", &Loader::loadWorldFile)
+        .function("renderToCanvas", &Loader::renderToCanvas);
 }
 #else
 int main()

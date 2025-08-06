@@ -5,7 +5,6 @@ var canvas = document.querySelector("#canvas");
 var overlayCanvas = document.querySelector("#overlayCanvas");
 var selectionCanvas = document.querySelector("#selectionCanvas");
 
-var ctx = canvas.getContext("2d");
 var overlayCtx = overlayCanvas.getContext("2d");
 var selectionCtx = selectionCanvas.getContext("2d");
 
@@ -13,11 +12,6 @@ var selectionCtx = selectionCanvas.getContext("2d");
 // var imageData = canvasContextImageData.data;
 
 var blockSelector = document.querySelector("#blocks");
-
-ctx.msImageSmoothingEnabled = false;
-ctx.mozImageSmoothingEnabled = false;
-ctx.msImageSmoothingEnabled = false;
-ctx.imageSmoothingEnabled = false;
 
 overlayCtx.msImageSmoothingEnabled = false;
 overlayCtx.mozImageSmoothingEnabled = false;
@@ -869,9 +863,11 @@ function reloadWorld() {
   if (worker === null) {
     worker = new Worker('wasm/src/build/terramap.js');
     worker.addEventListener('message', onWorldLoaderWorkerMessage);
+    const offscreen = canvas.transferControlToOffscreen();
+    worker.postMessage({ canvas: offscreen }, [offscreen]);
   }
 
-  worker.postMessage(file);
+  worker.postMessage({ file });
 }
 
 function onWorldLoaderWorkerMessage(e) {
@@ -961,8 +957,6 @@ function onWorldLoaderWorkerMessage(e) {
 
     panzoomContainer.width = world.width;
     panzoomContainer.height = world.height;
-    canvas.width = world.width;
-    canvas.height = world.height;
     overlayCanvas.width = world.width;
     overlayCanvas.height = world.height;
     selectionCanvas.width = world.width;

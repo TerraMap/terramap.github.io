@@ -1,6 +1,7 @@
 # Config values
 
-CXXFLAGS := -Wall -Wextra -pedantic -Werror -std=c++20 -O2
+CXXFLAGS := -Wall -Wextra -pedantic -Werror -Wno-dollar-in-identifier-extension \
+            -std=c++20 -O2
 LDFLAGS := -lembind                   \
            -sENVIRONMENT=worker       \
            -sALLOW_MEMORY_GROWTH=1    \

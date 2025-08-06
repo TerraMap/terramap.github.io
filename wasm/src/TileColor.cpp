@@ -217,7 +217,7 @@ uint8_t lavaColor[] = {255, 30, 0};
 uint8_t honeyColor[] = {255, 172, 0};
 uint8_t shimmerColor[] = {155, 112, 233};
 
-uint8_t surfaceColor[] = {155, 209, 255};
+uint8_t surfaceColor[] = {132, 170, 248};
 uint8_t undergroundColor[] = {84, 57, 42};
 uint8_t cavernColor[] = {72, 64, 57};
 uint8_t underworldColor[] = {51, 0, 0};
@@ -297,13 +297,13 @@ Color getTileColor(int x, int y, World &world)
         color = blendColors(waterColor, color);
         break;
     case Liquid::lava:
-        color = blendColors(lavaColor, color);
+        color = lavaColor;
         break;
     case Liquid::honey:
-        color = blendColors(honeyColor, color);
+        color = honeyColor;
         break;
     case Liquid::shimmer:
-        color = blendColors(shimmerColor, color);
+        color = shimmerColor;
         break;
     default:
         break;
