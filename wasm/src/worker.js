@@ -10,6 +10,9 @@ self.addEventListener('message', (e) => {
   if (e.data.file) {
     self.start(e.data.file);
   }
+  if (e.data.hoverTile) {
+    onHoverTile(e.data.hoverTile);
+  }
 });
 
 async function start(file) {
@@ -37,4 +40,73 @@ async function start(file) {
 
   self.postMessage({ status: 'Rendering tiles...', world });
   self.terramap.renderToCanvas();
+}
+
+function getTileInfo(tile) {
+  const tileInfo = settings.Tiles[tile.blockId];
+  if (tileInfo && tileInfo.Frames) {
+    for (const frame of tileInfo.Frames.slice().reverse()) {
+      if (
+        ((!frame.U && !tile.frameX) || frame.U <= tile.frameX) &&
+        ((!frame.V && !tile.frameY) || frame.V <= tile.frameY)
+      ) {
+        frame.parent = tileInfo;
+        return frame;
+      }
+    }
+  }
+  return tileInfo;
+}
+
+function getTileText(tile) {
+  let text = 'Nothing';
+  const tileInfo = getTileInfo(tile);
+  if (tileInfo) {
+    if (tileInfo.parent && tileInfo.parent.Name) {
+      text = tileInfo.parent.Name;
+      if (tileInfo.Name) {
+        text += ` - ${tileInfo.Name}`;
+      }
+      if (tileInfo.Variety) {
+        text += ` - ${tileInfo.Variety}`;
+      }
+    } else {
+      text = tileInfo.Name;
+    }
+
+    if (tile.frameX === 0 && tile.frameY === 0) {
+      text += ` (${tile.blockId})`;
+    } else {
+      text += ` (${tile.blockId}, ${tile.frameX}, ${tile.frameY})`;
+    }
+    // TODO: tileEntity
+  } else if (tile.wallId >= settings.Walls.length) {
+    text = `Unknown Wall (${tile.wallId})`;
+  } else if (tile.wallId > 0) {
+    text = `${settings.Walls[tile.wallId].Name} (${tile.wallId})`;
+  }
+
+  if (tile.liquid) {
+    text = text === 'Nothing' ? tile.liquid : `${text} ${tile.liquid}`;
+  }
+  const flagFields = [
+    ['wireRed', 'Red Wire'],
+    ['wireBlue', 'Blue Wire'],
+    ['wireGreen', 'Green Wire'],
+    ['wireYellow', 'Yellow Wire'],
+    ['actuator', 'Actuator'],
+  ];
+  for (const [key, label] of flagFields) {
+    if (tile[key]) {
+      text += ` (${label})`;
+    }
+  }
+
+  return text;
+}
+
+function onHoverTile({ x, y }) {
+  const tile = self.terramap.getTile(x, y);
+  const text = getTileText(tile);
+  self.postMessage({ status: `${text} (${x}, ${y})` });
 }

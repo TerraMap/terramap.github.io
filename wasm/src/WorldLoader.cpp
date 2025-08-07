@@ -322,8 +322,8 @@ void readTiles(Reader &r, World &world)
                     tile.blockId = r.getUint16();
                 }
                 if (world.framedTiles[tile.blockId]) {
-                    tile.frameX = r.getUint16();
-                    tile.frameY = r.getUint16();
+                    tile.frameX = static_cast<int16_t>(r.getUint16());
+                    tile.frameY = static_cast<int16_t>(r.getUint16());
                 }
                 if ((flags[2] & 0x08) != 0) {
                     tile.blockPaint = r.getUint8();

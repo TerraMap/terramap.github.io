@@ -56,6 +56,65 @@ emscripten::val marshalData(const NPC &npc)
     return result;
 }
 
+std::string marshalData(Liquid liquid)
+{
+    switch (liquid) {
+    case Liquid::none:
+        return "";
+    case Liquid::water:
+        return "Water";
+    case Liquid::lava:
+        return "Lava";
+    case Liquid::honey:
+        return "Honey";
+    case Liquid::shimmer:
+        return "Shimmer";
+    }
+}
+
+std::string marshalData(Slope slope)
+{
+    switch (slope) {
+    case Slope::none:
+        return "none";
+    case Slope::half:
+        return "half";
+    case Slope::topRight:
+        return "topRight";
+    case Slope::topLeft:
+        return "topLeft";
+    case Slope::bottomRight:
+        return "bottomRight";
+    case Slope::bottomLeft:
+        return "bottomLeft";
+    }
+}
+
+emscripten::val marshalData(const Tile &tile)
+{
+    auto result = emscripten::val::object();
+    result.set("blockId", tile.blockId);
+    result.set("frameX", tile.frameX);
+    result.set("frameY", tile.frameY);
+    result.set("wallId", tile.wallId);
+    result.set("blockPaint", tile.blockPaint);
+    result.set("wallPaint", tile.wallPaint);
+    result.set("liquidAmount", tile.liquidAmount);
+    result.set("liquid", marshalData(tile.liquid));
+    result.set("slope", marshalData(tile.slope));
+    result.set("wireRed", tile.wireRed);
+    result.set("wireBlue", tile.wireBlue);
+    result.set("wireGreen", tile.wireGreen);
+    result.set("wireYellow", tile.wireYellow);
+    result.set("actuated", tile.actuated);
+    result.set("actuator", tile.actuator);
+    result.set("echoCoatBlock", tile.echoCoatBlock);
+    result.set("echoCoatWall", tile.echoCoatWall);
+    result.set("illuminantBlock", tile.illuminantBlock);
+    result.set("illuminantWall", tile.illuminantWall);
+    return result;
+}
+
 #define DUMP(field) result.set(#field, world.field)
 #define DUMP_ARRAY(field)                                                      \
     result.set(                                                                \
@@ -355,6 +414,11 @@ public:
             world.width,
             world.height);
     }
+
+    emscripten::val getTile(int x, int y)
+    {
+        return marshalData(world.getTile(x, y));
+    }
 };
 
 EMSCRIPTEN_BINDINGS(terramap)
@@ -362,7 +426,8 @@ EMSCRIPTEN_BINDINGS(terramap)
     emscripten::class_<Loader>("Loader")
         .constructor()
         .function("loadWorldFile", &Loader::loadWorldFile)
-        .function("renderToCanvas", &Loader::renderToCanvas);
+        .function("renderToCanvas", &Loader::renderToCanvas)
+        .function("getTile", &Loader::getTile);
 }
 #else
 int main()

@@ -624,6 +624,8 @@ function getItemText(item) {
   return `${prefix} ${itemName} (${item.count})`;
 }
 
+var mouseMoveDebounce = null;
+var lastMouseMovePos = { x: 0, y: 0 };
 panzoomContainer.addEventListener('mousemove', evt => {
   if(!world)
     return;
@@ -632,16 +634,15 @@ panzoomContainer.addEventListener('mousemove', evt => {
   var x = mousePos.x;
   var y = mousePos.y;
 
-  $("#status").html(mousePos.x + ',' + (mousePos.y));
-
-  if(world.tiles) {
-    var tile = getTileAt(mousePos.x, mousePos.y);
-
-    if(tile) {
-      var text = getTileText(tile);
-
-      $("#status").html(`${text} (${mousePos.x}, ${mousePos.y})`);
-    }
+  clearTimeout(mouseMoveDebounce);
+  if (Math.hypot(lastMouseMovePos.x - x, lastMouseMovePos.y - y) > 20) {
+    worker.postMessage({ hoverTile: { x, y } });
+    lastMouseMovePos = { x, y };
+  } else {
+    mouseMoveDebounce = setTimeout(() => {
+      worker.postMessage({ hoverTile: { x, y } });
+      lastMouseMovePos = { x, y };
+    }, 75);
   }
 });
 
