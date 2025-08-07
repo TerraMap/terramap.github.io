@@ -37,6 +37,17 @@ struct NPC {
     int variation;
 };
 
+struct TileEntity {
+    int id;
+    int type;
+    int x;
+    int y;
+    int sensorType;
+    bool sensorActive;
+    std::vector<Item> items;
+    std::vector<Item> dyes;
+};
+
 class World
 {
     std::vector<Tile> tiles;
@@ -231,6 +242,7 @@ public:
     std::vector<Sign> signs;
     std::vector<int> shimmeredNPCs;
     std::vector<NPC> npcs;
+    std::vector<TileEntity> tileEntities;
 };
 
 #endif // WORLD_H

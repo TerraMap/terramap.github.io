@@ -115,6 +115,20 @@ emscripten::val marshalData(const Tile &tile)
     return result;
 }
 
+emscripten::val marshalData(const TileEntity &entity)
+{
+    auto result = emscripten::val::object();
+    result.set("id", entity.id);
+    result.set("type", entity.type);
+    result.set("x", entity.x);
+    result.set("y", entity.y);
+    result.set("sensorType", entity.sensorType);
+    result.set("sensorActive", entity.sensorActive);
+    result.set("items", marshalData(entity.items));
+    result.set("dyes", marshalData(entity.dyes));
+    return result;
+}
+
 #define DUMP(field) result.set(#field, world.field)
 #define DUMP_ARRAY(field)                                                      \
     result.set(                                                                \
@@ -385,11 +399,66 @@ void dumpWorld(const World &world)
 class Loader
 {
     World world;
+    std::map<int, int> chestLookup;
+    std::map<int, int> signLookup;
+    std::map<int, int> entityLookup;
 
 public:
     emscripten::val loadWorldFile(const std::string &data)
     {
         world = readWorldFile(data);
+        chestLookup.clear();
+        for (size_t chestId = 0; chestId < world.chests.size(); ++chestId) {
+            const Chest &chest = world.chests[chestId];
+            int maxI = world.getTile(chest.x, chest.y).blockId == 88 ? 3 : 2;
+            for (int i = 0; i < maxI; ++i) {
+                for (int j = 0; j < 2; ++j) {
+                    chestLookup[(chest.x + i) * world.height + chest.y + j] =
+                        chestId;
+                }
+            }
+        }
+        signLookup.clear();
+        for (size_t signId = 0; signId < world.signs.size(); ++signId) {
+            const Sign &sign = world.signs[signId];
+            for (int i = 0; i < 2; ++i) {
+                for (int j = 0; j < 2; ++j) {
+                    signLookup[(sign.x + i) * world.height + sign.y + j] =
+                        signId;
+                }
+            }
+        }
+        entityLookup.clear();
+        for (size_t entityId = 0; entityId < world.tileEntities.size();
+             ++entityId) {
+            const TileEntity &entity = world.tileEntities[entityId];
+            int maxI = 1;
+            int maxJ = 1;
+            switch (entity.type) {
+            case 1: // Item frame.
+                maxI = 2;
+                maxJ = 2;
+                break;
+            case 3: // (Wo)Mannequin.
+                maxI = 2;
+                maxJ = 3;
+                break;
+            case 4: // Weapon rack.
+                maxI = 3;
+                maxJ = 3;
+                break;
+            case 5: // Hat rack.
+                maxI = 3;
+                maxJ = 4;
+                break;
+            }
+            for (int i = 0; i < maxI; ++i) {
+                for (int j = 0; j < maxJ; ++j) {
+                    entityLookup[(entity.x + i) * world.height + entity.y + j] =
+                        entityId;
+                }
+            }
+        }
         return dumpWorld(world);
     }
 
@@ -417,7 +486,26 @@ public:
 
     emscripten::val getTile(int x, int y)
     {
-        return marshalData(world.getTile(x, y));
+        if (x < 0 || y < 0 || x >= world.width || y >= world.height) {
+            return emscripten::val::null();
+        }
+        auto result = marshalData(world.getTile(x, y));
+        int lookupKey = x * world.height + y;
+        auto chestItr = chestLookup.find(lookupKey);
+        if (chestItr != chestLookup.end()) {
+            result.set("chest", marshalData(world.chests[chestItr->second]));
+        }
+        auto signItr = signLookup.find(lookupKey);
+        if (signItr != signLookup.end()) {
+            result.set("sign", marshalData(world.signs[signItr->second]));
+        }
+        auto entityItr = entityLookup.find(lookupKey);
+        if (entityItr != entityLookup.end()) {
+            result.set(
+                "tileEntity",
+                marshalData(world.tileEntities[entityItr->second]));
+        }
+        return result;
     }
 };
 

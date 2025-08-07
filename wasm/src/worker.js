@@ -13,6 +13,9 @@ self.addEventListener('message', (e) => {
   if (e.data.hoverTile) {
     onHoverTile(e.data.hoverTile);
   }
+  if (e.data.selectTile) {
+    onSelectTile(e.data.selectTile);
+  }
 });
 
 async function start(file) {
@@ -79,7 +82,22 @@ function getTileText(tile) {
     } else {
       text += ` (${tile.blockId}, ${tile.frameX}, ${tile.frameY})`;
     }
-    // TODO: tileEntity
+    if (tile.tileEntity) {
+      const entity = tile.tileEntity;
+      if (entity.type === 2) {
+        const sensorType = tileInfo.CheckTypes[entity.sensorType];
+        const on = entity.sensorActive ? 'On' : 'Off';
+        text += ` - ${sensorType}, ${on}`;
+      } else if (entity.items.length === 1) {
+        const itemId = entity.items[0].id;
+        for (const itemSettings of settings.Items) {
+          if (Number(itemSettings.Id) === itemId) {
+            text += ` - ${itemSettings.Name}`;
+            break;
+          }
+        }
+      }
+    }
   } else if (tile.wallId >= settings.Walls.length) {
     text = `Unknown Wall (${tile.wallId})`;
   } else if (tile.wallId > 0) {
@@ -96,10 +114,14 @@ function getTileText(tile) {
     ['wireYellow', 'Yellow Wire'],
     ['actuator', 'Actuator'],
   ];
+  const flags = [];
   for (const [key, label] of flagFields) {
     if (tile[key]) {
-      text += ` (${label})`;
+      flags.push(label);
     }
+  }
+  if (flags.length > 0) {
+    text += ` (${flags.join(', ')})`;
   }
 
   return text;
@@ -107,6 +129,15 @@ function getTileText(tile) {
 
 function onHoverTile({ x, y }) {
   const tile = self.terramap.getTile(x, y);
-  const text = getTileText(tile);
-  self.postMessage({ status: `${text} (${x}, ${y})` });
+  if (tile) {
+    self.postMessage({ status: `${getTileText(tile)} (${x}, ${y})` });
+  }
+}
+
+function onSelectTile({ x, y }) {
+  const tile = self.terramap.getTile(x, y);
+  if (tile) {
+    tile.text = getTileText(tile);
+    self.postMessage({ tile });
+  }
 }

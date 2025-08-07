@@ -591,15 +591,13 @@ function resizeCanvases() {
 
 function getMousePos(canvas, evt) {
   var rect = panzoomContainer.getBoundingClientRect();
-  var transform = $(panzoomContainer).panzoom('getMatrix');
 
-  var scale = transform[0];
-
-  scale = rect.width / panzoomContainer.width;
+  const scaleX = rect.width / (panzoomContainer.width + 0.5);
+  const scaleY = rect.height / (panzoomContainer.height + 0.5);
 
   var mousePos =  {
-    x: Math.floor((evt.clientX - rect.left) / scale),
-    y: Math.floor((evt.clientY - rect.top) / scale)
+    x: Math.floor((evt.clientX - rect.left) / scaleX),
+    y: Math.floor((evt.clientY - rect.top) / scaleY)
   };
 
   // console.log(`${evt.clientX}\t${evt.clientY}\t${rect.left}\t${rect.top}\t${scale}\t${mousePos.x}\t${mousePos.y}`);
@@ -610,8 +608,8 @@ function getMousePos(canvas, evt) {
 function getItemText(item) {
   let prefix = "";
 
-  if(item.prefixId > 0 && item.prefixId < settings.ItemPrefix.length)
-    prefix = settings.ItemPrefix[item.prefixId].Name;
+  if(item.prefix > 0 && item.prefix < settings.ItemPrefix.length)
+    prefix = settings.ItemPrefix[item.prefix].Name;
 
   let itemName = item.id;
   for(let itemIndex = 0; itemIndex < settings.Items.length; itemIndex++) {
@@ -621,7 +619,7 @@ function getItemText(item) {
       break;
     }
   }
-  return `${prefix} ${itemName} (${item.count})`;
+  return `${prefix} ${itemName} (${item.stack})`;
 }
 
 var mouseMoveDebounce = null;
@@ -657,57 +655,7 @@ $("#panzoomContainer").on('panzoomend', function(evt, panzoom, matrix, changed) 
   selectionY = y;
 
   drawSelectionIndicator();
-
-  var tile = getTileAt(x, y);
-  if(tile) {
-    var text = getTileText(tile);
-
-    $("#tileInfoList").html("");
-
-    var chest = tile.chest;
-    if(chest) {
-      if(chest.name.length > 0)
-      text = `${text} - ${chest.name}`;
-
-      for(var i = 0; i < chest.items.length; i++) {
-        let item = chest.items[i];
-        let itemText = getItemText(item);
-
-        $("#tileInfoList").append(`<li>${itemText}</li>`);
-      }
-    }
-
-    let tileEntity = tile.tileEntity;
-    if (tileEntity) {
-      switch (tileEntity.type) {
-        case 3: // mannequin
-        case 5: // hat rack
-          let items = tileEntity.items;
-          let dyes = tileEntity.dyes;
-          let itemLength = items.length;
-          for (let i = 0; i < itemLength; i++) {
-            let item = items[i];
-            if (item.id > 0) {
-              $("#tileInfoList").append(`<li>${getItemText(item)}</li>`);
-            }
-            let dye = dyes[i];
-            if (dye.id > 0) {
-              $("#tileInfoList").append(`<li>${getItemText(dye)}</li>`);
-            }
-          }
-          break;
-      }
-    }
-
-    var sign = tile.sign;
-    if(sign && sign.text) {
-      if(sign.text.length > 0)
-        $("#tileInfoList").append(`<li>${sign.text}</li>`);
-    }
-
-    $("#tile").html(text);
-  }
-
+  worker.postMessage({ selectTile: { x, y } });
 });
 
 function getTileAt(x, y) {
@@ -875,78 +823,34 @@ function onWorldLoaderWorkerMessage(e) {
   if(e.data.status)
     $("#status").html(e.data.status);
 
-  if(e.data.tiles) {
-	  let xlimit = e.data.x + e.data.tiles.length / world.height;
-	  let i = 0;
-	  for(let x = e.data.x; x < xlimit; x++) {
-	    for(let y = 0; y < world.height; y++) {
-	      let tile = e.data.tiles[i++];
-	      if(tile) {
-	        tile.info = getTileInfo(tile);
-	        world.tiles.push(tile);
-
-	        var c = getTileColor(y, tile, world);
-	        if(!c) c = {"r": 0, "g": 0, "b": 0 };
-
-	        ctx.fillStyle = `rgb(${c.r}, ${c.g}, ${c.b})`;
-	        ctx.fillRect(x, y, 1, 1);
-	      }
-	    }
-		}
-  }
-
-  if(e.data.chests) {
-    world.chests = e.data.chests;
-
-    for(i = 0; i < e.data.chests.length; i++) {
-      var chest = e.data.chests[i];
-
-      var idx = chest.x * world.height + chest.y;
-      world.tiles[idx].chest = chest;
-      world.tiles[idx + 1].chest = chest;
-
-      idx = (chest.x + 1) * world.height + chest.y;
-      world.tiles[idx].chest = chest;
-      world.tiles[idx + 1].chest = chest;
+  if(e.data.tile) {
+    $("#tileInfoList").empty();
+    const tile = e.data.tile;
+    if (tile.chest) {
+      if (tile.chest.name.length > 0) {
+        tile.text += ` - ${tile.chest.name}`;
+      }
+      for (const item of tile.chest.items) {
+        $("#tileInfoList").append(`<li>${getItemText(item)}</li>`);
+      }
     }
-  }
-
-  if(e.data.signs) {
-    world.signs = e.data.signs;
-
-    for(i = 0; i < e.data.signs.length; i++) {
-      var sign = e.data.signs[i];
-
-      var tileIndex = sign.x * world.height + sign.y;
-      world.tiles[tileIndex].sign = sign;
-      world.tiles[tileIndex + 1].sign = sign;
-
-      tileIndex = (sign.x + 1) * world.height + sign.y;
-      world.tiles[tileIndex].sign = sign;
-      world.tiles[tileIndex + 1].sign = sign;
-    }
-  }
-
-  if (e.data.tileEntities) {
-    for (const [pos, entity] of e.data.tileEntities.entries()) {
-      let idx = pos.x * world.height + pos.y;
-      let tile = world.tiles[idx];
-      if (tile) {
-        let size = tile.info.Size;
-        let sizeX = 1;
-        let sizeY = 1;
-        if (size) {
-          sizeX = size[0] - '0';
-          sizeY = size[2] - '0';
+    if (tile.tileEntity && tile.tileEntity.items.length > 1) {
+      const items = tile.tileEntity.items;
+      const dyes = tile.tileEntity.dyes;
+      for (let i = 0; i < items.length; ++i) {
+        if (items[i].id > 0) {
+          $("#tileInfoList").append(`<li>${getItemText(items[i])}</li>`);
         }
-        for (let x = 0; x < sizeX; x++) {
-          for (let y = 0; y < sizeY; y++) {
-            let idx = (pos.x+x) * world.height + pos.y+y;
-            world.tiles[idx].tileEntity = entity;
-          }
+        if (dyes[i].id > 0) {
+          $("#tileInfoList").append(`<li>${getItemText(dyes[i])}</li>`);
         }
       }
     }
+    if (tile.sign && tile.sign.text.length > 0) {
+      const signText = tile.sign.text.trim().replaceAll('\n', '<br>');
+      $("#tileInfoList").append(`<li>${signText}</li>`);
+    }
+    $("#tile").html(tile.text);
   }
 
   if(e.data.world) {
@@ -959,8 +863,6 @@ function onWorldLoaderWorkerMessage(e) {
     selectionCanvas.width = world.width;
     selectionCanvas.height = world.height;
 
-    world.tiles = [];
-
     resizeCanvases();
 
     $("#worldPropertyList").empty();
@@ -969,7 +871,7 @@ function onWorldLoaderWorkerMessage(e) {
       const value = world[key];
       const type = typeof value;
       return type === 'string' || type === 'number' || type === 'boolean' || type === 'bigint' || (
-        Array.isArray(value) && value.length < 5
+        Array.isArray(value) && value.length < 5 && key !== 'npcs' && key !== 'signs'
       );
     }).sort()
     .forEach(key => 

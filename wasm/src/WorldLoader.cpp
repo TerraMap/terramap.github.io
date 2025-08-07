@@ -12,7 +12,7 @@ bool isValidWorldSize(const World &world)
 
 std::string parseBinaryTime(uint64_t ticks)
 {
-    uint64_t ms = ticks / 10000 - 62135596800000ull;
+    uint64_t ms = (ticks & 0x3fffffffffffffffull) / 10000 - 62135596800000ull;
     auto time = std::chrono::sys_time{std::chrono::milliseconds{ms}};
     return std::format("{:%e %B %Y}", time);
 }
@@ -409,6 +409,7 @@ void readNPCs(Reader &r, World &world)
             world.shimmeredNPCs.push_back(r.getUint32());
         }
     }
+    // Town NPCs.
     while (r.getBool()) {
         NPC npc{};
         if (world.version >= 190) {
@@ -461,6 +462,108 @@ void readNPCs(Reader &r, World &world)
         }
         world.npcs.push_back(std::move(npc));
     }
+    if (world.version >= 140) {
+        // Enemies.
+        while (r.getBool()) {
+            NPC npc{};
+            if (world.version >= 190) {
+                npc.id = r.getUint32();
+            } else {
+                npc.type = r.getString();
+            }
+            npc.x = r.getFloat32() / 16;
+            npc.y = r.getFloat32() / 16;
+            world.npcs.push_back(std::move(npc));
+        }
+    }
+}
+
+void readMannequin(TileEntity &entity, Reader &r)
+{
+    uint8_t itemMask = r.getUint8();
+    uint8_t dyeMask = r.getUint8();
+    entity.items.resize(8);
+    for (int i = 0; i < 8; ++i) {
+        if ((itemMask & (1 << i)) != 0) {
+            Item &item = entity.items[i];
+            item.id = r.getUint16();
+            item.prefix = r.getUint8();
+            item.stack = r.getUint16();
+        }
+    }
+    entity.dyes.resize(8);
+    for (int i = 0; i < 8; ++i) {
+        if ((dyeMask & (1 << i)) != 0) {
+            Item &item = entity.dyes[i];
+            item.id = r.getUint16();
+            item.prefix = r.getUint8();
+            item.stack = r.getUint16();
+        }
+    }
+}
+
+void readHatRack(TileEntity &entity, Reader &r)
+{
+    uint8_t mask = r.getUint8();
+    entity.items.resize(2);
+    for (Item &item : entity.items) {
+        if ((mask & 1) != 0) {
+            item.id = r.getUint16();
+            item.prefix = r.getUint8();
+            item.stack = r.getUint16();
+        }
+        mask >>= 1;
+    }
+    entity.dyes.resize(2);
+    for (Item &item : entity.dyes) {
+        if ((mask & 1) != 0) {
+            item.id = r.getUint16();
+            item.prefix = r.getUint8();
+            item.stack = r.getUint16();
+        }
+        mask >>= 1;
+    }
+}
+
+void readTileEntities(Reader &r, World &world)
+{
+    if (world.version < 140) {
+        return;
+    }
+    for (int i = r.getUint32(); i > 0; --i) {
+        TileEntity entity{};
+        entity.type = r.getUint8();
+        entity.id = r.getUint32();
+        entity.x = r.getUint16();
+        entity.y = r.getUint16();
+        switch (entity.type) {
+        case 0: // Target dummy.
+            r.getUint16();
+            break;
+        case 1: // Item frame.
+        case 4: // Weapon rack.
+        case 6: // Plate.
+        {
+            Item item;
+            item.id = r.getUint16();
+            item.prefix = r.getUint8();
+            item.stack = r.getUint16();
+            entity.items.push_back(item);
+            break;
+        }
+        case 2: // Logic sensor.
+            entity.sensorType = r.getUint8();
+            entity.sensorActive = r.getBool();
+            break;
+        case 3: // (Wo)Mannequin.
+            readMannequin(entity, r);
+            break;
+        case 5: // Hat rack.
+            readHatRack(entity, r);
+            break;
+        }
+        world.tileEntities.push_back(std::move(entity));
+    }
 }
 
 World readWorldFile(const std::string &data)
@@ -475,5 +578,6 @@ World readWorldFile(const std::string &data)
     readChests(r, world);
     readSigns(r, world);
     readNPCs(r, world);
+    readTileEntities(r, world);
     return world;
 }
