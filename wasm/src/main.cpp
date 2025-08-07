@@ -4,11 +4,64 @@
 #ifdef __EMSCRIPTEN__
 #include <emscripten/bind.h>
 
+template <typename T> emscripten::val marshalData(const std::vector<T> &data)
+{
+    std::vector<emscripten::val> jsData;
+    for (auto &row : data) {
+        jsData.push_back(marshalData(row));
+    }
+    return emscripten::val::array(jsData);
+}
+
+emscripten::val marshalData(const Item &item)
+{
+    auto result = emscripten::val::object();
+    result.set("id", item.id);
+    result.set("stack", item.stack);
+    result.set("prefix", item.prefix);
+    return result;
+}
+
+emscripten::val marshalData(const Chest &chest)
+{
+    auto result = emscripten::val::object();
+    result.set("x", chest.x);
+    result.set("y", chest.y);
+    result.set("name", chest.name);
+    result.set("items", marshalData(chest.items));
+    return result;
+}
+
+emscripten::val marshalData(const Sign &sign)
+{
+    auto result = emscripten::val::object();
+    result.set("x", sign.x);
+    result.set("y", sign.y);
+    result.set("text", sign.text);
+    return result;
+}
+
+emscripten::val marshalData(const NPC &npc)
+{
+    auto result = emscripten::val::object();
+    result.set("id", npc.id);
+    result.set("type", npc.type);
+    result.set("name", npc.name);
+    result.set("x", npc.x);
+    result.set("y", npc.y);
+    result.set("isHomeless", npc.isHomeless);
+    result.set("homeX", npc.homeX);
+    result.set("homeY", npc.homeY);
+    result.set("variation", npc.variation);
+    return result;
+}
+
 #define DUMP(field) result.set(#field, world.field)
 #define DUMP_ARRAY(field)                                                      \
     result.set(                                                                \
         #field,                                                                \
         emscripten::val::array(world.field.begin(), world.field.end()))
+#define DUMP_CUSTOM(field) result.set(#field, marshalData(world.field))
 
 emscripten::val dumpWorld(const World &world)
 {
@@ -18,6 +71,45 @@ emscripten::val dumpWorld(const World &world)
 #include <iostream>
 #include <sstream>
 
+template <typename T> void marshalData(const std::vector<T> &data)
+{
+    std::cout << '[';
+    for (auto &row : data) {
+        marshalData(row);
+        std::cout << ',';
+    }
+    std::cout << ']';
+}
+
+void marshalData(const Item &item)
+{
+    std::cout << "{id:" << item.id << ",stack:" << item.stack
+              << ",prefix:" << item.prefix << '}';
+}
+
+void marshalData(const Chest &chest)
+{
+    std::cout << "{\nx:" << chest.x << ",y:" << chest.y << ",\nname:\""
+              << chest.name << "\",\nitems:";
+    marshalData(chest.items);
+    std::cout << "\n}";
+}
+
+void marshalData(const Sign &sign)
+{
+    std::cout << "{x:" << sign.x << ",y:" << sign.y << ",text:\"" << sign.text
+              << "\"}";
+}
+
+void marshalData(const NPC &npc)
+{
+    std::cout << "{id:" << npc.id << ",type:\"" << npc.type << "\",name:\""
+              << npc.name << "\",x:" << npc.x << ",y:" << npc.y
+              << ",isHomeless:" << npc.isHomeless << ",homeX:" << npc.homeX
+              << ",homeY:" << npc.homeY << ",variation:" << npc.variation
+              << '}';
+}
+
 #define DUMP(field) std::cout << #field " " << world.field << '\n'
 #define DUMP_ARRAY(field)                                                      \
     do {                                                                       \
@@ -26,6 +118,12 @@ emscripten::val dumpWorld(const World &world)
             std::cout << val << ',';                                           \
         };                                                                     \
         std::cout << "]\n";                                                    \
+    } while (0)
+#define DUMP_CUSTOM(field)                                                     \
+    do {                                                                       \
+        std::cout << #field " ";                                               \
+        marshalData(world.field);                                              \
+        std::cout << '\n';                                                     \
     } while (0)
 
 void dumpWorld(const World &world)
@@ -212,6 +310,11 @@ void dumpWorld(const World &world)
     DUMP(unlockedSlimeCopper);
     DUMP(fastForwardTimeToDusk);
     DUMP(moondialCooldown);
+
+    DUMP_CUSTOM(chests);
+    DUMP_CUSTOM(signs);
+    DUMP_ARRAY(shimmeredNPCs);
+    DUMP_CUSTOM(npcs);
 #ifdef __EMSCRIPTEN__
     return result;
 }

@@ -6,6 +6,37 @@
 #include <string>
 #include <vector>
 
+struct Item {
+    int id;
+    int stack;
+    int prefix;
+};
+
+struct Chest {
+    int x;
+    int y;
+    std::string name;
+    std::vector<Item> items;
+};
+
+struct Sign {
+    int x;
+    int y;
+    std::string text;
+};
+
+struct NPC {
+    int id;
+    std::string type;
+    std::string name;
+    double x;
+    double y;
+    bool isHomeless;
+    int homeX;
+    int homeY;
+    int variation;
+};
+
 class World
 {
     std::vector<Tile> tiles;
@@ -195,6 +226,11 @@ public:
     bool unlockedSlimeCopper;
     bool fastForwardTimeToDusk;
     int moondialCooldown;
+
+    std::vector<Chest> chests;
+    std::vector<Sign> signs;
+    std::vector<int> shimmeredNPCs;
+    std::vector<NPC> npcs;
 };
 
 #endif // WORLD_H

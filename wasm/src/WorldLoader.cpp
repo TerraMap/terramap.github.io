@@ -38,7 +38,7 @@ void readProperties(Reader &r, World &world)
             if (i == 4 || i == 6 || i == 8 || i == 10) {
                 world.guid += '-';
             }
-            world.guid += std::format("{:x}", r.getUint8());
+            world.guid += std::format("{:02x}", r.getUint8());
         }
     }
     world.id = r.getUint32();
@@ -371,6 +371,98 @@ void readTiles(Reader &r, World &world)
     }
 }
 
+void readChests(Reader &r, World &world)
+{
+    world.chests.resize(r.getUint16());
+    int chestSlots = r.getUint16();
+    for (Chest &chest : world.chests) {
+        chest.x = r.getUint32();
+        chest.y = r.getUint32();
+        chest.name = r.getString();
+        for (int slot = 0; slot < chestSlots; ++slot) {
+            int stack = r.getUint16();
+            if (stack > 0) {
+                chest.items.resize(slot + 1);
+                Item &item = chest.items[slot];
+                item.id = r.getUint32();
+                item.stack = stack;
+                item.prefix = r.getUint8();
+            }
+        }
+    }
+}
+
+void readSigns(Reader &r, World &world)
+{
+    world.signs.resize(r.getUint16());
+    for (Sign &sign : world.signs) {
+        sign.text = r.getString();
+        sign.x = r.getUint32();
+        sign.y = r.getUint32();
+    }
+}
+
+void readNPCs(Reader &r, World &world)
+{
+    if (world.version >= 268) {
+        for (int i = r.getUint32(); i > 0; --i) {
+            world.shimmeredNPCs.push_back(r.getUint32());
+        }
+    }
+    while (r.getBool()) {
+        NPC npc{};
+        if (world.version >= 190) {
+            npc.id = r.getUint32();
+            switch (npc.id) {
+                // clang-format off
+                case 17: npc.type = "Merchant"; break;
+                case 18: npc.type = "Nurse"; break;
+                case 19: npc.type = "Arms Dealer"; break;
+                case 20: npc.type = "Dryad"; break;
+                case 22: npc.type = "Guide"; break;
+                case 37: npc.type = "Old Man"; break;
+                case 38: npc.type = "Demolitionist"; break;
+                case 54: npc.type = "Clothier"; break;
+                case 107: npc.type = "Goblin Tinkerer"; break;
+                case 108: npc.type = "Wizard"; break;
+                case 124: npc.type = "Mechanic"; break;
+                case 142: npc.type = "Santa Claus"; break;
+                case 160: npc.type = "Truffle"; break;
+                case 178: npc.type = "Steampunker"; break;
+                case 207: npc.type = "Dye Trader"; break;
+                case 208: npc.type = "Party Girl"; break;
+                case 209: npc.type = "Cyborg"; break;
+                case 227: npc.type = "Painter"; break;
+                case 228: npc.type = "Witch Doctor"; break;
+                case 229: npc.type = "Pirate"; break;
+                case 353: npc.type = "Stylist"; break;
+                case 369: npc.type = "Angler"; break;
+                case 441: npc.type = "Tax Collector"; break;
+                case 550: npc.type = "Tavernkeep"; break;
+                case 588: npc.type = "Golfer"; break;
+                case 633: npc.type = "Zoologist"; break;
+                case 637: npc.type = "Town Cat"; break;
+                case 638: npc.type = "Town Dog"; break;
+                case 656: npc.type = "Town Bunny"; break;
+                case 663: npc.type = "Princess"; break;
+                // clang-format on
+            }
+        } else {
+            npc.type = r.getString();
+        }
+        npc.name = r.getString();
+        npc.x = r.getFloat32() / 16;
+        npc.y = r.getFloat32() / 16;
+        npc.isHomeless = r.getBool();
+        npc.homeX = r.getUint32();
+        npc.homeY = r.getUint32();
+        if (world.version >= 213 && r.getBool()) {
+            npc.variation = r.getUint32();
+        }
+        world.npcs.push_back(std::move(npc));
+    }
+}
+
 World readWorldFile(const std::string &data)
 {
     Reader r{data};
@@ -380,5 +472,8 @@ World readWorldFile(const std::string &data)
         return world;
     }
     readTiles(r, world);
+    readChests(r, world);
+    readSigns(r, world);
+    readNPCs(r, world);
     return world;
 }

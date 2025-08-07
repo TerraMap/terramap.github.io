@@ -721,8 +721,8 @@ function getTileAt(x, y) {
 }
 
 function selectPoint(x, y) {
-  selectionX = x;
-  selectionY = y;
+  selectionX = Math.round(x);
+  selectionY = Math.round(y);
   drawSelectionIndicator();
 }
 
@@ -926,10 +926,6 @@ function onWorldLoaderWorkerMessage(e) {
     }
   }
 
-  if(e.data.npcs) {
-    addNpcs(e.data.npcs);
-  }
-
   if (e.data.tileEntities) {
     for (const [pos, entity] of e.data.tileEntities.entries()) {
       let idx = pos.x * world.height + pos.y;
@@ -980,11 +976,13 @@ function onWorldLoaderWorkerMessage(e) {
         `<li>${key}: ${Array.isArray(world[key]) ? JSON.stringify(world[key]) : world[key]}</li>`
       )
     );
+
+    addNpcs(world.npcs);
   }
 }
 
 function addNpcs(npcs) {
-  world.npcs = npcs;
+  $("#npcList").empty();
 
   for(var i = 0; i < npcs.length; i++) {
     var npc = npcs[i];

@@ -1,8 +1,6 @@
 self.addEventListener('message', (e) => {
   if (e.data.canvas) {
     self.canvas = e.data.canvas;
-    self.canvas.width = 100;
-    self.canvas.height = 100;
     self.ctx = self.canvas.getContext('2d');
     self.ctx.msImageSmoothingEnabled = false;
     self.ctx.mozImageSmoothingEnabled = false;
@@ -36,8 +34,7 @@ async function start(file) {
   }
   self.canvas.width = world.width;
   self.canvas.height = world.height;
-  self.postMessage({ world });
 
-  self.postMessage({ status: 'Rendering tiles...' });
+  self.postMessage({ status: 'Rendering tiles...', world });
   self.terramap.renderToCanvas();
 }
