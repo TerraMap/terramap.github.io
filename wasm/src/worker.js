@@ -4,8 +4,14 @@ self.addEventListener('message', (e) => {
     self.ctx = self.canvas.getContext('2d');
     self.ctx.msImageSmoothingEnabled = false;
     self.ctx.mozImageSmoothingEnabled = false;
-    self.ctx.msImageSmoothingEnabled = false;
     self.ctx.imageSmoothingEnabled = false;
+  }
+  if (e.data.overlayCanvas) {
+    self.overlayCanvas = e.data.overlayCanvas;
+    self.overlayCtx = self.overlayCanvas.getContext('2d');
+    self.overlayCtx.msImageSmoothingEnabled = false;
+    self.overlayCtx.mozImageSmoothingEnabled = false;
+    self.overlayCtx.imageSmoothingEnabled = false;
   }
   if (e.data.file) {
     self.start(e.data.file);
@@ -15,6 +21,16 @@ self.addEventListener('message', (e) => {
   }
   if (e.data.selectTile) {
     onSelectTile(e.data.selectTile);
+  }
+  if (e.data.search) {
+    onSearch(e.data.search);
+  }
+  if (e.data.clearHighlight) {
+    const { width, height } = self.overlayCanvas;
+    self.overlayCtx.clearRect(0, 0, width, height);
+  }
+  if (e.data.findNext) {
+    onFindNext(e.data.findNext);
   }
 });
 
@@ -40,9 +56,12 @@ async function start(file) {
   }
   self.canvas.width = world.width;
   self.canvas.height = world.height;
+  self.overlayCanvas.width = world.width;
+  self.overlayCanvas.height = world.height;
 
   self.postMessage({ status: 'Rendering tiles...', world });
   self.terramap.renderToCanvas();
+  self.postMessage({ status: 'Done.', done: true });
 }
 
 function getTileInfo(tile) {
@@ -139,5 +158,43 @@ function onSelectTile({ x, y }) {
   if (tile) {
     tile.text = getTileText(tile);
     self.postMessage({ tile });
+  }
+}
+
+function onSearch(search) {
+  const queries = [];
+  for (const info of search) {
+    if (info.isTile) {
+      if (info.parent) {
+        let sizeX = 1;
+        let sizeY = 1;
+        if (info.parent.Size) {
+          sizeX = info.parent.Size[0] - '0';
+          sizeY = info.parent.Size[2] - '0';
+        }
+        queries.push({
+          type: 1,
+          id: Number(info.parent.Id),
+          minU: info.U,
+          maxU: info.U + 18 * sizeX,
+          minV: info.V,
+          maxV: info.V + 18 * sizeY,
+        });
+      } else {
+        queries.push({ type: 0, id: Number(info.Id) });
+      }
+    } else if (info.isWall) {
+      queries.push({ type: 2, id: Number(info.Id) });
+    } else if (info.isItem) {
+      queries.push({ type: 3, id: Number(info.Id) });
+    }
+  }
+  self.terramap.search(queries);
+}
+
+function onFindNext({ x, y, direction }) {
+  const pos = self.terramap.findNext(x, y, direction);
+  if (pos) {
+    self.postMessage({ select: { x: pos[0], y: pos[1] } });
   }
 }

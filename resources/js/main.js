@@ -5,18 +5,9 @@ var canvas = document.querySelector("#canvas");
 var overlayCanvas = document.querySelector("#overlayCanvas");
 var selectionCanvas = document.querySelector("#selectionCanvas");
 
-var overlayCtx = overlayCanvas.getContext("2d");
 var selectionCtx = selectionCanvas.getContext("2d");
 
-// var canvasContextImageData = ctx.createImageData(1,1);
-// var imageData = canvasContextImageData.data;
-
 var blockSelector = document.querySelector("#blocks");
-
-overlayCtx.msImageSmoothingEnabled = false;
-overlayCtx.mozImageSmoothingEnabled = false;
-overlayCtx.msImageSmoothingEnabled = false;
-overlayCtx.imageSmoothingEnabled = false;
 
 selectionCtx.msImageSmoothingEnabled = false;
 selectionCtx.mozImageSmoothingEnabled = false;
@@ -117,7 +108,7 @@ function highlightSet(setIndex) {
 
   // blockSelector.val(selectedValues);
 
-  highlightInfos(set.Entries);
+  worker.postMessage({ search: set.Entries });
 }
 
 function sortAndAddSelectOptions() {
@@ -316,137 +307,15 @@ function nextBlock(e) {
   findBlock(1);
 }
 
-function isTileMatch(tile, selectedInfos, x, y) {
-  for(var j = 0; j < selectedInfos.length; j++) {
-    var info = selectedInfos[j];
-
-    // check the tile first
-    if(tile.info && info.isTile && (tile.info == info || (!info.parent && tile.Type == info.Id)))
-      return true;
-
-    // check the wall
-    if(info.isWall && tile.WallType == info.Id)
-      return true;
-
-    // see if it's a chest
-    var chest = tile.chest;
-    if(chest && info.isItem) {
-      // see if the chest contains the item
-      for(var i = 0; i < chest.items.length; i++) {
-        var item = chest.items[i];
-
-        if(info.Id == item.id) {
-          return true;
-        }
-      }
-    }
-
-    // check if the tile entity contains it
-    let tileEntity = tile.tileEntity;
-    if (tileEntity && info.isItem) {
-      switch (tileEntity.type) {
-        case 1: // item frame
-        case 4: // weapon rack
-        case 6: // plate
-          if (info.Id == tileEntity.item.id) {
-            return true;
-          }
-          break;
-        case 3: // (wo)mannequin
-        case 5: // hat rack
-          for (let i = 0; i < tileEntity.items.length; i++) {
-            if (info.Id == tileEntity.items[i].id) {
-              return true;
-            }
-            if (info.Id == tileEntity.dyes[i].id) {
-              return true;
-            }
-          }
-          break;
-      }
-    }
-  }
-
-  return false;
-}
-
 function findBlock(direction) {
-  if(!world)
-    return;
-
-  var x = selectionX;
-  var y = selectionY + direction;
-
-  var start = x * world.height + y;
-
-  var selectedInfos = getSelectedInfos();
-
-  if(selectedInfos.length > 0) {
-    for(var i = start; i >= 0 && i < world.tiles.length; i += direction) {
-      var tile = world.tiles[i];
-
-      var foundMatch = false;
-
-      if(isTileMatch(tile, selectedInfos, x, y)) {
-        selectionX = x;
-        selectionY = y;
-
-        drawSelectionIndicator();
-        // panzoom.panzoom('pan', (-overlayCanvas.width / 2) - x, (-overlayCanvas.height / 2) - y, { relative: false });
-
-        foundMatch = true;
-
-        break;
-      }
-
-      y += direction;
-
-      if(y < 0 || y >= world.height) {
-        if(direction > 0)
-          y = 0;
-        else
-          y = world.height - 1;
-        x += direction;
-      }
-
-      if(foundMatch)
-        break;
-    }
-  }
+  worker?.postMessage?.({
+    findNext: { x: selectionX, y: selectionY, direction },
+  });
 }
 
 function highlightAll() {
-  if(!world)
-    return;
-
-  var selectedInfos = getSelectedInfos();
-
-  highlightInfos(selectedInfos);
-}
-
-function highlightInfos(selectedInfos) {
-  var x = 0;
-  var y = 0;
-
-  overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
-  overlayCtx.fillStyle = "rgba(0, 0, 0, 0.75)";
-  overlayCtx.fillRect(0, 0, overlayCanvas.width, overlayCanvas.height);
-
-  if(selectedInfos.length > 0) {
-    for(var i = 0; i < world.tiles.length; i++) {
-      var tile = world.tiles[i];
-
-      if(isTileMatch(tile, selectedInfos)) {
-        overlayCtx.fillStyle = "rgb(255, 255, 255)";
-        overlayCtx.fillRect(x, y, 1, 1);
-      }
-
-      y++;
-      if(y >= world.height) {
-        y = 0;
-        x++;
-      }
-    }
+  if (world) {
+    worker.postMessage({ search: getSelectedInfos() });
   }
 }
 
@@ -535,36 +404,9 @@ function getWallInfoFromOption(option) {
   return null;
 }
 
-function getTileInfo(tile) {
-  var tileInfo = settings.Tiles[tile.Type];
-
-  if(!tileInfo) return tileInfo;
-
-  if(!tileInfo.Frames)
-    return tileInfo;
-
-  var matchingFrame;
-
-  for(var i = 0; i < tileInfo.Frames.length; i++) {
-    var frame = tileInfo.Frames[i];
-
-    if((!frame.U && !tile.TextureU) || frame.U <= tile.TextureU) {
-      if((!frame.V && !tile.TextureV) || frame.V <= tile.TextureV)
-        matchingFrame = frame;
-    }
-  }
-
-  if(!matchingFrame)
-    return tileInfo;
-
-  matchingFrame.parent = tileInfo;
-
-  return matchingFrame;
-}
-
 function clearHighlight() {
-  overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
   selectionCtx.clearRect(0, 0, selectionCanvas.width, selectionCanvas.height);
+  worker?.postMessage?.({ clearHighlight: true });
 }
 
 function clearSelection() {
@@ -708,98 +550,6 @@ function drawSelectionIndicator() {
   selectionCtx.stroke();
 }
 
-function getTileText (tile) {
-  var text = "Nothing";
-
-  if(!tile) {
-    return text;
-  }
-
-  var tileInfo = tile.info;
-
-  if(tileInfo) {
-    if(!tileInfo.parent || !tileInfo.parent.Name) {
-       text = tileInfo.Name;
-    }
-    else if(tileInfo.parent && tileInfo.parent.Name) {
-      text = tileInfo.parent.Name;
-
-      if(tileInfo.Name) {
-        text = `${text} - ${tileInfo.Name}`;
-
-        if(tileInfo.Variety)
-        text = `${text} - ${tileInfo.Variety}`;
-      }
-      else if (tileInfo.Variety) {
-        text = `${text} - ${tileInfo.Variety}`;
-      }
-    }
-
-    if(tile.TextureU > 0 && tile.TextureV > 0)
-      text = `${text} (${tile.Type}, ${tile.TextureU}, ${tile.TextureV})`;
-    else if(tile.TextureU > 0)
-      text = `${text} (${tile.Type}, ${tile.TextureU})`;
-    else
-      text = `${text} (${tile.Type})`;
-    if (tile.tileEntity) {
-      let tileEntity = tile.tileEntity;
-      switch (tileEntity.type) {
-        case 1: // item frame
-        case 4: // weapon rack
-        case 6: // plate
-          let item = tileEntity.item;
-          let itemText = getItemText(item);
-          text = `${text} - ${itemText}`;
-          break;
-        case 2: // logic sensor
-          let checkType = tile.info.CheckTypes[tileEntity.logicCheckType];
-          let on = tileEntity.on ? "On" : "Off";
-          text = `${text} - ${checkType}, ${on}`;
-          break;
-      }
-    }
-  }
-  else if (tile.WallType || tile.WallType === 0) {
-    if(tile.WallType < settings.Walls.length) {
-      text = `${settings.Walls[tile.WallType].Name} (${tile.WallType})`;
-    }
-    else {
-      text = `Unknown Wall (${tile.WallType})`;
-    }
-  }
-  
-  if (tile.IsLiquidPresent) {
-    if (text === "Nothing") text = "";
-
-    if(tile.IsLiquidLava) {
-      text += text ? " Lava" : "Lava";
-    }
-    else if (tile.IsLiquidHoney) {
-      text += text ? " Honey" : "Honey";
-    }
-    else if (tile.Shimmer) {
-      text += text ? " Shimmer" : "Shimmer";
-    }
-    else {
-      text += text ? " Water" : "Water";
-    }
-  }
-
-  if(tile.IsRedWirePresent)
-    text += " (Red Wire)";
-
-  if(tile.IsGreenWirePresent)
-    text += " (Green Wire)";
-
-  if(tile.IsBlueWirePresent)
-    text += " (Blue Wire)";
-
-  if(tile.IsYellowWirePresent)
-    text += " (Yellow Wire)";
-
-  return text;
-}
-
 function fileNameChanged (evt) {
   file = evt.target.files[0];
 
@@ -813,7 +563,11 @@ function reloadWorld() {
     worker = new Worker('wasm/src/build/terramap.js');
     worker.addEventListener('message', onWorldLoaderWorkerMessage);
     const offscreen = canvas.transferControlToOffscreen();
-    worker.postMessage({ canvas: offscreen }, [offscreen]);
+    const offscreenOverlay = overlayCanvas.transferControlToOffscreen();
+    worker.postMessage({ canvas: offscreen, overlayCanvas: offscreenOverlay }, [
+      offscreen,
+      offscreenOverlay,
+    ]);
   }
 
   worker.postMessage({ file });
@@ -823,7 +577,7 @@ function onWorldLoaderWorkerMessage(e) {
   if(e.data.status)
     $("#status").html(e.data.status);
 
-  if(e.data.tile) {
+  if (e.data.tile) {
     $("#tileInfoList").empty();
     const tile = e.data.tile;
     if (tile.chest) {
@@ -858,8 +612,6 @@ function onWorldLoaderWorkerMessage(e) {
 
     panzoomContainer.width = world.width;
     panzoomContainer.height = world.height;
-    overlayCanvas.width = world.width;
-    overlayCanvas.height = world.height;
     selectionCanvas.width = world.width;
     selectionCanvas.height = world.height;
 
@@ -882,6 +634,10 @@ function onWorldLoaderWorkerMessage(e) {
 
     addNpcs(world.npcs);
   }
+
+  if (e.data.select) {
+    selectPoint(e.data.select.x, e.data.select.y);
+  }
 }
 
 function addNpcs(npcs) {
@@ -890,45 +646,13 @@ function addNpcs(npcs) {
   for(var i = 0; i < npcs.length; i++) {
     var npc = npcs[i];
 
-    var npcText = npc.name;
-    if(npc.type != npc.name) {
-      npcText = `${npcText} the ${npc.type}`;
+    var npcText = npc.type;
+    if (npc.name && npc.type != npc.name) {
+      npcText = `${npc.name} the ${npc.type}`;
     }
 
     $("#npcList").append(`<li><a href="#" onclick="selectPoint(${npc.x}, ${npc.y})">${npcText}</a></li>`);
   }
-}
-
-function getTileColor(y, tile, world) {
-  if(tile.IsActive) {
-    return tileColors[tile.Type][0];
-  }
-
-  if (tile.IsLiquidPresent) {
-    if(tile.IsLiquidLava)
-      return liquidColors[1];
-    else if (tile.IsLiquidHoney)
-      return liquidColors[2];
-    else if (tile.Shimmer)
-      return { "r": 155, "g": 112, "b": 233 };
-    else
-      return liquidColors[0];
-  }
-
-  if (tile.IsWallPresent) {
-    return wallColors[tile.WallType][0];
-  }
-
-  if(y < world.worldSurfaceY)
-    return { "r": 132, "g": 170, "b": 248 };
-
-  if(y < world.rockLayerY)
-    return { "r": 88, "g": 61, "b": 46 };
-
-  if(y < world.hellLayerY)
-    return { "r": 74, "g": 67, "b": 60 };
-
-  return { "r": 0, "g": 0, "b": 0 };
 }
 
 function saveMapImage() {

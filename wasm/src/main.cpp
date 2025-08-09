@@ -1,10 +1,19 @@
 #include "TileColor.h"
 #include "WorldLoader.h"
+#include <set>
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten/bind.h>
 
-template <typename T> emscripten::val marshalData(const std::vector<T> &data)
+template <typename T> emscripten::val marshalData(const std::pair<T, T> &pair)
+{
+    return emscripten::val::array(std::vector<T>{pair.first, pair.second});
+}
+
+template <
+    typename C,
+    typename T = std::decay_t<decltype(*std::begin(std::declval<C>()))>>
+emscripten::val marshalData(const C &data)
 {
     std::vector<emscripten::val> jsData;
     for (auto &row : data) {
@@ -402,6 +411,99 @@ class Loader
     std::map<int, int> chestLookup;
     std::map<int, int> signLookup;
     std::map<int, int> entityLookup;
+    std::vector<std::pair<int, int>> searchResults;
+
+    void searchBlocks(
+        const std::set<int> &blockIds,
+        std::set<std::pair<int, int>> &results)
+    {
+        for (int x = 0; x < world.width; ++x) {
+            for (int y = 0; y < world.height; ++y) {
+                if (blockIds.contains(world.getTile(x, y).blockId)) {
+                    results.emplace(x, y);
+                }
+            }
+        }
+    }
+
+    void searchFramedBlocks(
+        int blockId,
+        int minU,
+        int maxU,
+        int minV,
+        int maxV,
+        std::set<std::pair<int, int>> &results)
+    {
+        for (int x = 0; x < world.width; ++x) {
+            for (int y = 0; y < world.height; ++y) {
+                Tile &tile = world.getTile(x, y);
+                if (tile.blockId == blockId && tile.frameX >= minU &&
+                    tile.frameX < maxU && tile.frameY >= minV &&
+                    tile.frameY < maxV) {
+                    results.emplace(x, y);
+                }
+            }
+        }
+    }
+
+    void searchWalls(int wallId, std::set<std::pair<int, int>> &results)
+    {
+        for (int x = 0; x < world.width; ++x) {
+            for (int y = 0; y < world.height; ++y) {
+                if (world.getTile(x, y).wallId == wallId) {
+                    results.emplace(x, y);
+                }
+            }
+        }
+    }
+
+    std::pair<int, int> parseLookupKey(int lookupKey)
+    {
+        int y = lookupKey % world.height;
+        return {(lookupKey - y) / world.height, y};
+    }
+
+    void searchItems(int itemId, std::set<std::pair<int, int>> &results)
+    {
+        for (auto [lookupKey, chestId] : chestLookup) {
+            for (const Item &item : world.chests[chestId].items) {
+                if (item.id == itemId) {
+                    results.insert(parseLookupKey(lookupKey));
+                    break;
+                }
+            }
+        }
+        for (auto [lookupKey, entityId] : entityLookup) {
+            const TileEntity &entity = world.tileEntities[entityId];
+            for (const Item &item : entity.items) {
+                if (item.id == itemId) {
+                    results.insert(parseLookupKey(lookupKey));
+                    break;
+                }
+            }
+            for (const Item &item : entity.dyes) {
+                if (item.id == itemId) {
+                    results.insert(parseLookupKey(lookupKey));
+                    break;
+                }
+            }
+        }
+    }
+
+    void putImageData(const std::vector<uint32_t> &pixels, const char *ctx)
+    {
+        EM_ASM(
+            {
+                const data =
+                    new Uint8ClampedArray(wasmMemory.buffer, $0, $1 * $2 * 4);
+                const imageData = new ImageData(data, $1);
+                self[UTF8ToString($3)].putImageData(imageData, 0, 0);
+            },
+            pixels.data(),
+            world.width,
+            world.height,
+            ctx);
+    }
 
 public:
     emscripten::val loadWorldFile(const std::string &data)
@@ -459,6 +561,7 @@ public:
                 }
             }
         }
+        searchResults.clear();
         return dumpWorld(world);
     }
 
@@ -471,17 +574,7 @@ public:
                 pixels.push_back(getTileColor(x, y, world).abgr);
             }
         }
-        EM_ASM_(
-            {
-                const data = HEAPU8.slice($0, $0 + $1 * $2 * 4);
-                const ctx = self['ctx'];
-                const imageData = ctx.getImageData(0, 0, $1, $2);
-                imageData.data.set(data);
-                ctx.putImageData(imageData, 0, 0);
-            },
-            pixels.data(),
-            world.width,
-            world.height);
+        putImageData(pixels, "ctx");
     }
 
     emscripten::val getTile(int x, int y)
@@ -507,6 +600,64 @@ public:
         }
         return result;
     }
+
+    void search(const emscripten::val &queries)
+    {
+        int numQueries = queries["length"].as<int>();
+        std::set<std::pair<int, int>> results;
+        std::set<int> blockIds;
+        for (int i = 0; i < numQueries; ++i) {
+            int id = queries[i]["id"].as<int>();
+            switch (queries[i]["type"].as<int>()) {
+            case 0:
+                blockIds.insert(id);
+                break;
+            case 1:
+                searchFramedBlocks(
+                    id,
+                    queries[i]["minU"].as<int>(),
+                    queries[i]["maxU"].as<int>(),
+                    queries[i]["minV"].as<int>(),
+                    queries[i]["maxV"].as<int>(),
+                    results);
+                break;
+            case 2:
+                searchWalls(id, results);
+                break;
+            case 3:
+                searchItems(id, results);
+                break;
+            }
+        }
+        if (!blockIds.empty()) {
+            searchBlocks(blockIds, results);
+        }
+        searchResults.clear();
+        searchResults.assign(results.begin(), results.end());
+
+        std::vector<uint32_t> pixels(world.width * world.height, 0xbf000000);
+        for (auto [x, y] : searchResults) {
+            pixels[y * world.width + x] = 0xffffffff;
+        }
+        putImageData(pixels, "overlayCtx");
+    }
+
+    emscripten::val findNext(int x, int y, int direction)
+    {
+        std::pair pt{x, y};
+        auto bound =
+            std::lower_bound(searchResults.begin(), searchResults.end(), pt);
+        if (direction < 0) {
+            if (bound == searchResults.begin()) {
+                return emscripten::val::null();
+            }
+            --bound;
+        } else if (bound != searchResults.end() && *bound == pt) {
+            ++bound;
+        }
+        return bound == searchResults.end() ? emscripten::val::null()
+                                            : marshalData(*bound);
+    }
 };
 
 EMSCRIPTEN_BINDINGS(terramap)
@@ -515,7 +666,9 @@ EMSCRIPTEN_BINDINGS(terramap)
         .constructor()
         .function("loadWorldFile", &Loader::loadWorldFile)
         .function("renderToCanvas", &Loader::renderToCanvas)
-        .function("getTile", &Loader::getTile);
+        .function("getTile", &Loader::getTile)
+        .function("search", &Loader::search)
+        .function("findNext", &Loader::findNext);
 }
 #else
 int main()
