@@ -85,17 +85,17 @@ std::string marshalData(Slope slope)
 {
     switch (slope) {
     case Slope::none:
-        return "none";
+        return "";
     case Slope::half:
-        return "half";
+        return "Half";
     case Slope::topRight:
-        return "topRight";
+        return "Top Right";
     case Slope::topLeft:
-        return "topLeft";
+        return "Top Left";
     case Slope::bottomRight:
-        return "bottomRight";
+        return "Bottom Right";
     case Slope::bottomLeft:
-        return "bottomLeft";
+        return "Bottom Left";
     }
 }
 

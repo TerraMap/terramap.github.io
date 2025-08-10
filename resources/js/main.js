@@ -550,6 +550,31 @@ function drawSelectionIndicator() {
   selectionCtx.stroke();
 }
 
+function getTileInfoList(tile) {
+  const info = [];
+  const fields = [
+    ['actuated', 'Actuated'],
+    ['echoCoatBlock', 'Echo Coat Block'],
+    ['echoCoatWall', 'Echo Coat Wall'],
+    ['illuminantBlock', 'Illuminant Block'],
+    ['illuminantWall', 'Illuminant Wall'],
+    ['liquidAmount', 'Liquid Amount'],
+    ['slope', 'Slope'],
+  ];
+  for (const [key, label] of fields) {
+    if (tile[key]) {
+      info.push(`${label}: ${tile[key]}`);
+    }
+  }
+  if (tile.blockPaint > 0) {
+    info.push(`Block Paint: ${settings.Paints[tile.blockPaint].Name}`);
+  }
+  if (tile.wallPaint > 0) {
+    info.push(`Wall Paint: ${settings.Paints[tile.wallPaint].Name}`);
+  }
+  return info.sort();
+}
+
 function fileNameChanged (evt) {
   file = evt.target.files[0];
 
@@ -580,6 +605,9 @@ function onWorldLoaderWorkerMessage(e) {
   if (e.data.tile) {
     $("#tileInfoList").empty();
     const tile = e.data.tile;
+    for (const row of getTileInfoList(tile)) {
+      $("#tileInfoList").append(`<li>${row}</li>`);
+    }
     if (tile.chest) {
       if (tile.chest.name.length > 0) {
         tile.text += ` - ${tile.chest.name}`;
