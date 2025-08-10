@@ -9,8 +9,7 @@ var ctx = canvas.getContext("2d");
 var overlayCtx = overlayCanvas.getContext("2d");
 var selectionCtx = selectionCanvas.getContext("2d");
 
-// var canvasContextImageData = ctx.createImageData(1,1);
-// var imageData = canvasContextImageData.data;
+var pixels = null;
 
 var blockSelector = document.querySelector("#blocks");
 
@@ -874,24 +873,45 @@ function onWorldLoaderWorkerMessage(e) {
   if(e.data.status)
     $("#status").html(e.data.status);
 
-  if(e.data.tiles) {
-	  let xlimit = e.data.x + e.data.tiles.length / world.height;
-	  let i = 0;
-	  for(let x = e.data.x; x < xlimit; x++) {
-	    for(let y = 0; y < world.height; y++) {
-	      let tile = e.data.tiles[i++];
-	      if(tile) {
-	        tile.info = getTileInfo(tile);
-	        world.tiles.push(tile);
+  if (e.data.tiles) {
+    const bufferWidth = 200;
+    if (!pixels) {
+      pixels = new Uint8ClampedArray(4 * bufferWidth * world.height);
+    }
+    let xlimit = e.data.x + e.data.tiles.length / world.height;
+    let i = 0;
+    for (let x = e.data.x; x < xlimit; x++) {
+      const bufferStart = bufferWidth * Math.floor(x / bufferWidth);
+      if (x % bufferWidth === 0 && x > 0) {
+        const imageData = new ImageData(pixels, bufferWidth);
+        ctx.putImageData(imageData, bufferStart - bufferWidth, 0);
+      }
+      for (let y = 0; y < world.height; y++) {
+        let tile = e.data.tiles[i++];
+        if (tile) {
+          tile.info = getTileInfo(tile);
+          world.tiles.push(tile);
 
-	        var c = getTileColor(y, tile, world);
-	        if(!c) c = {"r": 0, "g": 0, "b": 0 };
+          let c = getTileColor(y, tile, world);
+          if (!c) c = { "r": 0, "g": 0, "b": 0 };
 
-	        ctx.fillStyle = `rgb(${c.r}, ${c.g}, ${c.b})`;
-	        ctx.fillRect(x, y, 1, 1);
-	      }
-	    }
-		}
+          const pxIdx = 4 * (y * bufferWidth + x - bufferStart);
+          pixels[pxIdx] = c.r;
+          pixels[pxIdx + 1] = c.g;
+          pixels[pxIdx + 2] = c.b;
+          pixels[pxIdx + 3] = 255;
+        }
+      }
+    }
+  }
+
+  if (e.data.done) {
+    const bufferWidth = 200;
+    const bufferStart =
+      bufferWidth * Math.floor((world.width - 1) / bufferWidth);
+    const imageData = new ImageData(pixels, bufferWidth);
+    ctx.putImageData(imageData, bufferStart, 0);
+    pixels = null;
   }
 
   if(e.data.chests) {
