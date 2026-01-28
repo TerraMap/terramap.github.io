@@ -1033,7 +1033,12 @@ function getTileColor(y, tile, world) {
   }
 
   if (tile.IsWallPresent) {
-    return wallColors[tile.WallType][0];
+    let color = wallColors[tile.WallType][0];
+    if (!color || (color.r === 0 && color.g === 0 && color.b === 0)) {
+      const wall = settings.Walls.find(w => w.Id === tile.WallType.toString());
+      if (wall && wall.Color) return wall.Color;
+    }
+    return color;
   }
 
   if(y < world.worldSurfaceY)

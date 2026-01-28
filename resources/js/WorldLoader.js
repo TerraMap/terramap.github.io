@@ -762,6 +762,7 @@ function readNpcs(reader, world) {
         if (world.version >= 213 && reader.readUint8() > 0) {
             npc.townVariation = reader.readInt32();
         }
+        npc.homelessDespawn = reader.readUint8() > 0;
         npcs.push(npc);
 
         num++;
@@ -771,8 +772,8 @@ function readNpcs(reader, world) {
     flag = reader.readUint8() > 0;
     while (flag) {
         npc = {};
-        reader.readInt32();
-        npc.type = readString(reader);
+        npc.spriteId = reader.readInt32();
+        // npc.type = readString(reader);
         npc.x = reader.readFloat32();
         npc.y = reader.readFloat32();
         num++;
