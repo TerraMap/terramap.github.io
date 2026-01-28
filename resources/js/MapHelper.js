@@ -8,9 +8,9 @@ function rgb(r, g, b) {
 
 // Decompiled from the Terraria source code
 
-var tileColors = new Array(693);
-var liquidColors = new Array(3);
-var wallColors = new Array(347);
+var tileColors = new Array(753);
+var liquidColors = new Array(4);
+var wallColors = new Array(367);
 
 for (var i = 0; i < tileColors.length; i++) {
   tileColors[i] = new Array(12);
@@ -720,6 +720,7 @@ tileColors[624][0] = rgb(210, 91, 77);
 liquidColors[0] = rgb(9, 61, 191);
 liquidColors[1] = rgb(253, 32, 3);
 liquidColors[2] = rgb(254, 194, 20);
+liquidColors[3] = rgb(161, 127, 255);
 
 for (var j = 0; j < wallColors.length; j++) {
   wallColors[j] = new Array(2);
@@ -1055,7 +1056,7 @@ for (var num14 = 0; num14 < wallColors.length; num14++) {
 }
 wallRangeEnd = num11;
 liquidPosition = num11;
-for (var num16 = 0; num16 < 3; num16++) {
+for (var num16 = 0; num16 < 4; num16++) {
   colorLookup[num11] = liquidColors[num16];
   num11 += 1;
 }

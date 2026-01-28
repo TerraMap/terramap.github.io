@@ -28,14 +28,37 @@ var start = function(file) {
     readWorldFile(ds, world);
 };
 
+function logPosition(index, positions, reader, name) {
+    var expected = positions[index];
+    var actual = reader.position;
+    if (expected !== actual) {
+        console.error(`Position  ${index} wrong after reading ${name}: Expected ${expected}, actual ${actual}, diff ${expected - actual}`);
+    }
+}
+
 function readWorldFile(reader, world) {
-    readFileFormatHeader(reader, world);
-    readProperties(reader, world);
+    var position = 0;
+    
+    const positions = readFileFormatHeader(reader, world);
+    logPosition(position++, positions, reader, 'format');
+
+    readHeader(reader, world);
+    logPosition(position++, positions, reader, 'header');
+
     readTiles(reader, world);
+    logPosition(position++, positions, reader, 'tiles');
+    
     readChests(reader, world);
+    logPosition(position++, positions, reader, 'chests');
+
     readSigns(reader, world);
+    logPosition(position++, positions, reader, 'signs');
+
     readNpcs(reader, world);
+    logPosition(position++, positions, reader, 'NPCs');
+
     readTileEntities(reader, world);
+    logPosition(position++, positions, reader, 'entities');
 
     self.postMessage({
         'status': "Done.",
@@ -71,11 +94,12 @@ function readFileFormatHeader(reader, world) {
     var i = 0;
 
     var positionsLength = reader.readInt16();
+    const positions = new Array(positionsLength);
     for (i = 0; i < positionsLength; i++) {
-        reader.readInt32();
+        positions[i] = reader.readInt32();
     }
 
-    // read importances
+    // read importance
     var importanceLength = reader.readInt16();
     world.importance = new Array(importanceLength);
     var b = 0;
@@ -90,11 +114,15 @@ function readFileFormatHeader(reader, world) {
 
         if ((b & b2) == b2) {
             world.importance[i] = true;
+        } else {
+            world.importance[i] = false;
         }
     }
+
+    return positions;
 }
 
-function readProperties(reader, world) {
+function readHeader(reader, world) {
     world.name = readString(reader);
 
     world.seed = readString(reader);
@@ -117,6 +145,7 @@ function readProperties(reader, world) {
 
     world.height = reader.readInt32();
     world.width = reader.readInt32();
+
     if (world.version >= 209) {
         world.expertMode = world.gameMode = reader.readInt32();
         if (world.version >= 222) {
@@ -128,35 +157,32 @@ function readProperties(reader, world) {
         if (world.version >= 238) {
             world.tenthAnniversaryWorld = reader.readUint8();
         }
-    } else {
-        if (world.version >= 112) {
-            world.expertMode = world.gameMode = (reader.readUint8() ? 1 : 0);
-        } else {
-            world.expertMode = world.gameMode = 0;
+        if (world.version >= 239) {
+            world.dontStarveWorld = reader.readUint8();
         }
-        if (world.version == 208 && reader.readUint8()) {
-            world.expertMode = world.gameMode = 2;
+        if (world.version >= 241) {
+            world.notTheBeesWorld = reader.readUint8();
         }
-    }
-
-    if (world.version >= 239) {
-        world.dontStarveWorld = reader.readUint8();
-    }
-    if (world.version >= 241) {
-        world.notTheBeesWorld = reader.readUint8();
-    }
-
-    if (world.version >= 249) {
-        world.remixWorld = reader.readUint8();
-    }
-    if (world.version >= 266) {
-        world.noTrapsWorld = reader.readUint8();
-    }
-    if (world.version >= 267) {
-        world.zenithWorld = reader.readUint8();
+        if (world.version >= 249) {
+            world.remixWorld = reader.readUint8();
+        }
+        if (world.version >= 266) {
+            world.noTrapsWorld = reader.readUint8();
+        }
+        if (world.version >= 267) {
+            world.zenithWorld = reader.readUint8();
+        }
+        if (world.version >= 302)
+        {
+            world.skyblockWorld = reader.readUint8();
+        }
     }
 
     // creation time (Int64)
+    reader.readInt32();
+    reader.readInt32();
+
+    // last played (Int64)
     reader.readInt32();
     reader.readInt32();
 
@@ -228,7 +254,7 @@ function readProperties(reader, world) {
     world.desertStyle = reader.readUint8();
     world.oceanStyle = reader.readUint8();
     world.cloudBackground = reader.readInt32();
-    world.numberofClouds = reader.readInt16();
+    world.numberOfClouds = reader.readInt16();
     world.windSpeed = reader.readFloat32();
 
     world.anglerWhoFinishedTodayCount = reader.readInt32();
@@ -249,14 +275,14 @@ function readProperties(reader, world) {
     world.invasionSizeStart = reader.readInt32();
     world.tempCultistDelay = reader.readInt32();
 
+    // banner system
     let killedMobs = reader.readInt16();
     for (var j = 0; j < killedMobs; j++) {
-        if (j < 688) {
-            //this.NpcKillCount[j] = reader.readInt32();
-            reader.readInt32();
-        } else {
-            reader.readInt32();
-        }
+        reader.readInt32();
+    }
+    killedMobs = reader.readInt16();
+    for (var j = 0; j < killedMobs; j++) {
+        reader.readInt16();
     }
 
     world.fastForwardTime = reader.readUint8() > 0;
@@ -381,19 +407,67 @@ function readProperties(reader, world) {
     if (world.version >= 260) world.peddlersSatchelWasUsed = reader.readUint8() > 0;
     if (world.version >= 261)
     {
-      reader.readUint8() > 0;
-      reader.readUint8() > 0;
-      reader.readUint8() > 0;
-      reader.readUint8() > 0;
-      reader.readUint8() > 0;
-      reader.readUint8() > 0;
-      reader.readUint8() > 0;
+      world.unlockedSlimeGreenSpawn = reader.readUint8() > 0;
+      world.unlockedSlimeOldSpawn = reader.readUint8() > 0;
+      world.unlockedSlimePurpleSpawn = reader.readUint8() > 0;
+      world.unlockedSlimeRainbowSpawn = reader.readUint8() > 0;
+      world.unlockedSlimeRedSpawn = reader.readUint8() > 0;
+      world.unlockedSlimeYellowSpawn = reader.readUint8() > 0;
+      world.unlockedSlimeCopperSpawn = reader.readUint8() > 0;
     }
     if (world.version >= 264)
     {
       reader.readUint8() > 0;
       reader.readUint8();
     }
+
+    if (world.version >= 287)
+    {
+        world.forceHalloweenForever = reader.readUint8();
+        world.forceXMasForever = reader.readUint8();
+    }
+    if (world.version >= 288)
+    {
+        world.vampireSeed = reader.readUint8();
+    }
+    else
+    {
+        world.vampireSeed = false;
+    }
+    if (world.version >= 296)
+    {
+        world.infectedSeed = reader.readUint8();
+    }
+    else
+    {
+        world.infectedSeed = false;
+    }
+    if (world.version >= 291)
+    {
+        world._tempMeteorShowerCount = reader.readInt32();
+        world._tempCoinRain = reader.readInt32();
+    }
+    else
+    {
+        world._tempMeteorShowerCount = 0;
+        world._tempCoinRain = 0;
+    }
+    if (world.version >= 297)
+    {
+        world.teamBasedSpawnsSeed = reader.readUint8();
+        const b = reader.readUint8();
+        for (let i = 0; i < b; i++) {
+            reader.readInt16();
+            reader.readInt16();
+        }
+    }
+    world.dualDungeonsSeed = (world.version >= 304 && reader.readUint8());
+    if (world.version >= 299 && world.version < 313)
+    {
+        reader.ReadUInt32();
+    }
+    // manifest
+    if (world.version >= 299) readString(reader);
 
     var hellLevel = ((world.height - 230) - world.worldSurfaceY) / 6;
     hellLevel = hellLevel * 6 + world.worldSurfaceY - 5;
@@ -568,45 +642,55 @@ function readChests(reader, world) {
     var chests = [];
 
     var num = reader.readInt16();
-    var num2 = reader.readInt16();
-    var num3;
-    var num4;
-
-    var maxItems = 40;
-
-    if (num2 < maxItems) {
-        num3 = num2;
-        num4 = 0;
-    } else {
-        num3 = maxItems;
-        num4 = num2 - maxItems;
-    }
+    var num2 = 0;
 
     for (var i = 0; i < num; i++) {
-        var chest = {};
+        var chest = {maxItems: 40};
         chest.items = [];
         chest.x = reader.readInt32();
         chest.y = reader.readInt32();
         chest.name = readString(reader);
 
-        var j = 0;
-        var num5 = 0;
+        var num3 = reader.readInt32();
+        num2 = num3;
 
-        for (j = 0; j < num3; j++) {
-            num5 = reader.readInt16();
-
-            if (num5 > 0) {
-                var item = {};
+        var num4;
+        var num5;
+        if (num2 < num3)
+        {
+            num4 = num2;
+            num5 = 0;
+        }
+        else
+        {
+            num4 = chest.maxItems;
+            num5 = num2 - chest.maxItems;
+        }
+        for (var j = 0; j < num4; j++)
+        {
+            var num6 = reader.readInt16();
+            var item = {};
+            if (num6 > 0)
+            {
                 item.id = reader.readInt32();
-                item.count = num5;
+                item.count = num6;
                 item.prefixId = reader.readUint8();
+            }
+            else if (num6 < 0)
+            {
+                item.id = reader.readInt32();
+                item.prefixId = reader.readUint8();
+                item.count = 1;
+            }
+            if (item.count > 0) {
                 chest.items.push(item);
             }
         }
-
-        for (j = 0; j < num4; j++) {
-            num5 = reader.readInt16();
-            if (num5 > 0) {
+        for (var k = 0; k < num5; k++)
+        {
+            var num6 = reader.readInt16();
+            if (num6 > 0)
+            {
                 reader.readInt32();
                 reader.readUint8();
             }

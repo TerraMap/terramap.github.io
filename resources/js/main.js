@@ -1027,7 +1027,7 @@ function getTileColor(y, tile, world) {
     else if (tile.IsLiquidHoney)
       return liquidColors[2];
     else if (tile.Shimmer)
-      return { "r": 155, "g": 112, "b": 233 };
+      return liquidColors[3];
     else
       return liquidColors[0];
   }
