@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta name="description" content="TerraMap is an interactive Terraria v1.4.4 world map viewer that loads quickly and lets you pan, zoom, find blocks, ores, items in chests, dungeons, NPCs, etc.">
+  <meta name="description" content="TerraMap is an interactive Terraria v1.4.5 world map viewer that loads quickly and lets you pan, zoom, find blocks, ores, items in chests, dungeons, NPCs, etc.">
   <meta name="author" content="Jason Coon">
   <link rel="icon" href="favicon.ico">
 
@@ -117,6 +117,9 @@
             Games\Terraria\Worlds
           </li>
           <li>
+            <strong>Windows (Steam Cloud)</strong>: C:\Program Files (x86)\Steam\userdata\{YOUR_USER_ID}\105600\remote\worlds
+          </li>
+          <li>
             <strong>MacOS</strong>: ~/Library/Application
             Support/Terraria/Worlds
           </li>
@@ -181,13 +184,12 @@
   <script src="resources/js/itemKeys.js"></script>
   <script src="resources/js/wallKeys.js"></script>
   <script src="resources/js/main.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6BJH8276R"></script>
   <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', 'UA-65896817-1', 'auto');
-    ga('send', 'pageview');
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-P6BJH8276R');
   </script>
 </body>
 </html>

@@ -22,6 +22,14 @@ emscripten::val marshalData(const C &data)
     return emscripten::val::array(jsData);
 }
 
+emscripten::val marshalData(const Point &point)
+{
+    auto result = emscripten::val::object();
+    result.set("x", point.x);
+    result.set("y", point.y);
+    return result;
+}
+
 emscripten::val marshalData(const Item &item)
 {
     auto result = emscripten::val::object();
@@ -62,6 +70,7 @@ emscripten::val marshalData(const NPC &npc)
     result.set("homeX", npc.homeX);
     result.set("homeY", npc.homeY);
     result.set("variation", npc.variation);
+    result.set("homelessDespawn", npc.homelessDespawn);
     return result;
 }
 
@@ -163,6 +172,11 @@ template <typename T> void marshalData(const std::vector<T> &data)
     std::cout << ']';
 }
 
+void marshalData(const Point &point)
+{
+    std::cout << "{x:" << point.x << ",y:" << point.y << '}';
+}
+
 void marshalData(const Item &item)
 {
     std::cout << "{id:" << item.id << ",stack:" << item.stack
@@ -189,7 +203,7 @@ void marshalData(const NPC &npc)
               << npc.name << "\",x:" << npc.x << ",y:" << npc.y
               << ",isHomeless:" << npc.isHomeless << ",homeX:" << npc.homeX
               << ",homeY:" << npc.homeY << ",variation:" << npc.variation
-              << '}';
+              << ",homelessDespawn:" << npc.homelessDespawn << '}';
 }
 
 #define DUMP(field) std::cout << #field " " << world.field << '\n'
@@ -236,7 +250,9 @@ void dumpWorld(const World &world)
     DUMP(dontDigUp);
     DUMP(noTraps);
     DUMP(getFixedBoi);
+    DUMP(skyblock);
     DUMP(creationTime);
+    DUMP(lastPlayed);
 
     DUMP(moonType);
     DUMP_ARRAY(treeStyleCoords);
@@ -315,6 +331,7 @@ void dumpWorld(const World &world)
     DUMP(invasionStartSize);
     DUMP(cultistDelay);
     DUMP_ARRAY(enemyKillTallies);
+    DUMP_ARRAY(claimableBanners);
     DUMP(fastForwardTimeToDawn);
 
     DUMP(downedFishron);
@@ -372,7 +389,7 @@ void dumpWorld(const World &world)
     DUMP(downedEmpressOfLight);
     DUMP(downedQueenSlime);
     DUMP(downedDeerclops);
-    DUMP(unlockedSlimeBlue);
+    DUMP(unlockedNerdySlime);
     DUMP(unlockedMerchant);
     DUMP(unlockedDemolitionist);
     DUMP(unlockedPartyGirl);
@@ -383,15 +400,25 @@ void dumpWorld(const World &world)
     DUMP(unlockedPrincess);
     DUMP(combatBookVolumeTwoUsed);
     DUMP(peddlersSatchelUsed);
-    DUMP(unlockedSlimeGreen);
-    DUMP(unlockedSlimeOld);
-    DUMP(unlockedSlimePurple);
-    DUMP(unlockedSlimeRainbow);
-    DUMP(unlockedSlimeRed);
-    DUMP(unlockedSlimeYellow);
-    DUMP(unlockedSlimeCopper);
+    DUMP(unlockedCoolSlime);
+    DUMP(unlockedElderSlime);
+    DUMP(unlockedClumsySlime);
+    DUMP(unlockedDivaSlime);
+    DUMP(unlockedSurlySlime);
+    DUMP(unlockedMysticSlime);
+    DUMP(unlockedSquireSlime);
     DUMP(fastForwardTimeToDusk);
     DUMP(moondialCooldown);
+    DUMP(endlessHalloween);
+    DUMP(endlessChristmas);
+    DUMP(vampirism);
+    DUMP(infectedWorld);
+    DUMP(meteorShowerCount);
+    DUMP(coinRain);
+    DUMP(teamBasedSpawns);
+    DUMP_CUSTOM(extraSpawnPoints);
+    DUMP(dualDungeons);
+    DUMP(worldGenManifest);
 
     DUMP_CUSTOM(chests);
     DUMP_CUSTOM(signs);

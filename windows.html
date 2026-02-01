@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <meta name="description"
-    content="TerraMap is an interactive Terraria v1.4.4 world map viewer that loads quickly and lets you pan, zoom, find blocks, ores, items in chests, dungeons, NPCs, etc.">
+    content="TerraMap is an interactive Terraria v1.4.5 world map viewer that loads quickly and lets you pan, zoom, find blocks, ores, items in chests, dungeons, NPCs, etc.">
   <meta name="author" content="Jason Coon">
   <link rel="icon" href="favicon.ico">
 
@@ -56,13 +56,17 @@
     <div class="row">
       <div class="col-md-12">
         <h1><img alt="TerraMap" src="resources/images/TerraMap64.png" />TerraMap Windows</h1>
-        <p class="lead">TerraMap Windows is an interactive Terraria v1.4.4 world map viewer that loads quickly and lets
+        <p class="lead">TerraMap Windows is an interactive Terraria v1.4.5 world map viewer that loads quickly and lets
           you pan, zoom, find blocks, ores, items in chests, dungeons, NPCs, etc.</p>
         <p>
-          <span>For Terraria v1.4.4:</span><br />
-          <a class="btn btn-primary btn-lg" href="resources/TerraMap-1.4.19.zip" role="button">Download v1.4.19 »</a>
+          <span>For Terraria v1.4.5:</span><br />
+          <a class="btn btn-primary btn-lg" href="resources/TerraMap-1.5.0.zip" role="button">Download v1.5.0 »</a>
           <a class="btn btn-default" href="https://github.com/TerraMap/windows/commits/master" role="button"><span
               class="gh-ico2" aria-hidden="true"></span>View recent changes. »</a>
+        </p>
+        <p>
+          <span>For Terraria v1.4.4:</span><br />
+          <a class="btn btn-default" href="resources/TerraMap-1.4.19.zip" role="button">Download v1.4.19 »</a>
         </p>
         <p>
           <span>For Terraria v1.4.3.2:</span><br />
@@ -192,16 +196,12 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6BJH8276R"></script>
   <script>
-    (function (i, s, o, g, r, a, m) {
-      i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-        (i[r].q = i[r].q || []).push(arguments)
-      }, i[r].l = 1 * new Date(); a = s.createElement(o),
-        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-    ga('create', 'UA-65896817-1', 'auto');
-    ga('send', 'pageview');
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-P6BJH8276R');
   </script>
 </body>
-
 </html>

@@ -77,11 +77,17 @@ void readProperties(Reader &r, World &world)
         world.getFixedBoi = world.version < 267
                                 ? world.drunkWorld && world.dontDigUp
                                 : r.getBool();
+        if (world.version >= 302) {
+            world.skyblock = r.getBool();
+        }
     } else if (world.version >= 112) {
         world.gameMode = r.getBool() ? 1 : 0;
     }
     if (world.version >= 141) {
         world.creationTime = parseBinaryTime(r.getUint64());
+    }
+    if (world.version >= 284) {
+        world.lastPlayed = parseBinaryTime(r.getUint64());
     }
 
     world.moonType = r.getUint8();
@@ -196,6 +202,11 @@ void readProperties(Reader &r, World &world)
     for (int i = r.getUint16(); i > 0; --i) {
         world.enemyKillTallies.push_back(r.getUint32());
     }
+    if (world.version >= 289) {
+        for (int i = r.getUint16(); i > 0; --i) {
+            world.claimableBanners.push_back(r.getUint16());
+        }
+    }
     world.fastForwardTimeToDawn = r.getBool();
 
     world.downedFishron = r.getBool();
@@ -273,7 +284,7 @@ void readProperties(Reader &r, World &world)
     if (world.version < 269) {
         return;
     }
-    world.unlockedSlimeBlue = r.getBool();
+    world.unlockedNerdySlime = r.getBool();
     world.unlockedMerchant = r.getBool();
     world.unlockedDemolitionist = r.getBool();
     world.unlockedPartyGirl = r.getBool();
@@ -284,15 +295,32 @@ void readProperties(Reader &r, World &world)
     world.unlockedPrincess = r.getBool();
     world.combatBookVolumeTwoUsed = r.getBool();
     world.peddlersSatchelUsed = r.getBool();
-    world.unlockedSlimeGreen = r.getBool();
-    world.unlockedSlimeOld = r.getBool();
-    world.unlockedSlimePurple = r.getBool();
-    world.unlockedSlimeRainbow = r.getBool();
-    world.unlockedSlimeRed = r.getBool();
-    world.unlockedSlimeYellow = r.getBool();
-    world.unlockedSlimeCopper = r.getBool();
+    world.unlockedCoolSlime = r.getBool();
+    world.unlockedElderSlime = r.getBool();
+    world.unlockedClumsySlime = r.getBool();
+    world.unlockedDivaSlime = r.getBool();
+    world.unlockedSurlySlime = r.getBool();
+    world.unlockedMysticSlime = r.getBool();
+    world.unlockedSquireSlime = r.getBool();
     world.fastForwardTimeToDusk = r.getBool();
     world.moondialCooldown = r.getUint8();
+    if (world.version < 315) {
+        return;
+    }
+    world.endlessHalloween = r.getBool();
+    world.endlessChristmas = r.getBool();
+    world.vampirism = r.getBool();
+    world.infectedWorld = r.getBool();
+    world.meteorShowerCount = r.getUint32();
+    world.coinRain = r.getUint32();
+    world.teamBasedSpawns = r.getBool();
+    for (int i = r.getUint8(); i > 0; --i) {
+        int x = r.getUint16();
+        int y = r.getUint16();
+        world.extraSpawnPoints.push_back({x, y});
+    }
+    world.dualDungeons = r.getBool();
+    world.worldGenManifest = r.getString();
 }
 
 void readTiles(Reader &r, World &world)
@@ -374,11 +402,14 @@ void readTiles(Reader &r, World &world)
 void readChests(Reader &r, World &world)
 {
     world.chests.resize(r.getUint16());
-    int chestSlots = r.getUint16();
+    int chestSlots = world.version >= 294 ? 0 : r.getUint16();
     for (Chest &chest : world.chests) {
         chest.x = r.getUint32();
         chest.y = r.getUint32();
         chest.name = r.getString();
+        if (world.version >= 294) {
+            chestSlots = r.getUint32();
+        }
         for (int slot = 0; slot < chestSlots; ++slot) {
             int stack = r.getUint16();
             if (stack > 0) {
@@ -459,6 +490,9 @@ void readNPCs(Reader &r, World &world)
         npc.homeY = r.getUint32();
         if (world.version >= 213 && r.getBool()) {
             npc.variation = r.getUint32();
+        }
+        if (world.version >= 315) {
+            npc.homelessDespawn = r.getBool();
         }
         world.npcs.push_back(std::move(npc));
     }

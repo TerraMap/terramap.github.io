@@ -6,6 +6,11 @@
 #include <string>
 #include <vector>
 
+struct Point {
+    int x;
+    int y;
+};
+
 struct Item {
     int id;
     int stack;
@@ -35,6 +40,7 @@ struct NPC {
     int homeX;
     int homeY;
     int variation;
+    bool homelessDespawn;
 };
 
 struct TileEntity {
@@ -81,7 +87,9 @@ public:
     bool dontDigUp;
     bool noTraps;
     bool getFixedBoi;
+    bool skyblock;
     std::string creationTime;
+    std::string lastPlayed;
 
     int moonType;
     std::array<int, 3> treeStyleCoords;
@@ -160,6 +168,7 @@ public:
     int invasionStartSize;
     int cultistDelay;
     std::vector<int> enemyKillTallies;
+    std::vector<int> claimableBanners;
     bool fastForwardTimeToDawn;
 
     bool downedFishron;
@@ -217,7 +226,7 @@ public:
     bool downedEmpressOfLight;
     bool downedQueenSlime;
     bool downedDeerclops;
-    bool unlockedSlimeBlue;
+    bool unlockedNerdySlime;
     bool unlockedMerchant;
     bool unlockedDemolitionist;
     bool unlockedPartyGirl;
@@ -228,15 +237,25 @@ public:
     bool unlockedPrincess;
     bool combatBookVolumeTwoUsed;
     bool peddlersSatchelUsed;
-    bool unlockedSlimeGreen;
-    bool unlockedSlimeOld;
-    bool unlockedSlimePurple;
-    bool unlockedSlimeRainbow;
-    bool unlockedSlimeRed;
-    bool unlockedSlimeYellow;
-    bool unlockedSlimeCopper;
+    bool unlockedCoolSlime;
+    bool unlockedElderSlime;
+    bool unlockedClumsySlime;
+    bool unlockedDivaSlime;
+    bool unlockedSurlySlime;
+    bool unlockedMysticSlime;
+    bool unlockedSquireSlime;
     bool fastForwardTimeToDusk;
     int moondialCooldown;
+    bool endlessHalloween;
+    bool endlessChristmas;
+    bool vampirism;
+    bool infectedWorld;
+    int meteorShowerCount;
+    int coinRain;
+    bool teamBasedSpawns;
+    std::vector<Point> extraSpawnPoints;
+    bool dualDungeons;
+    std::string worldGenManifest;
 
     std::vector<Chest> chests;
     std::vector<Sign> signs;
