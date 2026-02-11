@@ -10,12 +10,14 @@ class Color
 public:
     Color() = default;
     Color(uint8_t *rgb);
-    Color(uint8_t r, uint8_t g, uint8_t b);
 
     void set(uint8_t r, uint8_t g, uint8_t b);
     uint8_t r() const;
     uint8_t g() const;
     uint8_t b() const;
+
+    void blend(Color tint, double strength = 0.3);
+    void hueBlend(Color tint);
 
     uint32_t abgr;
 };

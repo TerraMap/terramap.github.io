@@ -1,7 +1,7 @@
 #include "TileColor.h"
 
 #include "World.h"
-#include <cmath>
+#include <algorithm>
 
 namespace
 {
@@ -227,25 +227,30 @@ uint8_t paintColors[] = {
 };
 // clang-format on
 
-uint8_t waterColor[] = {0, 12, 255};
-uint8_t lavaColor[] = {255, 30, 0};
-uint8_t honeyColor[] = {255, 172, 0};
-uint8_t shimmerColor[] = {155, 112, 233};
+namespace Colors
+{
+uint8_t water[] = {0, 12, 255};
+uint8_t lava[] = {255, 30, 0};
+uint8_t honey[] = {255, 172, 0};
+uint8_t shimmer[] = {155, 112, 233};
 
-uint8_t surfaceColor[] = {132, 170, 248};
-uint8_t undergroundColor[] = {84, 57, 42};
-uint8_t cavernColor[] = {72, 64, 57};
-uint8_t underworldColor[] = {51, 0, 0};
+uint8_t surface[] = {132, 170, 248};
+uint8_t underground[] = {84, 57, 42};
+uint8_t cavern[] = {72, 64, 57};
+uint8_t underworld[] = {51, 0, 0};
+
+uint8_t black[] = {0, 0, 0};
+uint8_t red[] = {255, 0, 0};
+uint8_t blue[] = {0, 0, 255};
+uint8_t green[] = {0, 255, 0};
+uint8_t yellow[] = {255, 255, 0};
+} // namespace Colors
+
 } // namespace
 
 Color::Color(uint8_t *rgb)
 {
     set(rgb[0], rgb[1], rgb[2]);
-}
-
-Color::Color(uint8_t r, uint8_t g, uint8_t b)
-{
-    set(r, g, b);
 }
 
 void Color::set(uint8_t r, uint8_t g, uint8_t b)
@@ -268,31 +273,96 @@ uint8_t Color::b() const
     return (abgr >> 16) & 0xff;
 }
 
+void Color::blend(Color tint, double strength)
+{
+    double base = 1 - strength;
+    set(base * r() + strength * tint.r(),
+        base * g() + strength * tint.g(),
+        base * b() + strength * tint.b());
+}
+
+void Color::hueBlend(Color tint)
+{
+    uint8_t rgbMax = std::max({r(), g(), b()});
+    uint8_t rgbMin = std::min({r(), g(), b()});
+    double v = rgbMax / 255.0;
+    double s = rgbMax == 0 ? 0 : (v - (rgbMin / 255.0)) / v;
+
+    uint8_t primary;
+    double secondary;
+    rgbMax = std::max({tint.r(), tint.g(), tint.b()});
+    rgbMin = std::min({tint.r(), tint.g(), tint.b()});
+    if (rgbMax == 0 || rgbMax == rgbMin) {
+        primary = 0;
+        secondary = 0;
+        s = 0;
+    } else {
+        double fMax = rgbMax / 255.0;
+        double divisor = fMax - (rgbMin / 255.0);
+        uint8_t r = tint.r();
+        uint8_t g = tint.g();
+        uint8_t b = tint.b();
+        if (r == rgbMax) {
+            if (g == rgbMin) {
+                primary = 5;
+                secondary = (fMax - (b / 255.0)) / divisor;
+            } else {
+                primary = 0;
+                secondary = 1 - ((fMax - (g / 255.0)) / divisor);
+            }
+        } else if (g == rgbMax) {
+            if (b == rgbMin) {
+                primary = 1;
+                secondary = (fMax - (r / 255.0)) / divisor;
+            } else {
+                primary = 2;
+                secondary = 1 - ((fMax - (b / 255.0)) / divisor);
+            }
+        } else if (b == rgbMax && r == rgbMin) {
+            primary = 3;
+            secondary = (fMax - (g / 255.0)) / divisor;
+        } else {
+            primary = 4;
+            secondary = 1 - ((fMax - (r / 255.0)) / divisor);
+        }
+    }
+    double x = (1.0 - s) * v;
+    double y = (1.0 - (s * secondary)) * v;
+    double z = (1.0 - (s * (1.0 - secondary))) * v;
+    switch (primary) {
+    case 0:
+        set((v * 255.0) + 0.5, (z * 255.0) + 0.5, (x * 255.0) + 0.5);
+        break;
+    case 1:
+        set((y * 255.0) + 0.5, (v * 255.0) + 0.5, (x * 255.0) + 0.5);
+        break;
+    case 2:
+        set((x * 255.0) + 0.5, (v * 255.0) + 0.5, (z * 255.0) + 0.5);
+        break;
+    case 3:
+        set((x * 255.0) + 0.5, (y * 255.0) + 0.5, (v * 255.0) + 0.5);
+        break;
+    case 4:
+        set((z * 255.0) + 0.5, (x * 255.0) + 0.5, (v * 255.0) + 0.5);
+        break;
+    case 5:
+        set((v * 255.0) + 0.5, (x * 255.0) + 0.5, (y * 255.0) + 0.5);
+        break;
+    }
+    blend(tint);
+}
+
 Color getLayerColor(int y, World &world)
 {
     if (y < world.undergroundLevel) {
-        return surfaceColor;
+        return world.dontDigUp ? Colors::black : Colors::surface;
     } else if (y < world.cavernLevel) {
-        return undergroundColor;
+        return Colors::underground;
     } else if (y < world.height - 230) {
-        return cavernColor;
+        return Colors::cavern;
     } else {
-        return underworldColor;
+        return Colors::underworld;
     }
-}
-
-inline uint8_t roundToByte(double val)
-{
-    return std::round(val);
-}
-
-Color blendColors(Color base, Color tint)
-{
-    return {
-        roundToByte(0.7 * base.r() + 0.3 * tint.r()),
-        roundToByte(0.7 * base.g() + 0.3 * tint.g()),
-        roundToByte(0.7 * base.b() + 0.3 * tint.b()),
-    };
 }
 
 Color getTileColor(int x, int y, World &world)
@@ -302,23 +372,26 @@ Color getTileColor(int x, int y, World &world)
     if (tile.wallId != 0) {
         Color wallColor{wallColors + 3 * tile.wallId};
         if (tile.wallPaint != 0) {
-            wallColor =
-                blendColors(wallColor, paintColors + 3 * tile.wallPaint);
+            wallColor.hueBlend(paintColors + 3 * tile.wallPaint);
         }
-        color = tile.echoCoatWall ? blendColors(color, wallColor) : wallColor;
+        if (tile.echoCoatWall) {
+            color.blend(wallColor, 0.1);
+        } else {
+            color = wallColor;
+        }
     }
     switch (tile.liquid) {
     case Liquid::water:
-        color = blendColors(waterColor, color);
+        color.blend(Colors::water, 0.7);
         break;
     case Liquid::lava:
-        color = lavaColor;
+        color = Colors::lava;
         break;
     case Liquid::honey:
-        color = honeyColor;
+        color = Colors::honey;
         break;
     case Liquid::shimmer:
-        color = shimmerColor;
+        color = Colors::shimmer;
         break;
     default:
         break;
@@ -326,26 +399,28 @@ Color getTileColor(int x, int y, World &world)
     if (tile.blockId != -1) {
         Color blockColor{blockColors + 3 * tile.blockId};
         if (tile.actuated) {
-            blockColor = blendColors(blockColor, {0, 0, 0});
+            blockColor.blend(Colors::black);
         }
         if (tile.blockPaint != 0) {
-            blockColor =
-                blendColors(blockColor, paintColors + 3 * tile.blockPaint);
+            blockColor.hueBlend(paintColors + 3 * tile.blockPaint);
         }
-        color =
-            tile.echoCoatBlock ? blendColors(color, blockColor) : blockColor;
+        if (tile.echoCoatBlock) {
+            color.blend(blockColor, 0.15);
+        } else {
+            color = blockColor;
+        }
     }
     if (tile.wireRed) {
-        color = blendColors(color, {255, 0, 0});
+        color.blend(Colors::red);
     }
     if (tile.wireBlue) {
-        color = blendColors(color, {0, 0, 255});
+        color.blend(Colors::blue);
     }
     if (tile.wireGreen) {
-        color = blendColors(color, {0, 255, 0});
+        color.blend(Colors::green);
     }
     if (tile.wireYellow) {
-        color = blendColors(color, {255, 255, 0});
+        color.blend(Colors::yellow);
     }
     return color;
 }
