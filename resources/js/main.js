@@ -5,23 +5,9 @@ var canvas = document.querySelector("#canvas");
 var overlayCanvas = document.querySelector("#overlayCanvas");
 var selectionCanvas = document.querySelector("#selectionCanvas");
 
-var ctx = canvas.getContext("2d");
-var overlayCtx = overlayCanvas.getContext("2d");
 var selectionCtx = selectionCanvas.getContext("2d");
 
-var pixels = null;
-
 var blockSelector = document.querySelector("#blocks");
-
-ctx.msImageSmoothingEnabled = false;
-ctx.mozImageSmoothingEnabled = false;
-ctx.msImageSmoothingEnabled = false;
-ctx.imageSmoothingEnabled = false;
-
-overlayCtx.msImageSmoothingEnabled = false;
-overlayCtx.mozImageSmoothingEnabled = false;
-overlayCtx.msImageSmoothingEnabled = false;
-overlayCtx.imageSmoothingEnabled = false;
 
 selectionCtx.msImageSmoothingEnabled = false;
 selectionCtx.mozImageSmoothingEnabled = false;
@@ -31,6 +17,8 @@ selectionCtx.imageSmoothingEnabled = false;
 var file;
 
 var world;
+
+var worker = null;
 
 var selectionX = 0;
 var selectionY = 0;
@@ -120,7 +108,7 @@ function highlightSet(setIndex) {
 
   // blockSelector.val(selectedValues);
 
-  highlightInfos(set.Entries);
+  worker.postMessage({ search: set.Entries });
 }
 
 function sortAndAddSelectOptions() {
@@ -319,137 +307,15 @@ function nextBlock(e) {
   findBlock(1);
 }
 
-function isTileMatch(tile, selectedInfos, x, y) {
-  for(var j = 0; j < selectedInfos.length; j++) {
-    var info = selectedInfos[j];
-
-    // check the tile first
-    if(tile.info && info.isTile && (tile.info == info || (!info.parent && tile.Type == info.Id)))
-      return true;
-
-    // check the wall
-    if(info.isWall && tile.WallType == info.Id)
-      return true;
-
-    // see if it's a chest
-    var chest = tile.chest;
-    if(chest && info.isItem) {
-      // see if the chest contains the item
-      for(var i = 0; i < chest.items.length; i++) {
-        var item = chest.items[i];
-
-        if(info.Id == item.id) {
-          return true;
-        }
-      }
-    }
-
-    // check if the tile entity contains it
-    let tileEntity = tile.tileEntity;
-    if (tileEntity && info.isItem) {
-      switch (tileEntity.type) {
-        case 1: // item frame
-        case 4: // weapon rack
-        case 6: // plate
-          if (info.Id == tileEntity.item.id) {
-            return true;
-          }
-          break;
-        case 3: // (wo)mannequin
-        case 5: // hat rack
-          for (let i = 0; i < tileEntity.items.length; i++) {
-            if (info.Id == tileEntity.items[i].id) {
-              return true;
-            }
-            if (info.Id == tileEntity.dyes[i].id) {
-              return true;
-            }
-          }
-          break;
-      }
-    }
-  }
-
-  return false;
-}
-
 function findBlock(direction) {
-  if(!world)
-    return;
-
-  var x = selectionX;
-  var y = selectionY + direction;
-
-  var start = x * world.height + y;
-
-  var selectedInfos = getSelectedInfos();
-
-  if(selectedInfos.length > 0) {
-    for(var i = start; i >= 0 && i < world.tiles.length; i += direction) {
-      var tile = world.tiles[i];
-
-      var foundMatch = false;
-
-      if(isTileMatch(tile, selectedInfos, x, y)) {
-        selectionX = x;
-        selectionY = y;
-
-        drawSelectionIndicator();
-        // panzoom.panzoom('pan', (-overlayCanvas.width / 2) - x, (-overlayCanvas.height / 2) - y, { relative: false });
-
-        foundMatch = true;
-
-        break;
-      }
-
-      y += direction;
-
-      if(y < 0 || y >= world.height) {
-        if(direction > 0)
-          y = 0;
-        else
-          y = world.height - 1;
-        x += direction;
-      }
-
-      if(foundMatch)
-        break;
-    }
-  }
+  worker?.postMessage?.({
+    findNext: { x: selectionX, y: selectionY, direction },
+  });
 }
 
 function highlightAll() {
-  if(!world)
-    return;
-
-  var selectedInfos = getSelectedInfos();
-
-  highlightInfos(selectedInfos);
-}
-
-function highlightInfos(selectedInfos) {
-  var x = 0;
-  var y = 0;
-
-  overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
-  overlayCtx.fillStyle = "rgba(0, 0, 0, 0.75)";
-  overlayCtx.fillRect(0, 0, overlayCanvas.width, overlayCanvas.height);
-
-  if(selectedInfos.length > 0) {
-    for(var i = 0; i < world.tiles.length; i++) {
-      var tile = world.tiles[i];
-
-      if(isTileMatch(tile, selectedInfos)) {
-        overlayCtx.fillStyle = "rgb(255, 255, 255)";
-        overlayCtx.fillRect(x, y, 1, 1);
-      }
-
-      y++;
-      if(y >= world.height) {
-        y = 0;
-        x++;
-      }
-    }
+  if (world) {
+    worker.postMessage({ search: getSelectedInfos() });
   }
 }
 
@@ -538,36 +404,9 @@ function getWallInfoFromOption(option) {
   return null;
 }
 
-function getTileInfo(tile) {
-  var tileInfo = settings.Tiles[tile.Type];
-
-  if(!tileInfo) return tileInfo;
-
-  if(!tileInfo.Frames)
-    return tileInfo;
-
-  var matchingFrame;
-
-  for(var i = 0; i < tileInfo.Frames.length; i++) {
-    var frame = tileInfo.Frames[i];
-
-    if((!frame.U && !tile.TextureU) || frame.U <= tile.TextureU) {
-      if((!frame.V && !tile.TextureV) || frame.V <= tile.TextureV)
-        matchingFrame = frame;
-    }
-  }
-
-  if(!matchingFrame)
-    return tileInfo;
-
-  matchingFrame.parent = tileInfo;
-
-  return matchingFrame;
-}
-
 function clearHighlight() {
-  overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
   selectionCtx.clearRect(0, 0, selectionCanvas.width, selectionCanvas.height);
+  worker?.postMessage?.({ clearHighlight: true });
 }
 
 function clearSelection() {
@@ -594,15 +433,13 @@ function resizeCanvases() {
 
 function getMousePos(canvas, evt) {
   var rect = panzoomContainer.getBoundingClientRect();
-  var transform = $(panzoomContainer).panzoom('getMatrix');
 
-  var scale = transform[0];
-
-  scale = rect.width / panzoomContainer.width;
+  const scaleX = rect.width / (panzoomContainer.width + 0.5);
+  const scaleY = rect.height / (panzoomContainer.height + 0.5);
 
   var mousePos =  {
-    x: Math.floor((evt.clientX - rect.left) / scale),
-    y: Math.floor((evt.clientY - rect.top) / scale)
+    x: Math.floor((evt.clientX - rect.left) / scaleX),
+    y: Math.floor((evt.clientY - rect.top) / scaleY)
   };
 
   // console.log(`${evt.clientX}\t${evt.clientY}\t${rect.left}\t${rect.top}\t${scale}\t${mousePos.x}\t${mousePos.y}`);
@@ -613,8 +450,8 @@ function getMousePos(canvas, evt) {
 function getItemText(item) {
   let prefix = "";
 
-  if(item.prefixId > 0 && item.prefixId < settings.ItemPrefix.length)
-    prefix = settings.ItemPrefix[item.prefixId].Name;
+  if(item.prefix > 0 && item.prefix < settings.ItemPrefix.length)
+    prefix = settings.ItemPrefix[item.prefix].Name;
 
   let itemName = item.id;
   for(let itemIndex = 0; itemIndex < settings.Items.length; itemIndex++) {
@@ -624,9 +461,11 @@ function getItemText(item) {
       break;
     }
   }
-  return `${prefix} ${itemName} (${item.count})`;
+  return `${prefix} ${itemName} (${item.stack})`;
 }
 
+var mouseMoveDebounce = null;
+var lastMouseMovePos = { x: 0, y: 0 };
 panzoomContainer.addEventListener('mousemove', evt => {
   if(!world)
     return;
@@ -635,16 +474,15 @@ panzoomContainer.addEventListener('mousemove', evt => {
   var x = mousePos.x;
   var y = mousePos.y;
 
-  $("#status").html(mousePos.x + ',' + (mousePos.y));
-
-  if(world.tiles) {
-    var tile = getTileAt(mousePos.x, mousePos.y);
-
-    if(tile) {
-      var text = getTileText(tile);
-
-      $("#status").html(`${text} (${mousePos.x}, ${mousePos.y})`);
-    }
+  clearTimeout(mouseMoveDebounce);
+  if (Math.hypot(lastMouseMovePos.x - x, lastMouseMovePos.y - y) > 20) {
+    worker.postMessage({ hoverTile: { x, y } });
+    lastMouseMovePos = { x, y };
+  } else {
+    mouseMoveDebounce = setTimeout(() => {
+      worker.postMessage({ hoverTile: { x, y } });
+      lastMouseMovePos = { x, y };
+    }, 75);
   }
 });
 
@@ -659,57 +497,7 @@ $("#panzoomContainer").on('panzoomend', function(evt, panzoom, matrix, changed) 
   selectionY = y;
 
   drawSelectionIndicator();
-
-  var tile = getTileAt(x, y);
-  if(tile) {
-    var text = getTileText(tile);
-
-    $("#tileInfoList").html("");
-
-    var chest = tile.chest;
-    if(chest) {
-      if(chest.name.length > 0)
-      text = `${text} - ${chest.name}`;
-
-      for(var i = 0; i < chest.items.length; i++) {
-        let item = chest.items[i];
-        let itemText = getItemText(item);
-
-        $("#tileInfoList").append(`<li>${itemText}</li>`);
-      }
-    }
-
-    let tileEntity = tile.tileEntity;
-    if (tileEntity) {
-      switch (tileEntity.type) {
-        case 3: // mannequin
-        case 5: // hat rack
-          let items = tileEntity.items;
-          let dyes = tileEntity.dyes;
-          let itemLength = items.length;
-          for (let i = 0; i < itemLength; i++) {
-            let item = items[i];
-            if (item.id > 0) {
-              $("#tileInfoList").append(`<li>${getItemText(item)}</li>`);
-            }
-            let dye = dyes[i];
-            if (dye.id > 0) {
-              $("#tileInfoList").append(`<li>${getItemText(dye)}</li>`);
-            }
-          }
-          break;
-      }
-    }
-
-    var sign = tile.sign;
-    if(sign && sign.text) {
-      if(sign.text.length > 0)
-        $("#tileInfoList").append(`<li>${sign.text}</li>`);
-    }
-
-    $("#tile").html(text);
-  }
-
+  worker.postMessage({ selectTile: { x, y } });
 });
 
 function getTileAt(x, y) {
@@ -724,8 +512,8 @@ function getTileAt(x, y) {
 }
 
 function selectPoint(x, y) {
-  selectionX = x;
-  selectionY = y;
+  selectionX = Math.round(x);
+  selectionY = Math.round(y);
   drawSelectionIndicator();
 }
 
@@ -762,96 +550,29 @@ function drawSelectionIndicator() {
   selectionCtx.stroke();
 }
 
-function getTileText (tile) {
-  var text = "Nothing";
-
-  if(!tile) {
-    return text;
-  }
-
-  var tileInfo = tile.info;
-
-  if(tileInfo) {
-    if(!tileInfo.parent || !tileInfo.parent.Name) {
-       text = tileInfo.Name;
-    }
-    else if(tileInfo.parent && tileInfo.parent.Name) {
-      text = tileInfo.parent.Name;
-
-      if(tileInfo.Name) {
-        text = `${text} - ${tileInfo.Name}`;
-
-        if(tileInfo.Variety)
-        text = `${text} - ${tileInfo.Variety}`;
-      }
-      else if (tileInfo.Variety) {
-        text = `${text} - ${tileInfo.Variety}`;
-      }
-    }
-
-    if(tile.TextureU > 0 && tile.TextureV > 0)
-      text = `${text} (${tile.Type}, ${tile.TextureU}, ${tile.TextureV})`;
-    else if(tile.TextureU > 0)
-      text = `${text} (${tile.Type}, ${tile.TextureU})`;
-    else
-      text = `${text} (${tile.Type})`;
-    if (tile.tileEntity) {
-      let tileEntity = tile.tileEntity;
-      switch (tileEntity.type) {
-        case 1: // item frame
-        case 4: // weapon rack
-        case 6: // plate
-          let item = tileEntity.item;
-          let itemText = getItemText(item);
-          text = `${text} - ${itemText}`;
-          break;
-        case 2: // logic sensor
-          let checkType = tile.info.CheckTypes[tileEntity.logicCheckType];
-          let on = tileEntity.on ? "On" : "Off";
-          text = `${text} - ${checkType}, ${on}`;
-          break;
-      }
+function getTileInfoList(tile) {
+  const info = [];
+  const fields = [
+    ['actuated', 'Actuated'],
+    ['echoCoatBlock', 'Echo Coat Block'],
+    ['echoCoatWall', 'Echo Coat Wall'],
+    ['illuminantBlock', 'Illuminant Block'],
+    ['illuminantWall', 'Illuminant Wall'],
+    ['liquidAmount', 'Liquid Amount'],
+    ['slope', 'Slope'],
+  ];
+  for (const [key, label] of fields) {
+    if (tile[key]) {
+      info.push(`${label}: ${tile[key]}`);
     }
   }
-  else if (tile.WallType || tile.WallType === 0) {
-    if(tile.WallType < settings.Walls.length) {
-      text = `${settings.Walls[tile.WallType].Name} (${tile.WallType})`;
-    }
-    else {
-      text = `Unknown Wall (${tile.WallType})`;
-    }
+  if (tile.blockPaint > 0) {
+    info.push(`Block Paint: ${settings.Paints[tile.blockPaint].Name}`);
   }
-  
-  if (tile.IsLiquidPresent) {
-    if (text === "Nothing") text = "";
-
-    if(tile.IsLiquidLava) {
-      text += text ? " Lava" : "Lava";
-    }
-    else if (tile.IsLiquidHoney) {
-      text += text ? " Honey" : "Honey";
-    }
-    else if (tile.Shimmer) {
-      text += text ? " Shimmer" : "Shimmer";
-    }
-    else {
-      text += text ? " Water" : "Water";
-    }
+  if (tile.wallPaint > 0) {
+    info.push(`Wall Paint: ${settings.Paints[tile.wallPaint].Name}`);
   }
-
-  if(tile.IsRedWirePresent)
-    text += " (Red Wire)";
-
-  if(tile.IsGreenWirePresent)
-    text += " (Green Wire)";
-
-  if(tile.IsBlueWirePresent)
-    text += " (Blue Wire)";
-
-  if(tile.IsYellowWirePresent)
-    text += " (Yellow Wire)";
-
-  return text;
+  return info.sort();
 }
 
 function fileNameChanged (evt) {
@@ -863,113 +584,55 @@ function fileNameChanged (evt) {
 }
 
 function reloadWorld() {
-  var worker = new Worker('resources/js/WorldLoader.js');
-  worker.addEventListener('message', onWorldLoaderWorkerMessage);
+  if (worker === null) {
+    worker = new Worker('wasm/src/build/terramap.js');
+    worker.addEventListener('message', onWorldLoaderWorkerMessage);
+    const offscreen = canvas.transferControlToOffscreen();
+    const offscreenOverlay = overlayCanvas.transferControlToOffscreen();
+    worker.postMessage({ canvas: offscreen, overlayCanvas: offscreenOverlay }, [
+      offscreen,
+      offscreenOverlay,
+    ]);
+  }
 
-  worker.postMessage(file);
+  worker.postMessage({ file });
 }
 
 function onWorldLoaderWorkerMessage(e) {
   if(e.data.status)
     $("#status").html(e.data.status);
 
-  if (e.data.tiles) {
-    const bufferWidth = 200;
-    if (!pixels) {
-      pixels = new Uint8ClampedArray(4 * bufferWidth * world.height);
+  if (e.data.tile) {
+    $("#tileInfoList").empty();
+    const tile = e.data.tile;
+    for (const row of getTileInfoList(tile)) {
+      $("#tileInfoList").append(`<li>${row}</li>`);
     }
-    let xlimit = e.data.x + e.data.tiles.length / world.height;
-    let i = 0;
-    for (let x = e.data.x; x < xlimit; x++) {
-      const bufferStart = bufferWidth * Math.floor(x / bufferWidth);
-      if (x % bufferWidth === 0 && x > 0) {
-        const imageData = new ImageData(pixels, bufferWidth);
-        ctx.putImageData(imageData, bufferStart - bufferWidth, 0);
+    if (tile.chest) {
+      if (tile.chest.name.length > 0) {
+        tile.text += ` - ${tile.chest.name}`;
       }
-      for (let y = 0; y < world.height; y++) {
-        let tile = e.data.tiles[i++];
-        if (tile) {
-          tile.info = getTileInfo(tile);
-          world.tiles.push(tile);
-
-          let c = getTileColor(y, tile, world);
-          if (!c) c = { "r": 0, "g": 0, "b": 0 };
-
-          const pxIdx = 4 * (y * bufferWidth + x - bufferStart);
-          pixels[pxIdx] = c.r;
-          pixels[pxIdx + 1] = c.g;
-          pixels[pxIdx + 2] = c.b;
-          pixels[pxIdx + 3] = 255;
+      for (const item of tile.chest.items) {
+        $("#tileInfoList").append(`<li>${getItemText(item)}</li>`);
+      }
+    }
+    if (tile.tileEntity && tile.tileEntity.items.length > 1) {
+      const items = tile.tileEntity.items;
+      const dyes = tile.tileEntity.dyes;
+      for (let i = 0; i < items.length; ++i) {
+        if (items[i].id > 0) {
+          $("#tileInfoList").append(`<li>${getItemText(items[i])}</li>`);
+        }
+        if (dyes[i].id > 0) {
+          $("#tileInfoList").append(`<li>${getItemText(dyes[i])}</li>`);
         }
       }
     }
-  }
-
-  if (e.data.done) {
-    const bufferWidth = 200;
-    const bufferStart =
-      bufferWidth * Math.floor((world.width - 1) / bufferWidth);
-    const imageData = new ImageData(pixels, bufferWidth);
-    ctx.putImageData(imageData, bufferStart, 0);
-    pixels = null;
-  }
-
-  if(e.data.chests) {
-    world.chests = e.data.chests;
-
-    for(i = 0; i < e.data.chests.length; i++) {
-      var chest = e.data.chests[i];
-
-      var idx = chest.x * world.height + chest.y;
-      world.tiles[idx].chest = chest;
-      world.tiles[idx + 1].chest = chest;
-
-      idx = (chest.x + 1) * world.height + chest.y;
-      world.tiles[idx].chest = chest;
-      world.tiles[idx + 1].chest = chest;
+    if (tile.sign && tile.sign.text.length > 0) {
+      const signText = tile.sign.text.trim().replaceAll('\n', '<br>');
+      $("#tileInfoList").append(`<li>${signText}</li>`);
     }
-  }
-
-  if(e.data.signs) {
-    world.signs = e.data.signs;
-
-    for(i = 0; i < e.data.signs.length; i++) {
-      var sign = e.data.signs[i];
-
-      var tileIndex = sign.x * world.height + sign.y;
-      world.tiles[tileIndex].sign = sign;
-      world.tiles[tileIndex + 1].sign = sign;
-
-      tileIndex = (sign.x + 1) * world.height + sign.y;
-      world.tiles[tileIndex].sign = sign;
-      world.tiles[tileIndex + 1].sign = sign;
-    }
-  }
-
-  if(e.data.npcs) {
-    addNpcs(e.data.npcs);
-  }
-
-  if (e.data.tileEntities) {
-    for (const [pos, entity] of e.data.tileEntities.entries()) {
-      let idx = pos.x * world.height + pos.y;
-      let tile = world.tiles[idx];
-      if (tile) {
-        let size = tile.info.Size;
-        let sizeX = 1;
-        let sizeY = 1;
-        if (size) {
-          sizeX = size[0] - '0';
-          sizeY = size[2] - '0';
-        }
-        for (let x = 0; x < sizeX; x++) {
-          for (let y = 0; y < sizeY; y++) {
-            let idx = (pos.x+x) * world.height + pos.y+y;
-            world.tiles[idx].tileEntity = entity;
-          }
-        }
-      }
-    }
+    $("#tile").html(tile.text);
   }
 
   if(e.data.world) {
@@ -977,14 +640,8 @@ function onWorldLoaderWorkerMessage(e) {
 
     panzoomContainer.width = world.width;
     panzoomContainer.height = world.height;
-    canvas.width = world.width;
-    canvas.height = world.height;
-    overlayCanvas.width = world.width;
-    overlayCanvas.height = world.height;
     selectionCanvas.width = world.width;
     selectionCanvas.height = world.height;
-
-    world.tiles = [];
 
     resizeCanvases();
 
@@ -993,64 +650,37 @@ function onWorldLoaderWorkerMessage(e) {
     Object.keys(world).filter(key => {
       const value = world[key];
       const type = typeof value;
-      return type === 'string' || type === 'number' || type === 'boolean' || type === 'bigint';
+      return type === 'string' || type === 'number' || type === 'boolean' || type === 'bigint' || (
+        Array.isArray(value) && value.length < 5 && key !== 'npcs' && key !== 'signs'
+      );
     }).sort()
     .forEach(key => 
-      $("#worldPropertyList").append(`<li>${key}: ${world[key]}</li>`)
+      $("#worldPropertyList").append(
+        `<li>${key}: ${Array.isArray(world[key]) ? JSON.stringify(world[key]) : world[key]}</li>`
+      )
     );
+
+    addNpcs(world.npcs);
+  }
+
+  if (e.data.select) {
+    selectPoint(e.data.select.x, e.data.select.y);
   }
 }
 
 function addNpcs(npcs) {
-  world.npcs = npcs;
+  $("#npcList").empty();
 
   for(var i = 0; i < npcs.length; i++) {
     var npc = npcs[i];
 
-    var npcText = npc.name;
-    if(npc.type != npc.name) {
-      npcText = `${npcText} the ${npc.type}`;
+    var npcText = npc.type;
+    if (npc.name && npc.type != npc.name) {
+      npcText = `${npc.name} the ${npc.type}`;
     }
 
     $("#npcList").append(`<li><a href="#" onclick="selectPoint(${npc.x}, ${npc.y})">${npcText}</a></li>`);
   }
-}
-
-function getTileColor(y, tile, world) {
-  if(tile.IsActive) {
-    return tileColors[tile.Type][0];
-  }
-
-  if (tile.IsLiquidPresent) {
-    if(tile.IsLiquidLava)
-      return liquidColors[1];
-    else if (tile.IsLiquidHoney)
-      return liquidColors[2];
-    else if (tile.Shimmer)
-      return liquidColors[3];
-    else
-      return liquidColors[0];
-  }
-
-  if (tile.IsWallPresent) {
-    let color = wallColors[tile.WallType][0];
-    if (!color || (color.r === 0 && color.g === 0 && color.b === 0)) {
-      const wall = settings.Walls.find(w => w.Id === tile.WallType.toString());
-      if (wall && wall.Color) return wall.Color;
-    }
-    return color;
-  }
-
-  if(y < world.worldSurfaceY)
-    return { "r": 132, "g": 170, "b": 248 };
-
-  if(y < world.rockLayerY)
-    return { "r": 88, "g": 61, "b": 46 };
-
-  if(y < world.hellLayerY)
-    return { "r": 74, "g": 67, "b": 60 };
-
-  return { "r": 0, "g": 0, "b": 0 };
 }
 
 function saveMapImage() {
