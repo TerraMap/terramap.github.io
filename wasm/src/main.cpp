@@ -74,6 +74,18 @@ emscripten::val marshalData(const NPC &npc)
     return result;
 }
 
+emscripten::val marshalData(const CreativePowers &pwr)
+{
+    auto result = emscripten::val::object();
+    result.set("freezeTime", pwr.freezeTime);
+    result.set("timeRate", pwr.timeRate);
+    result.set("freezeRainStatus", pwr.freezeRainStatus);
+    result.set("freezeWindStatus", pwr.freezeWindStatus);
+    result.set("difficulty", pwr.difficulty);
+    result.set("freezeBiomeSpread", pwr.freezeBiomeSpread);
+    return result;
+}
+
 std::string marshalData(Liquid liquid)
 {
     switch (liquid) {
@@ -204,6 +216,16 @@ void marshalData(const NPC &npc)
               << ",isHomeless:" << npc.isHomeless << ",homeX:" << npc.homeX
               << ",homeY:" << npc.homeY << ",variation:" << npc.variation
               << ",homelessDespawn:" << npc.homelessDespawn << '}';
+}
+
+void marshalData(const CreativePowers &pwr)
+{
+    std::cout << "{freezeTime:" << pwr.freezeTime
+              << ",timeRate:" << pwr.timeRate
+              << ",freezeRainStatus:" << pwr.freezeRainStatus
+              << ",freezeWindStatus:" << pwr.freezeWindStatus
+              << ",difficulty:" << pwr.difficulty
+              << ",freezeBiomeSpread:" << pwr.freezeBiomeSpread << '}';
 }
 
 #define DUMP(field) std::cout << #field " " << world.field << '\n'
@@ -424,6 +446,7 @@ void dumpWorld(const World &world)
     DUMP_CUSTOM(signs);
     DUMP_ARRAY(shimmeredNPCs);
     DUMP_CUSTOM(npcs);
+    DUMP_CUSTOM(creative);
 #ifdef __EMSCRIPTEN__
     return result;
 }

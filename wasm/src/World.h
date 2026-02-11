@@ -54,6 +54,15 @@ struct TileEntity {
     std::vector<Item> dyes;
 };
 
+struct CreativePowers {
+    bool freezeTime;
+    double timeRate;
+    bool freezeRainStatus;
+    bool freezeWindStatus;
+    double difficulty;
+    bool freezeBiomeSpread;
+};
+
 class World
 {
     std::vector<Tile> tiles;
@@ -262,6 +271,7 @@ public:
     std::vector<int> shimmeredNPCs;
     std::vector<NPC> npcs;
     std::vector<TileEntity> tileEntities;
+    CreativePowers creative;
 };
 
 #endif // WORLD_H

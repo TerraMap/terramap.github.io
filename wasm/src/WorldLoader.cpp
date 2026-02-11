@@ -600,6 +600,73 @@ void readTileEntities(Reader &r, World &world)
     }
 }
 
+void readWeightedPressurePlates(Reader &r, World &world)
+{
+    if (world.version < 170) {
+        return;
+    }
+    r.skipBytes(r.getUint32() * 8);
+}
+
+void readTownManager(Reader &r, World &world)
+{
+    if (world.version < 189) {
+        return;
+    }
+    r.skipBytes(r.getUint32() * 12);
+}
+
+void readBestiary(Reader &r, World &world)
+{
+    if (world.version < 210) {
+        return;
+    }
+    // Kills.
+    for (int i = r.getUint32(); i > 0; --i) {
+        r.getString();
+        r.skipBytes(4);
+    }
+    // Seen.
+    for (int i = r.getUint32(); i > 0; --i) {
+        r.getString();
+    }
+    // Chatted.
+    for (int i = r.getUint32(); i > 0; --i) {
+        r.getString();
+    }
+}
+
+void readCreativePowers(Reader &r, World &world)
+{
+    if (world.version < 220) {
+        return;
+    }
+    while (r.getBool()) {
+        switch (r.getUint16()) {
+        case 0:
+            world.creative.freezeTime = r.getBool();
+            break;
+        case 8:
+            world.creative.timeRate = r.getFloat32();
+            break;
+        case 9:
+            world.creative.freezeRainStatus = r.getBool();
+            break;
+        case 10:
+            world.creative.freezeWindStatus = r.getBool();
+            break;
+        case 12:
+            world.creative.difficulty = r.getFloat32();
+            break;
+        case 13:
+            world.creative.freezeBiomeSpread = r.getBool();
+            break;
+        default:
+            return;
+        }
+    }
+}
+
 World readWorldFile(const std::string &data)
 {
     Reader r{data};
@@ -613,5 +680,9 @@ World readWorldFile(const std::string &data)
     readSigns(r, world);
     readNPCs(r, world);
     readTileEntities(r, world);
+    readWeightedPressurePlates(r, world);
+    readTownManager(r, world);
+    readBestiary(r, world);
+    readCreativePowers(r, world);
     return world;
 }
