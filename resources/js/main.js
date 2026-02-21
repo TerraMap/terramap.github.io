@@ -623,7 +623,7 @@ function onWorldLoaderWorkerMessage(e) {
         if (items[i].id > 0) {
           $("#tileInfoList").append(`<li>${getItemText(items[i])}</li>`);
         }
-        if (dyes[i].id > 0) {
+        if (dyes[i]?.id > 0) {
           $("#tileInfoList").append(`<li>${getItemText(dyes[i])}</li>`);
         }
       }

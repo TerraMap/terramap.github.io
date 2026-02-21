@@ -477,6 +477,14 @@ void readNPCs(Reader &r, World &world)
                 case 638: npc.type = "Town Dog"; break;
                 case 656: npc.type = "Town Bunny"; break;
                 case 663: npc.type = "Princess"; break;
+                case 670: npc.type = "Nerdy Slime"; break;
+                case 678: npc.type = "Cool Slime"; break;
+                case 679: npc.type = "Elder Slime"; break;
+                case 680: npc.type = "Clumsy Slime"; break;
+                case 681: npc.type = "Diva Slime"; break;
+                case 682: npc.type = "Surly Slime"; break;
+                case 683: npc.type = "Mystic Slime"; break;
+                case 684: npc.type = "Squire Slime"; break;
                 // clang-format on
             }
         } else {
@@ -512,12 +520,22 @@ void readNPCs(Reader &r, World &world)
     }
 }
 
-void readMannequin(TileEntity &entity, Reader &r)
+void readMannequin(TileEntity &entity, Reader &r, World &world)
 {
-    uint8_t itemMask = r.getUint8();
-    uint8_t dyeMask = r.getUint8();
-    entity.items.resize(8);
-    for (int i = 0; i < 8; ++i) {
+    uint16_t itemMask = r.getUint8();
+    uint16_t dyeMask = r.getUint8();
+    int maxSlots = 8;
+    bool hasExtraItem = false;
+    if (world.version >= 315) {
+        maxSlots = 9;
+        r.getUint8(); // Pose.
+        uint16_t extendedMask = r.getUint8();
+        hasExtraItem = (extendedMask & 1) == 1;
+        itemMask |= ((extendedMask >> 1) & 1) << 8;
+        dyeMask |= ((extendedMask >> 2) & 1) << 8;
+    }
+    entity.items.resize(hasExtraItem ? maxSlots + 1 : maxSlots);
+    for (int i = 0; i < maxSlots; ++i) {
         if ((itemMask & (1 << i)) != 0) {
             Item &item = entity.items[i];
             item.id = r.getUint16();
@@ -525,14 +543,20 @@ void readMannequin(TileEntity &entity, Reader &r)
             item.stack = r.getUint16();
         }
     }
-    entity.dyes.resize(8);
-    for (int i = 0; i < 8; ++i) {
+    entity.dyes.resize(maxSlots);
+    for (int i = 0; i < maxSlots; ++i) {
         if ((dyeMask & (1 << i)) != 0) {
             Item &item = entity.dyes[i];
             item.id = r.getUint16();
             item.prefix = r.getUint8();
             item.stack = r.getUint16();
         }
+    }
+    if (hasExtraItem) {
+        Item &item = entity.items[maxSlots];
+        item.id = r.getUint16();
+        item.prefix = r.getUint8();
+        item.stack = r.getUint16();
     }
 }
 
@@ -571,12 +595,15 @@ void readTileEntities(Reader &r, World &world)
         entity.x = r.getUint16();
         entity.y = r.getUint16();
         switch (entity.type) {
-        case 0: // Target dummy.
+        case 0:  // Target dummy.
+        case 9:  // Kite
+        case 10: // Critter
             r.getUint16();
             break;
         case 1: // Item frame.
         case 4: // Weapon rack.
         case 6: // Plate.
+        case 8: // Item Flask.
         {
             Item item;
             item.id = r.getUint16();
@@ -590,7 +617,7 @@ void readTileEntities(Reader &r, World &world)
             entity.sensorActive = r.getBool();
             break;
         case 3: // (Wo)Mannequin.
-            readMannequin(entity, r);
+            readMannequin(entity, r, world);
             break;
         case 5: // Hat rack.
             readHatRack(entity, r);
