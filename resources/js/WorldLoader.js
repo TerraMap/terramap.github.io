@@ -464,7 +464,7 @@ function readHeader(reader, world) {
     world.dualDungeonsSeed = (world.version >= 304 && reader.readUint8());
     if (world.version >= 299 && world.version < 313)
     {
-        reader.ReadUInt32();
+        reader.readUint32();
     }
     // manifest
     if (world.version >= 299) readString(reader);
@@ -731,7 +731,9 @@ function getNpcType(id) {
         return npc.Name;
     }
 
-    return "";
+    if ([670, 678, 679, 680, 681, 682, 683, 684].includes(id)) return 'Slime';
+
+    return `Unknown NPC (ID ${id})`;
 }
 
 function readNpcs(reader, world) {

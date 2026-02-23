@@ -761,5 +761,6 @@ settings.Tiles.forEach(tile => {
   if (!tileKey) return;
   const tileName = names[tileKey];
   if (!tileName) return;
+  if (tileName === "Heart") return;
   tile.Name = tileName;
 });
