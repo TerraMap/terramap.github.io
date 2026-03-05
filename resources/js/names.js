@@ -5364,6 +5364,7 @@ const names = {
   SandstoneWallUnsafe: "Treacherous Sandstone Wall",
   HardenedSandWallUnsafe: "Treacherous Hardened Sand Wall",
   LihzahrdWallUnsafe: "Forbidden Lihzahrd Brick Wall",
+  StoneUnsafe: "Stone Wall (Unsafe)",
   CursedFlare: "Cursed Flare",
   RainbowFlare: "Rainbow Flare",
   SpelunkerFlare: "Spelunker Flare",
