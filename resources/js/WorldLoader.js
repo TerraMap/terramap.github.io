@@ -32,7 +32,9 @@ function logPosition(index, positions, reader, name) {
     var expected = positions[index];
     var actual = reader.position;
     if (expected !== actual) {
-        console.error(`Position  ${index} wrong after reading ${name}: Expected ${expected}, actual ${actual}, diff ${expected - actual}`);
+        console.error(`Position ${index} wrong after reading ${name}: Expected ${expected}, actual ${actual}, diff ${expected - actual}`);
+    } else {
+      console.log(`Position ${index} correct after reading ${name}: Expected ${expected}, actual ${actual}, diff ${expected - actual}`);
     }
 }
 
@@ -485,30 +487,22 @@ function readTiles(reader, world) {
 
     var tilesProcessed = 0;
 
-    var color;
-    var num2 = -1;
-    var tile = {};
-    var b3 = 0;
-    var b4 = 0;
-    var k = 0;
-    var x = 0;
-    var y = 0;
-
     // world.tiles = new Array(world.width);
 
     var tiles = [];
 
-    for (x = 0; x < world.width; x++) {
+    for (let x = 0; x < world.width; x++) {
         // world.tiles[x] = new Array(world.height);
 
-        for (y = 0; y < world.height; y++) {
-            num2 = -1;
+        for (let y = 0; y < world.height; y++) {
+            let num2 = -1;
+            let b3 = 0;
             let b2 = 0;
             let b = 0;
-            let tile = {};
-            let b3 = reader.readUint8();
+            tile = {};
+            b4 = reader.readUint8();
             let flag = false;
-            if ((b3 & 1) == 1) {
+            if ((b4 & 1) == 1) {
                 flag = true;
                 b2 = reader.readUint8();
             }
@@ -518,15 +512,15 @@ function readTiles(reader, world) {
                 b = reader.readUint8();
             }
             if (flag2 && (b & 1) == 1) {
-                b4 = reader.readUint8();
+                b3 = reader.readUint8();
             }
-            b4 = 0;
-            if ((b3 & 2) == 2) {
+            let b5 = 0;
+            if ((b4 & 2) == 2) {
                 tile.IsActive = true;
-                if ((b3 & 32) == 32) {
-                    b4 = reader.readUint8();
+                if ((b4 & 32) == 32) {
+                    b5 = reader.readUint8();
                     num2 = reader.readUint8();
-                    num2 = (num2 << 8 | b4);
+                    num2 = (num2 << 8 | b5);
                 } else {
                     num2 = reader.readUint8();
                 }
@@ -548,23 +542,26 @@ function readTiles(reader, world) {
                     reader.readUint8();
                 }
             }
-            if ((b3 & 4) == 4) {
+            if ((b4 & 4) == 4) {
                 tile.WallType = reader.readUint8();
+                if (tile.WallType >= settings.Walls.length) {
+                  tile.WallType = 0;
+                }
                 tile.IsWallPresent = true;
                 if ((b & 16) == 16) {
                     tile.WallColor = reader.readUint8();
                     tile.IsWallColorPresent = true;
                 }
             }
-            b4 = (b3 & 0x18) >> 3;
-            if (b4 !== 0) {
+            b5 = (b4 & 24) >> 3;
+            if (b5 !== 0) {
                 tile.IsLiquidPresent = true;
                 tile.LiquidAmount = reader.readUint8();
                 if ((b & 128) == 128) {
                     tile.Shimmer = true;
                 }
-                if (b4 > 1) {
-                    if (b4 == 2) {
+                if (b5 > 1) {
+                    if (b5 == 2) {
                         tile.IsLiquidLava = true;
                     } else {
                         tile.IsLiquidHoney = true;
@@ -581,44 +578,44 @@ function readTiles(reader, world) {
                 if ((b2 & 8) == 8) {
                     tile.IsBlueWirePresent = true;
                 }
-                b4 = (b2 & 0x70) >> 4;
+                b5 = (b2 & 112) >> 4;
             }
-            if (b > 0) {
+            if (b > 1) {
                 if ((b & 2) == 2) {
                     tile.IsActuatorPresent = true;
                 }
                 if ((b & 4) == 4) {
                     tile.IsActive = false;
                 }
-                if ((b & 0x20) == 32) {
+                if ((b & 32) == 32) {
                     tile.IsYellowWirePresent = true;
                 }
-                if ((b & 0x40) == 64) {
-                    b4 = reader.readUint8();
-                    tile.WallType = (b4 << 8 | tile.WallType);
+                if ((b & 64) == 64) {
+                    b5 = reader.readUint8();
+                    tile.WallType = (b5 << 8 | tile.WallType);
+                    if (tile.WallType >= settings.Walls.length) {
+                      tile.WallType = 0;
+                    }
                 }
             }
-            b4 = (b3 & 192) >> 6;
-            k = 0;
-            switch ((b3 & 192) >> 6) {
-            case 0:
-                k = 0;
-                break;
-            case 1:
-                k = reader.readUint8();
-                break;
-            default:
-                k = reader.readUint16();
-                break;
+            b5 = (b4 & 192) >> 6;
+            let k = 0;
+            if (b5 == 0) {
+              k = 0;
+            }
+            else if (b5 == 1) {
+              k = reader.readUint8();
+            }
+            else {
+              k = reader.readInt16();
             }
 
             tiles.push(tile);
 
+            if (x === 0 && k > 0) {console.log({k, x, y, tile})}
             while (k > 0) {
                 y++;
-
                 tiles.push(tile);
-
                 k--;
             }
         }
@@ -787,9 +784,10 @@ function readNpcs(reader, world) {
     });
 }
 
-function readTileEntity(reader) {
+function readTileEntity(reader, world) {
     let tileType = reader.readUint8();
-    if (tileType < 0 || tileType > 7) {
+    if (tileType < 0 || tileType > 10) {
+      console.error({tileType});
         return null;
     }
     let tileEntity = {};
@@ -803,6 +801,7 @@ function readTileEntity(reader) {
         case 1: // item frame
         case 4: // weapon rack
         case 6: // plate
+        case 8: // dead cells display jar
             tileEntity.item = {}
             tileEntity.item.id = reader.readInt16();
             tileEntity.item.prefixId = reader.readUint8();
@@ -812,30 +811,51 @@ function readTileEntity(reader) {
             tileEntity.logicCheckType = reader.readUint8();
             tileEntity.on = reader.readUint8() > 0;
             break;
-        case 3: // (wo)mannequin
-            tileEntity.items = Array(8)
-            tileEntity.dyes = Array(8);
-            let itemBitmask = reader.readUint8();
-            let dyeBitmask = reader.readUint8();
-            for (let i = 0; i < 8; i++) {
+        case 3: // display doll / (wo)mannequin
+            tileEntity.items = Array(9)
+            tileEntity.dyes = Array(9);
+            tileEntity.misc = Array(1);
+            let arg_62_0 = reader.readUint8();
+            let bb = reader.readUint8();
+            let pose = reader.readUint8();
+            let bitsByte = reader.readUint8();
+
+            tileEntity.arg_62_0 = arg_62_0;
+            tileEntity.bb = bb;
+            tileEntity.pose = pose;
+            tileEntity.bitsByte = bitsByte;
+
+			      let num = arg_62_0 | (((bitsByte>>1)&1) ? 256 : 0);
+            for (let i = 0; i < tileEntity.items.length; i++) {
                 tileEntity.items[i] = {
                     id: 0
                 };
-                if (((itemBitmask >> i) & 1) === 1) {
+				        if ((num & 1 << i) != 0) {
                     tileEntity.items[i].id = reader.readInt16();
                     tileEntity.items[i].prefixId = reader.readUint8();
                     tileEntity.items[i].count = reader.readInt16();
                 }
             }
-            for (let j = 0; j < 8; j++) {
+			      let num2 = (bb | (((bitsByte>>2)&1) ? 256 : 0));
+            for (let j = 0; j < tileEntity.dyes.length; j++) {
                 tileEntity.dyes[j] = {
                     id: 0
                 };
-                if (((dyeBitmask >> j) & 1) === 1) {
+				        if ((num2 & 1 << (j & 31)) != 0) {
                     tileEntity.dyes[j].id = reader.readInt16();
                     tileEntity.dyes[j].prefixId = reader.readUint8();
                     tileEntity.dyes[j].count = reader.readInt16();
                 }
+            }
+            for (let k = 0; k < tileEntity.misc.length; k++)
+            {
+              tileEntity.misc[k] = { id: 0 };
+              if (((bitsByte>>k)&1))
+              {
+                tileEntity.misc[k].id = reader.readInt16();
+                tileEntity.misc[k].prefixId = reader.readUint8();
+                tileEntity.misc[k].count = reader.readInt16();
+              }
             }
             break;
         case 5: // hat rack
@@ -865,6 +885,10 @@ function readTileEntity(reader) {
             break;
         case 7: // pylon
             break;
+        case 9: // kite anchor
+        case 10: // critter anchor
+            tileEntity.item = {}
+            tileEntity.item.id = reader.readInt16();
     }
     return tileEntity;
 }
@@ -873,8 +897,16 @@ function readTileEntities(reader, world) {
     /** @type{Map<{x:int,y:int}, any>}*/
     let byPosition = new Map();
     let count = reader.readInt32();
+    let lastPosition;
+    // console.log({tileEntityCount: count});
     for (let i = 0; i < count; i++) {
-        let tileEntity = readTileEntity(reader);
+        let tileEntity = readTileEntity(reader, world);
+        // console.log({tileEntity});
+        if (!tileEntity) {
+          console.error({tileEntity, lastPosition});
+          continue;
+        }
+        lastPosition = tileEntity.position;
         byPosition.set(tileEntity.position, tileEntity);
     }
     self.postMessage({
