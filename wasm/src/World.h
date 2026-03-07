@@ -88,15 +88,15 @@ public:
     int height;
     int width;
     int gameMode;
-    bool drunkWorld;
-    bool forTheWorthy;
-    bool celebrationmk10;
-    bool theConstant;
-    bool notTheBees;
-    bool dontDigUp;
-    bool noTraps;
-    bool getFixedBoi;
-    bool skyblock;
+    bool seedDrunkWorld;
+    bool seedForTheWorthy;
+    bool seedCelebrationmk10;
+    bool seedTheConstant;
+    bool seedNotTheBees;
+    bool seedRemix;
+    bool seedNoTraps;
+    bool seedZenith;
+    bool seedSkyblock;
     std::string creationTime;
     std::string lastPlayed;
 
@@ -255,15 +255,15 @@ public:
     bool unlockedSquireSlime;
     bool fastForwardTimeToDusk;
     int moondialCooldown;
-    bool endlessHalloween;
-    bool endlessChristmas;
-    bool vampirism;
-    bool infectedWorld;
+    bool seedEndlessHalloween;
+    bool seedEndlessChristmas;
+    bool seedVampirism;
+    bool seedInfectedWorld;
     int meteorShowerCount;
     int coinRain;
-    bool teamBasedSpawns;
+    bool seedTeamBasedSpawns;
     std::vector<Point> extraSpawnPoints;
-    bool dualDungeons;
+    bool seedDualDungeons;
     std::string worldGenManifest;
 
     std::vector<Chest> chests;

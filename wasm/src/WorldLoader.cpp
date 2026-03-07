@@ -54,31 +54,31 @@ void readProperties(Reader &r, World &world)
     if (world.version >= 209) {
         world.gameMode = r.getUint32();
         if (world.version >= 222) {
-            world.drunkWorld = r.getBool();
+            world.seedDrunkWorld = r.getBool();
         }
         if (world.version >= 227) {
-            world.forTheWorthy = r.getBool();
+            world.seedForTheWorthy = r.getBool();
         }
         if (world.version >= 238) {
-            world.celebrationmk10 = r.getBool();
+            world.seedCelebrationmk10 = r.getBool();
         }
         if (world.version >= 239) {
-            world.theConstant = r.getBool();
+            world.seedTheConstant = r.getBool();
         }
         if (world.version >= 241) {
-            world.notTheBees = r.getBool();
+            world.seedNotTheBees = r.getBool();
         }
         if (world.version >= 249) {
-            world.dontDigUp = r.getBool();
+            world.seedRemix = r.getBool();
         }
         if (world.version >= 266) {
-            world.noTraps = r.getBool();
+            world.seedNoTraps = r.getBool();
         }
-        world.getFixedBoi = world.version < 267
-                                ? world.drunkWorld && world.dontDigUp
-                                : r.getBool();
+        world.seedZenith = world.version < 267
+                               ? world.seedDrunkWorld && world.seedRemix
+                               : r.getBool();
         if (world.version >= 302) {
-            world.skyblock = r.getBool();
+            world.seedSkyblock = r.getBool();
         }
     } else if (world.version >= 112) {
         world.gameMode = r.getBool() ? 1 : 0;
@@ -307,19 +307,19 @@ void readProperties(Reader &r, World &world)
     if (world.version < 315) {
         return;
     }
-    world.endlessHalloween = r.getBool();
-    world.endlessChristmas = r.getBool();
-    world.vampirism = r.getBool();
-    world.infectedWorld = r.getBool();
+    world.seedEndlessHalloween = r.getBool();
+    world.seedEndlessChristmas = r.getBool();
+    world.seedVampirism = r.getBool();
+    world.seedInfectedWorld = r.getBool();
     world.meteorShowerCount = r.getUint32();
     world.coinRain = r.getUint32();
-    world.teamBasedSpawns = r.getBool();
+    world.seedTeamBasedSpawns = r.getBool();
     for (int i = r.getUint8(); i > 0; --i) {
         int x = r.getUint16();
         int y = r.getUint16();
         world.extraSpawnPoints.push_back({x, y});
     }
-    world.dualDungeons = r.getBool();
+    world.seedDualDungeons = r.getBool();
     world.worldGenManifest = r.getString();
 }
 

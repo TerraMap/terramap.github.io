@@ -234,7 +234,9 @@ uint8_t lava[] = {255, 30, 0};
 uint8_t honey[] = {255, 172, 0};
 uint8_t shimmer[] = {155, 112, 233};
 
-uint8_t surface[] = {132, 170, 248};
+uint8_t space[] = {55, 58, 248};
+uint8_t surface[] = {150, 180, 251};
+uint8_t surfaceFlat[] = {132, 170, 248};
 uint8_t underground[] = {84, 57, 42};
 uint8_t cavern[] = {72, 64, 57};
 uint8_t underworld[] = {51, 0, 0};
@@ -247,6 +249,11 @@ uint8_t yellow[] = {255, 255, 0};
 } // namespace Colors
 
 } // namespace
+
+inline uint8_t roundToUint8(double val)
+{
+    return std::clamp<int>(std::lround(val), 0, UINT8_MAX);
+}
 
 Color::Color(uint8_t *rgb)
 {
@@ -279,6 +286,33 @@ void Color::blend(Color tint, double strength)
     set(base * r() + strength * tint.r(),
         base * g() + strength * tint.g(),
         base * b() + strength * tint.b());
+}
+
+void Color::ditherBlend(
+    Color tint,
+    double strength,
+    int x,
+    std::vector<double> &errCur,
+    std::vector<double> &errNext)
+{
+    double target[] = {
+        errCur[3 * x] + r() + strength * (tint.r() - r()),
+        errCur[3 * x + 1] + g() + strength * (tint.g() - g()),
+        errCur[3 * x + 2] + b() + strength * (tint.b() - b())};
+    uint8_t quant[] = {
+        roundToUint8(target[0]),
+        roundToUint8(target[1]),
+        roundToUint8(target[2])};
+    for (int i = 0; i < 3; ++i) {
+        double residule = target[i] - quant[i];
+        errCur[3 * (x + 1) + i] += 7 * residule / 16;
+        if (x > 0) {
+            errNext[3 * (x - 1) + i] += 3 * residule / 16;
+        }
+        errNext[3 * (x) + i] += 5 * residule / 16;
+        errNext[3 * (x + 1) + i] += residule / 16;
+    }
+    set(quant[0], quant[1], quant[2]);
 }
 
 void Color::hueBlend(Color tint)
@@ -352,10 +386,27 @@ void Color::hueBlend(Color tint)
     blend(tint);
 }
 
-Color getLayerColor(int y, World &world)
+Color getLayerColor(
+    int x,
+    int y,
+    std::vector<double> &errCur,
+    std::vector<double> &errNext,
+    World &world)
 {
     if (y < world.undergroundLevel) {
-        return world.dontDigUp ? Colors::black : Colors::surface;
+        if (world.seedRemix) {
+            return Colors::black;
+        } else if (world.version < 315) {
+            return Colors::surfaceFlat;
+        }
+        Color color{Colors::space};
+        color.ditherBlend(
+            Colors::surface,
+            static_cast<double>(y) / world.undergroundLevel,
+            x,
+            errCur,
+            errNext);
+        return color;
     } else if (y < world.cavernLevel) {
         return Colors::underground;
     } else if (y < world.height - 230) {
@@ -365,9 +416,14 @@ Color getLayerColor(int y, World &world)
     }
 }
 
-Color getTileColor(int x, int y, World &world)
+Color getTileColor(
+    int x,
+    int y,
+    std::vector<double> &errCur,
+    std::vector<double> &errNext,
+    World &world)
 {
-    Color color = getLayerColor(y, world);
+    Color color = getLayerColor(x, y, errCur, errNext, world);
     Tile &tile = world.getTile(x, y);
     if (tile.wallId != 0) {
         Color wallColor{wallColors + 3 * tile.wallId};
@@ -382,7 +438,7 @@ Color getTileColor(int x, int y, World &world)
     }
     switch (tile.liquid) {
     case Liquid::water:
-        color.blend(Colors::water, 0.7);
+        color.blend(Colors::water, 0.85);
         break;
     case Liquid::lava:
         color = Colors::lava;

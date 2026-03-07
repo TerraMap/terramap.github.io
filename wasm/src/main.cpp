@@ -264,15 +264,15 @@ void dumpWorld(const World &world)
     DUMP(height);
     DUMP(width);
     DUMP(gameMode);
-    DUMP(drunkWorld);
-    DUMP(forTheWorthy);
-    DUMP(celebrationmk10);
-    DUMP(theConstant);
-    DUMP(notTheBees);
-    DUMP(dontDigUp);
-    DUMP(noTraps);
-    DUMP(getFixedBoi);
-    DUMP(skyblock);
+    DUMP(seedDrunkWorld);
+    DUMP(seedForTheWorthy);
+    DUMP(seedCelebrationmk10);
+    DUMP(seedTheConstant);
+    DUMP(seedNotTheBees);
+    DUMP(seedRemix);
+    DUMP(seedNoTraps);
+    DUMP(seedZenith);
+    DUMP(seedSkyblock);
     DUMP(creationTime);
     DUMP(lastPlayed);
 
@@ -431,15 +431,15 @@ void dumpWorld(const World &world)
     DUMP(unlockedSquireSlime);
     DUMP(fastForwardTimeToDusk);
     DUMP(moondialCooldown);
-    DUMP(endlessHalloween);
-    DUMP(endlessChristmas);
-    DUMP(vampirism);
-    DUMP(infectedWorld);
+    DUMP(seedEndlessHalloween);
+    DUMP(seedEndlessChristmas);
+    DUMP(seedVampirism);
+    DUMP(seedInfectedWorld);
     DUMP(meteorShowerCount);
     DUMP(coinRain);
-    DUMP(teamBasedSpawns);
+    DUMP(seedTeamBasedSpawns);
     DUMP_CUSTOM(extraSpawnPoints);
-    DUMP(dualDungeons);
+    DUMP(seedDualDungeons);
     DUMP(worldGenManifest);
 
     DUMP_CUSTOM(chests);
@@ -619,10 +619,15 @@ public:
     {
         std::vector<uint32_t> pixels;
         pixels.reserve(world.width * world.height);
+        std::vector<double> errCur(3 * (world.width + 1));
+        std::vector<double> errNext(3 * (world.width + 1));
         for (int y = 0; y < world.height; ++y) {
             for (int x = 0; x < world.width; ++x) {
-                pixels.push_back(getTileColor(x, y, world).abgr);
+                pixels.push_back(
+                    getTileColor(x, y, errCur, errNext, world).abgr);
             }
+            errCur.swap(errNext);
+            std::fill(errNext.begin(), errNext.end(), 0);
         }
         putImageData(pixels, "ctx");
     }
