@@ -198,13 +198,24 @@ function readHeader(reader, world) {
     reader.readInt32();
     reader.readInt32();
 
+    var posBeforeLastPlayed = reader.position;
+
     // last played (Int64)
     reader.readInt32();
     reader.readInt32();
 
     world.moonType = reader.readUint8();
-
     world.treeTypeXCoordinates = reader.readInt32Array(3);
+
+    // tModLoader files may omit the last-played timestamp;
+    // detect by validating moonType and treeTypeXCoordinates
+    if (world.moonType > 8 ||
+        world.treeTypeXCoordinates[0] >= world.treeTypeXCoordinates[1] ||
+        world.treeTypeXCoordinates[1] >= world.treeTypeXCoordinates[2]) {
+        reader.seek(posBeforeLastPlayed);
+        world.moonType = reader.readUint8();
+        world.treeTypeXCoordinates = reader.readInt32Array(3);
+    }
     world.treeStyles = reader.readInt32Array(4);
     world.caveBackXCoordinates = reader.readInt32Array(3);
     world.caveBackStyles = reader.readInt32Array(4);
