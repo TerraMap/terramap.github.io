@@ -38,29 +38,43 @@ function logPosition(index, positions, reader, name) {
     }
 }
 
+function seekToPosition(index, positions, reader, name) {
+    var expected = positions[index];
+    if (expected !== undefined && reader.position !== expected) {
+        console.warn(`Seeking to position ${expected} after reading ${name} (was at ${reader.position}, diff ${expected - reader.position})`);
+        reader.seek(expected);
+    }
+}
+
 function readWorldFile(reader, world) {
     var position = 0;
-    
+
     const positions = readFileFormatHeader(reader, world);
     logPosition(position++, positions, reader, 'format');
 
     readHeader(reader, world);
-    logPosition(position++, positions, reader, 'header');
+    logPosition(position, positions, reader, 'header');
+    seekToPosition(position++, positions, reader, 'header');
 
     readTiles(reader, world);
-    logPosition(position++, positions, reader, 'tiles');
-    
+    logPosition(position, positions, reader, 'tiles');
+    seekToPosition(position++, positions, reader, 'tiles');
+
     readChests(reader, world);
-    logPosition(position++, positions, reader, 'chests');
+    logPosition(position, positions, reader, 'chests');
+    seekToPosition(position++, positions, reader, 'chests');
 
     readSigns(reader, world);
-    logPosition(position++, positions, reader, 'signs');
+    logPosition(position, positions, reader, 'signs');
+    seekToPosition(position++, positions, reader, 'signs');
 
     readNpcs(reader, world);
-    logPosition(position++, positions, reader, 'NPCs');
+    logPosition(position, positions, reader, 'NPCs');
+    seekToPosition(position++, positions, reader, 'NPCs');
 
     readTileEntities(reader, world);
-    logPosition(position++, positions, reader, 'entities');
+    logPosition(position, positions, reader, 'entities');
+    seekToPosition(position++, positions, reader, 'entities');
 
     self.postMessage({
         'status': "Done.",
