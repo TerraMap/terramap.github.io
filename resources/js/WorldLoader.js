@@ -612,7 +612,6 @@ function readTiles(reader, world) {
 
             tiles.push(tile);
 
-            if (x === 0 && k > 0) {console.log({k, x, y, tile})}
             while (k > 0) {
                 y++;
                 tiles.push(tile);

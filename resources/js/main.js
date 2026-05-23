@@ -1017,7 +1017,7 @@ function addNpcs(npcs) {
 }
 
 function getTileColor(y, tile, world) {
-  if(tile.IsActive) {
+  if(tile.IsActive && tileColors.length > tile.Type) {
     return tileColors[tile.Type][0];
   }
 
