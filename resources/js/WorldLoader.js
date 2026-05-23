@@ -194,28 +194,20 @@ function readHeader(reader, world) {
         }
     }
 
-    // creation time (Int64)
-    reader.readInt32();
-    reader.readInt32();
+    if (world.version >= 141) {
+        // creation time (Int64)
+        reader.readInt32();
+        reader.readInt32();
+    }
 
-    var posBeforeLastPlayed = reader.position;
-
-    // last played (Int64)
-    reader.readInt32();
-    reader.readInt32();
+    if (world.version >= 284) {
+        // last played (Int64)
+        reader.readInt32();
+        reader.readInt32();
+    }
 
     world.moonType = reader.readUint8();
     world.treeTypeXCoordinates = reader.readInt32Array(3);
-
-    // tModLoader files may omit the last-played timestamp;
-    // detect by validating moonType and treeTypeXCoordinates
-    if (world.moonType > 8 ||
-        world.treeTypeXCoordinates[0] >= world.treeTypeXCoordinates[1] ||
-        world.treeTypeXCoordinates[1] >= world.treeTypeXCoordinates[2]) {
-        reader.seek(posBeforeLastPlayed);
-        world.moonType = reader.readUint8();
-        world.treeTypeXCoordinates = reader.readInt32Array(3);
-    }
     world.treeStyles = reader.readInt32Array(4);
     world.caveBackXCoordinates = reader.readInt32Array(3);
     world.caveBackStyles = reader.readInt32Array(4);
@@ -307,9 +299,11 @@ function readHeader(reader, world) {
     for (var j = 0; j < killedMobs; j++) {
         reader.readInt32();
     }
-    killedMobs = reader.readInt16();
-    for (var j = 0; j < killedMobs; j++) {
-        reader.readInt16();
+    if (world.version >= 289) {
+        killedMobs = reader.readInt16();
+        for (var j = 0; j < killedMobs; j++) {
+            reader.readInt16();
+        }
     }
 
     world.fastForwardTime = reader.readUint8() > 0;
@@ -665,6 +659,10 @@ function readChests(reader, world) {
     var num = reader.readInt16();
     var num2 = 0;
 
+    if (world.version < 294) {
+        num2 = reader.readInt16();
+    }
+
     for (var i = 0; i < num; i++) {
         var chest = {maxItems: 40};
         chest.items = [];
@@ -672,12 +670,15 @@ function readChests(reader, world) {
         chest.y = reader.readInt32();
         chest.name = readString(reader);
 
-        var num3 = reader.readInt32();
-        num2 = num3;
+        if (world.version >= 294) {
+            var num3 = reader.readInt32();
+            chest.maxItems = num3;
+            num2 = num3;
+        }
 
         var num4;
         var num5;
-        if (num2 < num3)
+        if (num2 < chest.maxItems)
         {
             num4 = num2;
             num5 = 0;
@@ -785,7 +786,9 @@ function readNpcs(reader, world) {
         if (world.version >= 213 && reader.readUint8() > 0) {
             npc.townVariation = reader.readInt32();
         }
-        npc.homelessDespawn = reader.readUint8() > 0;
+        if (world.version >= 315) {
+            npc.homelessDespawn = reader.readUint8() > 0;
+        }
         npcs.push(npc);
 
         num++;
