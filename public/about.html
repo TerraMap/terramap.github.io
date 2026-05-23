@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="description" content="TerraMap is an interactive Terraria v1.4.5 world map viewer that loads quickly and lets you pan, zoom, find blocks, ores, items in chests, dungeons, NPCs, etc.">
+  <meta name="author" content="Jason Coon">
+  <link rel="icon" href="favicon.ico">
+
+  <title>TerraMap | About</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+  <!-- Custom styles for this template -->
+  <link rel="stylesheet" href="resources/css/styles.css">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+
+  <nav id="main-navbar" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-top" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html"><img alt="TerraMap" src="resources/images/TerraMap16.png" /></a>
+        <a class="navbar-brand" href="index.html">TerraMap</a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="navbar-top">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Web</a></li>
+          <li><a href="windows.html">Windows</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1><img alt="TerraMap" src="resources/images/TerraMap64.png" />TerraMap Web</h1>
+        <p class="lead">TerraMap Web is a cross-platform, interactive Terraria v1.4.5 world map viewer that loads quickly and lets you pan, zoom, find blocks, ores, items in chests, dungeons, NPCs, etc.</p>
+        <p>
+          <a class="btn btn-primary btn-lg" href="index.html" role="button">Try it now »</a>
+          <a class="btn btn-default btn-lg" href="https://github.com/TerraMap/terramap.github.io/commits/master" role="button"><span class="gh-ico2" aria-hidden="true"></span>View recent changes. »</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="row" style="margin-bottom: 200px;">
+      <div class="col-md-12">
+        <h3 id="features">Features</h3>
+
+        <ul>
+          <li>Completely read-only, making it completely safe to use, with no risk of corrupting or overwriting your world files.</li>
+          <li>Cross-platform, supports <b>any modern browser</b> on <b>Windows</b>, <b>MacOS</b>, and <b>Linux</b>.</li>
+          <li>Completely client-side JavaScript, meaning your Terraria worlds are <b>not uploaded to any server</b>.</li>
+          <li>Open your Terraria world files by browsing to the .wld file.</li>
+          <li>Interactive, smooth pan and zoom using the mouse.</li>
+          <li>Find and highlight ores, items in chests, Enchanted Swords, Shark Statues, Strange Plants, etc.</li>
+          <li>Find and highlight biomes such as Corruption, Crimson, Hallow, Spider Nests, Floating Islands, etc.</li>
+          <li>View the world's spawn and dungeon locations.</li>
+          <li>View the location of NPCs such as Merchant, Mechanic, Arms Dealer, etc.</li>
+          <li>View world properties such as name, version, revision, width, height, moon phase, orbs broken, altars smashed, etc.</li>
+        </ul>
+
+        <h3 id="controls">Controls</h3>
+
+        <ul>
+          <li>Drag with left mouse button to pan.</li>
+          <li>Click with left mouse button to select a tile. Click the 'Selected Tile Info' panel to see the contents of chests, text on signs and gravestones, etc.</li>
+          <li>Use mouse wheel to zoom.</li>
+        </ul>
+
+        <h4 id="topToolbar">Top Toolbar</h3>
+        <ul>
+          <li>
+            <strong>Browse/Choose File</strong> - Open your Terraria world .wld file.
+            <ul>
+              <li><strong>Windows</strong>: %USERPROFILE%\Documents\My Games\Terraria\Worlds</li>
+              <li><strong>MacOS</strong>: ~/Library/Application Support/Terraria/Worlds</li>
+              <li><strong>Linux</strong>: ~/.local/share/Terraria/Worlds</li>
+            </ul>
+          </li>
+          <li><button title="Sets" class="btn btn-default navbar-btn">Sets <span class="caret"></span></button> <strong>Sets</strong> - A list of pre-configured sets of blocks (Corruption, Crimons, Hallow, etc). Click the dropdown menu, then click a set to highlight all tiles in the map that match.</li>
+          <li><button title="Choose Blocks" class="btn btn-default navbar-btn">Blocks...</button> <strong>Choose Blocks</strong> - Choose tiles, items, and walls to find or highlight.</li>
+          <li><button title="Find Previous" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-chevron-left"></span></button> <strong>Find Previous</strong> - Find tiles that match the options chosen in 'Choose Blocks', starting at the current selection, working backwards (bottom-to-top, right-to-left).</li>
+          <li><button title="Find Next" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-chevron-right"></span></button> <strong>Find Next</strong> - Find tiles that match the options chosen in 'Choose Blocks', starting at the current selection, working forwards (top-to-bottom, left-to-right).</li>
+          <li><button title="Highlight All" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-screenshot"></span></button> <strong>Highlight All</strong> - Highlights all of the tiles in the map that match the options chosen in 'Choose Blocks'.</li>
+          <li><button title="Clear Highlight" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-remove"></span></button> <strong>Clear Highlight</strong> - Clears any overlay (selection or highlight).</li>
+          <li><button title="Zoom To Fit" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-fullscreen"></span></button> <strong>Zoom To Fit</strong> - zooms all of the way out and centers the map.</li>
+          <li><button title="Save Map Image" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-save"></span></button> <strong>Save Map Image</strong> - saves the map and any overlay (selection or highlight) to a .png image file.</li>
+          <li><button title="Reload World" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-refresh"></span></button> <strong>Reload World</strong> - reloads the current world file, picking up any changes since it was first loaded.</li>
+        </ul>
+
+        <h4 id="bottomToolbar">Bottom Toolbar</h3>
+        <ul>
+          <li><button title="NPCs" class="btn btn-default navbar-btn">NPCs <span class="caret"></span></button> A list of NPCs present in the world. Click the dropdown menu, then click an NPC to highlight them in the map.</li>
+          <li><button title="World Properties" class="btn btn-default navbar-btn">World Properties <span class="caret"></span></button> A list of world properties (version, revision, size, defeated bosses, etc.</li>
+          <li><button title="Selected Tile Info" class="btn btn-default navbar-btn">Selected Tile Info <span class="caret"></span></button> Information about the currently selected tile. Click a tile on the map. If the tile is a chest, sign, gravestone, etc, click the dropdown menu to view its contents and/or text.</li>
+          <li><button title="Hover Tile Info" class="btn btn-default navbar-btn">Hover Tile Info</span></button> Information about the tile the cursor is currently over.</li>
+        </ul>
+
+        <h3 id="background">Background Information</h3>
+        <p>
+          TerraMap uses only a single pixel and color for each block, tile, wall, item, etc. It does not use the game's textures. For that, I highly recommend the excellent <a href="http://seancode.com/terrafirma">Terrafirma</a>.
+        </p>
+        <p>
+          It's built using <a href="http://www.w3schools.com/js">JavaScript</a>, <a href="http://www.w3schools.com/jquery">JQuery</a>, and <a href="http://getbootstrap.com">Bootstrap</a>.
+          It uses <a href="http://www.w3schools.com/html/html5_webworkers.asp">Web Workers</a> to do processor-intensive work in the background to improve responsiveness and performance.
+        </p>
+        <p>
+          I experimented with <a href="http://jsperf.com/setting-canvas-pixel">several different approaches to drawing</a>, and finally ended up using HTML canvas 2d context fillRect method, which is the fastest method on Chrome, my current browser of choice.
+        </p>
+        <p>
+          This was an education exercise for me. The only real improvements I made over Terrafirma are the combined block/tile/item search, allowing you to search for items in chests, the incremental search forward/backward, and UI improvements.
+        </p>
+        <p>
+          I referenced the <a href="http://seancode.com/terrafirma/world.html">Terraria .wld format documentation</a> provided by Terrafirma to read the world data.
+          Sean definitely did a great job at reverse-engineering and documenting the format.
+          Portions of TerraMap code were adapted from the <a href="https://github.com/mrkite/TerraFirma">source code for TerraFirma</a> and <a href="https://github.com/TEdit/Terraria-Map-Editor">TEdit</a>.
+          I also used <a href="http://ilspy.net">ILSpy</a> to peek at some of the Terraria game code.
+        </p>
+        <p>
+          I used the excellent <a href="https://github.com/timmywil/jquery.panzoom">jquery.panzoom</a> for pan and zoom functionality.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="navbar navbar-inverse navbar-fixed-bottom">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-bottom" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+
+      <div class="collapse navbar-collapse" id="navbar-bottom">
+        <p class="navbar-text navbar-left">
+          TerraMap © <a href="https://github.com/jasoncoon">Jason Coon</a> 2015
+        </p>
+        <p class="navbar-text navbar-left">
+          Support TerraMap development:
+        </p>
+        <p class="navbar-text navbar-left">
+          <span class="github-btn">
+            <a href="https://github.com/terramap/terramap.github.io" class="gh-btn">
+              <span class="gh-ico" aria-hidden="true"></span>
+              <span class="gh-text">View Source Code on GitHub</span>
+            </a>
+          </span>
+        </p>
+        <p class="navbar-text navbar-left">
+          <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=3FXFSZXHYJ9Y4">
+            <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" alt="Donate via PayPal" title="Donate via PayPal" style="border:none">
+          </a>
+        </p>
+      </div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4263195580051724"
+        crossorigin="anonymous"></script>
+      <!-- TerraMap Responsive -->
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4263195580051724" data-ad-slot="9553900295"
+        data-ad-format="auto"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  </nav>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6BJH8276R"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-P6BJH8276R');
+  </script>
+</body>
+</html>

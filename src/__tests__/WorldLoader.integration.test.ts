@@ -1,0 +1,177 @@
+import { describe, it, expect, vi, beforeAll } from 'vitest';
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
+import { DataStream } from '../DataStream';
+
+const postMessageMock = vi.fn();
+(globalThis as any).self = {
+  addEventListener: vi.fn(),
+  postMessage: postMessageMock,
+};
+
+const { readFileFormatHeader, readHeader, readTiles, readChests, readSigns, readNpcs, readTileEntities } = await import('../WorldLoader');
+
+function loadWorld(filename: string): any {
+  const filePath = resolve(__dirname, '../../Worlds', filename);
+  const fileBuffer = readFileSync(filePath);
+  const arrayBuffer = fileBuffer.buffer.slice(
+    fileBuffer.byteOffset,
+    fileBuffer.byteOffset + fileBuffer.byteLength
+  );
+  const ds = new DataStream(arrayBuffer);
+  ds.endianness = DataStream.LITTLE_ENDIAN;
+  return ds;
+}
+
+function parseWorld(filename: string): { world: any; positions: number[] } {
+  const reader = loadWorld(filename);
+  const world: any = {};
+  postMessageMock.mockClear();
+
+  const positions = readFileFormatHeader(reader, world);
+  readHeader(reader, world);
+
+  if (positions[1] !== undefined && reader.position !== positions[1]) {
+    reader.seek(positions[1]);
+  }
+
+  readTiles(reader, world);
+
+  if (positions[2] !== undefined && reader.position !== positions[2]) {
+    reader.seek(positions[2]);
+  }
+
+  readChests(reader, world);
+
+  if (positions[3] !== undefined && reader.position !== positions[3]) {
+    reader.seek(positions[3]);
+  }
+
+  readSigns(reader, world);
+
+  if (positions[4] !== undefined && reader.position !== positions[4]) {
+    reader.seek(positions[4]);
+  }
+
+  readNpcs(reader, world);
+
+  if (positions[5] !== undefined && reader.position !== positions[5]) {
+    reader.seek(positions[5]);
+  }
+
+  readTileEntities(reader, world);
+
+  return { world, positions };
+}
+
+describe('WorldLoader integration', () => {
+  describe('SmCrptClsc1_4_5_0.wld (vanilla v1.4.5.0 small classic)', () => {
+    let world: any;
+    let positions: number[];
+
+    beforeAll(() => {
+      const result = parseWorld('SmCrptClsc1_4_5_0.wld');
+      world = result.world;
+      positions = result.positions;
+    });
+
+    it('should parse the version', () => {
+      expect(world.version).toBeGreaterThanOrEqual(279);
+    });
+
+    it('should parse world dimensions', () => {
+      expect(world.width).toBeGreaterThan(0);
+      expect(world.height).toBeGreaterThan(0);
+    });
+
+    it('should parse the world name', () => {
+      expect(typeof world.name).toBe('string');
+      expect(world.name.length).toBeGreaterThan(0);
+    });
+
+    it('should parse worldSurfaceY as a reasonable value', () => {
+      expect(world.worldSurfaceY).toBeGreaterThan(0);
+      expect(world.worldSurfaceY).toBeLessThan(world.height);
+    });
+
+    it('should parse rockLayerY below worldSurfaceY', () => {
+      expect(world.rockLayerY).toBeGreaterThanOrEqual(world.worldSurfaceY);
+      expect(world.rockLayerY).toBeLessThan(world.height);
+    });
+
+    it('should parse spawn coordinates within world bounds', () => {
+      expect(world.spawnX).toBeGreaterThanOrEqual(0);
+      expect(world.spawnX).toBeLessThan(world.width);
+      expect(world.spawnY).toBeGreaterThanOrEqual(0);
+      expect(world.spawnY).toBeLessThan(world.height);
+    });
+
+    it('should post tile data via postMessage', () => {
+      const tileMessages = postMessageMock.mock.calls.filter(c => c[0].tiles);
+      expect(tileMessages.length).toBeGreaterThan(0);
+      expect(tileMessages[0][0].tiles.length).toBeGreaterThan(0);
+    });
+
+    it('should post chests message', () => {
+      const chestsMsg = postMessageMock.mock.calls.find(c => c[0].chests);
+      expect(chestsMsg).toBeDefined();
+    });
+
+    it('should post NPCs message', () => {
+      const npcsMsg = postMessageMock.mock.calls.find(c => c[0].npcs);
+      expect(npcsMsg).toBeDefined();
+    });
+
+    it('should complete full parse without throwing', () => {
+      expect(world.version).toBeDefined();
+      expect(world.name).toBeDefined();
+    });
+  });
+
+  describe('jagged_rocks.wld', () => {
+    let world: any;
+
+    beforeAll(() => {
+      const result = parseWorld('jagged_rocks.wld');
+      world = result.world;
+    });
+
+    it('should parse successfully', () => {
+      expect(world.version).toBeGreaterThan(0);
+      expect(world.name).toBeTruthy();
+      expect(world.width).toBeGreaterThan(0);
+      expect(world.height).toBeGreaterThan(0);
+    });
+
+    it('should have valid surface and rock layers', () => {
+      expect(world.worldSurfaceY).toBeGreaterThan(0);
+      expect(world.rockLayerY).toBeGreaterThanOrEqual(world.worldSurfaceY);
+    });
+  });
+
+  describe('The_Sus_Bog.wld (tModLoader world)', () => {
+    let world: any;
+
+    beforeAll(() => {
+      const result = parseWorld('The_Sus_Bog.wld');
+      world = result.world;
+    });
+
+    it('should parse successfully despite being a tModLoader world', () => {
+      expect(world.version).toBeGreaterThan(0);
+      expect(world.name).toBeTruthy();
+      expect(world.width).toBeGreaterThan(0);
+      expect(world.height).toBeGreaterThan(0);
+    });
+
+    it('should parse worldSurfaceY correctly', () => {
+      expect(world.worldSurfaceY).toBeGreaterThan(0);
+      expect(world.worldSurfaceY).toBeLessThan(world.height);
+    });
+
+    it('should post tile data', () => {
+      const tileMessages = postMessageMock.mock.calls.filter(c => c[0].tiles);
+      expect(tileMessages.length).toBeGreaterThan(0);
+    });
+  });
+});

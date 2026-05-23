@@ -1,0 +1,26 @@
+{
+  "name": "terramap.github.io",
+  "version": "1.0.0",
+  "description": "TerraMap is an interactive Terraria v1.4.5 world map viewer that loads quickly and lets you pan, zoom, find blocks, ores, items in chests, dungeons, NPCs, etc.",
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "test": "npm run typecheck && npm run vitest",
+    "dev": "vite",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "preview": "vite preview",
+    "vitest": "vitest run",
+    "vitest:watch": "vitest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jquery": "^4.0.0",
+    "@types/node": "^25.9.1",
+    "typescript": "^6.0.3",
+    "vite": "^6.4.2",
+    "vitest": "^4.1.7"
+  }
+}
