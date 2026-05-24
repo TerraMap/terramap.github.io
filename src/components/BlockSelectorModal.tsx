@@ -1,5 +1,8 @@
-import { Modal, Select } from 'antd';
-import type { BlockOption } from '../hooks/useBlockOptions';
+import { Modal, Segmented, Select } from 'antd';
+import { useMemo, useState } from 'react';
+import type { BlockOption, BlockType } from '../hooks/useBlockOptions';
+
+type FilterType = 'all' | BlockType;
 
 interface BlockSelectorModalProps {
   open: boolean;
@@ -16,6 +19,13 @@ export function BlockSelectorModal({
   selectedValues,
   onSelectionChange,
 }: BlockSelectorModalProps) {
+  const [filter, setFilter] = useState<FilterType>('all');
+
+  const filteredOptions = useMemo(() => {
+    const filtered = filter === 'all' ? options : options.filter(o => o.type === filter);
+    return filtered.filter(o => o.label !== '[empty] (Item 0)').map(o => ({ value: `${o.value}|${o.dataU ?? ''}|${o.dataV ?? ''}`, label: o.label }));
+  }, [options, filter]);
+
   return (
     <Modal
       title="Choose Blocks"
@@ -25,6 +35,18 @@ export function BlockSelectorModal({
       width={600}
       destroyOnHidden={false}
     >
+      <Segmented
+        block
+        value={filter}
+        onChange={setFilter as (value: string | number) => void}
+        options={[
+          { value: 'all', label: 'All' },
+          { value: 'tile', label: 'Tiles' },
+          { value: 'item', label: 'Items' },
+          { value: 'wall', label: 'Walls' },
+        ]}
+        style={{ marginBottom: 12 }}
+      />
       <Select
         allowClear
         mode="multiple"
@@ -34,7 +56,7 @@ export function BlockSelectorModal({
         placeholder="Search blocks, items, walls..."
         value={selectedValues}
         onChange={onSelectionChange}
-        options={options.map(o => ({ value: `${o.value}|${o.dataU ?? ''}|${o.dataV ?? ''}`, label: o.label }))}
+        options={filteredOptions}
         filterOption={(input, option) =>
           (option?.label as string ?? '').toLowerCase().includes(input.toLowerCase())
         }

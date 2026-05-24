@@ -1,9 +1,12 @@
 import { useMemo } from 'react';
 import { settings } from '../settings';
 
+export type BlockType = 'tile' | 'item' | 'wall';
+
 export interface BlockOption {
   value: string;
   label: string;
+  type: BlockType;
   dataU?: number;
   dataV?: number;
 }
@@ -19,6 +22,7 @@ export function useBlockOptions() {
       options.push({
         value: String(i),
         label: `${tile.Name} (Tile ${i})`,
+        type: 'tile',
       });
 
       if (tile.Frames) {
@@ -38,6 +42,7 @@ export function useBlockOptions() {
           options.push({
             value: `${i}`,
             label: text,
+            type: 'tile',
             dataU: frame.U,
             dataV: frame.V,
           });
@@ -51,6 +56,7 @@ export function useBlockOptions() {
       options.push({
         value: `item${item.Id}`,
         label: `${item.Name} (Item ${item.Id})`,
+        type: 'item',
       });
     }
 
@@ -60,6 +66,7 @@ export function useBlockOptions() {
       options.push({
         value: `wall${wall.Id}`,
         label: `${wall.Name} (Wall)`,
+        type: 'wall',
       });
     }
 
