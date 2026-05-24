@@ -248,6 +248,21 @@ export var sets = [
     ]
   },
   {
+    Name: "Locked Chests",
+    Entries: [
+      { "Id": "21", isTile: true, "U": 72, "V": 0, "Name": "Gold Chest", "Variety": "Locked" },
+      { "Id": "21", isTile: true, "U": 144, "V": 0, "Name": "Shadow Chest", "Variety": "Locked" },
+      { "Id": "21", isTile: true, "U": 828, "V": 0, "Name": "Jungle Chest", "Variety": "Locked" },
+      { "Id": "21", isTile: true, "U": 864, "V": 0, "Name": "Corruption Chest", "Variety": "Locked" },
+      { "Id": "21", isTile: true, "U": 900, "V": 0, "Name": "Crimson Chest", "Variety": "Locked" },
+      { "Id": "21", isTile: true, "U": 936, "V": 0, "Name": "Hallowed Chest", "Variety": "Locked" },
+      { "Id": "21", isTile: true, "U": 972, "V": 0, "Name": "Frozen Chest", "Variety": "Locked" },
+      { "Id": "21", isTile: true, "U": 1296, "V": 0, "Name": "Green Dungeon Chest", "Variety": "Locked" },
+      { "Id": "21", isTile: true, "U": 1368, "V": 0, "Name": "Pink Dungeon Chest", "Variety": "Locked" },
+      { "Id": "21", isTile: true, "U": 1440, "V": 0, "Name": "Blue Dungeon Chest", "Variety": "Locked" },
+    ]
+  },
+  {
     "Name": "Spider Caves",
     "Entries": [
       {

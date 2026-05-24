@@ -11,8 +11,8 @@ import {
   UploadOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Button, Dropdown, Flex, Space, Tooltip } from 'antd';
-import { useRef } from 'react';
+import { Button, Drawer, Dropdown, Flex, Input, Space, Tooltip } from 'antd';
+import { useRef, useState } from 'react';
 
 interface NavbarProps {
   isLoading: boolean;
@@ -54,6 +54,8 @@ export function Navbar({
   onSetSelect,
 }: NavbarProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [propsOpen, setPropsOpen] = useState(false);
+  const [propsFilter, setPropsFilter] = useState('');
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -71,13 +73,6 @@ export function Navbar({
     label: set.Name,
     onClick: () => onSetSelect(i),
   }));
-
-  const propMenuItems: MenuProps['items'] = Object.keys(worldProperties)
-    .sort()
-    .map((key) => ({
-      key,
-      label: `${key}: ${worldProperties[key]}`,
-    }));
 
   const tileInfoMenuItems: MenuProps['items'] = tileInfoItems.map((item, i) => ({
     key: i,
@@ -140,9 +135,7 @@ export function Navbar({
           <Dropdown menu={{ items: npcMenuItems }} trigger={['click']}>
             <Button>NPCs</Button>
           </Dropdown>
-          <Dropdown menu={{ items: propMenuItems }} trigger={['click']}>
-            <Button>World Properties</Button>
-          </Dropdown>
+          <Button onClick={() => setPropsOpen(true)} disabled={propsOpen}>World Properties</Button>
           {tileInfoItems.length > 0 && (
             <Dropdown menu={{ items: tileInfoMenuItems }} trigger={['click']}>
               <Button>Tile Info</Button>
@@ -160,6 +153,33 @@ export function Navbar({
           style={{ color: '#fff', marginLeft: 'auto' }}
         />
       </Tooltip>
+
+      <Drawer
+        title="World Properties"
+        open={propsOpen}
+        onClose={() => setPropsOpen(false)}
+      >
+        <Input
+          placeholder="Filter world properties..."
+          allowClear
+          value={propsFilter}
+          onChange={(e) => setPropsFilter(e.target.value)}
+          style={{ marginBottom: 12 }}
+        />
+        <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+          {Object.keys(worldProperties).filter(k => !k.startsWith('_')).sort()
+            .filter((key) => {
+              if (!propsFilter) return true;
+              const q = propsFilter.toLowerCase();
+              return key.toLowerCase().includes(q) || String(worldProperties[key]).toLowerCase().includes(q);
+            })
+            .map((key) => (
+              <li key={key} style={{ padding: '4px 0' }}>
+                <strong>{key}:</strong> {String(worldProperties[key])}
+              </li>
+            ))}
+        </ul>
+      </Drawer>
     </Flex>
   );
 }

@@ -28,10 +28,10 @@ export function useBlockOptions() {
 
           let text = tile.Name;
           if (frame.Name) {
-            text = `${frame.Name} - ${text}`;
+            text += ` - ${frame.Name}`;
           }
           if (frame.Variety) {
-            text = `${frame.Variety} - ${text}`;
+            text += ` - ${frame.Variety}`;
           }
           text += ` (Tile ${i})`;
 

@@ -207,9 +207,10 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
 
         ctx.clearRect(0, 0, selection.width, selection.height);
         ctx.lineWidth = 12;
-        ctx.strokeStyle = "rgb(255, 0, 0)";
+        ctx.strokeStyle = "rgba(255, 0, 0, 0.85)";
         ctx.strokeRect(cx - half, cy - half, targetWidth, targetWidth);
 
+        ctx.strokeStyle = "rgba(255, 0, 0, 0.75)";
         ctx.lineWidth = 1;
         ctx.beginPath(); ctx.moveTo(cx - half, cy); ctx.lineTo(cx - 1, cy); ctx.stroke();
         ctx.beginPath(); ctx.moveTo(cx + half, cy); ctx.lineTo(cx + 1, cy); ctx.stroke();

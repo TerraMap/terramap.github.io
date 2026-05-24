@@ -25,7 +25,11 @@ export function usePanZoom(
       cursor: 'default',
     });
 
-    el.parentElement!.addEventListener('wheel', pz.zoomWithWheel, { passive: false });
+    const handleWheel = (e: WheelEvent) => {
+      const isTrackpad = e.deltaMode === 0 && Math.abs(e.deltaY) < 50;
+      pz.zoomWithWheel(e, { step: isTrackpad ? 0.08 : 0.3 });
+    };
+    el.parentElement!.addEventListener('wheel', handleWheel, { passive: false });
 
     if (options?.onPanZoomEnd) {
       el.addEventListener('panzoomend', options.onPanZoomEnd as EventListener);
@@ -34,7 +38,7 @@ export function usePanZoom(
     instanceRef.current = pz;
 
     return () => {
-      el.parentElement!.removeEventListener('wheel', pz.zoomWithWheel);
+      el.parentElement!.removeEventListener('wheel', handleWheel);
       if (options?.onPanZoomEnd) {
         el.removeEventListener('panzoomend', options.onPanZoomEnd as EventListener);
       }
