@@ -6,6 +6,14 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'dist',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          antd: ['antd', '@ant-design/icons'],
+          settings: ['./src/settings.ts', './src/MapHelper.ts'],
+        },
+      },
+    },
   },
   test: {
     globals: true,
