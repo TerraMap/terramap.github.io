@@ -23,9 +23,10 @@ export function BlockSelectorModal({
       onCancel={onClose}
       onOk={onClose}
       width={600}
-      destroyOnClose={false}
+      destroyOnHidden={false}
     >
       <Select
+        allowClear
         mode="multiple"
         showSearch
         virtual

@@ -1,20 +1,21 @@
-import { useRef } from 'react';
-import { Button, Space, Dropdown, Flex } from 'antd';
-import type { MenuProps } from 'antd';
 import {
-  UploadOutlined,
-  SearchOutlined,
-  LeftOutlined,
-  RightOutlined,
-  HighlightOutlined,
+  CameraOutlined,
   ClearOutlined,
   ExpandOutlined,
-  CameraOutlined,
-  ReloadOutlined,
+  HighlightOutlined,
+  LeftOutlined,
   QuestionCircleOutlined,
+  ReloadOutlined,
+  RightOutlined,
+  SearchOutlined,
+  UploadOutlined,
 } from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+import { Button, Dropdown, Flex, Space, Tooltip } from 'antd';
+import { useRef } from 'react';
 
 interface NavbarProps {
+  isLoading: boolean;
   worldLoaded: boolean;
   npcs: any[];
   sets: any[];
@@ -34,6 +35,7 @@ interface NavbarProps {
 }
 
 export function Navbar({
+  isLoading,
   worldLoaded,
   npcs,
   sets,
@@ -97,37 +99,41 @@ export function Navbar({
         zIndex: 1000,
       }}
     >
-      <span style={{ color: '#fff', fontWeight: 'bold', marginRight: 8 }}>TerraMap</span>
+      <span style={{ color: '#fff', marginRight: 8, fontFamily: 'inherit' }}>TerraMap</span>
 
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept=".wld"
-        onChange={handleFileChange}
-        style={{ display: 'none' }}
-      />
-      <Button icon={<UploadOutlined />} onClick={() => fileInputRef.current?.click()}>
-        Open
-      </Button>
-
-      <Space.Compact>
-        <Button icon={<SearchOutlined />} onClick={onOpenBlocks} disabled={!worldLoaded}>
-          Blocks
+      <Tooltip title="Open Terraria World File">
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept=".wld"
+          onChange={handleFileChange}
+          style={{ display: 'none' }}
+        />
+        <Button icon={<UploadOutlined />} loading={isLoading} onClick={() => fileInputRef.current?.click()}>
+          Open
         </Button>
-        <Button icon={<LeftOutlined />} onClick={onPrevBlock} disabled={!worldLoaded} />
-        <Button icon={<RightOutlined />} onClick={onNextBlock} disabled={!worldLoaded} />
-        <Button icon={<HighlightOutlined />} onClick={onHighlightAll} disabled={!worldLoaded} />
-        <Button icon={<ClearOutlined />} onClick={onClearHighlight} disabled={!worldLoaded} />
-      </Space.Compact>
-
-      <Space.Compact>
-        <Button icon={<ExpandOutlined />} onClick={onResetZoom} disabled={!worldLoaded} />
-        <Button icon={<CameraOutlined />} onClick={onSaveImage} disabled={!worldLoaded} />
-        <Button icon={<ReloadOutlined />} onClick={onReload} disabled={!worldLoaded} />
-      </Space.Compact>
+      </Tooltip>
 
       {worldLoaded && (
         <>
+          <Space.Compact>
+            <Tooltip title="Choose Blocks (b)">
+              <Button icon={<SearchOutlined />} onClick={onOpenBlocks} disabled={!worldLoaded}>
+                Blocks
+              </Button>
+            </Tooltip>
+            <Tooltip title="Find Previous Block"><Button icon={<LeftOutlined />} onClick={onPrevBlock} disabled={!worldLoaded} /></Tooltip>
+            <Tooltip title="Find Next Block"><Button icon={<RightOutlined />} onClick={onNextBlock} disabled={!worldLoaded} /></Tooltip>
+            <Tooltip title="Highlight All Matching Blocks"><Button icon={<HighlightOutlined />} onClick={onHighlightAll} disabled={!worldLoaded} /></Tooltip>
+            <Tooltip title="Clear Highlighted Blocks"><Button icon={<ClearOutlined />} onClick={onClearHighlight} disabled={!worldLoaded} /></Tooltip>
+          </Space.Compact>
+
+          <Space.Compact>
+            <Tooltip title="Reset Zoom"><Button icon={<ExpandOutlined />} onClick={onResetZoom} disabled={!worldLoaded} /></Tooltip>
+            <Tooltip title="Save Image"><Button icon={<CameraOutlined />} onClick={onSaveImage} disabled={!worldLoaded} /></Tooltip>
+            <Tooltip title="Reload World"><Button icon={<ReloadOutlined />} onClick={onReload} disabled={!worldLoaded} /></Tooltip>
+          </Space.Compact>
+
           <Dropdown menu={{ items: setMenuItems }} trigger={['click']}>
             <Button>Sets</Button>
           </Dropdown>
@@ -145,13 +151,15 @@ export function Navbar({
         </>
       )}
 
-      <Button
-        type="link"
-        icon={<QuestionCircleOutlined />}
-        href="about.html"
-        target="_blank"
-        style={{ color: '#fff', marginLeft: 'auto' }}
-      />
+      <Tooltip title="About">
+        <Button
+          type="link"
+          icon={<QuestionCircleOutlined />}
+          href="about.html"
+          target="_blank"
+          style={{ color: '#fff', marginLeft: 'auto' }}
+        />
+      </Tooltip>
     </Flex>
   );
 }

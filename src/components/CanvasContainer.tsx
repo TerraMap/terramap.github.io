@@ -9,6 +9,7 @@ export interface CanvasContainerHandle {
   finishRender: (worldWidth: number) => void;
   highlightTiles: (matchFn: ((tile: any) => boolean) | null, world: any) => void;
   drawSelection: (x: number, y: number) => void;
+  panToTile: (x: number, y: number) => void;
   clearOverlay: () => void;
   clearSelection: () => void;
   saveImage: (filename: string) => void;
@@ -32,19 +33,24 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
     const overlayRef = useRef<HTMLCanvasElement>(null);
     const selectionRef = useRef<HTMLCanvasElement>(null);
     const pixelsRef = useRef<Uint8ClampedArray | null>(null);
+    const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
+    const overlayCtxRef = useRef<CanvasRenderingContext2D | null>(null);
+    const selectionCtxRef = useRef<CanvasRenderingContext2D | null>(null);
     const isDraggingRef = useRef(false);
     const dragStartRef = useRef<{ x: number; y: number } | null>(null);
 
-    const { zoomIn, zoomOut, reset } = usePanZoom(panzoomRef);
+    const { zoomIn, zoomOut, reset, panToPoint } = usePanZoom(panzoomRef);
 
     const getMousePos = useCallback((evt: MouseEvent | PointerEvent) => {
       const el = panzoomRef.current;
-      if (!el) return { x: 0, y: 0 };
+      const canvas = canvasRef.current;
+      if (!el || !canvas) return { x: 0, y: 0 };
       const rect = el.getBoundingClientRect();
-      const scale = rect.width / el.offsetWidth;
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
       return {
-        x: Math.floor((evt.clientX - rect.left) / scale),
-        y: Math.floor((evt.clientY - rect.top) / scale),
+        x: Math.floor((evt.clientX - rect.left) * scaleX),
+        y: Math.floor((evt.clientY - rect.top) * scaleY),
       };
     }, []);
 
@@ -110,6 +116,10 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         selection.width = width;
         selection.height = height;
 
+        ctxRef.current = canvas.getContext('2d')!;
+        overlayCtxRef.current = overlay.getContext('2d')!;
+        selectionCtxRef.current = selection.getContext('2d')!;
+
         const displayWidth = window.innerWidth * 0.99;
         const ratio = height / width;
         const displayHeight = displayWidth * ratio;
@@ -123,7 +133,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
       },
 
       renderTileBatch(tiles: any[], startX: number, world: any) {
-        const ctx = canvasRef.current!.getContext('2d')!;
+        const ctx = ctxRef.current!;
         const pixels = pixelsRef.current!;
         const height = world.height;
         const xlimit = startX + tiles.length / height;
@@ -154,7 +164,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
       },
 
       finishRender(worldWidth: number) {
-        const ctx = canvasRef.current!.getContext('2d')!;
+        const ctx = ctxRef.current!;
         const pixels = pixelsRef.current!;
         const bufferStart = BUFFER_WIDTH * Math.floor((worldWidth - 1) / BUFFER_WIDTH);
         const imageData = new ImageData(pixels as unknown as Uint8ClampedArray<ArrayBuffer>, BUFFER_WIDTH);
@@ -163,7 +173,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
       },
 
       highlightTiles(matchFn: ((tile: any) => boolean) | null, world: any) {
-        const ctx = overlayRef.current!.getContext('2d')!;
+        const ctx = overlayCtxRef.current!;
         const overlay = overlayRef.current!;
         ctx.clearRect(0, 0, overlay.width, overlay.height);
         ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
@@ -188,7 +198,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
       },
 
       drawSelection(x: number, y: number) {
-        const ctx = selectionRef.current!.getContext('2d')!;
+        const ctx = selectionCtxRef.current!;
         const selection = selectionRef.current!;
         const cx = x + 0.5;
         const cy = y + 0.5;
@@ -208,15 +218,13 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
       },
 
       clearOverlay() {
-        const ctx = overlayRef.current!.getContext('2d')!;
         const overlay = overlayRef.current!;
-        ctx.clearRect(0, 0, overlay.width, overlay.height);
+        overlayCtxRef.current!.clearRect(0, 0, overlay.width, overlay.height);
       },
 
       clearSelection() {
-        const ctx = selectionRef.current!.getContext('2d')!;
         const selection = selectionRef.current!;
-        ctx.clearRect(0, 0, selection.width, selection.height);
+        selectionCtxRef.current!.clearRect(0, 0, selection.width, selection.height);
       },
 
       saveImage(filename: string) {
@@ -237,17 +245,26 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         });
       },
 
+      panToTile(x: number, y: number) {
+        const canvas = canvasRef.current;
+        const el = panzoomRef.current;
+        if (!canvas || !el) return;
+        const elX = x * (el.offsetWidth / canvas.width);
+        const elY = y * (el.offsetHeight / canvas.height);
+        panToPoint(elX, elY);
+      },
+
       zoomIn() { zoomIn(); },
       zoomOut() { zoomOut(); },
       resetZoom() { reset(); },
     }));
 
     return (
-      <div ref={wrapperRef} style={{ overflow: 'hidden', width: '100%', position: 'relative' }}>
+      <div ref={wrapperRef} style={{ overflow: 'hidden', width: '100%', height: '100%', position: 'relative' }}>
         <div ref={panzoomRef} style={{ position: 'relative' }}>
-          <canvas ref={canvasRef} style={{ position: 'absolute', left: 0, top: 0 }} />
-          <canvas ref={overlayRef} style={{ position: 'absolute', left: 0, top: 0 }} />
-          <canvas ref={selectionRef} style={{ position: 'absolute', left: 0, top: 0 }} />
+          <canvas ref={canvasRef} style={{ position: 'absolute', left: 0, top: 0, imageRendering: 'pixelated' }} />
+          <canvas ref={overlayRef} style={{ position: 'absolute', left: 0, top: 0, imageRendering: 'pixelated' }} />
+          <canvas ref={selectionRef} style={{ position: 'absolute', left: 0, top: 0, imageRendering: 'pixelated' }} />
         </div>
       </div>
     );

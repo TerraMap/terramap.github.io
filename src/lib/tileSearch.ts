@@ -1,6 +1,7 @@
 import { settings } from '../settings';
 
 export function isTileMatch(tile: any, selectedInfos: any[]): boolean {
+  if (!tile) return false;
   for (let j = 0; j < selectedInfos.length; j++) {
     const info = selectedInfos[j];
 

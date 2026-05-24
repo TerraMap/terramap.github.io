@@ -22,6 +22,8 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
   const [isLoading, setIsLoading] = useState(false);
   const worldRef = useRef<WorldData | null>(null);
   const workerRef = useRef<Worker | null>(null);
+  const statusRef = useRef(status);
+  const lastStatusFlush = useRef(0);
 
   const loadFile = useCallback((file: File) => {
     if (workerRef.current) {
@@ -36,7 +38,12 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
 
     worker.addEventListener('message', (e: MessageEvent) => {
       if (e.data.status) {
-        setStatus(e.data.status);
+        statusRef.current = e.data.status;
+        const now = performance.now();
+        if (now - lastStatusFlush.current > 200) {
+          lastStatusFlush.current = now;
+          setStatus(e.data.status);
+        }
       }
 
       if (e.data.world) {
@@ -47,16 +54,17 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
         w.npcs = [];
         worldRef.current = w;
         canvasRef.current?.setWorldSize(w.width, w.height);
+        setStatus(statusRef.current);
       }
 
       if (e.data.tiles) {
         const w = worldRef.current!;
-        canvasRef.current?.renderTileBatch(e.data.tiles, e.data.x, w);
+        const tiles = e.data.tiles;
+        canvasRef.current?.renderTileBatch(tiles, e.data.x, w);
 
-        for (const tile of e.data.tiles) {
-          if (tile) {
-            w.tiles.push(tile);
-          }
+        const len = tiles.length;
+        for (let i = 0; i < len; i++) {
+          w.tiles.push(tiles[i]);
         }
       }
 
@@ -103,7 +111,7 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
       if (e.data.tileEntities) {
         const w = worldRef.current!;
         for (const [pos, entity] of e.data.tileEntities.entries()) {
-          let idx = pos.x * w.height + pos.y;
+          const idx = pos.x * w.height + pos.y;
           const tile = w.tiles[idx];
           if (tile) {
             const size = tile.info?.Size;

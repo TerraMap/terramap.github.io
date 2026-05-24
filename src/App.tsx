@@ -1,21 +1,21 @@
+import { App as AntApp, ConfigProvider, theme } from 'antd';
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { ConfigProvider, theme } from 'antd';
+import { BlockSelectorModal } from './components/BlockSelectorModal';
+import { CanvasContainer, CanvasContainerHandle } from './components/CanvasContainer';
+import { HelpPanel } from './components/HelpPanel';
 import { Navbar } from './components/Navbar';
 import { StatusBar } from './components/StatusBar';
-import { HelpPanel } from './components/HelpPanel';
-import { CanvasContainer, CanvasContainerHandle } from './components/CanvasContainer';
-import { BlockSelectorModal } from './components/BlockSelectorModal';
-import { useWorldLoader } from './hooks/useWorldLoader';
 import { useBlockOptions } from './hooks/useBlockOptions';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
-import { getTileAt, getTileText, getItemText } from './lib/tileInfo';
-import { isTileMatch, getTileInfoFrom } from './lib/tileSearch';
-import { settings } from './settings';
+import { useWorldLoader } from './hooks/useWorldLoader';
+import { getItemText, getTileAt, getTileText } from './lib/tileInfo';
+import { getTileInfoFrom, isTileMatch } from './lib/tileSearch';
 import { sets } from './sets';
+import { settings } from './settings';
 
 export default function App() {
   const canvasRef = useRef<CanvasContainerHandle>(null);
-  const { world, worldRef, status, loadFile } = useWorldLoader(canvasRef);
+  const { world, worldRef, status, loadFile, isLoading } = useWorldLoader(canvasRef);
   const blockOptions = useBlockOptions();
 
   const [blocksModalOpen, setBlocksModalOpen] = useState(false);
@@ -142,6 +142,7 @@ export default function App() {
       if (isTileMatch(tile, infos)) {
         setSelectionPos({ x, y });
         canvasRef.current?.drawSelection(x, y);
+        canvasRef.current?.panToTile(x, y);
         break;
       }
       y += direction;
@@ -200,48 +201,52 @@ export default function App() {
 
   return (
     <ConfigProvider theme={{ algorithm: theme.darkAlgorithm }}>
-      <Navbar
-        worldLoaded={!!world}
-        npcs={world?.npcs ?? []}
-        sets={sets}
-        worldProperties={worldProperties}
-        tileInfoItems={tileInfoItems}
-        onFileSelect={handleFileSelect}
-        onOpenBlocks={() => setBlocksModalOpen(true)}
-        onPrevBlock={() => findBlock(-1)}
-        onNextBlock={() => findBlock(1)}
-        onHighlightAll={handleHighlightAll}
-        onClearHighlight={handleClearHighlight}
-        onResetZoom={() => canvasRef.current?.resetZoom()}
-        onSaveImage={handleSaveImage}
-        onReload={handleReload}
-        onNpcSelect={(x, y) => {
-          setSelectionPos({ x, y });
-          canvasRef.current?.drawSelection(x, y);
-        }}
-        onSetSelect={handleSetSelect}
-      />
+      <AntApp style={{ height: '100%' }}>
+        <Navbar
+          worldLoaded={!!world}
+          isLoading={isLoading}
+          npcs={world?.npcs ?? []}
+          sets={sets}
+          worldProperties={worldProperties}
+          tileInfoItems={tileInfoItems}
+          onFileSelect={handleFileSelect}
+          onOpenBlocks={() => setBlocksModalOpen(true)}
+          onPrevBlock={() => findBlock(-1)}
+          onNextBlock={() => findBlock(1)}
+          onHighlightAll={handleHighlightAll}
+          onClearHighlight={handleClearHighlight}
+          onResetZoom={() => canvasRef.current?.resetZoom()}
+          onSaveImage={handleSaveImage}
+          onReload={handleReload}
+          onNpcSelect={(x, y) => {
+            setSelectionPos({ x, y });
+            canvasRef.current?.drawSelection(x, y);
+            canvasRef.current?.panToTile(x, y);
+          }}
+          onSetSelect={handleSetSelect}
+        />
 
-      <div style={{ paddingTop: 52, paddingBottom: 32 }}>
-        {!world && <HelpPanel />}
-        <div style={{ display: world ? 'block' : 'none' }}>
-          <CanvasContainer
-            ref={canvasRef}
-            onTileHover={handleTileHover}
-            onTileClick={handleTileClick}
-          />
+        <div style={{ paddingTop: 52, paddingBottom: 32, height: '100vh', boxSizing: 'border-box' }}>
+          {!world && <HelpPanel />}
+          <div style={{ display: world ? 'block' : 'none', height: '100%' }}>
+            <CanvasContainer
+              ref={canvasRef}
+              onTileHover={handleTileHover}
+              onTileClick={handleTileClick}
+            />
+          </div>
         </div>
-      </div>
 
-      <StatusBar status={displayStatus} />
+        <StatusBar status={displayStatus} isLoading={isLoading} />
 
-      <BlockSelectorModal
-        open={blocksModalOpen}
-        onClose={() => setBlocksModalOpen(false)}
-        options={blockOptions}
-        selectedValues={selectedBlocks}
-        onSelectionChange={setSelectedBlocks}
-      />
+        <BlockSelectorModal
+          open={blocksModalOpen}
+          onClose={() => setBlocksModalOpen(false)}
+          options={blockOptions}
+          selectedValues={selectedBlocks}
+          onSelectionChange={setSelectedBlocks}
+        />
+      </AntApp>
     </ConfigProvider>
   );
 }

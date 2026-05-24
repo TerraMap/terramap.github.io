@@ -1,5 +1,5 @@
-import { useEffect, useRef, useCallback } from 'react';
 import Panzoom, { PanzoomObject } from '@panzoom/panzoom';
+import { useCallback, useEffect, useRef } from 'react';
 
 export interface PanZoomControls {
   zoomIn: () => void;
@@ -19,10 +19,10 @@ export function usePanZoom(
     if (!el) return;
 
     const pz = Panzoom(el, {
-      maxScale: 20,
-      minScale: 0.3,
+      maxScale: 80,
+      minScale: 1,
+      step: 0.08,
       cursor: 'default',
-      contain: 'outside',
     });
 
     el.parentElement!.addEventListener('wheel', pz.zoomWithWheel, { passive: false });
@@ -48,5 +48,18 @@ export function usePanZoom(
   const reset = useCallback(() => instanceRef.current?.reset(), []);
   const getScale = useCallback(() => instanceRef.current?.getScale() ?? 1, []);
 
-  return { zoomIn, zoomOut, reset, getScale, instanceRef };
+  const panToPoint = useCallback((elX: number, elY: number) => {
+    const pz = instanceRef.current;
+    const el = containerRef.current;
+    if (!pz || !el) return;
+    const scale = pz.getScale();
+    const parent = el.parentElement!;
+    const cx = el.offsetWidth / 2;
+    const cy = el.offsetHeight / 2;
+    const panX = (parent.clientWidth / 2 - cx) / scale - elX + cx;
+    const panY = (parent.clientHeight / 2 - cy) / scale - elY + cy;
+    pz.pan(panX, panY, { force: true });
+  }, [containerRef]);
+
+  return { zoomIn, zoomOut, reset, getScale, panToPoint, instanceRef };
 }
