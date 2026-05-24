@@ -33,13 +33,17 @@ export function useBlockOptions() {
           const frame = tile.Frames[f];
           frame.isTile = true;
 
+          if (frame.Name === 'Default' && frame.Variety === 'Default') continue;
+
           let text = tile.Name;
-          if (frame.Name) {
+          if (frame.Name && frame.Name !== tile.Name) {
             text += ` - ${frame.Name}`;
           }
-          if (frame.Variety) {
+          if (frame.Variety && frame.Variety !== 'Default') {
             text += ` - ${frame.Variety}`;
           }
+
+          if (text === tile.Name && (frame.U ?? 0) === 0 && (frame.V ?? 0) === 0) continue;
 
           options.push({
             value: `${i}`,

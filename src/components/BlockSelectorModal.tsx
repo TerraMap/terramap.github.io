@@ -61,12 +61,12 @@ export function BlockSelectorModal({
       <Select
         allowClear
         mode="multiple"
-        virtual
-        style={{ width: '100%' }}
-        placeholder={filter === 'All' ? "Search tiles, items, and walls..." : filter === 'Item' ? 'Search items...' : filter === 'Tile' ? 'Search tiles...' : 'Search walls...'}
-        value={selectedValues}
         onChange={onSelectionChange}
         options={filteredOptions}
+        style={{ width: '100%' }}
+        value={selectedValues}
+        virtual
+        placeholder={filter === 'All' ? "Search tiles, items, and walls..." : filter === 'Item' ? 'Search items...' : filter === 'Tile' ? 'Search tiles...' : 'Search walls...'}
         showSearch={{
           filterOption: (input, option) => {
             const inputLower = input.toLowerCase();

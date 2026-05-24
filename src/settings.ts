@@ -28298,7 +28298,7 @@ export var settings: Settings = {
     },
     {
       "Id": "115",
-      "Name": "Shadow Orb"
+      "Name": "Shadow Orb (item)"
     },
     {
       "Id": "116",
@@ -28322,7 +28322,7 @@ export var settings: Settings = {
     },
     {
       "Id": "121",
-      "Name": "Fiery Greatsword"
+      "Name": "Volcano"
     },
     {
       "Id": "122",
@@ -29494,7 +29494,7 @@ export var settings: Settings = {
     },
     {
       "Id": "414",
-      "Name": "Mudstone Block"
+      "Name": "Mudstone Brick"
     },
     {
       "Id": "415",
@@ -29874,7 +29874,7 @@ export var settings: Settings = {
     },
     {
       "Id": "509",
-      "Name": "Wrench"
+      "Name": "Red Wrench"
     },
     {
       "Id": "510",
@@ -30514,7 +30514,7 @@ export var settings: Settings = {
     },
     {
       "Id": "669",
-      "Name": "Fish"
+      "Name": "Fish (item)"
     },
     {
       "Id": "670",
@@ -30530,7 +30530,7 @@ export var settings: Settings = {
     },
     {
       "Id": "673",
-      "Name": "Icemourne"
+      "Name": "Boreal Wood Work Bench"
     },
     {
       "Id": "674",
@@ -30546,7 +30546,7 @@ export var settings: Settings = {
     },
     {
       "Id": "677",
-      "Name": "Scythe"
+      "Name": "Boreal Wood Table"
     },
     {
       "Id": "678",
@@ -30562,7 +30562,7 @@ export var settings: Settings = {
     },
     {
       "Id": "681",
-      "Name": "Ice Chest"
+      "Name": "Frozen Chest"
     },
     {
       "Id": "682",
@@ -31050,15 +31050,15 @@ export var settings: Settings = {
     },
     {
       "Id": "803",
-      "Name": "Eskimo Hood"
+      "Name": "Snow Hood"
     },
     {
       "Id": "804",
-      "Name": "Eskimo Coat"
+      "Name": "Snow Coat"
     },
     {
       "Id": "805",
-      "Name": "Eskimo Pants"
+      "Name": "Snow Pants"
     },
     {
       "Id": "806",
@@ -31130,7 +31130,7 @@ export var settings: Settings = {
     },
     {
       "Id": "823",
-      "Name": "Ghost Wings"
+      "Name": "Spectre Wings"
     },
     {
       "Id": "824",
@@ -31750,15 +31750,15 @@ export var settings: Settings = {
     },
     {
       "Id": "978",
-      "Name": "Pink Eskimo Hood"
+      "Name": "Pink Snow Hood"
     },
     {
       "Id": "979",
-      "Name": "Pink Eskimo Coat"
+      "Name": "Pink Snow Coat"
     },
     {
       "Id": "980",
-      "Name": "Pink Eskimo Pants"
+      "Name": "Pink Snow Pants"
     },
     {
       "Id": "981",
@@ -32310,7 +32310,7 @@ export var settings: Settings = {
     },
     {
       "Id": "1118",
-      "Name": "Purple Mucos"
+      "Name": "Purple Mucus"
     },
     {
       "Id": "1119",
@@ -33158,7 +33158,7 @@ export var settings: Settings = {
     },
     {
       "Id": "1330",
-      "Name": "Vertebrae"
+      "Name": "Vertebra"
     },
     {
       "Id": "1331",
@@ -33414,11 +33414,11 @@ export var settings: Settings = {
     },
     {
       "Id": "1394",
-      "Name": "Diablost Lamp"
+      "Name": "Diabolist Lamp"
     },
     {
       "Id": "1395",
-      "Name": "Oil Rag Sconse"
+      "Name": "Oil Rag Sconce"
     },
     {
       "Id": "1396",
@@ -33630,7 +33630,7 @@ export var settings: Settings = {
     },
     {
       "Id": "1448",
-      "Name": "Metal Fence"
+      "Name": "Lead Fence"
     },
     {
       "Id": "1449",
@@ -33726,7 +33726,7 @@ export var settings: Settings = {
     },
     {
       "Id": "1472",
-      "Name": "Red Dungeon Bed"
+      "Name": "Pink Dungeon Bed"
     },
     {
       "Id": "1473",
@@ -33966,7 +33966,7 @@ export var settings: Settings = {
     },
     {
       "Id": "1532",
-      "Name": "Frozen Chest"
+      "Name": "Ice Chest"
     },
     {
       "Id": "1533",
@@ -34226,7 +34226,7 @@ export var settings: Settings = {
     },
     {
       "Id": "1597",
-      "Name": "Music Box (Space)"
+      "Name": "Music Box (Space Night)"
     },
     {
       "Id": "1598",
@@ -34254,7 +34254,7 @@ export var settings: Settings = {
     },
     {
       "Id": "1604",
-      "Name": "Music Box (Ocean)"
+      "Name": "Music Box (Ocean Day)"
     },
     {
       "Id": "1605",
@@ -34410,7 +34410,7 @@ export var settings: Settings = {
     },
     {
       "Id": "1643",
-      "Name": "Zombie Eskimo Banner"
+      "Name": "Frozen Zombie Banner"
     },
     {
       "Id": "1644",
@@ -34446,7 +34446,7 @@ export var settings: Settings = {
     },
     {
       "Id": "1652",
-      "Name": "Goblin Archer Banner"
+      "Name": "Goblin Thief Banner"
     },
     {
       "Id": "1653",
@@ -34454,11 +34454,11 @@ export var settings: Settings = {
     },
     {
       "Id": "1654",
-      "Name": "Goblin Scout Banner"
+      "Name": "Goblin Peon Banner"
     },
     {
       "Id": "1655",
-      "Name": "Goblin Thief Banner"
+      "Name": "Goblin Scout Banner"
     },
     {
       "Id": "1656",
@@ -34670,7 +34670,7 @@ export var settings: Settings = {
     },
     {
       "Id": "1708",
-      "Name": "Steam Punk Chair"
+      "Name": "Steampunk Chair"
     },
     {
       "Id": "1709",
@@ -34686,7 +34686,7 @@ export var settings: Settings = {
     },
     {
       "Id": "1712",
-      "Name": "Steam Punk Door"
+      "Name": "Steampunk Door"
     },
     {
       "Id": "1713",
@@ -34710,7 +34710,7 @@ export var settings: Settings = {
     },
     {
       "Id": "1718",
-      "Name": "Steam Punk Table"
+      "Name": "Steampunk Table"
     },
     {
       "Id": "1719",
@@ -34726,7 +34726,7 @@ export var settings: Settings = {
     },
     {
       "Id": "1722",
-      "Name": "Steam Punk Bed"
+      "Name": "Steampunk Bed"
     },
     {
       "Id": "1723",
@@ -34806,7 +34806,7 @@ export var settings: Settings = {
     },
     {
       "Id": "1742",
-      "Name": "Steam Punk Goggles"
+      "Name": "Steampunk Goggles"
     },
     {
       "Id": "1743",
@@ -35110,7 +35110,7 @@ export var settings: Settings = {
     },
     {
       "Id": "1818",
-      "Name": "Spooky Platform"
+      "Name": "Spooky Wood Platform"
     },
     {
       "Id": "1819",
@@ -35870,7 +35870,7 @@ export var settings: Settings = {
     },
     {
       "Id": "2008",
-      "Name": "Fancy Grey Wallpaper"
+      "Name": "Fancy Gray Wallpaper"
     },
     {
       "Id": "2009",
@@ -36526,7 +36526,7 @@ export var settings: Settings = {
     },
     {
       "Id": "2172",
-      "Name": "Heavy Work Bench"
+      "Name": "Heavy Assembler"
     },
     {
       "Id": "2173",
@@ -36786,23 +36786,23 @@ export var settings: Settings = {
     },
     {
       "Id": "2237",
-      "Name": "Dynasty Grandfather Clock"
+      "Name": "Dynasty Clock"
     },
     {
       "Id": "2238",
-      "Name": "Golden Grandfather Clock"
+      "Name": "Golden Clock"
     },
     {
       "Id": "2239",
-      "Name": "Glass Grandfather Clock"
+      "Name": "Glass Clock"
     },
     {
       "Id": "2240",
-      "Name": "Honey Grandfather Clock"
+      "Name": "Honey Clock"
     },
     {
       "Id": "2241",
-      "Name": "Steampunk Grandfather Clock"
+      "Name": "Steampunk Clock"
     },
     {
       "Id": "2242",
@@ -36954,7 +36954,7 @@ export var settings: Settings = {
     },
     {
       "Id": "2279",
-      "Name": "Gypsy Robe"
+      "Name": "Mystic Robe"
     },
     {
       "Id": "2280",
@@ -37738,7 +37738,7 @@ export var settings: Settings = {
     },
     {
       "Id": "2475",
-      "Name": "Amanitia Fungifin"
+      "Name": "Amanita Fungifin"
     },
     {
       "Id": "2476",
@@ -37826,7 +37826,7 @@ export var settings: Settings = {
     },
     {
       "Id": "2497",
-      "Name": "Pillagin Me Pixels"
+      "Name": "Pillagin' Me Pixels"
     },
     {
       "Id": "2498",
@@ -37898,7 +37898,7 @@ export var settings: Settings = {
     },
     {
       "Id": "2515",
-      "Name": "Palm Wood Sword"
+      "Name": "Palm Wood Bow"
     },
     {
       "Id": "2516",
@@ -37906,7 +37906,7 @@ export var settings: Settings = {
     },
     {
       "Id": "2517",
-      "Name": "Palm Wood Bow"
+      "Name": "Palm Wood Sword"
     },
     {
       "Id": "2518",
@@ -38186,7 +38186,7 @@ export var settings: Settings = {
     },
     {
       "Id": "2587",
-      "Name": "Tartar Sauce"
+      "Name": "Beguiling Lyre"
     },
     {
       "Id": "2588",
@@ -38262,7 +38262,7 @@ export var settings: Settings = {
     },
     {
       "Id": "2606",
-      "Name": "Sunplate Clock"
+      "Name": "Skyware Clock"
     },
     {
       "Id": "2607",
@@ -38282,7 +38282,7 @@ export var settings: Settings = {
     },
     {
       "Id": "2611",
-      "Name": "Flairon"
+      "Name": "Flairoon"
     },
     {
       "Id": "2612",
@@ -38646,147 +38646,147 @@ export var settings: Settings = {
     },
     {
       "Id": "2702",
-      "Name": "0 Statue"
+      "Name": "'0' Statue"
     },
     {
       "Id": "2703",
-      "Name": "1 Statue"
+      "Name": "'1' Statue"
     },
     {
       "Id": "2704",
-      "Name": "2 Statue"
+      "Name": "'2' Statue"
     },
     {
       "Id": "2705",
-      "Name": "3 Statue"
+      "Name": "'3' Statue"
     },
     {
       "Id": "2706",
-      "Name": "4 Statue"
+      "Name": "'4' Statue"
     },
     {
       "Id": "2707",
-      "Name": "5 Statue"
+      "Name": "'5' Statue"
     },
     {
       "Id": "2708",
-      "Name": "6 Statue"
+      "Name": "'6' Statue"
     },
     {
       "Id": "2709",
-      "Name": "7 Statue"
+      "Name": "'7' Statue"
     },
     {
       "Id": "2710",
-      "Name": "8 Statue"
+      "Name": "'8' Statue"
     },
     {
       "Id": "2711",
-      "Name": "9 Statue"
+      "Name": "'9' Statue"
     },
     {
       "Id": "2712",
-      "Name": "A Statue"
+      "Name": "'A' Statue"
     },
     {
       "Id": "2713",
-      "Name": "B Statue"
+      "Name": "'B' Statue"
     },
     {
       "Id": "2714",
-      "Name": "C Statue"
+      "Name": "'C' Statue"
     },
     {
       "Id": "2715",
-      "Name": "D Statue"
+      "Name": "'D' Statue"
     },
     {
       "Id": "2716",
-      "Name": "E Statue"
+      "Name": "'E' Statue"
     },
     {
       "Id": "2717",
-      "Name": "F Statue"
+      "Name": "'F' Statue"
     },
     {
       "Id": "2718",
-      "Name": "G Statue"
+      "Name": "'G' Statue"
     },
     {
       "Id": "2719",
-      "Name": "H Statue"
+      "Name": "'H' Statue"
     },
     {
       "Id": "2720",
-      "Name": "I Statue"
+      "Name": "'I' Statue"
     },
     {
       "Id": "2721",
-      "Name": "J Statue"
+      "Name": "'J' Statue"
     },
     {
       "Id": "2722",
-      "Name": "K Statue"
+      "Name": "'K' Statue"
     },
     {
       "Id": "2723",
-      "Name": "L Statue"
+      "Name": "'L' Statue"
     },
     {
       "Id": "2724",
-      "Name": "M Statue"
+      "Name": "'M' Statue"
     },
     {
       "Id": "2725",
-      "Name": "N Statue"
+      "Name": "'N' Statue"
     },
     {
       "Id": "2726",
-      "Name": "O Statue"
+      "Name": "'O' Statue"
     },
     {
       "Id": "2727",
-      "Name": "P Statue"
+      "Name": "'P' Statue"
     },
     {
       "Id": "2728",
-      "Name": "Q Statue"
+      "Name": "'Q' Statue"
     },
     {
       "Id": "2729",
-      "Name": "R Statue"
+      "Name": "'R' Statue"
     },
     {
       "Id": "2730",
-      "Name": "S Statue"
+      "Name": "'S' Statue"
     },
     {
       "Id": "2731",
-      "Name": "T Statue"
+      "Name": "'T' Statue"
     },
     {
       "Id": "2732",
-      "Name": "U Statue"
+      "Name": "'U' Statue"
     },
     {
       "Id": "2733",
-      "Name": "V Statue"
+      "Name": "'V' Statue"
     },
     {
       "Id": "2734",
-      "Name": "W Statue"
+      "Name": "'W' Statue"
     },
     {
       "Id": "2735",
-      "Name": "X Statue"
+      "Name": "'X' Statue"
     },
     {
       "Id": "2736",
-      "Name": "Y Statue"
+      "Name": "'Y' Statue"
     },
     {
       "Id": "2737",
-      "Name": "Z Statue"
+      "Name": "'Z' Statue"
     },
     {
       "Id": "2738",
@@ -38922,7 +38922,7 @@ export var settings: Settings = {
     },
     {
       "Id": "2771",
-      "Name": "Brain Scrambler"
+      "Name": "Brain Scrambler (item)"
     },
     {
       "Id": "2772",
@@ -39446,7 +39446,7 @@ export var settings: Settings = {
     },
     {
       "Id": "2902",
-      "Name": "Blue Cultist Caster Banner"
+      "Name": "Lunatic Devotee Banner"
     },
     {
       "Id": "2903",
@@ -39618,7 +39618,7 @@ export var settings: Settings = {
     },
     {
       "Id": "2945",
-      "Name": "Martian Brainscrambler Banner"
+      "Name": "Martian Brain Scrambler Banner"
     },
     {
       "Id": "2946",
@@ -39642,7 +39642,7 @@ export var settings: Settings = {
     },
     {
       "Id": "2951",
-      "Name": "Martian Raygunner Banner"
+      "Name": "Martian Ray Gunner Banner"
     },
     {
       "Id": "2952",
@@ -39934,7 +39934,7 @@ export var settings: Settings = {
     },
     {
       "Id": "3024",
-      "Name": "Skiphs's Blood"
+      "Name": "Skiphs' Blood"
     },
     {
       "Id": "3025",
@@ -40086,7 +40086,7 @@ export var settings: Settings = {
     },
     {
       "Id": "3062",
-      "Name": "Crimson Heart"
+      "Name": "Crimson Heart (item)"
     },
     {
       "Id": "3063",
@@ -41110,63 +41110,63 @@ export var settings: Settings = {
     },
     {
       "Id": "3318",
-      "Name": "Treasure Bag"
+      "Name": "Treasure Bag (King Slime)"
     },
     {
       "Id": "3319",
-      "Name": "Treasure Bag"
+      "Name": "Treasure Bag (Eye of Cthulhu)"
     },
     {
       "Id": "3320",
-      "Name": "Treasure Bag"
+      "Name": "Treasure Bag (Eater of Worlds)"
     },
     {
       "Id": "3321",
-      "Name": "Treasure Bag"
+      "Name": "Treasure Bag (Brain of Cthulhu)"
     },
     {
       "Id": "3322",
-      "Name": "Treasure Bag"
+      "Name": "Treasure Bag (Queen Bee)"
     },
     {
       "Id": "3323",
-      "Name": "Treasure Bag"
+      "Name": "Treasure Bag (Skeletron)"
     },
     {
       "Id": "3324",
-      "Name": "Treasure Bag"
+      "Name": "Treasure Bag (Wall of Flesh)"
     },
     {
       "Id": "3325",
-      "Name": "Treasure Bag"
+      "Name": "Treasure Bag (The Destroyer)"
     },
     {
       "Id": "3326",
-      "Name": "Treasure Bag"
+      "Name": "Treasure Bag (The Twins)"
     },
     {
       "Id": "3327",
-      "Name": "Treasure Bag"
+      "Name": "Treasure Bag (Skeletron Prime)"
     },
     {
       "Id": "3328",
-      "Name": "Treasure Bag"
+      "Name": "Treasure Bag (Plantera)"
     },
     {
       "Id": "3329",
-      "Name": "Treasure Bag"
+      "Name": "Treasure Bag (Golem)"
     },
     {
       "Id": "3330",
-      "Name": "Treasure Bag"
+      "Name": "Treasure Bag (Duke Fishron)"
     },
     {
       "Id": "3331",
-      "Name": "Treasure Bag"
+      "Name": "Treasure Bag (Lunatic Cultist)"
     },
     {
       "Id": "3332",
-      "Name": "Treasure Bag"
+      "Name": "Treasure Bag (Moon Lord)"
     },
     {
       "Id": "3333",
@@ -41266,7 +41266,7 @@ export var settings: Settings = {
     },
     {
       "Id": "3357",
-      "Name": "Ancient Cultist Trophy"
+      "Name": "Lunatic Cultist Trophy"
     },
     {
       "Id": "3358",
@@ -41326,7 +41326,7 @@ export var settings: Settings = {
     },
     {
       "Id": "3372",
-      "Name": "Ancient Cultist Mask"
+      "Name": "Lunatic Cultist Mask"
     },
     {
       "Id": "3373",
@@ -41398,7 +41398,7 @@ export var settings: Settings = {
     },
     {
       "Id": "3390",
-      "Name": "Goblin Summoner Banner"
+      "Name": "Goblin Warlock Banner"
     },
     {
       "Id": "3391",
@@ -41470,7 +41470,7 @@ export var settings: Settings = {
     },
     {
       "Id": "3408",
-      "Name": "Grolem Banner"
+      "Name": "Granite Golem Banner"
     },
     {
       "Id": "3409",
@@ -41514,7 +41514,7 @@ export var settings: Settings = {
     },
     {
       "Id": "3419",
-      "Name": "Ravager Scorpion Banner"
+      "Name": "Sand Poacher Banner"
     },
     {
       "Id": "3420",
@@ -41534,7 +41534,7 @@ export var settings: Settings = {
     },
     {
       "Id": "3424",
-      "Name": "Small Star Cell Banner"
+      "Name": "Mini Star Cell Banner"
     },
     {
       "Id": "3425",
@@ -42178,19 +42178,19 @@ export var settings: Settings = {
     },
     {
       "Id": "3585",
-      "Name": "Skiphs's Mask"
+      "Name": "Skiphs' Mask"
     },
     {
       "Id": "3586",
-      "Name": "Skiphs's Skin"
+      "Name": "Skiphs' Skin"
     },
     {
       "Id": "3587",
-      "Name": "Skiphs's Bear Butt"
+      "Name": "Skiphs' Bear Butt"
     },
     {
       "Id": "3588",
-      "Name": "Skiphs's Paws"
+      "Name": "Skiphs' Paws"
     },
     {
       "Id": "3589",
@@ -42302,7 +42302,7 @@ export var settings: Settings = {
     },
     {
       "Id": "3615",
-      "Name": "Logic Sensor (Above)"
+      "Name": "Logic Sensor (Player Above)"
     },
     {
       "Id": "3616",
@@ -42346,7 +42346,7 @@ export var settings: Settings = {
     },
     {
       "Id": "3626",
-      "Name": "Weighted Pressure Plate Pink"
+      "Name": "Pink Weighted Pressure Plate"
     },
     {
       "Id": "3627",
@@ -42362,55 +42362,55 @@ export var settings: Settings = {
     },
     {
       "Id": "3630",
-      "Name": "Weighted Pressure Plate Orange"
+      "Name": "Orange Weighted Pressure Plate"
     },
     {
       "Id": "3631",
-      "Name": "Weighted Pressure Plate Purple"
+      "Name": "Purple Weighted Pressure Plate"
     },
     {
       "Id": "3632",
-      "Name": "Weighted Pressure Plate Cyan"
+      "Name": "Cyan Weighted Pressure Plate"
     },
     {
       "Id": "3633",
-      "Name": "Team Block Green"
+      "Name": "Green Team Block"
     },
     {
       "Id": "3634",
-      "Name": "Team Block Blue"
+      "Name": "Blue Team Block"
     },
     {
       "Id": "3635",
-      "Name": "Team Block Yellow"
+      "Name": "Yellow Team Block"
     },
     {
       "Id": "3636",
-      "Name": "Team Block Pink"
+      "Name": "Pink Team Block"
     },
     {
       "Id": "3637",
-      "Name": "Team Block White"
+      "Name": "White Team Block"
     },
     {
       "Id": "3638",
-      "Name": "Team Block Green Platform"
+      "Name": "Green Team Platform"
     },
     {
       "Id": "3639",
-      "Name": "Team Block BlueP latform"
+      "Name": "Blue Team Platform"
     },
     {
       "Id": "3640",
-      "Name": "Team Block Yellow Platform"
+      "Name": "Yellow Team Platform"
     },
     {
       "Id": "3641",
-      "Name": "Team Block Pink Platform"
+      "Name": "Pink Team Platform"
     },
     {
       "Id": "3642",
-      "Name": "Team Block White Platform"
+      "Name": "White Team Platform"
     },
     {
       "Id": "3643",
@@ -42418,31 +42418,31 @@ export var settings: Settings = {
     },
     {
       "Id": "3644",
-      "Name": "Gem Lock Ruby"
+      "Name": "Ruby Gem Lock"
     },
     {
       "Id": "3645",
-      "Name": "Gem Lock Sapphire"
+      "Name": "Sapphire Gem Lock"
     },
     {
       "Id": "3646",
-      "Name": "Gem Lock Emerald"
+      "Name": "Emerald Gem Lock"
     },
     {
       "Id": "3647",
-      "Name": "Gem Lock Topaz"
+      "Name": "Topaz Gem Lock"
     },
     {
       "Id": "3648",
-      "Name": "Gem Lock Amethyst"
+      "Name": "Amethyst Gem Lock"
     },
     {
       "Id": "3649",
-      "Name": "Gem Lock Diamond"
+      "Name": "Diamond Gem Lock"
     },
     {
       "Id": "3650",
-      "Name": "Gem Lock Amber"
+      "Name": "Amber Gem Lock"
     },
     {
       "Id": "3651",
@@ -42518,7 +42518,7 @@ export var settings: Settings = {
     },
     {
       "Id": "3669",
-      "Name": "Trapped RichMahogany Chest"
+      "Name": "Trapped Rich Mahogany Chest"
     },
     {
       "Id": "3670",
@@ -42530,7 +42530,7 @@ export var settings: Settings = {
     },
     {
       "Id": "3672",
-      "Name": "Trapped Ice Chest"
+      "Name": "Trapped Frozen Chest"
     },
     {
       "Id": "3673",
@@ -42558,119 +42558,119 @@ export var settings: Settings = {
     },
     {
       "Id": "3679",
-      "Name": "Trapped JungleChest"
+      "Name": "Trapped Jungle Chest"
     },
     {
       "Id": "3680",
-      "Name": "Trapped CorruptionChest"
+      "Name": "Trapped Corruption Chest"
     },
     {
       "Id": "3681",
-      "Name": "Trapped CrimsonChest"
+      "Name": "Trapped Crimson Chest"
     },
     {
       "Id": "3682",
-      "Name": "Trapped HallowedChest"
+      "Name": "Trapped Hallowed Chest"
     },
     {
       "Id": "3683",
-      "Name": "Trapped FrozenChest"
+      "Name": "Trapped Ice Chest"
     },
     {
       "Id": "3684",
-      "Name": "Trapped DynastyChest"
+      "Name": "Trapped Dynasty Chest"
     },
     {
       "Id": "3685",
-      "Name": "Trapped HoneyChest"
+      "Name": "Trapped Honey Chest"
     },
     {
       "Id": "3686",
-      "Name": "Trapped SteampunkChest"
+      "Name": "Trapped Steampunk Chest"
     },
     {
       "Id": "3687",
-      "Name": "Trapped PalmWoodChest"
+      "Name": "Trapped Palm Wood Chest"
     },
     {
       "Id": "3688",
-      "Name": "Trapped MushroomChest"
+      "Name": "Trapped Mushroom Chest"
     },
     {
       "Id": "3689",
-      "Name": "Trapped BorealWoodChest"
+      "Name": "Trapped Boreal Wood Chest"
     },
     {
       "Id": "3690",
-      "Name": "Trapped SlimeChest"
+      "Name": "Trapped Slime Chest"
     },
     {
       "Id": "3691",
-      "Name": "Trapped GreenDungeonChest"
+      "Name": "Trapped Green Dungeon Chest"
     },
     {
       "Id": "3692",
-      "Name": "Trapped PinkDungeonChest"
+      "Name": "Trapped Pink Dungeon Chest"
     },
     {
       "Id": "3693",
-      "Name": "Trapped BlueDungeonChest"
+      "Name": "Trapped Blue Dungeon Chest"
     },
     {
       "Id": "3694",
-      "Name": "Trapped BoneChest"
+      "Name": "Trapped Bone Chest"
     },
     {
       "Id": "3695",
-      "Name": "Trapped CactusChest"
+      "Name": "Trapped Cactus Chest"
     },
     {
       "Id": "3696",
-      "Name": "Trapped FleshChest"
+      "Name": "Trapped Flesh Chest"
     },
     {
       "Id": "3697",
-      "Name": "Trapped ObsidianChest"
+      "Name": "Trapped Obsidian Chest"
     },
     {
       "Id": "3698",
-      "Name": "Trapped PumpkinChest"
+      "Name": "Trapped Pumpkin Chest"
     },
     {
       "Id": "3699",
-      "Name": "Trapped SpookyChest"
+      "Name": "Trapped Spooky Chest"
     },
     {
       "Id": "3700",
-      "Name": "Trapped GlassChest"
+      "Name": "Trapped Glass Chest"
     },
     {
       "Id": "3701",
-      "Name": "Trapped MartianChest"
+      "Name": "Trapped Martian Chest"
     },
     {
       "Id": "3702",
-      "Name": "Trapped MeteoriteChest"
+      "Name": "Trapped Meteorite Chest"
     },
     {
       "Id": "3703",
-      "Name": "Trapped GraniteChest"
+      "Name": "Trapped Granite Chest"
     },
     {
       "Id": "3704",
-      "Name": "Trapped MarbleChest"
+      "Name": "Trapped Marble Chest"
     },
     {
       "Id": "3705",
-      "Name": "Trapped newchest1"
+      "Name": "Trapped Chest (new 1)"
     },
     {
       "Id": "3706",
-      "Name": "Trapped newchest2"
+      "Name": "Trapped Chest (new 2)"
     },
     {
       "Id": "3707",
-      "Name": "Projectile Pressure Pad"
+      "Name": "Teal Pressure Pad"
     },
     {
       "Id": "3708",
@@ -42734,7 +42734,7 @@ export var settings: Settings = {
     },
     {
       "Id": "3723",
-      "Name": "Ultra Bright Campfire"
+      "Name": "Ultrabright Campfire"
     },
     {
       "Id": "3724",
@@ -42786,27 +42786,27 @@ export var settings: Settings = {
     },
     {
       "Id": "3736",
-      "Name": "Silly Balloon Pink"
+      "Name": "Silly Pink Balloon"
     },
     {
       "Id": "3737",
-      "Name": "Silly Balloon Purple"
+      "Name": "Silly Purple Balloon"
     },
     {
       "Id": "3738",
-      "Name": "Silly Balloon Green"
+      "Name": "Silly Green Balloon"
     },
     {
       "Id": "3739",
-      "Name": "Silly Streamer Blue"
+      "Name": "Blue Streamer"
     },
     {
       "Id": "3740",
-      "Name": "Silly Streamer Green"
+      "Name": "Green Streamer"
     },
     {
       "Id": "3741",
-      "Name": "Silly Streamer Pink"
+      "Name": "Pink Streamer"
     },
     {
       "Id": "3742",
@@ -42814,15 +42814,15 @@ export var settings: Settings = {
     },
     {
       "Id": "3743",
-      "Name": "Silly Balloon Tied Pink"
+      "Name": "Silly Tied Balloon (Pink)"
     },
     {
       "Id": "3744",
-      "Name": "Silly Balloon Tied Purple"
+      "Name": "Silly Tied Balloon (Purple)"
     },
     {
       "Id": "3745",
-      "Name": "Silly Balloon Tied Green"
+      "Name": "Silly Tied Balloon (Green)"
     },
     {
       "Id": "3746",
@@ -42882,19 +42882,19 @@ export var settings: Settings = {
     },
     {
       "Id": "3760",
-      "Name": "Silly Balloon Pink Wall"
+      "Name": "Silly Pink Balloon Wall"
     },
     {
       "Id": "3761",
-      "Name": "Silly Balloon Purple Wall"
+      "Name": "Silly Purple Balloon Wall"
     },
     {
       "Id": "3762",
-      "Name": "Silly Balloon Green Wall"
+      "Name": "Silly Green Balloon Wall"
     },
     {
       "Id": "3763",
-      "Name": "0x33's Sunglasses"
+      "Name": "0x33's Aviators"
     },
     {
       "Id": "3764",
@@ -43106,7 +43106,7 @@ export var settings: Settings = {
     },
     {
       "Id": "3816",
-      "Name": "Elder Crystal Stand"
+      "Name": "Eternia Crystal Stand"
     },
     {
       "Id": "3817",
@@ -43154,7 +43154,7 @@ export var settings: Settings = {
     },
     {
       "Id": "3828",
-      "Name": "Elder Crystal"
+      "Name": "Eternia Crystal"
     },
     {
       "Id": "3829",
@@ -43426,7 +43426,7 @@ export var settings: Settings = {
     },
     {
       "Id": "3905",
-      "Name": "Dynasty Platform"
+      "Name": "Dynasty Wood Platform"
     },
     {
       "Id": "3906",
@@ -43490,19 +43490,19 @@ export var settings: Settings = {
     },
     {
       "Id": "3921",
-      "Name": "Arkhalis's Hood"
+      "Name": "Arkhalis' Hood"
     },
     {
       "Id": "3922",
-      "Name": "Arkhalis's Bodice"
+      "Name": "Arkhalis' Bodice"
     },
     {
       "Id": "3923",
-      "Name": "Arkhalis's Tights"
+      "Name": "Arkhalis' Tights"
     },
     {
       "Id": "3924",
-      "Name": "Arkhalis's Lightwings"
+      "Name": "Arkhalis' Lightwings"
     },
     {
       "Id": "3925",
@@ -43525,319 +43525,319 @@ export var settings: Settings = {
       "Name": "Leinfors' Luxury Shampoo"
     },
     {
-      "Name": "Celeb2",
+      "Name": "Celebration Mk2",
       "Id": "3930"
     },
     {
-      "Name": "SpiderBathtub",
+      "Name": "Spider Bathtub",
       "Id": "3931"
     },
     {
-      "Name": "SpiderBed",
+      "Name": "Spider Bed",
       "Id": "3932"
     },
     {
-      "Name": "SpiderBookcase",
+      "Name": "Spider Bookcase",
       "Id": "3933"
     },
     {
-      "Name": "SpiderDresser",
+      "Name": "Spider Dresser",
       "Id": "3934"
     },
     {
-      "Name": "SpiderCandelabra",
+      "Name": "Spider Candelabra",
       "Id": "3935"
     },
     {
-      "Name": "SpiderCandle",
+      "Name": "Spider Candle",
       "Id": "3936"
     },
     {
-      "Name": "SpiderChair",
+      "Name": "Spider Chair",
       "Id": "3937"
     },
     {
-      "Name": "SpiderChandelier",
+      "Name": "Spider Chandelier",
       "Id": "3938"
     },
     {
-      "Name": "SpiderChest",
+      "Name": "Spider Chest",
       "Id": "3939"
     },
     {
-      "Name": "SpiderClock",
+      "Name": "Spider Clock",
       "Id": "3940"
     },
     {
-      "Name": "SpiderDoor",
+      "Name": "Spider Door",
       "Id": "3941"
     },
     {
-      "Name": "SpiderLamp",
+      "Name": "Spider Lamp",
       "Id": "3942"
     },
     {
-      "Name": "SpiderLantern",
+      "Name": "Spider Lantern",
       "Id": "3943"
     },
     {
-      "Name": "SpiderPiano",
+      "Name": "Spider Piano",
       "Id": "3944"
     },
     {
-      "Name": "SpiderPlatform",
+      "Name": "Spider Platform",
       "Id": "3945"
     },
     {
-      "Name": "SpiderSinkSpiderSinkDoesWhateverASpiderSinkDoes",
+      "Name": "Spider Sink",
       "Id": "3946"
     },
     {
-      "Name": "SpiderSofa",
+      "Name": "Spider Sofa",
       "Id": "3947"
     },
     {
-      "Name": "SpiderTable",
+      "Name": "Spider Table",
       "Id": "3948"
     },
     {
-      "Name": "SpiderWorkbench",
+      "Name": "Spider Work Bench",
       "Id": "3949"
     },
     {
-      "Name": "Fake_SpiderChest",
+      "Name": "Trapped Spider Chest",
       "Id": "3950"
     },
     {
-      "Name": "IronBrick",
+      "Name": "Iron Brick",
       "Id": "3951"
     },
     {
-      "Name": "IronBrickWall",
+      "Name": "Iron Brick Wall",
       "Id": "3952"
     },
     {
-      "Name": "LeadBrick",
+      "Name": "Lead Brick",
       "Id": "3953"
     },
     {
-      "Name": "LeadBrickWall",
+      "Name": "Lead Brick Wall",
       "Id": "3954"
     },
     {
-      "Name": "LesionBlock",
+      "Name": "Lesion Block",
       "Id": "3955"
     },
     {
-      "Name": "LesionBlockWall",
+      "Name": "Lesion Block Wall",
       "Id": "3956"
     },
     {
-      "Name": "LesionPlatform",
+      "Name": "Lesion Platform",
       "Id": "3957"
     },
     {
-      "Name": "LesionBathtub",
+      "Name": "Lesion Bathtub",
       "Id": "3958"
     },
     {
-      "Name": "LesionBed",
+      "Name": "Lesion Bed",
       "Id": "3959"
     },
     {
-      "Name": "LesionBookcase",
+      "Name": "Lesion Bookcase",
       "Id": "3960"
     },
     {
-      "Name": "LesionCandelabra",
+      "Name": "Lesion Candelabra",
       "Id": "3961"
     },
     {
-      "Name": "LesionCandle",
+      "Name": "Lesion Candle",
       "Id": "3962"
     },
     {
-      "Name": "LesionChair",
+      "Name": "Lesion Chair",
       "Id": "3963"
     },
     {
-      "Name": "LesionChandelier",
+      "Name": "Lesion Chandelier",
       "Id": "3964"
     },
     {
-      "Name": "LesionChest",
+      "Name": "Lesion Chest",
       "Id": "3965"
     },
     {
-      "Name": "LesionClock",
+      "Name": "Lesion Clock",
       "Id": "3966"
     },
     {
-      "Name": "LesionDoor",
+      "Name": "Lesion Door",
       "Id": "3967"
     },
     {
-      "Name": "LesionDresser",
+      "Name": "Lesion Dresser",
       "Id": "3968"
     },
     {
-      "Name": "LesionLamp",
+      "Name": "Lesion Lamp",
       "Id": "3969"
     },
     {
-      "Name": "LesionLantern",
+      "Name": "Lesion Lantern",
       "Id": "3970"
     },
     {
-      "Name": "LesionPiano",
+      "Name": "Lesion Piano",
       "Id": "3971"
     },
     {
-      "Name": "LesionSink",
+      "Name": "Lesion Sink",
       "Id": "3972"
     },
     {
-      "Name": "LesionSofa",
+      "Name": "Lesion Sofa",
       "Id": "3973"
     },
     {
-      "Name": "LesionTable",
+      "Name": "Lesion Table",
       "Id": "3974"
     },
     {
-      "Name": "LesionWorkbench",
+      "Name": "Lesion Work Bench",
       "Id": "3975"
     },
     {
-      "Name": "Fake_LesionChest",
+      "Name": "Trapped Lesion Chest",
       "Id": "3976"
     },
     {
-      "Name": "HatRack",
+      "Name": "Hat Rack",
       "Id": "3977"
     },
     {
-      "Name": "ColorOnlyDye",
+      "Name": "Color Only Dye",
       "Id": "3978"
     },
     {
-      "Name": "WoodenCrateHard",
+      "Name": "Pearlwood Crate",
       "Id": "3979"
     },
     {
-      "Name": "IronCrateHard",
+      "Name": "Mythril Crate",
       "Id": "3980"
     },
     {
-      "Name": "GoldenCrateHard",
+      "Name": "Titanium Crate",
       "Id": "3981"
     },
     {
-      "Name": "CorruptFishingCrateHard",
+      "Name": "Defiled Crate",
       "Id": "3982"
     },
     {
-      "Name": "CrimsonFishingCrateHard",
+      "Name": "Hematic Crate",
       "Id": "3983"
     },
     {
-      "Name": "DungeonFishingCrateHard",
+      "Name": "Stockade Crate",
       "Id": "3984"
     },
     {
-      "Name": "FloatingIslandFishingCrateHard",
+      "Name": "Azure Crate",
       "Id": "3985"
     },
     {
-      "Name": "HallowedFishingCrateHard",
+      "Name": "Divine Crate",
       "Id": "3986"
     },
     {
-      "Name": "JungleFishingCrateHard",
+      "Name": "Bramble Crate",
       "Id": "3987"
     },
     {
-      "Name": "DeadMansChest",
+      "Name": "Dead Man's Chest",
       "Id": "3988"
     },
     {
-      "Name": "GolfBall",
+      "Name": "Golf Ball",
       "Id": "3989"
     },
     {
-      "Name": "AmphibianBoots",
+      "Name": "Amphibian Boots",
       "Id": "3990"
     },
     {
-      "Name": "ArcaneFlower",
+      "Name": "Arcane Flower",
       "Id": "3991"
     },
     {
-      "Name": "BerserkerGlove",
+      "Name": "Berserker's Glove",
       "Id": "3992"
     },
     {
-      "Name": "FairyBoots",
+      "Name": "Fairy Boots",
       "Id": "3993"
     },
     {
-      "Name": "FrogFlipper",
+      "Name": "Frog Flipper",
       "Id": "3994"
     },
     {
-      "Name": "FrogGear",
+      "Name": "Frog Gear",
       "Id": "3995"
     },
     {
-      "Name": "FrogWebbing",
+      "Name": "Frog Webbing",
       "Id": "3996"
     },
     {
-      "Name": "FrozenShield",
+      "Name": "Frozen Shield",
       "Id": "3997"
     },
     {
-      "Name": "HeroShield",
+      "Name": "Hero Shield",
       "Id": "3998"
     },
     {
-      "Name": "LavaSkull",
+      "Name": "Magma Skull",
       "Id": "3999"
     },
     {
-      "Name": "MagnetFlower",
+      "Name": "Magnet Flower",
       "Id": "4000"
     },
     {
-      "Name": "ManaCloak",
+      "Name": "Mana Cloak",
       "Id": "4001"
     },
     {
-      "Name": "MoltenQuiver",
+      "Name": "Molten Quiver",
       "Id": "4002"
     },
     {
-      "Name": "MoltenSkullRose",
+      "Name": "Molten Skull Rose",
       "Id": "4003"
     },
     {
-      "Name": "ObsidianSkullRose",
+      "Name": "Obsidian Skull Rose",
       "Id": "4004"
     },
     {
-      "Name": "ReconScope",
+      "Name": "Recon Scope",
       "Id": "4005"
     },
     {
-      "Name": "StalkersQuiver",
+      "Name": "Stalker's Quiver",
       "Id": "4006"
     },
     {
-      "Name": "StingerNecklace",
+      "Name": "Stinger Necklace",
       "Id": "4007"
     },
     {
-      "Name": "UltrabrightHelmet",
+      "Name": "Ultrabright Helmet",
       "Id": "4008"
     },
     {
@@ -43845,23 +43845,23 @@ export var settings: Settings = {
       "Id": "4009"
     },
     {
-      "Name": "ApplePieSlice",
+      "Name": "Apple Pie Slice",
       "Id": "4010"
     },
     {
-      "Name": "ApplePie",
+      "Name": "Apple Pie",
       "Id": "4011"
     },
     {
-      "Name": "BananaSplit",
+      "Name": "Banana Split",
       "Id": "4012"
     },
     {
-      "Name": "BBQRibs",
+      "Name": "BBQ Ribs",
       "Id": "4013"
     },
     {
-      "Name": "BunnyStew",
+      "Name": "Bunny Stew",
       "Id": "4014"
     },
     {
@@ -43869,15 +43869,15 @@ export var settings: Settings = {
       "Id": "4015"
     },
     {
-      "Name": "ChickenNugget",
+      "Name": "Chicken Nugget",
       "Id": "4016"
     },
     {
-      "Name": "ChocolateChipCookie",
+      "Name": "Chocolate Chip Cookie",
       "Id": "4017"
     },
     {
-      "Name": "CreamSoda",
+      "Name": "Cream Soda",
       "Id": "4018"
     },
     {
@@ -43885,7 +43885,7 @@ export var settings: Settings = {
       "Id": "4019"
     },
     {
-      "Name": "FriedEgg",
+      "Name": "Fried Egg",
       "Id": "4020"
     },
     {
@@ -43893,7 +43893,7 @@ export var settings: Settings = {
       "Id": "4021"
     },
     {
-      "Name": "GoldenDelight",
+      "Name": "Golden Delight",
       "Id": "4022"
     },
     {
@@ -43901,7 +43901,7 @@ export var settings: Settings = {
       "Id": "4023"
     },
     {
-      "Name": "GrilledSquirrel",
+      "Name": "Grilled Squirrel",
       "Id": "4024"
     },
     {
@@ -43909,7 +43909,7 @@ export var settings: Settings = {
       "Id": "4025"
     },
     {
-      "Name": "IceCream",
+      "Name": "Ice Cream",
       "Id": "4026"
     },
     {
@@ -43925,27 +43925,27 @@ export var settings: Settings = {
       "Id": "4029"
     },
     {
-      "Name": "PotatoChips",
+      "Name": "Potato Chips",
       "Id": "4030"
     },
     {
-      "Name": "RoastedBird",
+      "Name": "Roasted Bird",
       "Id": "4031"
     },
     {
-      "Name": "RoastedDuck",
+      "Name": "Roasted Duck",
       "Id": "4032"
     },
     {
-      "Name": "SauteedFrogLegs",
+      "Name": "Sauteed Frog Legs",
       "Id": "4033"
     },
     {
-      "Name": "SeafoodDinner",
+      "Name": "Seafood Dinner",
       "Id": "4034"
     },
     {
-      "Name": "ShrimpPoBoy",
+      "Name": "Shrimp Po' Boy",
       "Id": "4035"
     },
     {
@@ -43957,427 +43957,427 @@ export var settings: Settings = {
       "Id": "4037"
     },
     {
-      "Name": "MoltenCharm",
+      "Name": "Molten Charm",
       "Id": "4038"
     },
     {
-      "Name": "GolfClubIron",
+      "Name": "Golf Club (Iron)",
       "Id": "4039"
     },
     {
-      "Name": "GolfCup",
+      "Name": "Golf Cup",
       "Id": "4040"
     },
     {
-      "Name": "FlowerPacketBlue",
+      "Name": "Blue Flower Seeds",
       "Id": "4041"
     },
     {
-      "Name": "FlowerPacketMagenta",
+      "Name": "Magenta Flower Seeds",
       "Id": "4042"
     },
     {
-      "Name": "FlowerPacketPink",
+      "Name": "Pink Flower Seeds",
       "Id": "4043"
     },
     {
-      "Name": "FlowerPacketRed",
+      "Name": "Red Flower Seeds",
       "Id": "4044"
     },
     {
-      "Name": "FlowerPacketYellow",
+      "Name": "Yellow Flower Seeds",
       "Id": "4045"
     },
     {
-      "Name": "FlowerPacketViolet",
+      "Name": "Violet Flower Seeds",
       "Id": "4046"
     },
     {
-      "Name": "FlowerPacketWhite",
+      "Name": "White Flower Seeds",
       "Id": "4047"
     },
     {
-      "Name": "FlowerPacketTallGrass",
+      "Name": "Tall Grass Seeds",
       "Id": "4048"
     },
     {
-      "Name": "LawnMower",
+      "Name": "Lawn Mower",
       "Id": "4049"
     },
     {
-      "Name": "CrimstoneBrick",
+      "Name": "Crimstone Brick",
       "Id": "4050"
     },
     {
-      "Name": "SmoothSandstone",
+      "Name": "Smooth Sandstone",
       "Id": "4051"
     },
     {
-      "Name": "CrimstoneBrickWall",
+      "Name": "Crimstone Brick Wall",
       "Id": "4052"
     },
     {
-      "Name": "SmoothSandstoneWall",
+      "Name": "Smooth Sandstone Wall",
       "Id": "4053"
     },
     {
-      "Name": "BloodMoonMonolith",
+      "Name": "Blood Moon Monolith",
       "Id": "4054"
     },
     {
-      "Name": "SandBoots",
+      "Name": "Dunerider Boots",
       "Id": "4055"
     },
     {
-      "Name": "AncientChisel",
+      "Name": "Ancient Chisel",
       "Id": "4056"
     },
     {
-      "Name": "CarbonGuitar",
+      "Name": "Rain Song",
       "Id": "4057"
     },
     {
-      "Name": "SkeletonBow",
+      "Name": "Skull Bow",
       "Id": "4058"
     },
     {
-      "Name": "FossilPickaxe",
+      "Name": "Fossil Pickaxe",
       "Id": "4059"
     },
     {
-      "Name": "SuperStarCannon",
+      "Name": "Super Star Shooter",
       "Id": "4060"
     },
     {
-      "Name": "ThunderSpear",
+      "Name": "Storm Spear",
       "Id": "4061"
     },
     {
-      "Name": "ThunderStaff",
+      "Name": "Thunder Zapper",
       "Id": "4062"
     },
     {
-      "Name": "DrumSet",
+      "Name": "Drum Set",
       "Id": "4063"
     },
     {
-      "Name": "PicnicTable",
+      "Name": "Picnic Table",
       "Id": "4064"
     },
     {
-      "Name": "PicnicTableWithCloth",
+      "Name": "Fancy Picnic Table",
       "Id": "4065"
     },
     {
-      "Name": "DesertMinecart",
+      "Name": "Desert Minecart",
       "Id": "4066"
     },
     {
-      "Name": "FishMinecart",
+      "Name": "Minecarp",
       "Id": "4067"
     },
     {
-      "Name": "FairyCritterPink",
+      "Name": "Pink Fairy",
       "Id": "4068"
     },
     {
-      "Name": "FairyCritterGreen",
+      "Name": "Green Fairy",
       "Id": "4069"
     },
     {
-      "Name": "FairyCritterBlue",
+      "Name": "Blue Fairy",
       "Id": "4070"
     },
     {
-      "Name": "JunoniaShell",
+      "Name": "Junonia Shell",
       "Id": "4071"
     },
     {
-      "Name": "LightningWhelkShell",
+      "Name": "Lightning Whelk Shell",
       "Id": "4072"
     },
     {
-      "Name": "TulipShell",
+      "Name": "Tulip Shell",
       "Id": "4073"
     },
     {
-      "Name": "PinWheel",
+      "Name": "Pin Wheel",
       "Id": "4074"
     },
     {
-      "Name": "WeatherVane",
+      "Name": "Weather Vane",
       "Id": "4075"
     },
     {
-      "Name": "VoidVault",
+      "Name": "Void Vault",
       "Id": "4076"
     },
     {
-      "Name": "MusicBoxOceanAlt",
+      "Name": "Music Box (Ocean Night)",
       "Id": "4077"
     },
     {
-      "Name": "MusicBoxSlimeRain",
+      "Name": "Music Box (Slime Rain)",
       "Id": "4078"
     },
     {
-      "Name": "MusicBoxSpaceAlt",
+      "Name": "Music Box (Space Day)",
       "Id": "4079"
     },
     {
-      "Name": "MusicBoxTownDay",
+      "Name": "Music Box (Town Day)",
       "Id": "4080"
     },
     {
-      "Name": "MusicBoxTownNight",
+      "Name": "Music Box (Town Night)",
       "Id": "4081"
     },
     {
-      "Name": "MusicBoxWindyDay",
+      "Name": "Music Box (Windy Day)",
       "Id": "4082"
     },
     {
-      "Name": "GolfCupFlagWhite",
+      "Name": "White Pin Flag",
       "Id": "4083"
     },
     {
-      "Name": "GolfCupFlagRed",
+      "Name": "Red Pin Flag",
       "Id": "4084"
     },
     {
-      "Name": "GolfCupFlagGreen",
+      "Name": "Green Pin Flag",
       "Id": "4085"
     },
     {
-      "Name": "GolfCupFlagBlue",
+      "Name": "Blue Pin Flag",
       "Id": "4086"
     },
     {
-      "Name": "GolfCupFlagYellow",
+      "Name": "Yellow Pin Flag",
       "Id": "4087"
     },
     {
-      "Name": "GolfCupFlagPurple",
+      "Name": "Purple Pin Flag",
       "Id": "4088"
     },
     {
-      "Name": "GolfTee",
+      "Name": "Golf Tee",
       "Id": "4089"
     },
     {
-      "Name": "ShellPileBlock",
+      "Name": "Shell Pile",
       "Id": "4090"
     },
     {
-      "Name": "AntiPortalBlock",
+      "Name": "Anti-Portal Block",
       "Id": "4091"
     },
     {
-      "Name": "GolfClubPutter",
+      "Name": "Golf Club (Putter)",
       "Id": "4092"
     },
     {
-      "Name": "GolfClubWedge",
+      "Name": "Golf Club (Wedge)",
       "Id": "4093"
     },
     {
-      "Name": "GolfClubDriver",
+      "Name": "Golf Club (Driver)",
       "Id": "4094"
     },
     {
-      "Name": "GolfWhistle",
+      "Name": "Golf Whistle",
       "Id": "4095"
     },
     {
-      "Name": "ToiletEbonyWood",
+      "Name": "Ebonwood Toilet",
       "Id": "4096"
     },
     {
-      "Name": "ToiletRichMahogany",
+      "Name": "Rich Mahogany Toilet",
       "Id": "4097"
     },
     {
-      "Name": "ToiletPearlwood",
+      "Name": "Pearlwood Toilet",
       "Id": "4098"
     },
     {
-      "Name": "ToiletLivingWood",
+      "Name": "Living Wood Toilet",
       "Id": "4099"
     },
     {
-      "Name": "ToiletCactus",
+      "Name": "Cactus Toilet",
       "Id": "4100"
     },
     {
-      "Name": "ToiletBone",
+      "Name": "Bone Toilet",
       "Id": "4101"
     },
     {
-      "Name": "ToiletFlesh",
+      "Name": "Flesh Toilet",
       "Id": "4102"
     },
     {
-      "Name": "ToiletMushroom",
+      "Name": "Mushroom Toilet",
       "Id": "4103"
     },
     {
-      "Name": "ToiletSunplate",
+      "Name": "Skyware Toilet",
       "Id": "4104"
     },
     {
-      "Name": "ToiletShadewood",
+      "Name": "Shadewood Toilet",
       "Id": "4105"
     },
     {
-      "Name": "ToiletLihzhard",
+      "Name": "Lihzahrd Toilet",
       "Id": "4106"
     },
     {
-      "Name": "ToiletDungeonBlue",
+      "Name": "Blue Dungeon Toilet",
       "Id": "4107"
     },
     {
-      "Name": "ToiletDungeonGreen",
+      "Name": "Green Dungeon Toilet",
       "Id": "4108"
     },
     {
-      "Name": "ToiletDungeonPink",
+      "Name": "Pink Dungeon Toilet",
       "Id": "4109"
     },
     {
-      "Name": "ToiletObsidian",
+      "Name": "Obsidian Toilet",
       "Id": "4110"
     },
     {
-      "Name": "ToiletFrozen",
+      "Name": "Frozen Toilet",
       "Id": "4111"
     },
     {
-      "Name": "ToiletGlass",
+      "Name": "Glass Toilet",
       "Id": "4112"
     },
     {
-      "Name": "ToiletHoney",
+      "Name": "Honey Toilet",
       "Id": "4113"
     },
     {
-      "Name": "ToiletSteampunk",
+      "Name": "Steampunk Toilet",
       "Id": "4114"
     },
     {
-      "Name": "ToiletPumpkin",
+      "Name": "Pumpkin Toilet",
       "Id": "4115"
     },
     {
-      "Name": "ToiletSpooky",
+      "Name": "Spooky Toilet",
       "Id": "4116"
     },
     {
-      "Name": "ToiletDynasty",
+      "Name": "Dynasty Toilet",
       "Id": "4117"
     },
     {
-      "Name": "ToiletPalm",
+      "Name": "Palm Wood Toilet",
       "Id": "4118"
     },
     {
-      "Name": "ToiletBoreal",
+      "Name": "Boreal Wood Toilet",
       "Id": "4119"
     },
     {
-      "Name": "ToiletSlime",
+      "Name": "Slime Toilet",
       "Id": "4120"
     },
     {
-      "Name": "ToiletMartian",
+      "Name": "Martian Toilet",
       "Id": "4121"
     },
     {
-      "Name": "ToiletGranite",
+      "Name": "Granite Toilet",
       "Id": "4122"
     },
     {
-      "Name": "ToiletMarble",
+      "Name": "Marble Toilet",
       "Id": "4123"
     },
     {
-      "Name": "ToiletCrystal",
+      "Name": "Crystal Toilet",
       "Id": "4124"
     },
     {
-      "Name": "ToiletSpider",
+      "Name": "Spider Toilet",
       "Id": "4125"
     },
     {
-      "Name": "ToiletLesion",
+      "Name": "Lesion Toilet",
       "Id": "4126"
     },
     {
-      "Name": "ToiletDiamond",
+      "Name": "Diamond Toilet",
       "Id": "4127"
     },
     {
-      "Name": "MaidHead",
+      "Name": "Maid Bonnet",
       "Id": "4128"
     },
     {
-      "Name": "MaidShirt",
+      "Name": "Maid Dress",
       "Id": "4129"
     },
     {
-      "Name": "MaidPants",
+      "Name": "Maid Shoes",
       "Id": "4130"
     },
     {
-      "Name": "VoidLens",
+      "Name": "Void Bag",
       "Id": "4131"
     },
     {
-      "Name": "MaidHead2",
+      "Name": "Pink Maid Bonnet",
       "Id": "4132"
     },
     {
-      "Name": "MaidShirt2",
+      "Name": "Pink Maid Dress",
       "Id": "4133"
     },
     {
-      "Name": "MaidPants2",
+      "Name": "Pink Maid Shoes",
       "Id": "4134"
     },
     {
-      "Name": "GolfHat",
+      "Name": "Country Club Cap",
       "Id": "4135"
     },
     {
-      "Name": "GolfShirt",
+      "Name": "Country Club Vest",
       "Id": "4136"
     },
     {
-      "Name": "GolfPants",
+      "Name": "Country Club Trousers",
       "Id": "4137"
     },
     {
-      "Name": "GolfVisor",
+      "Name": "Country Club Visor",
       "Id": "4138"
     },
     {
-      "Name": "SpiderBlock",
+      "Name": "Spider Nest Block",
       "Id": "4139"
     },
     {
-      "Name": "SpiderWall",
+      "Name": "Spider Nest Wall",
       "Id": "4140"
     },
     {
-      "Name": "ToiletMeteor",
+      "Name": "Meteorite Toilet",
       "Id": "4141"
     },
     {
-      "Name": "LesionStation",
+      "Name": "Decay Chamber",
       "Id": "4142"
     },
     {
-      "Name": "ManaCloakStar",
+      "Name": "Mana Cloak Star",
       "Id": "4143"
     },
     {
@@ -44385,551 +44385,551 @@ export var settings: Settings = {
       "Id": "4144"
     },
     {
-      "Name": "SolarBathtub",
+      "Name": "Solar Bathtub",
       "Id": "4145"
     },
     {
-      "Name": "SolarBed",
+      "Name": "Solar Bed",
       "Id": "4146"
     },
     {
-      "Name": "SolarBookcase",
+      "Name": "Solar Bookcase",
       "Id": "4147"
     },
     {
-      "Name": "SolarDresser",
+      "Name": "Solar Dresser",
       "Id": "4148"
     },
     {
-      "Name": "SolarCandelabra",
+      "Name": "Solar Candelabra",
       "Id": "4149"
     },
     {
-      "Name": "SolarCandle",
+      "Name": "Solar Candle",
       "Id": "4150"
     },
     {
-      "Name": "SolarChair",
+      "Name": "Solar Chair",
       "Id": "4151"
     },
     {
-      "Name": "SolarChandelier",
+      "Name": "Solar Chandelier",
       "Id": "4152"
     },
     {
-      "Name": "SolarChest",
+      "Name": "Solar Chest",
       "Id": "4153"
     },
     {
-      "Name": "SolarClock",
+      "Name": "Solar Clock",
       "Id": "4154"
     },
     {
-      "Name": "SolarDoor",
+      "Name": "Solar Door",
       "Id": "4155"
     },
     {
-      "Name": "SolarLamp",
+      "Name": "Solar Lamp",
       "Id": "4156"
     },
     {
-      "Name": "SolarLantern",
+      "Name": "Solar Lantern",
       "Id": "4157"
     },
     {
-      "Name": "SolarPiano",
+      "Name": "Solar Piano",
       "Id": "4158"
     },
     {
-      "Name": "SolarPlatform",
+      "Name": "Solar Platform",
       "Id": "4159"
     },
     {
-      "Name": "SolarSink",
+      "Name": "Solar Sink",
       "Id": "4160"
     },
     {
-      "Name": "SolarSofa",
+      "Name": "Solar Sofa",
       "Id": "4161"
     },
     {
-      "Name": "SolarTable",
+      "Name": "Solar Table",
       "Id": "4162"
     },
     {
-      "Name": "SolarWorkbench",
+      "Name": "Solar Work Bench",
       "Id": "4163"
     },
     {
-      "Name": "Fake_SolarChest",
+      "Name": "Trapped Solar Chest",
       "Id": "4164"
     },
     {
-      "Name": "SolarToilet",
+      "Name": "Solar Toilet",
       "Id": "4165"
     },
     {
-      "Name": "VortexBathtub",
+      "Name": "Vortex Bathtub",
       "Id": "4166"
     },
     {
-      "Name": "VortexBed",
+      "Name": "Vortex Bed",
       "Id": "4167"
     },
     {
-      "Name": "VortexBookcase",
+      "Name": "Vortex Bookcase",
       "Id": "4168"
     },
     {
-      "Name": "VortexDresser",
+      "Name": "Vortex Dresser",
       "Id": "4169"
     },
     {
-      "Name": "VortexCandelabra",
+      "Name": "Vortex Candelabra",
       "Id": "4170"
     },
     {
-      "Name": "VortexCandle",
+      "Name": "Vortex Candle",
       "Id": "4171"
     },
     {
-      "Name": "VortexChair",
+      "Name": "Vortex Chair",
       "Id": "4172"
     },
     {
-      "Name": "VortexChandelier",
+      "Name": "Vortex Chandelier",
       "Id": "4173"
     },
     {
-      "Name": "VortexChest",
+      "Name": "Vortex Chest",
       "Id": "4174"
     },
     {
-      "Name": "VortexClock",
+      "Name": "Vortex Clock",
       "Id": "4175"
     },
     {
-      "Name": "VortexDoor",
+      "Name": "Vortex Door",
       "Id": "4176"
     },
     {
-      "Name": "VortexLamp",
+      "Name": "Vortex Lamp",
       "Id": "4177"
     },
     {
-      "Name": "VortexLantern",
+      "Name": "Vortex Lantern",
       "Id": "4178"
     },
     {
-      "Name": "VortexPiano",
+      "Name": "Vortex Piano",
       "Id": "4179"
     },
     {
-      "Name": "VortexPlatform",
+      "Name": "Vortex Platform",
       "Id": "4180"
     },
     {
-      "Name": "VortexSink",
+      "Name": "Vortex Sink",
       "Id": "4181"
     },
     {
-      "Name": "VortexSofa",
+      "Name": "Vortex Sofa",
       "Id": "4182"
     },
     {
-      "Name": "VortexTable",
+      "Name": "Vortex Table",
       "Id": "4183"
     },
     {
-      "Name": "VortexWorkbench",
+      "Name": "Vortex Work Bench",
       "Id": "4184"
     },
     {
-      "Name": "Fake_VortexChest",
+      "Name": "Trapped Vortex Chest",
       "Id": "4185"
     },
     {
-      "Name": "VortexToilet",
+      "Name": "Vortex Toilet",
       "Id": "4186"
     },
     {
-      "Name": "NebulaBathtub",
+      "Name": "Nebula Bathtub",
       "Id": "4187"
     },
     {
-      "Name": "NebulaBed",
+      "Name": "Nebula Bed",
       "Id": "4188"
     },
     {
-      "Name": "NebulaBookcase",
+      "Name": "Nebula Bookcase",
       "Id": "4189"
     },
     {
-      "Name": "NebulaDresser",
+      "Name": "Nebula Dresser",
       "Id": "4190"
     },
     {
-      "Name": "NebulaCandelabra",
+      "Name": "Nebula Candelabra",
       "Id": "4191"
     },
     {
-      "Name": "NebulaCandle",
+      "Name": "Nebula Candle",
       "Id": "4192"
     },
     {
-      "Name": "NebulaChair",
+      "Name": "Nebula Chair",
       "Id": "4193"
     },
     {
-      "Name": "NebulaChandelier",
+      "Name": "Nebula Chandelier",
       "Id": "4194"
     },
     {
-      "Name": "NebulaChest",
+      "Name": "Nebula Chest",
       "Id": "4195"
     },
     {
-      "Name": "NebulaClock",
+      "Name": "Nebula Clock",
       "Id": "4196"
     },
     {
-      "Name": "NebulaDoor",
+      "Name": "Nebula Door",
       "Id": "4197"
     },
     {
-      "Name": "NebulaLamp",
+      "Name": "Nebula Lamp",
       "Id": "4198"
     },
     {
-      "Name": "NebulaLantern",
+      "Name": "Nebula Lantern",
       "Id": "4199"
     },
     {
-      "Name": "NebulaPiano",
+      "Name": "Nebula Piano",
       "Id": "4200"
     },
     {
-      "Name": "NebulaPlatform",
+      "Name": "Nebula Platform",
       "Id": "4201"
     },
     {
-      "Name": "NebulaSink",
+      "Name": "Nebula Sink",
       "Id": "4202"
     },
     {
-      "Name": "NebulaSofa",
+      "Name": "Nebula Sofa",
       "Id": "4203"
     },
     {
-      "Name": "NebulaTable",
+      "Name": "Nebula Table",
       "Id": "4204"
     },
     {
-      "Name": "NebulaWorkbench",
+      "Name": "Nebula Work Bench",
       "Id": "4205"
     },
     {
-      "Name": "Fake_NebulaChest",
+      "Name": "Trapped Nebula Chest",
       "Id": "4206"
     },
     {
-      "Name": "NebulaToilet",
+      "Name": "Nebula Toilet",
       "Id": "4207"
     },
     {
-      "Name": "StardustBathtub",
+      "Name": "Stardust Bathtub",
       "Id": "4208"
     },
     {
-      "Name": "StardustBed",
+      "Name": "Stardust Bed",
       "Id": "4209"
     },
     {
-      "Name": "StardustBookcase",
+      "Name": "Stardust Bookcase",
       "Id": "4210"
     },
     {
-      "Name": "StardustDresser",
+      "Name": "Stardust Dresser",
       "Id": "4211"
     },
     {
-      "Name": "StardustCandelabra",
+      "Name": "Stardust Candelabra",
       "Id": "4212"
     },
     {
-      "Name": "StardustCandle",
+      "Name": "Stardust Candle",
       "Id": "4213"
     },
     {
-      "Name": "StardustChair",
+      "Name": "Stardust Chair",
       "Id": "4214"
     },
     {
-      "Name": "StardustChandelier",
+      "Name": "Stardust Chandelier",
       "Id": "4215"
     },
     {
-      "Name": "StardustChest",
+      "Name": "Stardust Chest",
       "Id": "4216"
     },
     {
-      "Name": "StardustClock",
+      "Name": "Stardust Clock",
       "Id": "4217"
     },
     {
-      "Name": "StardustDoor",
+      "Name": "Stardust Door",
       "Id": "4218"
     },
     {
-      "Name": "StardustLamp",
+      "Name": "Stardust Lamp",
       "Id": "4219"
     },
     {
-      "Name": "StardustLantern",
+      "Name": "Stardust Lantern",
       "Id": "4220"
     },
     {
-      "Name": "StardustPiano",
+      "Name": "Stardust Piano",
       "Id": "4221"
     },
     {
-      "Name": "StardustPlatform",
+      "Name": "Stardust Platform",
       "Id": "4222"
     },
     {
-      "Name": "StardustSink",
+      "Name": "Stardust Sink",
       "Id": "4223"
     },
     {
-      "Name": "StardustSofa",
+      "Name": "Stardust Sofa",
       "Id": "4224"
     },
     {
-      "Name": "StardustTable",
+      "Name": "Stardust Table",
       "Id": "4225"
     },
     {
-      "Name": "StardustWorkbench",
+      "Name": "Stardust Work Bench",
       "Id": "4226"
     },
     {
-      "Name": "Fake_StardustChest",
+      "Name": "Trapped Stardust Chest",
       "Id": "4227"
     },
     {
-      "Name": "StardustToilet",
+      "Name": "Stardust Toilet",
       "Id": "4228"
     },
     {
-      "Name": "SolarBrick",
+      "Name": "Solar Brick",
       "Id": "4229"
     },
     {
-      "Name": "VortexBrick",
+      "Name": "Vortex Brick",
       "Id": "4230"
     },
     {
-      "Name": "NebulaBrick",
+      "Name": "Nebula Brick",
       "Id": "4231"
     },
     {
-      "Name": "StardustBrick",
+      "Name": "Stardust Brick",
       "Id": "4232"
     },
     {
-      "Name": "SolarBrickWall",
+      "Name": "Solar Brick Wall",
       "Id": "4233"
     },
     {
-      "Name": "VortexBrickWall",
+      "Name": "Vortex Brick Wall",
       "Id": "4234"
     },
     {
-      "Name": "NebulaBrickWall",
+      "Name": "Nebula Brick Wall",
       "Id": "4235"
     },
     {
-      "Name": "StardustBrickWall",
+      "Name": "Stardust Brick Wall",
       "Id": "4236"
     },
     {
-      "Name": "MusicBoxDayRemix",
+      "Name": "Music Box (Day Remix)",
       "Id": "4237"
     },
     {
-      "Name": "CrackedBlueBrick",
+      "Name": "Cracked Blue Brick",
       "Id": "4238"
     },
     {
-      "Name": "CrackedGreenBrick",
+      "Name": "Cracked Green Brick",
       "Id": "4239"
     },
     {
-      "Name": "CrackedPinkBrick",
+      "Name": "Cracked Pink Brick",
       "Id": "4240"
     },
     {
-      "Name": "FlowerPacketWild",
+      "Name": "Wild Flower Seeds",
       "Id": "4241"
     },
     {
-      "Name": "GolfBallDyedBlack",
+      "Name": "Black Golf Ball",
       "Id": "4242"
     },
     {
-      "Name": "GolfBallDyedBlue",
+      "Name": "Blue Golf Ball",
       "Id": "4243"
     },
     {
-      "Name": "GolfBallDyedBrown",
+      "Name": "Brown Golf Ball",
       "Id": "4244"
     },
     {
-      "Name": "GolfBallDyedCyan",
+      "Name": "Cyan Golf Ball",
       "Id": "4245"
     },
     {
-      "Name": "GolfBallDyedGreen",
+      "Name": "Green Golf Ball",
       "Id": "4246"
     },
     {
-      "Name": "GolfBallDyedLimeGreen",
+      "Name": "Lime Golf Ball",
       "Id": "4247"
     },
     {
-      "Name": "GolfBallDyedOrange",
+      "Name": "Orange Golf Ball",
       "Id": "4248"
     },
     {
-      "Name": "GolfBallDyedPink",
+      "Name": "Pink Golf Ball",
       "Id": "4249"
     },
     {
-      "Name": "GolfBallDyedPurple",
+      "Name": "Purple Golf Ball",
       "Id": "4250"
     },
     {
-      "Name": "GolfBallDyedRed",
+      "Name": "Red Golf Ball",
       "Id": "4251"
     },
     {
-      "Name": "GolfBallDyedSkyBlue",
+      "Name": "Sky Blue Golf Ball",
       "Id": "4252"
     },
     {
-      "Name": "GolfBallDyedTeal",
+      "Name": "Teal Golf Ball",
       "Id": "4253"
     },
     {
-      "Name": "GolfBallDyedViolet",
+      "Name": "Violet Golf Ball",
       "Id": "4254"
     },
     {
-      "Name": "GolfBallDyedYellow",
+      "Name": "Yellow Golf Ball",
       "Id": "4255"
     },
     {
-      "Name": "AmberRobe",
+      "Name": "Amber Robe",
       "Id": "4256"
     },
     {
-      "Name": "AmberHook",
+      "Name": "Amber Hook",
       "Id": "4257"
     },
     {
-      "Name": "OrangePhaseblade",
+      "Name": "Orange Phaseblade",
       "Id": "4258"
     },
     {
-      "Name": "OrangePhasesaber",
+      "Name": "Orange Phasesaber",
       "Id": "4259"
     },
     {
-      "Name": "OrangeStainedGlass",
+      "Name": "Orange Stained Glass",
       "Id": "4260"
     },
     {
-      "Name": "OrangePressurePlate",
+      "Name": "Orange Pressure Plate",
       "Id": "4261"
     },
     {
-      "Name": "MysticCoilSnake",
+      "Name": "Snake Charmer's Flute",
       "Id": "4262"
     },
     {
-      "Name": "MagicConch",
+      "Name": "Magic Conch",
       "Id": "4263"
     },
     {
-      "Name": "GolfCart",
+      "Name": "Golf Cart Keys",
       "Id": "4264"
     },
     {
-      "Name": "GolfChest",
+      "Name": "Golf Chest",
       "Id": "4265"
     },
     {
-      "Name": "Fake_GolfChest",
+      "Name": "Trapped Golf Chest",
       "Id": "4266"
     },
     {
-      "Name": "DesertChest",
+      "Name": "Sandstone Chest",
       "Id": "4267"
     },
     {
-      "Name": "Fake_DesertChest",
+      "Name": "Trapped Sandstone Chest",
       "Id": "4268"
     },
     {
-      "Name": "SanguineStaff",
+      "Name": "Sanguine Staff",
       "Id": "4269"
     },
     {
-      "Name": "SharpTears",
+      "Name": "Blood Thorn",
       "Id": "4270"
     },
     {
-      "Name": "BloodMoonStarter",
+      "Name": "Bloody Tear",
       "Id": "4271"
     },
     {
-      "Name": "DripplerFlail",
+      "Name": "Drippler Crippler",
       "Id": "4272"
     },
     {
-      "Name": "VampireFrogStaff",
+      "Name": "Vampire Frog Staff",
       "Id": "4273"
     },
     {
-      "Name": "GoldGoldfish",
+      "Name": "Gold Goldfish",
       "Id": "4274"
     },
     {
-      "Name": "GoldGoldfishBowl",
+      "Name": "Gold Fish Bowl",
       "Id": "4275"
     },
     {
-      "Name": "CatBast",
+      "Name": "Bast Statue",
       "Id": "4276"
     },
     {
-      "Name": "GoldStarryGlassBlock",
+      "Name": "Gold Starry Block",
       "Id": "4277"
     },
     {
-      "Name": "BlueStarryGlassBlock",
+      "Name": "Blue Starry Block",
       "Id": "4278"
     },
     {
-      "Name": "GoldStarryGlassWall",
+      "Name": "Gold Starry Wall",
       "Id": "4279"
     },
     {
-      "Name": "BlueStarryGlassWall",
+      "Name": "Blue Starry Wall",
       "Id": "4280"
     },
     {
-      "Name": "BabyBirdStaff",
+      "Name": "Finch Staff",
       "Id": "4281"
     },
     {
@@ -44941,11 +44941,11 @@ export var settings: Settings = {
       "Id": "4283"
     },
     {
-      "Name": "BlackCurrant",
+      "Name": "Blackcurrant",
       "Id": "4284"
     },
     {
-      "Name": "BloodOrange",
+      "Name": "Blood Orange",
       "Id": "4285"
     },
     {
@@ -44957,7 +44957,7 @@ export var settings: Settings = {
       "Id": "4287"
     },
     {
-      "Name": "Dragonfruit",
+      "Name": "Dragon Fruit",
       "Id": "4288"
     },
     {
@@ -44993,115 +44993,115 @@ export var settings: Settings = {
       "Id": "4296"
     },
     {
-      "Name": "Starfruit",
+      "Name": "Star Fruit",
       "Id": "4297"
     },
     {
-      "Name": "SandstoneBathtub",
+      "Name": "Sandstone Bathtub",
       "Id": "4298"
     },
     {
-      "Name": "SandstoneBed",
+      "Name": "Sandstone Bed",
       "Id": "4299"
     },
     {
-      "Name": "SandstoneBookcase",
+      "Name": "Sandstone Bookcase",
       "Id": "4300"
     },
     {
-      "Name": "SandstoneDresser",
+      "Name": "Sandstone Dresser",
       "Id": "4301"
     },
     {
-      "Name": "SandstoneCandelabra",
+      "Name": "Sandstone Candelabra",
       "Id": "4302"
     },
     {
-      "Name": "SandstoneCandle",
+      "Name": "Sandstone Candle",
       "Id": "4303"
     },
     {
-      "Name": "SandstoneChair",
+      "Name": "Sandstone Chair",
       "Id": "4304"
     },
     {
-      "Name": "SandstoneChandelier",
+      "Name": "Sandstone Chandelier",
       "Id": "4305"
     },
     {
-      "Name": "SandstoneClock",
+      "Name": "Sandstone Clock",
       "Id": "4306"
     },
     {
-      "Name": "SandstoneDoor",
+      "Name": "Sandstone Door",
       "Id": "4307"
     },
     {
-      "Name": "SandstoneLamp",
+      "Name": "Sandstone Lamp",
       "Id": "4308"
     },
     {
-      "Name": "SandstoneLantern",
+      "Name": "Sandstone Lantern",
       "Id": "4309"
     },
     {
-      "Name": "SandstonePiano",
+      "Name": "Sandstone Piano",
       "Id": "4310"
     },
     {
-      "Name": "SandstonePlatform",
+      "Name": "Sandstone Platform",
       "Id": "4311"
     },
     {
-      "Name": "SandstoneSink",
+      "Name": "Sandstone Sink",
       "Id": "4312"
     },
     {
-      "Name": "SandstoneSofa",
+      "Name": "Sandstone Sofa",
       "Id": "4313"
     },
     {
-      "Name": "SandstoneTable",
+      "Name": "Sandstone Table",
       "Id": "4314"
     },
     {
-      "Name": "SandstoneWorkbench",
+      "Name": "Sandstone Work Bench",
       "Id": "4315"
     },
     {
-      "Name": "SandstoneToilet",
+      "Name": "Sandstone Toilet",
       "Id": "4316"
     },
     {
-      "Name": "BloodHamaxe",
+      "Name": "Haemorrhaxe",
       "Id": "4317"
     },
     {
-      "Name": "VoidMonolith",
+      "Name": "Void Monolith",
       "Id": "4318"
     },
     {
-      "Name": "ArrowSign",
+      "Name": "Arrow Sign",
       "Id": "4319"
     },
     {
-      "Name": "PaintedArrowSign",
+      "Name": "Painted Arrow Sign",
       "Id": "4320"
     },
     {
-      "Name": "GameMasterShirt",
+      "Name": "Master Gamer's Jacket",
       "Id": "4321"
     },
     {
-      "Name": "GameMasterPants",
+      "Name": "Master Gamer's Pants",
       "Id": "4322"
     },
     {
-      "Name": "StarPrincessCrown",
+      "Name": "Star Princess Crown",
       "Id": "4323"
     },
     {
-      "Name": "StarPrincessDress",
+      "Name": "Star Princess Dress",
       "Id": "4324"
     },
     {
@@ -45109,135 +45109,135 @@ export var settings: Settings = {
       "Id": "4325"
     },
     {
-      "Name": "FoodPlatter",
+      "Name": "Plate",
       "Id": "4326"
     },
     {
-      "Name": "BlackDragonflyJar",
+      "Name": "Black Dragonfly Jar",
       "Id": "4327"
     },
     {
-      "Name": "BlueDragonflyJar",
+      "Name": "Blue Dragonfly Jar",
       "Id": "4328"
     },
     {
-      "Name": "GreenDragonflyJar",
+      "Name": "Green Dragonfly Jar",
       "Id": "4329"
     },
     {
-      "Name": "OrangeDragonflyJar",
+      "Name": "Orange Dragonfly Jar",
       "Id": "4330"
     },
     {
-      "Name": "RedDragonflyJar",
+      "Name": "Red Dragonfly Jar",
       "Id": "4331"
     },
     {
-      "Name": "YellowDragonflyJar",
+      "Name": "Yellow Dragonfly Jar",
       "Id": "4332"
     },
     {
-      "Name": "GoldDragonflyJar",
+      "Name": "Gold Dragonfly Jar",
       "Id": "4333"
     },
     {
-      "Name": "BlackDragonfly",
+      "Name": "Black Dragonfly",
       "Id": "4334"
     },
     {
-      "Name": "BlueDragonfly",
+      "Name": "Blue Dragonfly",
       "Id": "4335"
     },
     {
-      "Name": "GreenDragonfly",
+      "Name": "Green Dragonfly",
       "Id": "4336"
     },
     {
-      "Name": "OrangeDragonfly",
+      "Name": "Orange Dragonfly",
       "Id": "4337"
     },
     {
-      "Name": "RedDragonfly",
+      "Name": "Red Dragonfly",
       "Id": "4338"
     },
     {
-      "Name": "YellowDragonfly",
+      "Name": "Yellow Dragonfly",
       "Id": "4339"
     },
     {
-      "Name": "GoldDragonfly",
+      "Name": "Gold Dragonfly",
       "Id": "4340"
     },
     {
-      "Name": "PortableStool",
+      "Name": "Step Stool",
       "Id": "4341"
     },
     {
-      "Name": "DragonflyStatue",
+      "Name": "Dragonfly Statue",
       "Id": "4342"
     },
     {
-      "Name": "PaperAirplaneA",
+      "Name": "Paper Airplane",
       "Id": "4343"
     },
     {
-      "Name": "PaperAirplaneB",
+      "Name": "White Paper Airplane",
       "Id": "4344"
     },
     {
-      "Name": "CanOfWorms",
+      "Name": "Can Of Worms",
       "Id": "4345"
     },
     {
-      "Name": "EncumberingStone",
+      "Name": "Encumbering Stone",
       "Id": "4346"
     },
     {
-      "Name": "ZapinatorGray",
+      "Name": "Gray Zapinator",
       "Id": "4347"
     },
     {
-      "Name": "ZapinatorOrange",
+      "Name": "Orange Zapinator",
       "Id": "4348"
     },
     {
-      "Name": "GreenMoss",
+      "Name": "Green Moss",
       "Id": "4349"
     },
     {
-      "Name": "BrownMoss",
+      "Name": "Brown Moss",
       "Id": "4350"
     },
     {
-      "Name": "RedMoss",
+      "Name": "Red Moss",
       "Id": "4351"
     },
     {
-      "Name": "BlueMoss",
+      "Name": "Blue Moss",
       "Id": "4352"
     },
     {
-      "Name": "PurpleMoss",
+      "Name": "Purple Moss",
       "Id": "4353"
     },
     {
-      "Name": "LavaMoss",
+      "Name": "Lava Moss",
       "Id": "4354"
     },
     {
-      "Name": "BoulderStatue",
+      "Name": "Boulder Statue",
       "Id": "4355"
     },
     {
-      "Name": "MusicBoxTitleAlt",
+      "Name": "Music Box (Journey's Beginning)",
       "Id": "4356"
     },
     {
-      "Name": "MusicBoxStorm",
+      "Name": "Music Box (Storm)",
       "Id": "4357"
     },
     {
-      "Name": "MusicBoxGraveyard",
+      "Name": "Music Box (Graveyard)",
       "Id": "4358"
     },
     {
@@ -45245,15 +45245,15 @@ export var settings: Settings = {
       "Id": "4359"
     },
     {
-      "Name": "SeagullStatue",
+      "Name": "Seagull Statue",
       "Id": "4360"
     },
     {
-      "Name": "LadyBug",
+      "Name": "Ladybug",
       "Id": "4361"
     },
     {
-      "Name": "GoldLadyBug",
+      "Name": "Gold Ladybug",
       "Id": "4362"
     },
     {
@@ -45261,39 +45261,39 @@ export var settings: Settings = {
       "Id": "4363"
     },
     {
-      "Name": "MaggotCage",
+      "Name": "Maggot Cage",
       "Id": "4364"
     },
     {
-      "Name": "CelestialWand",
+      "Name": "Celestial Wand",
       "Id": "4365"
     },
     {
-      "Name": "EucaluptusSap",
+      "Name": "Eucalyptus Sap",
       "Id": "4366"
     },
     {
-      "Name": "KiteBlue",
+      "Name": "Blue Kite",
       "Id": "4367"
     },
     {
-      "Name": "KiteBlueAndYellow",
+      "Name": "Blue and Yellow Kite",
       "Id": "4368"
     },
     {
-      "Name": "KiteRed",
+      "Name": "Red Kite",
       "Id": "4369"
     },
     {
-      "Name": "KiteRedAndYellow",
+      "Name": "Red and Yellow Kite",
       "Id": "4370"
     },
     {
-      "Name": "KiteYellow",
+      "Name": "Yellow Kite",
       "Id": "4371"
     },
     {
-      "Name": "IvyGuitar",
+      "Name": "Ivy",
       "Id": "4372"
     },
     {
@@ -45309,79 +45309,79 @@ export var settings: Settings = {
       "Id": "4375"
     },
     {
-      "Name": "RatCage",
+      "Name": "Rat Cage",
       "Id": "4376"
     },
     {
-      "Name": "KryptonMoss",
+      "Name": "Krypton Moss",
       "Id": "4377"
     },
     {
-      "Name": "XenonMoss",
+      "Name": "Xenon Moss",
       "Id": "4378"
     },
     {
-      "Name": "KiteWyvern",
+      "Name": "Wyvern Kite",
       "Id": "4379"
     },
     {
-      "Name": "LadybugCage",
+      "Name": "Ladybug Cage",
       "Id": "4380"
     },
     {
-      "Name": "BloodRainBow",
+      "Name": "Blood Rain Bow",
       "Id": "4381"
     },
     {
-      "Name": "CombatBook",
+      "Name": "Advanced Combat Techniques",
       "Id": "4382"
     },
     {
-      "Name": "DesertTorch",
+      "Name": "Desert Torch",
       "Id": "4383"
     },
     {
-      "Name": "CoralTorch",
+      "Name": "Coral Torch",
       "Id": "4384"
     },
     {
-      "Name": "CorruptTorch",
+      "Name": "Corrupt Torch",
       "Id": "4385"
     },
     {
-      "Name": "CrimsonTorch",
+      "Name": "Crimson Torch",
       "Id": "4386"
     },
     {
-      "Name": "HallowedTorch",
+      "Name": "Hallowed Torch",
       "Id": "4387"
     },
     {
-      "Name": "JungleTorch",
+      "Name": "Jungle Torch",
       "Id": "4388"
     },
     {
-      "Name": "ArgonMoss",
+      "Name": "Argon Moss",
       "Id": "4389"
     },
     {
-      "Name": "RollingCactus",
+      "Name": "Rolling Cactus",
       "Id": "4390"
     },
     {
-      "Name": "ThinIce",
+      "Name": "Thin Ice",
       "Id": "4391"
     },
     {
-      "Name": "EchoBlock",
+      "Name": "Echo Block",
       "Id": "4392"
     },
     {
-      "Name": "ScarabFish",
+      "Name": "Scarab Fish",
       "Id": "4393"
     },
     {
-      "Name": "ScorpioFish",
+      "Name": "Scorpio Fish",
       "Id": "4394"
     },
     {
@@ -45389,19 +45389,19 @@ export var settings: Settings = {
       "Id": "4395"
     },
     {
-      "Name": "OwlCage",
+      "Name": "Owl Cage",
       "Id": "4396"
     },
     {
-      "Name": "OwlStatue",
+      "Name": "Owl Statue",
       "Id": "4397"
     },
     {
-      "Name": "PupfishBowl",
+      "Name": "Pupfish Bowl",
       "Id": "4398"
     },
     {
-      "Name": "GoldLadybugCage",
+      "Name": "Gold Ladybug Cage",
       "Id": "4399"
     },
     {
@@ -45413,35 +45413,35 @@ export var settings: Settings = {
       "Id": "4401"
     },
     {
-      "Name": "RockLobster",
+      "Name": "Rock Lobster",
       "Id": "4402"
     },
     {
-      "Name": "LobsterTail",
+      "Name": "Lobster Tail",
       "Id": "4403"
     },
     {
-      "Name": "FloatingTube",
+      "Name": "Inner Tube",
       "Id": "4404"
     },
     {
-      "Name": "FrozenCrate",
+      "Name": "Frozen Crate",
       "Id": "4405"
     },
     {
-      "Name": "FrozenCrateHard",
+      "Name": "Boreal Crate",
       "Id": "4406"
     },
     {
-      "Name": "OasisCrate",
+      "Name": "Oasis Crate",
       "Id": "4407"
     },
     {
-      "Name": "OasisCrateHard",
+      "Name": "Mirage Crate",
       "Id": "4408"
     },
     {
-      "Name": "SpectreGoggles",
+      "Name": "Spectre Goggles",
       "Id": "4409"
     },
     {
@@ -45449,47 +45449,47 @@ export var settings: Settings = {
       "Id": "4410"
     },
     {
-      "Name": "ShuckedOyster",
+      "Name": "Shucked Oyster",
       "Id": "4411"
     },
     {
-      "Name": "WhitePearl",
+      "Name": "White Pearl",
       "Id": "4412"
     },
     {
-      "Name": "BlackPearl",
+      "Name": "Black Pearl",
       "Id": "4413"
     },
     {
-      "Name": "PinkPearl",
+      "Name": "Pink Pearl",
       "Id": "4414"
     },
     {
-      "Name": "StoneDoor",
+      "Name": "Stone Door",
       "Id": "4415"
     },
     {
-      "Name": "StonePlatform",
+      "Name": "Stone Platform",
       "Id": "4416"
     },
     {
-      "Name": "OasisFountain",
+      "Name": "Oasis Water Fountain",
       "Id": "4417"
     },
     {
-      "Name": "WaterStrider",
+      "Name": "Water Strider",
       "Id": "4418"
     },
     {
-      "Name": "GoldWaterStrider",
+      "Name": "Gold Water Strider",
       "Id": "4419"
     },
     {
-      "Name": "LawnFlamingo",
+      "Name": "Lawn Flamingo",
       "Id": "4420"
     },
     {
-      "Name": "MusicBoxUndergroundJungle",
+      "Name": "Music Box (Underground Jungle)",
       "Id": "4421"
     },
     {
@@ -45497,163 +45497,163 @@ export var settings: Settings = {
       "Id": "4422"
     },
     {
-      "Name": "ScarabBomb",
+      "Name": "Scarab Bomb",
       "Id": "4423"
     },
     {
-      "Name": "WroughtIronFence",
+      "Name": "Wrought Iron Fence",
       "Id": "4424"
     },
     {
-      "Name": "SharkBait",
+      "Name": "Shark Bait",
       "Id": "4425"
     },
     {
-      "Name": "BeeMinecart",
+      "Name": "Bee Minecart",
       "Id": "4426"
     },
     {
-      "Name": "LadybugMinecart",
+      "Name": "Ladybug Minecart",
       "Id": "4427"
     },
     {
-      "Name": "PigronMinecart",
+      "Name": "Pigron Minecart",
       "Id": "4428"
     },
     {
-      "Name": "SunflowerMinecart",
+      "Name": "Sunflower Minecart",
       "Id": "4429"
     },
     {
-      "Name": "PottedForestCedar",
+      "Name": "Potted Forest Cedar",
       "Id": "4430"
     },
     {
-      "Name": "PottedJungleCedar",
+      "Name": "Potted Jungle Cedar",
       "Id": "4431"
     },
     {
-      "Name": "PottedHallowCedar",
+      "Name": "Potted Hallow Cedar",
       "Id": "4432"
     },
     {
-      "Name": "PottedForestTree",
+      "Name": "Potted Forest Tree",
       "Id": "4433"
     },
     {
-      "Name": "PottedJungleTree",
+      "Name": "Potted Jungle Tree",
       "Id": "4434"
     },
     {
-      "Name": "PottedHallowTree",
+      "Name": "Potted Hallow Tree",
       "Id": "4435"
     },
     {
-      "Name": "PottedForestPalm",
+      "Name": "Potted Forest Palm",
       "Id": "4436"
     },
     {
-      "Name": "PottedJunglePalm",
+      "Name": "Potted Jungle Palm",
       "Id": "4437"
     },
     {
-      "Name": "PottedHallowPalm",
+      "Name": "Potted Hallow Palm",
       "Id": "4438"
     },
     {
-      "Name": "PottedForestBamboo",
+      "Name": "Potted Forest Bamboo",
       "Id": "4439"
     },
     {
-      "Name": "PottedJungleBamboo",
+      "Name": "Potted Jungle Bamboo",
       "Id": "4440"
     },
     {
-      "Name": "PottedHallowBamboo",
+      "Name": "Potted Hallow Bamboo",
       "Id": "4441"
     },
     {
-      "Name": "ScarabFishingRod",
+      "Name": "Scarab Fishing Rod",
       "Id": "4442"
     },
     {
-      "Name": "HellMinecart",
+      "Name": "Demonic Hellcart",
       "Id": "4443"
     },
     {
-      "Name": "WitchBroom",
+      "Name": "Witch's Broom",
       "Id": "4444"
     },
     {
-      "Name": "ClusterRocketI",
+      "Name": "Cluster Rocket I",
       "Id": "4445"
     },
     {
-      "Name": "ClusterRocketII",
+      "Name": "Cluster Rocket II",
       "Id": "4446"
     },
     {
-      "Name": "WetRocket",
+      "Name": "Wet Rocket",
       "Id": "4447"
     },
     {
-      "Name": "LavaRocket",
+      "Name": "Lava Rocket",
       "Id": "4448"
     },
     {
-      "Name": "HoneyRocket",
+      "Name": "Honey Rocket",
       "Id": "4449"
     },
     {
-      "Name": "ShroomMinecart",
+      "Name": "Shroom Minecart",
       "Id": "4450"
     },
     {
-      "Name": "AmethystMinecart",
+      "Name": "Amethyst Minecart",
       "Id": "4451"
     },
     {
-      "Name": "TopazMinecart",
+      "Name": "Topaz Minecart",
       "Id": "4452"
     },
     {
-      "Name": "SapphireMinecart",
+      "Name": "Sapphire Minecart",
       "Id": "4453"
     },
     {
-      "Name": "EmeraldMinecart",
+      "Name": "Emerald Minecart",
       "Id": "4454"
     },
     {
-      "Name": "RubyMinecart",
+      "Name": "Ruby Minecart",
       "Id": "4455"
     },
     {
-      "Name": "DiamondMinecart",
+      "Name": "Diamond Minecart",
       "Id": "4456"
     },
     {
-      "Name": "MiniNukeI",
+      "Name": "Mini Nuke I",
       "Id": "4457"
     },
     {
-      "Name": "MiniNukeII",
+      "Name": "Mini Nuke II",
       "Id": "4458"
     },
     {
-      "Name": "DryRocket",
+      "Name": "Dry Rocket",
       "Id": "4459"
     },
     {
-      "Name": "SandcastleBucket",
+      "Name": "Sandcastle Bucket",
       "Id": "4460"
     },
     {
-      "Name": "TurtleCage",
+      "Name": "Turtle Cage",
       "Id": "4461"
     },
     {
-      "Name": "TurtleJungleCage",
+      "Name": "Jungle Turtle Cage",
       "Id": "4462"
     },
     {
@@ -45665,63 +45665,63 @@ export var settings: Settings = {
       "Id": "4464"
     },
     {
-      "Name": "TurtleJungle",
+      "Name": "Jungle Turtle",
       "Id": "4465"
     },
     {
-      "Name": "TurtleStatue",
+      "Name": "Turtle Statue",
       "Id": "4466"
     },
     {
-      "Name": "AmberMinecart",
+      "Name": "Amber Minecart",
       "Id": "4467"
     },
     {
-      "Name": "BeetleMinecart",
+      "Name": "Beetle Minecart",
       "Id": "4468"
     },
     {
-      "Name": "MeowmereMinecart",
+      "Name": "Meowmere Minecart",
       "Id": "4469"
     },
     {
-      "Name": "PartyMinecart",
+      "Name": "Party Wagon",
       "Id": "4470"
     },
     {
-      "Name": "PirateMinecart",
+      "Name": "The Dutchman",
       "Id": "4471"
     },
     {
-      "Name": "SteampunkMinecart",
+      "Name": "Steampunk Minecart",
       "Id": "4472"
     },
     {
-      "Name": "GrebeCage",
+      "Name": "Grebe Cage",
       "Id": "4473"
     },
     {
-      "Name": "SeagullCage",
+      "Name": "Seagull Cage",
       "Id": "4474"
     },
     {
-      "Name": "WaterStriderCage",
+      "Name": "Water Strider Cage",
       "Id": "4475"
     },
     {
-      "Name": "GoldWaterStriderCage",
+      "Name": "Gold Water Strider Cage",
       "Id": "4476"
     },
     {
-      "Name": "LuckPotionLesser",
+      "Name": "Lesser Luck Potion",
       "Id": "4477"
     },
     {
-      "Name": "LuckPotion",
+      "Name": "Luck Potion",
       "Id": "4478"
     },
     {
-      "Name": "LuckPotionGreater",
+      "Name": "Greater Luck Potion",
       "Id": "4479"
     },
     {
@@ -45729,327 +45729,327 @@ export var settings: Settings = {
       "Id": "4480"
     },
     {
-      "Name": "SeahorseCage",
+      "Name": "Seahorse Cage",
       "Id": "4481"
     },
     {
-      "Name": "GoldSeahorse",
+      "Name": "Gold Seahorse",
       "Id": "4482"
     },
     {
-      "Name": "GoldSeahorseCage",
+      "Name": "Gold Seahorse Cage",
       "Id": "4483"
     },
     {
-      "Name": "TimerOneHalfSecond",
+      "Name": "1/2 Second Timer",
       "Id": "4484"
     },
     {
-      "Name": "TimerOneFourthSecond",
+      "Name": "1/4 Second Timer",
       "Id": "4485"
     },
     {
-      "Name": "EbonstoneEcho",
+      "Name": "Ebonstone Wall",
       "Id": "4486"
     },
     {
-      "Name": "MudWallEcho",
+      "Name": "Mud Wall",
       "Id": "4487"
     },
     {
-      "Name": "PearlstoneEcho",
+      "Name": "Pearlstone Wall",
       "Id": "4488"
     },
     {
-      "Name": "SnowWallEcho",
+      "Name": "Snow Wall",
       "Id": "4489"
     },
     {
-      "Name": "AmethystEcho",
+      "Name": "Amethyst Stone Wall",
       "Id": "4490"
     },
     {
-      "Name": "TopazEcho",
+      "Name": "Topaz Stone Wall",
       "Id": "4491"
     },
     {
-      "Name": "SapphireEcho",
+      "Name": "Sapphire Stone Wall",
       "Id": "4492"
     },
     {
-      "Name": "EmeraldEcho",
+      "Name": "Emerald Stone Wall",
       "Id": "4493"
     },
     {
-      "Name": "RubyEcho",
+      "Name": "Ruby Stone Wall",
       "Id": "4494"
     },
     {
-      "Name": "DiamondEcho",
+      "Name": "Diamond Stone Wall",
       "Id": "4495"
     },
     {
-      "Name": "Cave1Echo",
+      "Name": "Green Mossy Wall",
       "Id": "4496"
     },
     {
-      "Name": "Cave2Echo",
+      "Name": "Brown Mossy Wall",
       "Id": "4497"
     },
     {
-      "Name": "Cave3Echo",
+      "Name": "Red Mossy Wall",
       "Id": "4498"
     },
     {
-      "Name": "Cave4Echo",
+      "Name": "Blue Mossy Wall",
       "Id": "4499"
     },
     {
-      "Name": "Cave5Echo",
+      "Name": "Purple Mossy Wall",
       "Id": "4500"
     },
     {
-      "Name": "Cave6Echo",
+      "Name": "Rocky Dirt Wall",
       "Id": "4501"
     },
     {
-      "Name": "Cave7Echo",
+      "Name": "Old Stone Wall",
       "Id": "4502"
     },
     {
-      "Name": "SpiderEcho",
+      "Name": "Spider Wall",
       "Id": "4503"
     },
     {
-      "Name": "CorruptGrassEcho",
+      "Name": "Corrupt Grass Wall",
       "Id": "4504"
     },
     {
-      "Name": "HallowedGrassEcho",
+      "Name": "Hallowed Grass Wall",
       "Id": "4505"
     },
     {
-      "Name": "IceEcho",
+      "Name": "Ice Wall",
       "Id": "4506"
     },
     {
-      "Name": "ObsidianBackEcho",
+      "Name": "Obsidian Wall",
       "Id": "4507"
     },
     {
-      "Name": "CrimsonGrassEcho",
+      "Name": "Crimson Grass Wall",
       "Id": "4508"
     },
     {
-      "Name": "CrimstoneEcho",
+      "Name": "Crimstone Wall",
       "Id": "4509"
     },
     {
-      "Name": "CaveWall1Echo",
+      "Name": "Cave Dirt Wall",
       "Id": "4510"
     },
     {
-      "Name": "CaveWall2Echo",
+      "Name": "Rough Dirt Wall",
       "Id": "4511"
     },
     {
-      "Name": "Cave8Echo",
+      "Name": "Craggy Stone Wall",
       "Id": "4512"
     },
     {
-      "Name": "Corruption1Echo",
+      "Name": "Corrupt Growth Wall",
       "Id": "4513"
     },
     {
-      "Name": "Corruption2Echo",
+      "Name": "Corrupt Mass Wall",
       "Id": "4514"
     },
     {
-      "Name": "Corruption3Echo",
+      "Name": "Corrupt Pustule Wall",
       "Id": "4515"
     },
     {
-      "Name": "Corruption4Echo",
+      "Name": "Corrupt Tendril Wall",
       "Id": "4516"
     },
     {
-      "Name": "Crimson1Echo",
+      "Name": "Crimson Crust Wall",
       "Id": "4517"
     },
     {
-      "Name": "Crimson2Echo",
+      "Name": "Crimson Scab Wall",
       "Id": "4518"
     },
     {
-      "Name": "Crimson3Echo",
+      "Name": "Crimson Teeth Wall",
       "Id": "4519"
     },
     {
-      "Name": "Crimson4Echo",
+      "Name": "Crimson Blister Wall",
       "Id": "4520"
     },
     {
-      "Name": "Dirt1Echo",
+      "Name": "Layered Dirt Wall",
       "Id": "4521"
     },
     {
-      "Name": "Dirt2Echo",
+      "Name": "Crumbling Dirt Wall",
       "Id": "4522"
     },
     {
-      "Name": "Dirt3Echo",
+      "Name": "Cracked Dirt Wall",
       "Id": "4523"
     },
     {
-      "Name": "Dirt4Echo",
+      "Name": "Wavy Dirt Wall",
       "Id": "4524"
     },
     {
-      "Name": "Hallow1Echo",
+      "Name": "Hallowed Prism Wall",
       "Id": "4525"
     },
     {
-      "Name": "Hallow2Echo",
+      "Name": "Hallowed Cavern Wall",
       "Id": "4526"
     },
     {
-      "Name": "Hallow3Echo",
+      "Name": "Hallowed Shard Wall",
       "Id": "4527"
     },
     {
-      "Name": "Hallow4Echo",
+      "Name": "Hallowed Crystalline Wall",
       "Id": "4528"
     },
     {
-      "Name": "Jungle1Echo",
+      "Name": "Lichen Stone Wall",
       "Id": "4529"
     },
     {
-      "Name": "Jungle2Echo",
+      "Name": "Leafy Jungle Wall",
       "Id": "4530"
     },
     {
-      "Name": "Jungle3Echo",
+      "Name": "Ivy Stone Wall",
       "Id": "4531"
     },
     {
-      "Name": "Jungle4Echo",
+      "Name": "Jungle Vine Wall",
       "Id": "4532"
     },
     {
-      "Name": "Lava1Echo",
+      "Name": "Ember Wall",
       "Id": "4533"
     },
     {
-      "Name": "Lava2Echo",
+      "Name": "Cinder Wall",
       "Id": "4534"
     },
     {
-      "Name": "Lava3Echo",
+      "Name": "Magma Wall",
       "Id": "4535"
     },
     {
-      "Name": "Lava4Echo",
+      "Name": "Smouldering Stone Wall",
       "Id": "4536"
     },
     {
-      "Name": "Rocks1Echo",
+      "Name": "Worn Stone Wall",
       "Id": "4537"
     },
     {
-      "Name": "Rocks2Echo",
+      "Name": "Stalactite Stone Wall",
       "Id": "4538"
     },
     {
-      "Name": "Rocks3Echo",
+      "Name": "Mottled Stone Wall",
       "Id": "4539"
     },
     {
-      "Name": "Rocks4Echo",
+      "Name": "Fractured Stone Wall",
       "Id": "4540"
     },
     {
-      "Name": "TheBrideBanner",
+      "Name": "The Bride Banner",
       "Id": "4541"
     },
     {
-      "Name": "ZombieMermanBanner",
+      "Name": "Zombie Merman Banner",
       "Id": "4542"
     },
     {
-      "Name": "EyeballFlyingFishBanner",
+      "Name": "Wandering Eye Fish Banner",
       "Id": "4543"
     },
     {
-      "Name": "BloodSquidBanner",
+      "Name": "Blood Squid Banner",
       "Id": "4544"
     },
     {
-      "Name": "BloodEelBanner",
+      "Name": "Blood Eel Banner",
       "Id": "4545"
     },
     {
-      "Name": "GoblinSharkBanner",
+      "Name": "Hemogoblin Shark Banner",
       "Id": "4546"
     },
     {
-      "Name": "LargeBambooBlock",
+      "Name": "Large Bamboo",
       "Id": "4547"
     },
     {
-      "Name": "LargeBambooBlockWall",
+      "Name": "Large Bamboo Wall",
       "Id": "4548"
     },
     {
-      "Name": "DemonHorns",
+      "Name": "Demon Horns",
       "Id": "4549"
     },
     {
-      "Name": "BambooLeaf",
+      "Name": "Bamboo Leaf",
       "Id": "4550"
     },
     {
-      "Name": "HellCake",
+      "Name": "Slice of Hell Cake",
       "Id": "4551"
     },
     {
-      "Name": "FogMachine",
+      "Name": "Fog Machine",
       "Id": "4552"
     },
     {
-      "Name": "PlasmaLamp",
+      "Name": "Plasma Lamp",
       "Id": "4553"
     },
     {
-      "Name": "MarbleColumn",
+      "Name": "Marble Column",
       "Id": "4554"
     },
     {
-      "Name": "ChefHat",
+      "Name": "Chef Hat",
       "Id": "4555"
     },
     {
-      "Name": "ChefShirt",
+      "Name": "Chef Uniform",
       "Id": "4556"
     },
     {
-      "Name": "ChefPants",
+      "Name": "Chef Pants",
       "Id": "4557"
     },
     {
-      "Name": "StarHairpin",
+      "Name": "Star Hairpin",
       "Id": "4558"
     },
     {
-      "Name": "HeartHairpin",
+      "Name": "Heart Hairpin",
       "Id": "4559"
     },
     {
-      "Name": "BunnyEars",
+      "Name": "Bunny Ears",
       "Id": "4560"
     },
     {
-      "Name": "DevilHorns",
+      "Name": "Devil Horns",
       "Id": "4561"
     },
     {
@@ -46057,179 +46057,179 @@ export var settings: Settings = {
       "Id": "4562"
     },
     {
-      "Name": "UnicornHornHat",
+      "Name": "Fake Unicorn Horn",
       "Id": "4563"
     },
     {
-      "Name": "BambooBlock",
+      "Name": "Bamboo",
       "Id": "4564"
     },
     {
-      "Name": "BambooBlockWall",
+      "Name": "Bamboo Wall",
       "Id": "4565"
     },
     {
-      "Name": "BambooBathtub",
+      "Name": "Bamboo Bathtub",
       "Id": "4566"
     },
     {
-      "Name": "BambooBed",
+      "Name": "Bamboo Bed",
       "Id": "4567"
     },
     {
-      "Name": "BambooBookcase",
+      "Name": "Bamboo Bookcase",
       "Id": "4568"
     },
     {
-      "Name": "BambooDresser",
+      "Name": "Bamboo Dresser",
       "Id": "4569"
     },
     {
-      "Name": "BambooCandelabra",
+      "Name": "Bamboo Candelabra",
       "Id": "4570"
     },
     {
-      "Name": "BambooCandle",
+      "Name": "Bamboo Candle",
       "Id": "4571"
     },
     {
-      "Name": "BambooChair",
+      "Name": "Bamboo Chair",
       "Id": "4572"
     },
     {
-      "Name": "BambooChandelier",
+      "Name": "Bamboo Chandelier",
       "Id": "4573"
     },
     {
-      "Name": "BambooChest",
+      "Name": "Bamboo Chest",
       "Id": "4574"
     },
     {
-      "Name": "BambooClock",
+      "Name": "Bamboo Clock",
       "Id": "4575"
     },
     {
-      "Name": "BambooDoor",
+      "Name": "Bamboo Door",
       "Id": "4576"
     },
     {
-      "Name": "BambooLamp",
+      "Name": "Bamboo Lamp",
       "Id": "4577"
     },
     {
-      "Name": "BambooLantern",
+      "Name": "Bamboo Lantern",
       "Id": "4578"
     },
     {
-      "Name": "BambooPiano",
+      "Name": "Bamboo Piano",
       "Id": "4579"
     },
     {
-      "Name": "BambooPlatform",
+      "Name": "Bamboo Platform",
       "Id": "4580"
     },
     {
-      "Name": "BambooSink",
+      "Name": "Bamboo Sink",
       "Id": "4581"
     },
     {
-      "Name": "BambooSofa",
+      "Name": "Bamboo Sofa",
       "Id": "4582"
     },
     {
-      "Name": "BambooTable",
+      "Name": "Bamboo Table",
       "Id": "4583"
     },
     {
-      "Name": "BambooWorkbench",
+      "Name": "Bamboo Work Bench",
       "Id": "4584"
     },
     {
-      "Name": "Fake_BambooChest",
+      "Name": "Trapped Bamboo Chest",
       "Id": "4585"
     },
     {
-      "Name": "BambooToilet",
+      "Name": "Bamboo Toilet",
       "Id": "4586"
     },
     {
-      "Name": "GolfClubStoneIron",
+      "Name": "Worn Golf Club (Iron)",
       "Id": "4587"
     },
     {
-      "Name": "GolfClubRustyPutter",
+      "Name": "Worn Golf Club (Putter)",
       "Id": "4588"
     },
     {
-      "Name": "GolfClubBronzeWedge",
+      "Name": "Worn Golf Club (Wedge)",
       "Id": "4589"
     },
     {
-      "Name": "GolfClubWoodDriver",
+      "Name": "Worn Golf Club (Driver)",
       "Id": "4590"
     },
     {
-      "Name": "GolfClubMythrilIron",
+      "Name": "Fancy Golf Club (Iron)",
       "Id": "4591"
     },
     {
-      "Name": "GolfClubLeadPutter",
+      "Name": "Fancy Golf Club (Putter)",
       "Id": "4592"
     },
     {
-      "Name": "GolfClubGoldWedge",
+      "Name": "Fancy Golf Club (Wedge)",
       "Id": "4593"
     },
     {
-      "Name": "GolfClubPearlwoodDriver",
+      "Name": "Fancy Golf Club (Driver)",
       "Id": "4594"
     },
     {
-      "Name": "GolfClubTitaniumIron",
+      "Name": "Premium Golf Club (Iron)",
       "Id": "4595"
     },
     {
-      "Name": "GolfClubShroomitePutter",
+      "Name": "Premium Golf Club (Putter)",
       "Id": "4596"
     },
     {
-      "Name": "GolfClubDiamondWedge",
+      "Name": "Premium Golf Club (Wedge)",
       "Id": "4597"
     },
     {
-      "Name": "GolfClubChlorophyteDriver",
+      "Name": "Premium Golf Club (Driver)",
       "Id": "4598"
     },
     {
-      "Name": "GolfTrophyBronze",
+      "Name": "Bronze Golf Trophy",
       "Id": "4599"
     },
     {
-      "Name": "GolfTrophySilver",
+      "Name": "Silver Golf Trophy",
       "Id": "4600"
     },
     {
-      "Name": "GolfTrophyGold",
+      "Name": "Gold Golf Trophy",
       "Id": "4601"
     },
     {
-      "Name": "BloodNautilusBanner",
+      "Name": "Dreadnautilus Banner",
       "Id": "4602"
     },
     {
-      "Name": "BirdieRattle",
+      "Name": "Birdie Rattle",
       "Id": "4603"
     },
     {
-      "Name": "ExoticEasternChewToy",
+      "Name": "Exotic Chew Toy",
       "Id": "4604"
     },
     {
-      "Name": "BedazzledNectar",
+      "Name": "Bedazzled Nectar",
       "Id": "4605"
     },
     {
-      "Name": "MusicBoxJungleNight",
+      "Name": "Music Box (Jungle Night)",
       "Id": "4606"
     },
     {
@@ -46237,35 +46237,35 @@ export var settings: Settings = {
       "Id": "4607"
     },
     {
-      "Name": "ChumBucket",
+      "Name": "Chum Bucket",
       "Id": "4608"
     },
     {
-      "Name": "GardenGnome",
+      "Name": "Garden Gnome",
       "Id": "4609"
     },
     {
-      "Name": "KiteBoneSerpent",
+      "Name": "Bone Serpent Kite",
       "Id": "4610"
     },
     {
-      "Name": "KiteWorldFeeder",
+      "Name": "World Feeder Kite",
       "Id": "4611"
     },
     {
-      "Name": "KiteBunny",
+      "Name": "Bunny Kite",
       "Id": "4612"
     },
     {
-      "Name": "KitePigron",
+      "Name": "Pigron Kite",
       "Id": "4613"
     },
     {
-      "Name": "AppleJuice",
+      "Name": "Apple Juice",
       "Id": "4614"
     },
     {
-      "Name": "GrapeJuice",
+      "Name": "Grape Juice",
       "Id": "4615"
     },
     {
@@ -46273,67 +46273,67 @@ export var settings: Settings = {
       "Id": "4616"
     },
     {
-      "Name": "BananaDaiquiri",
+      "Name": "Frozen Banana Daiquiri",
       "Id": "4617"
     },
     {
-      "Name": "PeachSangria",
+      "Name": "Peach Sangria",
       "Id": "4618"
     },
     {
-      "Name": "PinaColada",
+      "Name": "Piña Colada",
       "Id": "4619"
     },
     {
-      "Name": "TropicalSmoothie",
+      "Name": "Tropical Smoothie",
       "Id": "4620"
     },
     {
-      "Name": "BloodyMoscato",
+      "Name": "Bloody Moscato",
       "Id": "4621"
     },
     {
-      "Name": "SmoothieofDarkness",
+      "Name": "Smoothie of Darkness",
       "Id": "4622"
     },
     {
-      "Name": "PrismaticPunch",
+      "Name": "Prismatic Punch",
       "Id": "4623"
     },
     {
-      "Name": "FruitJuice",
+      "Name": "Fruit Juice",
       "Id": "4624"
     },
     {
-      "Name": "FruitSalad",
+      "Name": "Fruit Salad",
       "Id": "4625"
     },
     {
-      "Name": "AndrewSphinx",
+      "Name": "Andrew Sphinx",
       "Id": "4626"
     },
     {
-      "Name": "WatchfulAntlion",
+      "Name": "Watchful Antlion",
       "Id": "4627"
     },
     {
-      "Name": "BurningSpirit",
+      "Name": "Burning Spirit",
       "Id": "4628"
     },
     {
-      "Name": "JawsOfDeath",
+      "Name": "Jaws of Death",
       "Id": "4629"
     },
     {
-      "Name": "TheSandsOfSlime",
+      "Name": "The Sands of Slime",
       "Id": "4630"
     },
     {
-      "Name": "SnakesIHateSnakes",
+      "Name": "Snakes, I Hate Snakes",
       "Id": "4631"
     },
     {
-      "Name": "LifeAboveTheSand",
+      "Name": "Life Above the Sand",
       "Id": "4632"
     },
     {
@@ -46341,11 +46341,11 @@ export var settings: Settings = {
       "Id": "4633"
     },
     {
-      "Name": "PrehistoryPreserved",
+      "Name": "Prehistory Preserved",
       "Id": "4634"
     },
     {
-      "Name": "AncientTablet",
+      "Name": "Ancient Tablet",
       "Id": "4635"
     },
     {
@@ -46353,347 +46353,347 @@ export var settings: Settings = {
       "Id": "4636"
     },
     {
-      "Name": "VisitingThePyramids",
+      "Name": "Visiting the Pyramids",
       "Id": "4637"
     },
     {
-      "Name": "BandageBoy",
+      "Name": "Bandage Boy",
       "Id": "4638"
     },
     {
-      "Name": "DivineEye",
+      "Name": "Divine Eye",
       "Id": "4639"
     },
     {
-      "Name": "AmethystStoneBlock",
+      "Name": "Amethyst Stone Block",
       "Id": "4640"
     },
     {
-      "Name": "TopazStoneBlock",
+      "Name": "Topaz Stone Block",
       "Id": "4641"
     },
     {
-      "Name": "SapphireStoneBlock",
+      "Name": "Sapphire Stone Block",
       "Id": "4642"
     },
     {
-      "Name": "EmeraldStoneBlock",
+      "Name": "Emerald Stone Block",
       "Id": "4643"
     },
     {
-      "Name": "RubyStoneBlock",
+      "Name": "Ruby Stone Block",
       "Id": "4644"
     },
     {
-      "Name": "DiamondStoneBlock",
+      "Name": "Diamond Stone Block",
       "Id": "4645"
     },
     {
-      "Name": "AmberStoneBlock",
+      "Name": "Amber Stone Block",
       "Id": "4646"
     },
     {
-      "Name": "AmberStoneWallEcho",
+      "Name": "Amber Stone Wall",
       "Id": "4647"
     },
     {
-      "Name": "KiteManEater",
+      "Name": "Man Eater Kite",
       "Id": "4648"
     },
     {
-      "Name": "KiteJellyfishBlue",
+      "Name": "Blue Jellyfish Kite",
       "Id": "4649"
     },
     {
-      "Name": "KiteJellyfishPink",
+      "Name": "Pink Jellyfish Kite",
       "Id": "4650"
     },
     {
-      "Name": "KiteShark",
+      "Name": "Shark Kite",
       "Id": "4651"
     },
     {
-      "Name": "SuperHeroMask",
+      "Name": "Superhero Mask",
       "Id": "4652"
     },
     {
-      "Name": "SuperHeroCostume",
+      "Name": "Superhero Costume",
       "Id": "4653"
     },
     {
-      "Name": "SuperHeroTights",
+      "Name": "Superhero Tights",
       "Id": "4654"
     },
     {
-      "Name": "PinkFairyJar",
+      "Name": "Pink Fairy Jar",
       "Id": "4655"
     },
     {
-      "Name": "GreenFairyJar",
+      "Name": "Green Fairy Jar",
       "Id": "4656"
     },
     {
-      "Name": "BlueFairyJar",
+      "Name": "Blue Fairy Jar",
       "Id": "4657"
     },
     {
-      "Name": "GolfPainting1",
+      "Name": "The Rolling Greens",
       "Id": "4658"
     },
     {
-      "Name": "GolfPainting2",
+      "Name": "Study of a Ball at Rest",
       "Id": "4659"
     },
     {
-      "Name": "GolfPainting3",
+      "Name": "Fore!",
       "Id": "4660"
     },
     {
-      "Name": "GolfPainting4",
+      "Name": "The Duplicity of Reflections",
       "Id": "4661"
     },
     {
-      "Name": "FogboundDye",
+      "Name": "Fogbound Dye",
       "Id": "4662"
     },
     {
-      "Name": "BloodbathDye",
+      "Name": "Bloodbath Dye",
       "Id": "4663"
     },
     {
-      "Name": "PrettyPinkDressSkirt",
+      "Name": "Pretty Pink Dress",
       "Id": "4664"
     },
     {
-      "Name": "PrettyPinkDressPants",
+      "Name": "Pretty Pink Stockings",
       "Id": "4665"
     },
     {
-      "Name": "PrettyPinkRibbon",
+      "Name": "Pretty Pink Ribbon",
       "Id": "4666"
     },
     {
-      "Name": "BambooFence",
+      "Name": "Bamboo Fence",
       "Id": "4667"
     },
     {
-      "Name": "GlowPaint",
+      "Name": "Illuminant Coating",
       "Id": "4668"
     },
     {
-      "Name": "KiteSandShark",
+      "Name": "Sand Shark Kite",
       "Id": "4669"
     },
     {
-      "Name": "KiteBunnyCorrupt",
+      "Name": "Corrupt Bunny Kite",
       "Id": "4670"
     },
     {
-      "Name": "KiteBunnyCrimson",
+      "Name": "Vicious Bunny Kite",
       "Id": "4671"
     },
     {
-      "Name": "BlandWhip",
+      "Name": "Leather Whip",
       "Id": "4672"
     },
     {
-      "Name": "DrumStick",
+      "Name": "Drumstick",
       "Id": "4673"
     },
     {
-      "Name": "KiteGoldfish",
+      "Name": "Goldfish Kite",
       "Id": "4674"
     },
     {
-      "Name": "KiteAngryTrapper",
+      "Name": "Angry Trapper Kite",
       "Id": "4675"
     },
     {
-      "Name": "KiteKoi",
+      "Name": "Koi Kite",
       "Id": "4676"
     },
     {
-      "Name": "KiteCrawltipede",
+      "Name": "Crawltipede Kite",
       "Id": "4677"
     },
     {
-      "Name": "SwordWhip",
+      "Name": "Durendal",
       "Id": "4678"
     },
     {
-      "Name": "MaceWhip",
+      "Name": "Morning Star",
       "Id": "4679"
     },
     {
-      "Name": "ScytheWhip",
+      "Name": "Dark Harvest",
       "Id": "4680"
     },
     {
-      "Name": "KiteSpectrum",
+      "Name": "Spectrum Kite",
       "Id": "4681"
     },
     {
-      "Name": "ReleaseDoves",
+      "Name": "Release Doves",
       "Id": "4682"
     },
     {
-      "Name": "KiteWanderingEye",
+      "Name": "Wandering Eye Kite",
       "Id": "4683"
     },
     {
-      "Name": "KiteUnicorn",
+      "Name": "Unicorn Kite",
       "Id": "4684"
     },
     {
-      "Name": "UndertakerHat",
+      "Name": "Gravedigger Hat",
       "Id": "4685"
     },
     {
-      "Name": "UndertakerCoat",
+      "Name": "Gravedigger Coat",
       "Id": "4686"
     },
     {
-      "Name": "DandelionBanner",
+      "Name": "Angry Dandelion Banner",
       "Id": "4687"
     },
     {
-      "Name": "GnomeBanner",
+      "Name": "Gnome Banner",
       "Id": "4688"
     },
     {
-      "Name": "DesertCampfire",
+      "Name": "Desert Campfire",
       "Id": "4689"
     },
     {
-      "Name": "CoralCampfire",
+      "Name": "Coral Campfire",
       "Id": "4690"
     },
     {
-      "Name": "CorruptCampfire",
+      "Name": "Corrupt Campfire",
       "Id": "4691"
     },
     {
-      "Name": "CrimsonCampfire",
+      "Name": "Crimson Campfire",
       "Id": "4692"
     },
     {
-      "Name": "HallowedCampfire",
+      "Name": "Hallowed Campfire",
       "Id": "4693"
     },
     {
-      "Name": "JungleCampfire",
+      "Name": "Jungle Campfire",
       "Id": "4694"
     },
     {
-      "Name": "SoulBottleLight",
+      "Name": "Soul of Light in a Bottle",
       "Id": "4695"
     },
     {
-      "Name": "SoulBottleNight",
+      "Name": "Soul of Night in a Bottle",
       "Id": "4696"
     },
     {
-      "Name": "SoulBottleFlight",
+      "Name": "Soul of Flight in a Bottle",
       "Id": "4697"
     },
     {
-      "Name": "SoulBottleSight",
+      "Name": "Soul of Sight in a Bottle",
       "Id": "4698"
     },
     {
-      "Name": "SoulBottleMight",
+      "Name": "Soul of Might in a Bottle",
       "Id": "4699"
     },
     {
-      "Name": "SoulBottleFright",
+      "Name": "Soul of Fright in a Bottle",
       "Id": "4700"
     },
     {
-      "Name": "MudBud",
+      "Name": "Mud Bud",
       "Id": "4701"
     },
     {
-      "Name": "ReleaseLantern",
+      "Name": "Release Lantern",
       "Id": "4702"
     },
     {
-      "Name": "QuadBarrelShotgun",
+      "Name": "Quad-Barrel Shotgun",
       "Id": "4703"
     },
     {
-      "Name": "FuneralHat",
+      "Name": "Funeral Hat",
       "Id": "4704"
     },
     {
-      "Name": "FuneralCoat",
+      "Name": "Funeral Coat",
       "Id": "4705"
     },
     {
-      "Name": "FuneralPants",
+      "Name": "Funeral Pants",
       "Id": "4706"
     },
     {
-      "Name": "TragicUmbrella",
+      "Name": "Tragic Umbrella",
       "Id": "4707"
     },
     {
-      "Name": "VictorianGothHat",
+      "Name": "Victorian Goth Hat",
       "Id": "4708"
     },
     {
-      "Name": "VictorianGothDress",
+      "Name": "Victorian Goth Dress",
       "Id": "4709"
     },
     {
-      "Name": "TatteredWoodSign",
+      "Name": "Tattered Wood Sign",
       "Id": "4710"
     },
     {
-      "Name": "GravediggerShovel",
+      "Name": "Gravedigger's Shovel",
       "Id": "4711"
     },
     {
-      "Name": "DungeonDesertChest",
+      "Name": "Desert Chest",
       "Id": "4712"
     },
     {
-      "Name": "Fake_DungeonDesertChest",
+      "Name": "Trapped Desert Chest",
       "Id": "4713"
     },
     {
-      "Name": "DungeonDesertKey",
+      "Name": "Desert Key",
       "Id": "4714"
     },
     {
-      "Name": "SparkleGuitar",
+      "Name": "Stellar Tune",
       "Id": "4715"
     },
     {
-      "Name": "MolluskWhistle",
+      "Name": "Mollusk Whistle",
       "Id": "4716"
     },
     {
-      "Name": "BorealBeam",
+      "Name": "Boreal Beam",
       "Id": "4717"
     },
     {
-      "Name": "RichMahoganyBeam",
+      "Name": "Rich Mahogany Beam",
       "Id": "4718"
     },
     {
-      "Name": "GraniteColumn",
+      "Name": "Granite Column",
       "Id": "4719"
     },
     {
-      "Name": "SandstoneColumn",
+      "Name": "Sandstone Column",
       "Id": "4720"
     },
     {
-      "Name": "MushroomBeam",
+      "Name": "Mushroom Beam",
       "Id": "4721"
     },
     {
-      "Name": "FirstFractal",
+      "Name": "First Fractal",
       "Id": "4722"
     },
     {
@@ -46709,71 +46709,71 @@ export var settings: Settings = {
       "Id": "4725"
     },
     {
-      "Name": "GhostManifestation",
+      "Name": "Ghost Manifestation",
       "Id": "4726"
     },
     {
-      "Name": "WickedUndead",
+      "Name": "Wicked Undead",
       "Id": "4727"
     },
     {
-      "Name": "BloodyGoblet",
+      "Name": "Bloody Goblet",
       "Id": "4728"
     },
     {
-      "Name": "StillLife",
+      "Name": "Still Life",
       "Id": "4729"
     },
     {
-      "Name": "GhostarsWings",
+      "Name": "Ghostar's Infinity Eight",
       "Id": "4730"
     },
     {
-      "Name": "TerraToilet",
+      "Name": "Terra Toilet",
       "Id": "4731"
     },
     {
-      "Name": "GhostarSkullPin",
+      "Name": "Ghostar's Soul Jar",
       "Id": "4732"
     },
     {
-      "Name": "GhostarShirt",
+      "Name": "Ghostar's Garb",
       "Id": "4733"
     },
     {
-      "Name": "GhostarPants",
+      "Name": "Ghostar's Tights",
       "Id": "4734"
     },
     {
-      "Name": "BallOfFuseWire",
+      "Name": "Ball O' Fuse Wire",
       "Id": "4735"
     },
     {
-      "Name": "FullMoonSqueakyToy",
+      "Name": "Full Moon Squeaky Toy",
       "Id": "4736"
     },
     {
-      "Name": "OrnateShadowKey",
+      "Name": "Ornate Shadow Key",
       "Id": "4737"
     },
     {
-      "Name": "DrManFlyMask",
+      "Name": "Dr. Man Fly Mask",
       "Id": "4738"
     },
     {
-      "Name": "DrManFlyLabCoat",
+      "Name": "Dr. Man Fly's Lab Coat",
       "Id": "4739"
     },
     {
-      "Name": "ButcherMask",
+      "Name": "Butcher Mask",
       "Id": "4740"
     },
     {
-      "Name": "ButcherApron",
+      "Name": "Butcher's Bloodstained Apron",
       "Id": "4741"
     },
     {
-      "Name": "ButcherPants",
+      "Name": "Butcher's Bloodstained Pants",
       "Id": "4742"
     },
     {
@@ -46781,83 +46781,83 @@ export var settings: Settings = {
       "Id": "4743"
     },
     {
-      "Name": "HunterCloak",
+      "Name": "Hunter Cloak",
       "Id": "4744"
     },
     {
-      "Name": "CoffinMinecart",
+      "Name": "Coffin Minecart",
       "Id": "4745"
     },
     {
-      "Name": "SafemanWings",
+      "Name": "Safeman's Blanket Cape",
       "Id": "4746"
     },
     {
-      "Name": "SafemanSunHair",
+      "Name": "Safeman's Sunny Day",
       "Id": "4747"
     },
     {
-      "Name": "SafemanSunDress",
+      "Name": "Safeman's Sun Dress",
       "Id": "4748"
     },
     {
-      "Name": "SafemanDressLeggings",
+      "Name": "Safeman's Pink Leggings",
       "Id": "4749"
     },
     {
-      "Name": "FoodBarbarianWings",
+      "Name": "FoodBarbarian's Tattered Dragon Wings",
       "Id": "4750"
     },
     {
-      "Name": "FoodBarbarianHelm",
+      "Name": "FoodBarbarian's Horned Helm",
       "Id": "4751"
     },
     {
-      "Name": "FoodBarbarianArmor",
+      "Name": "FoodBarbarian's Wild Wolf Spaulders",
       "Id": "4752"
     },
     {
-      "Name": "FoodBarbarianGreaves",
+      "Name": "FoodBarbarian's Savage Greaves",
       "Id": "4753"
     },
     {
-      "Name": "GroxTheGreatWings",
+      "Name": "Grox The Great's Wings",
       "Id": "4754"
     },
     {
-      "Name": "GroxTheGreatHelm",
+      "Name": "Grox The Great's Horned Cowl",
       "Id": "4755"
     },
     {
-      "Name": "GroxTheGreatArmor",
+      "Name": "Grox The Great's Chestplate",
       "Id": "4756"
     },
     {
-      "Name": "GroxTheGreatGreaves",
+      "Name": "Grox The Great's Greaves",
       "Id": "4757"
     },
     {
-      "Name": "Smolstar",
+      "Name": "Blade Staff",
       "Id": "4758"
     },
     {
-      "Name": "SquirrelHook",
+      "Name": "Squirrel Hook",
       "Id": "4759"
     },
     {
-      "Name": "BouncingShield",
+      "Name": "Sergeant United Shield",
       "Id": "4760"
     },
     {
-      "Name": "RockGolemHead",
+      "Name": "Rock Golem Head",
       "Id": "4761"
     },
     {
-      "Name": "CritterShampoo",
+      "Name": "Critter Shampoo",
       "Id": "4762"
     },
     {
-      "Name": "DiggingMoleMinecart",
+      "Name": "Digging Molecart",
       "Id": "4763"
     },
     {
@@ -46865,331 +46865,331 @@ export var settings: Settings = {
       "Id": "4764"
     },
     {
-      "Name": "TreeGlobe",
+      "Name": "Tree Globe",
       "Id": "4765"
     },
     {
-      "Name": "WorldGlobe",
+      "Name": "World Globe",
       "Id": "4766"
     },
     {
-      "Name": "DontHurtCrittersBook",
+      "Name": "Guide to Critter Companionship",
       "Id": "4767"
     },
     {
-      "Name": "DogEars",
+      "Name": "Dog Ears",
       "Id": "4768"
     },
     {
-      "Name": "DogTail",
+      "Name": "Dog Tail",
       "Id": "4769"
     },
     {
-      "Name": "FoxEars",
+      "Name": "Fox Ears",
       "Id": "4770"
     },
     {
-      "Name": "FoxTail",
+      "Name": "Fox Tail",
       "Id": "4771"
     },
     {
-      "Name": "LizardEars",
+      "Name": "Lizard Ears",
       "Id": "4772"
     },
     {
-      "Name": "LizardTail",
+      "Name": "Lizard Tail",
       "Id": "4773"
     },
     {
-      "Name": "PandaEars",
+      "Name": "Panda Ears",
       "Id": "4774"
     },
     {
-      "Name": "BunnyTail",
+      "Name": "Bunny Tail",
       "Id": "4775"
     },
     {
-      "Name": "FairyGlowstick",
+      "Name": "Fairy Glowstick",
       "Id": "4776"
     },
     {
-      "Name": "LightningCarrot",
+      "Name": "Lightning Carrot",
       "Id": "4777"
     },
     {
-      "Name": "HallowBossDye",
+      "Name": "Prismatic Dye",
       "Id": "4778"
     },
     {
-      "Name": "MushroomHat",
+      "Name": "Mushroom Hat",
       "Id": "4779"
     },
     {
-      "Name": "MushroomVest",
+      "Name": "Mushroom Vest",
       "Id": "4780"
     },
     {
-      "Name": "MushroomPants",
+      "Name": "Mushroom Pants",
       "Id": "4781"
     },
     {
-      "Name": "FairyQueenBossBag",
+      "Name": "Treasure Bag (Empress of Light)",
       "Id": "4782"
     },
     {
-      "Name": "FairyQueenTrophy",
+      "Name": "Empress of Light Trophy",
       "Id": "4783"
     },
     {
-      "Name": "FairyQueenMask",
+      "Name": "Empress of Light Mask",
       "Id": "4784"
     },
     {
-      "Name": "PaintedHorseSaddle",
+      "Name": "Dusty Rawhide Saddle",
       "Id": "4785"
     },
     {
-      "Name": "MajesticHorseSaddle",
+      "Name": "Royal Gilded Saddle",
       "Id": "4786"
     },
     {
-      "Name": "DarkHorseSaddle",
+      "Name": "Black Studded Saddle",
       "Id": "4787"
     },
     {
-      "Name": "JoustingLance",
+      "Name": "Jousting Lance",
       "Id": "4788"
     },
     {
-      "Name": "ShadowJoustingLance",
+      "Name": "Shadow Jousting Lance",
       "Id": "4789"
     },
     {
-      "Name": "HallowJoustingLance",
+      "Name": "Hallowed Jousting Lance",
       "Id": "4790"
     },
     {
-      "Name": "PogoStick",
+      "Name": "Pogo Stick",
       "Id": "4791"
     },
     {
-      "Name": "PirateShipMountItem",
+      "Name": "The Black Spot",
       "Id": "4792"
     },
     {
-      "Name": "SpookyWoodMountItem",
+      "Name": "Hexxed Branch",
       "Id": "4793"
     },
     {
-      "Name": "SantankMountItem",
+      "Name": "Toy Tank",
       "Id": "4794"
     },
     {
-      "Name": "WallOfFleshGoatMountItem",
+      "Name": "Goat Skull",
       "Id": "4795"
     },
     {
-      "Name": "DarkMageBookMountItem",
+      "Name": "Dark Mage's Tome",
       "Id": "4796"
     },
     {
-      "Name": "KingSlimePetItem",
+      "Name": "Royal Delight",
       "Id": "4797"
     },
     {
-      "Name": "EyeOfCthulhuPetItem",
+      "Name": "Suspicious Grinning Eye",
       "Id": "4798"
     },
     {
-      "Name": "EaterOfWorldsPetItem",
+      "Name": "Writhing Remains",
       "Id": "4799"
     },
     {
-      "Name": "BrainOfCthulhuPetItem",
+      "Name": "Brain in a Jar",
       "Id": "4800"
     },
     {
-      "Name": "SkeletronPetItem",
+      "Name": "Possessed Skull",
       "Id": "4801"
     },
     {
-      "Name": "QueenBeePetItem",
+      "Name": "Sparkling Honey",
       "Id": "4802"
     },
     {
-      "Name": "DestroyerPetItem",
+      "Name": "Deactivated Probe",
       "Id": "4803"
     },
     {
-      "Name": "TwinsPetItem",
+      "Name": "Pair of Eyeballs",
       "Id": "4804"
     },
     {
-      "Name": "SkeletronPrimePetItem",
+      "Name": "Robotic Skull",
       "Id": "4805"
     },
     {
-      "Name": "PlanteraPetItem",
+      "Name": "Plantera Seedling",
       "Id": "4806"
     },
     {
-      "Name": "GolemPetItem",
+      "Name": "Guardian Golem",
       "Id": "4807"
     },
     {
-      "Name": "DukeFishronPetItem",
+      "Name": "Pork of the Sea",
       "Id": "4808"
     },
     {
-      "Name": "LunaticCultistPetItem",
+      "Name": "Tablet Fragment",
       "Id": "4809"
     },
     {
-      "Name": "MoonLordPetItem",
+      "Name": "Piece of Moon Squid",
       "Id": "4810"
     },
     {
-      "Name": "FairyQueenPetItem",
+      "Name": "Jewel of Light",
       "Id": "4811"
     },
     {
-      "Name": "PumpkingPetItem",
+      "Name": "Pumpkin Scented Candle",
       "Id": "4812"
     },
     {
-      "Name": "EverscreamPetItem",
+      "Name": "Shrub Star",
       "Id": "4813"
     },
     {
-      "Name": "IceQueenPetItem",
+      "Name": "Frozen Crown",
       "Id": "4814"
     },
     {
-      "Name": "MartianPetItem",
+      "Name": "Cosmic Skateboard",
       "Id": "4815"
     },
     {
-      "Name": "DD2OgrePetItem",
+      "Name": "Ogre's Club",
       "Id": "4816"
     },
     {
-      "Name": "DD2BetsyPetItem",
+      "Name": "Betsy's Egg",
       "Id": "4817"
     },
     {
-      "Name": "CombatWrench",
+      "Name": "Combat Wrench",
       "Id": "4818"
     },
     {
-      "Name": "DemonConch",
+      "Name": "Demon Conch",
       "Id": "4819"
     },
     {
-      "Name": "BottomlessLavaBucket",
+      "Name": "Bottomless Lava Bucket",
       "Id": "4820"
     },
     {
-      "Name": "FireproofBugNet",
+      "Name": "Lavaproof Bug Net",
       "Id": "4821"
     },
     {
-      "Name": "FlameWakerBoots",
+      "Name": "Flame Waker Boots",
       "Id": "4822"
     },
     {
-      "Name": "RainbowWings",
+      "Name": "Empress Wings",
       "Id": "4823"
     },
     {
-      "Name": "WetBomb",
+      "Name": "Wet Bomb",
       "Id": "4824"
     },
     {
-      "Name": "LavaBomb",
+      "Name": "Lava Bomb",
       "Id": "4825"
     },
     {
-      "Name": "HoneyBomb",
+      "Name": "Honey Bomb",
       "Id": "4826"
     },
     {
-      "Name": "DryBomb",
+      "Name": "Dry Bomb",
       "Id": "4827"
     },
     {
-      "Name": "SuperheatedBlood",
+      "Name": "Superheated Blood",
       "Id": "4828"
     },
     {
-      "Name": "LicenseCat",
+      "Name": "Cat License",
       "Id": "4829"
     },
     {
-      "Name": "LicenseDog",
+      "Name": "Dog License",
       "Id": "4830"
     },
     {
-      "Name": "GemSquirrelAmethyst",
+      "Name": "Amethyst Squirrel",
       "Id": "4831"
     },
     {
-      "Name": "GemSquirrelTopaz",
+      "Name": "Topaz Squirrel",
       "Id": "4832"
     },
     {
-      "Name": "GemSquirrelSapphire",
+      "Name": "Sapphire Squirrel",
       "Id": "4833"
     },
     {
-      "Name": "GemSquirrelEmerald",
+      "Name": "Emerald Squirrel",
       "Id": "4834"
     },
     {
-      "Name": "GemSquirrelRuby",
+      "Name": "Ruby Squirrel",
       "Id": "4835"
     },
     {
-      "Name": "GemSquirrelDiamond",
+      "Name": "Diamond Squirrel",
       "Id": "4836"
     },
     {
-      "Name": "GemSquirrelAmber",
+      "Name": "Amber Squirrel",
       "Id": "4837"
     },
     {
-      "Name": "GemBunnyAmethyst",
+      "Name": "Amethyst Bunny",
       "Id": "4838"
     },
     {
-      "Name": "GemBunnyTopaz",
+      "Name": "Topaz Bunny",
       "Id": "4839"
     },
     {
-      "Name": "GemBunnySapphire",
+      "Name": "Sapphire Bunny",
       "Id": "4840"
     },
     {
-      "Name": "GemBunnyEmerald",
+      "Name": "Emerald Bunny",
       "Id": "4841"
     },
     {
-      "Name": "GemBunnyRuby",
+      "Name": "Ruby Bunny",
       "Id": "4842"
     },
     {
-      "Name": "GemBunnyDiamond",
+      "Name": "Diamond Bunny",
       "Id": "4843"
     },
     {
-      "Name": "GemBunnyAmber",
+      "Name": "Amber Bunny",
       "Id": "4844"
     },
     {
-      "Name": "HellButterfly",
+      "Name": "Hell Butterfly",
       "Id": "4845"
     },
     {
-      "Name": "HellButterflyJar",
+      "Name": "Hell Butterfly Jar",
       "Id": "4846"
     },
     {
@@ -47197,435 +47197,435 @@ export var settings: Settings = {
       "Id": "4847"
     },
     {
-      "Name": "LavaflyinaBottle",
+      "Name": "Lavafly in a Bottle",
       "Id": "4848"
     },
     {
-      "Name": "MagmaSnail",
+      "Name": "Magma Snail",
       "Id": "4849"
     },
     {
-      "Name": "MagmaSnailCage",
+      "Name": "Magma Snail Cage",
       "Id": "4850"
     },
     {
-      "Name": "GemTreeTopazSeed",
+      "Name": "Topaz Gemcorn",
       "Id": "4851"
     },
     {
-      "Name": "GemTreeAmethystSeed",
+      "Name": "Amethyst Gemcorn",
       "Id": "4852"
     },
     {
-      "Name": "GemTreeSapphireSeed",
+      "Name": "Sapphire Gemcorn",
       "Id": "4853"
     },
     {
-      "Name": "GemTreeEmeraldSeed",
+      "Name": "Emerald Gemcorn",
       "Id": "4854"
     },
     {
-      "Name": "GemTreeRubySeed",
+      "Name": "Ruby Gemcorn",
       "Id": "4855"
     },
     {
-      "Name": "GemTreeDiamondSeed",
+      "Name": "Diamond Gemcorn",
       "Id": "4856"
     },
     {
-      "Name": "GemTreeAmberSeed",
+      "Name": "Amber Gemcorn",
       "Id": "4857"
     },
     {
-      "Name": "PotSuspended",
+      "Name": "Hanging Pot",
       "Id": "4858"
     },
     {
-      "Name": "PotSuspendedDaybloom",
+      "Name": "Hanging Daybloom",
       "Id": "4859"
     },
     {
-      "Name": "PotSuspendedMoonglow",
+      "Name": "Hanging Moonglow",
       "Id": "4860"
     },
     {
-      "Name": "PotSuspendedWaterleaf",
+      "Name": "Hanging Waterleaf",
       "Id": "4861"
     },
     {
-      "Name": "PotSuspendedShiverthorn",
+      "Name": "Hanging Shiverthorn",
       "Id": "4862"
     },
     {
-      "Name": "PotSuspendedBlinkroot",
+      "Name": "Hanging Blinkroot",
       "Id": "4863"
     },
     {
-      "Name": "PotSuspendedDeathweedCorrupt",
+      "Name": "Hanging Corrupt Deathweed",
       "Id": "4864"
     },
     {
-      "Name": "PotSuspendedDeathweedCrimson",
+      "Name": "Hanging Crimson Deathweed",
       "Id": "4865"
     },
     {
-      "Name": "PotSuspendedFireblossom",
+      "Name": "Hanging Fireblossom",
       "Id": "4866"
     },
     {
-      "Name": "BrazierSuspended",
+      "Name": "Hanging Brazier",
       "Id": "4867"
     },
     {
-      "Name": "VolcanoSmall",
+      "Name": "Mini Volcano",
       "Id": "4868"
     },
     {
-      "Name": "VolcanoLarge",
+      "Name": "Large Volcano",
       "Id": "4869"
     },
     {
-      "Name": "PotionOfReturn",
+      "Name": "Potion of Return",
       "Id": "4870"
     },
     {
-      "Name": "VanityTreeSakuraSeed",
+      "Name": "Sakura Sapling",
       "Id": "4871"
     },
     {
-      "Name": "LavaAbsorbantSponge",
+      "Name": "Lava Absorbant Sponge",
       "Id": "4872"
     },
     {
-      "Name": "HallowedHood",
+      "Name": "Hallowed Hood",
       "Id": "4873"
     },
     {
-      "Name": "HellfireTreads",
+      "Name": "Hellfire Treads",
       "Id": "4874"
     },
     {
-      "Name": "TeleportationPylonJungle",
+      "Name": "Jungle Pylon",
       "Id": "4875"
     },
     {
-      "Name": "TeleportationPylonPurity",
+      "Name": "Forest Pylon",
       "Id": "4876"
     },
     {
-      "Name": "LavaCrate",
+      "Name": "Obsidian Crate",
       "Id": "4877"
     },
     {
-      "Name": "LavaCrateHard",
+      "Name": "Hellstone Crate",
       "Id": "4878"
     },
     {
-      "Name": "ObsidianLockbox",
+      "Name": "Obsidian Lock Box",
       "Id": "4879"
     },
     {
-      "Name": "LavaFishbowl",
+      "Name": "Lava Serpent Bowl",
       "Id": "4880"
     },
     {
-      "Name": "LavaFishingHook",
+      "Name": "Lavaproof Fishing Hook",
       "Id": "4881"
     },
     {
-      "Name": "AmethystBunnyCage",
+      "Name": "Amethyst Bunny Cage",
       "Id": "4882"
     },
     {
-      "Name": "TopazBunnyCage",
+      "Name": "Topaz Bunny Cage",
       "Id": "4883"
     },
     {
-      "Name": "SapphireBunnyCage",
+      "Name": "Sapphire Bunny Cage",
       "Id": "4884"
     },
     {
-      "Name": "EmeraldBunnyCage",
+      "Name": "Emerald Bunny Cage",
       "Id": "4885"
     },
     {
-      "Name": "RubyBunnyCage",
+      "Name": "Ruby Bunny Cage",
       "Id": "4886"
     },
     {
-      "Name": "DiamondBunnyCage",
+      "Name": "Diamond Bunny Cage",
       "Id": "4887"
     },
     {
-      "Name": "AmberBunnyCage",
+      "Name": "Amber Bunny Cage",
       "Id": "4888"
     },
     {
-      "Name": "AmethystSquirrelCage",
+      "Name": "Amethyst Squirrel Cage",
       "Id": "4889"
     },
     {
-      "Name": "TopazSquirrelCage",
+      "Name": "Topaz Squirrel Cage",
       "Id": "4890"
     },
     {
-      "Name": "SapphireSquirrelCage",
+      "Name": "Sapphire Squirrel Cage",
       "Id": "4891"
     },
     {
-      "Name": "EmeraldSquirrelCage",
+      "Name": "Emerald Squirrel Cage",
       "Id": "4892"
     },
     {
-      "Name": "RubySquirrelCage",
+      "Name": "Ruby Squirrel Cage",
       "Id": "4893"
     },
     {
-      "Name": "DiamondSquirrelCage",
+      "Name": "Diamond Squirrel Cage",
       "Id": "4894"
     },
     {
-      "Name": "AmberSquirrelCage",
+      "Name": "Amber Squirrel Cage",
       "Id": "4895"
     },
     {
-      "Name": "AncientHallowedMask",
+      "Name": "Ancient Hallowed Mask",
       "Id": "4896"
     },
     {
-      "Name": "AncientHallowedHelmet",
+      "Name": "Ancient Hallowed Helmet",
       "Id": "4897"
     },
     {
-      "Name": "AncientHallowedHeadgear",
+      "Name": "Ancient Hallowed Headgear",
       "Id": "4898"
     },
     {
-      "Name": "AncientHallowedHood",
+      "Name": "Ancient Hallowed Hood",
       "Id": "4899"
     },
     {
-      "Name": "AncientHallowedPlateMail",
+      "Name": "Ancient Hallowed Plate Mail",
       "Id": "4900"
     },
     {
-      "Name": "AncientHallowedGreaves",
+      "Name": "Ancient Hallowed Greaves",
       "Id": "4901"
     },
     {
-      "Name": "PottedLavaPlantPalm",
+      "Name": "Potted Magma Palm",
       "Id": "4902"
     },
     {
-      "Name": "PottedLavaPlantBush",
+      "Name": "Potted Brimstone Bush",
       "Id": "4903"
     },
     {
-      "Name": "PottedLavaPlantBramble",
+      "Name": "Potted Fire Brambles",
       "Id": "4904"
     },
     {
-      "Name": "PottedLavaPlantBulb",
+      "Name": "Potted Lava Bulb",
       "Id": "4905"
     },
     {
-      "Name": "PottedLavaPlantTendrils",
+      "Name": "Potted Ember Tendrils",
       "Id": "4906"
     },
     {
-      "Name": "VanityTreeYellowWillowSeed",
+      "Name": "Yellow Willow Sapling",
       "Id": "4907"
     },
     {
-      "Name": "DirtBomb",
+      "Name": "Dirt Bomb",
       "Id": "4908"
     },
     {
-      "Name": "DirtStickyBomb",
+      "Name": "Sticky Dirt Bomb",
       "Id": "4909"
     },
     {
-      "Name": "LicenseBunny",
+      "Name": "Bunny License",
       "Id": "4910"
     },
     {
-      "Name": "CoolWhip",
+      "Name": "Cool Whip",
       "Id": "4911"
     },
     {
-      "Name": "FireWhip",
+      "Name": "Firecracker",
       "Id": "4912"
     },
     {
-      "Name": "ThornWhip",
+      "Name": "Snapthorn",
       "Id": "4913"
     },
     {
-      "Name": "RainbowWhip",
+      "Name": "Kaleidoscope",
       "Id": "4914"
     },
     {
-      "Name": "TungstenBullet",
+      "Name": "Tungsten Bullet",
       "Id": "4915"
     },
     {
-      "Name": "TeleportationPylonHallow",
+      "Name": "Hallow Pylon",
       "Id": "4916"
     },
     {
-      "Name": "TeleportationPylonUnderground",
+      "Name": "Cavern Pylon",
       "Id": "4917"
     },
     {
-      "Name": "TeleportationPylonOcean",
+      "Name": "Ocean Pylon",
       "Id": "4918"
     },
     {
-      "Name": "TeleportationPylonDesert",
+      "Name": "Desert Pylon",
       "Id": "4919"
     },
     {
-      "Name": "TeleportationPylonSnow",
+      "Name": "Snow Pylon",
       "Id": "4920"
     },
     {
-      "Name": "TeleportationPylonMushroom",
+      "Name": "Mushroom Pylon",
       "Id": "4921"
     },
     {
-      "Name": "CavernFountain",
+      "Name": "Cavern Water Fountain",
       "Id": "4922"
     },
     {
-      "Name": "PiercingStarlight",
+      "Name": "Starlight",
       "Id": "4923"
     },
     {
-      "Name": "EyeofCthulhuMasterTrophy",
+      "Name": "Eye of Cthulhu Relic",
       "Id": "4924"
     },
     {
-      "Name": "EaterofWorldsMasterTrophy",
+      "Name": "Eater of Worlds Relic",
       "Id": "4925"
     },
     {
-      "Name": "BrainofCthulhuMasterTrophy",
+      "Name": "Brain of Cthulhu Relic",
       "Id": "4926"
     },
     {
-      "Name": "SkeletronMasterTrophy",
+      "Name": "Skeletron Relic",
       "Id": "4927"
     },
     {
-      "Name": "QueenBeeMasterTrophy",
+      "Name": "Queen Bee Relic",
       "Id": "4928"
     },
     {
-      "Name": "KingSlimeMasterTrophy",
+      "Name": "King Slime Relic",
       "Id": "4929"
     },
     {
-      "Name": "WallofFleshMasterTrophy",
+      "Name": "Wall of Flesh Relic",
       "Id": "4930"
     },
     {
-      "Name": "TwinsMasterTrophy",
+      "Name": "Twins Relic",
       "Id": "4931"
     },
     {
-      "Name": "DestroyerMasterTrophy",
+      "Name": "Destroyer Relic",
       "Id": "4932"
     },
     {
-      "Name": "SkeletronPrimeMasterTrophy",
+      "Name": "Skeletron Prime Relic",
       "Id": "4933"
     },
     {
-      "Name": "PlanteraMasterTrophy",
+      "Name": "Plantera Relic",
       "Id": "4934"
     },
     {
-      "Name": "GolemMasterTrophy",
+      "Name": "Golem Relic",
       "Id": "4935"
     },
     {
-      "Name": "DukeFishronMasterTrophy",
+      "Name": "Duke Fishron Relic",
       "Id": "4936"
     },
     {
-      "Name": "LunaticCultistMasterTrophy",
+      "Name": "Lunatic Cultist Relic",
       "Id": "4937"
     },
     {
-      "Name": "MoonLordMasterTrophy",
+      "Name": "Moon Lord Relic",
       "Id": "4938"
     },
     {
-      "Name": "UFOMasterTrophy",
+      "Name": "Martian Saucer Relic",
       "Id": "4939"
     },
     {
-      "Name": "FlyingDutchmanMasterTrophy",
+      "Name": "Flying Dutchman Relic",
       "Id": "4940"
     },
     {
-      "Name": "MourningWoodMasterTrophy",
+      "Name": "Mourning Wood Relic",
       "Id": "4941"
     },
     {
-      "Name": "PumpkingMasterTrophy",
+      "Name": "Pumpking Relic",
       "Id": "4942"
     },
     {
-      "Name": "IceQueenMasterTrophy",
+      "Name": "Ice Queen Relic",
       "Id": "4943"
     },
     {
-      "Name": "EverscreamMasterTrophy",
+      "Name": "Everscream Relic",
       "Id": "4944"
     },
     {
-      "Name": "SantankMasterTrophy",
+      "Name": "Santa-NK1 Relic",
       "Id": "4945"
     },
     {
-      "Name": "DarkMageMasterTrophy",
+      "Name": "Dark Mage Relic",
       "Id": "4946"
     },
     {
-      "Name": "OgreMasterTrophy",
+      "Name": "Ogre Relic",
       "Id": "4947"
     },
     {
-      "Name": "BetsyMasterTrophy",
+      "Name": "Betsy Relic",
       "Id": "4948"
     },
     {
-      "Name": "FairyQueenMasterTrophy",
+      "Name": "Empress of Light Relic",
       "Id": "4949"
     },
     {
-      "Name": "QueenSlimeMasterTrophy",
+      "Name": "Queen Slime Relic",
       "Id": "4950"
     },
     {
-      "Name": "TeleportationPylonVictory",
+      "Name": "Universal Pylon",
       "Id": "4951"
     },
     {
-      "Name": "FairyQueenMagicItem",
+      "Name": "Nightglow",
       "Id": "4952"
     },
     {
-      "Name": "FairyQueenRangedItem",
+      "Name": "Eventide",
       "Id": "4953"
     },
     {
-      "Name": "LongRainbowTrailWings",
+      "Name": "Celestial Starboard",
       "Id": "4954"
     },
     {
-      "Name": "RabbitOrder",
+      "Name": "Rabbit Perch",
       "Id": "4955"
     },
     {
@@ -47633,211 +47633,211 @@ export var settings: Settings = {
       "Id": "4956"
     },
     {
-      "Name": "QueenSlimeBossBag",
+      "Name": "Treasure Bag (Queen Slime)",
       "Id": "4957"
     },
     {
-      "Name": "QueenSlimeTrophy",
+      "Name": "Queen Slime Trophy",
       "Id": "4958"
     },
     {
-      "Name": "QueenSlimeMask",
+      "Name": "Queen Slime Mask",
       "Id": "4959"
     },
     {
-      "Name": "QueenSlimePetItem",
+      "Name": "Regal Delicacy",
       "Id": "4960"
     },
     {
-      "Name": "EmpressButterfly",
+      "Name": "Prismatic Lacewing",
       "Id": "4961"
     },
     {
-      "Name": "AccentSlab",
+      "Name": "Stone Accent Slab",
       "Id": "4962"
     },
     {
-      "Name": "TruffleWormCage",
+      "Name": "Truffle Worm Cage",
       "Id": "4963"
     },
     {
-      "Name": "EmpressButterflyJar",
+      "Name": "Prismatic Lacewing Jar",
       "Id": "4964"
     },
     {
-      "Name": "RockGolemBanner",
+      "Name": "Rock Golem Banner",
       "Id": "4965"
     },
     {
-      "Name": "BloodMummyBanner",
+      "Name": "Blood Mummy Banner",
       "Id": "4966"
     },
     {
-      "Name": "SporeSkeletonBanner",
+      "Name": "Spore Skeleton Banner",
       "Id": "4967"
     },
     {
-      "Name": "SporeBatBanner",
+      "Name": "Spore Bat Banner",
       "Id": "4968"
     },
     {
-      "Name": "LarvaeAntlionBanner",
+      "Name": "Antlion Larva Banner",
       "Id": "4969"
     },
     {
-      "Name": "CrimsonBunnyBanner",
+      "Name": "Vicious Bunny Banner",
       "Id": "4970"
     },
     {
-      "Name": "CrimsonGoldfishBanner",
+      "Name": "Vicious Goldfish Banner",
       "Id": "4971"
     },
     {
-      "Name": "CrimsonPenguinBanner",
+      "Name": "Vicious Penguin Banner",
       "Id": "4972"
     },
     {
-      "Name": "BigMimicCorruptionBanner",
+      "Name": "Corrupt Mimic Banner",
       "Id": "4973"
     },
     {
-      "Name": "BigMimicCrimsonBanner",
+      "Name": "Crimson Mimic Banner",
       "Id": "4974"
     },
     {
-      "Name": "BigMimicHallowBanner",
+      "Name": "Hallowed Mimic Banner",
       "Id": "4975"
     },
     {
-      "Name": "MossHornetBanner",
+      "Name": "Moss Hornet Banner",
       "Id": "4976"
     },
     {
-      "Name": "WanderingEyeBanner",
+      "Name": "Wandering Eye Banner",
       "Id": "4977"
     },
     {
-      "Name": "CreativeWings",
+      "Name": "Fledgling Wings",
       "Id": "4978"
     },
     {
-      "Name": "MusicBoxQueenSlime",
+      "Name": "Music Box (Queen Slime)",
       "Id": "4979"
     },
     {
-      "Name": "QueenSlimeHook",
+      "Name": "Hook of Dissonance",
       "Id": "4980"
     },
     {
-      "Name": "QueenSlimeMountSaddle",
+      "Name": "Gelatinous Pillion",
       "Id": "4981"
     },
     {
-      "Name": "CrystalNinjaHelmet",
+      "Name": "Crystal Assassin Hood",
       "Id": "4982"
     },
     {
-      "Name": "CrystalNinjaChestplate",
+      "Name": "Crystal Assassin Shirt",
       "Id": "4983"
     },
     {
-      "Name": "CrystalNinjaLeggings",
+      "Name": "Crystal Assassin Pants",
       "Id": "4984"
     },
     {
-      "Name": "MusicBoxEmpressOfLight",
+      "Name": "Music Box (Empress Of Light)",
       "Id": "4985"
     },
     {
-      "Name": "GelBalloon",
+      "Name": "Sparkle Slime Balloon",
       "Id": "4986"
     },
     {
-      "Name": "VolatileGelatin",
+      "Name": "Volatile Gelatin",
       "Id": "4987"
     },
     {
-      "Name": "QueenSlimeCrystal",
+      "Name": "Gelatin Crystal",
       "Id": "4988"
     },
     {
-      "Name": "EmpressFlightBooster",
+      "Name": "Soaring Insignia",
       "Id": "4989"
     },
     {
-      "Name": "MusicBoxDukeFishron",
+      "Name": "Music Box (Duke Fishron)",
       "Id": "4990"
     },
     {
-      "Name": "MusicBoxMorningRain",
+      "Name": "Music Box (Morning Rain)",
       "Id": "4991"
     },
     {
-      "Name": "MusicBoxConsoleTitle",
+      "Name": "Music Box (Alt Title)",
       "Id": "4992"
     },
     {
-      "Name": "ChippysCouch",
+      "Name": "Chippy's Couch",
       "Id": "4993"
     },
     {
-      "Name": "GraduationCapBlue",
+      "Name": "Blue Graduation Cap",
       "Id": "4994"
     },
     {
-      "Name": "GraduationCapMaroon",
+      "Name": "Maroon Graduation Cap",
       "Id": "4995"
     },
     {
-      "Name": "GraduationCapBlack",
+      "Name": "Black Graduation Cap",
       "Id": "4996"
     },
     {
-      "Name": "GraduationGownBlue",
+      "Name": "Blue Graduation Gown",
       "Id": "4997"
     },
     {
-      "Name": "GraduationGownMaroon",
+      "Name": "Maroon Graduation Gown",
       "Id": "4998"
     },
     {
-      "Name": "GraduationGownBlack",
+      "Name": "Black Graduation Gown",
       "Id": "4999"
     },
     {
-      "Name": "TerrasparkBoots",
+      "Name": "Terraspark Boots",
       "Id": "5000"
     },
     {
-      "Name": "MoonLordLegs",
+      "Name": "Moon Lord Legs",
       "Id": "5001"
     },
     {
-      "Name": "OceanCrate",
+      "Name": "Ocean Crate",
       "Id": "5002"
     },
     {
-      "Name": "OceanCrateHard",
+      "Name": "Seaside Crate",
       "Id": "5003"
     },
     {
-      "Name": "BadgersHat",
+      "Name": "Badger's Hat",
       "Id": "5004"
     },
     {
-      "Name": "EmpressBlade",
+      "Name": "Terraprisma",
       "Id": "5005"
     },
     {
-      "Name": "MusicBoxUndergroundDesert",
+      "Name": "Music Box (Underground Desert)",
       "Id": "5006"
     },
     {
-      "Name": "DeadMansSweater",
+      "Name": "Dead Man's Sweater",
       "Id": "5007"
     },
     {
-      "Name": "TeaKettle",
+      "Name": "Teapot",
       "Id": "5008"
     },
     {
@@ -47845,7 +47845,7 @@ export var settings: Settings = {
       "Id": "5009"
     },
     {
-      "Name": "TreasureMagnet",
+      "Name": "Treasure Magnet",
       "Id": "5010"
     },
     {
@@ -47853,127 +47853,127 @@ export var settings: Settings = {
       "Id": "5011"
     },
     {
-      "Name": "FlamingMace",
+      "Name": "Flaming Mace",
       "Id": "5012"
     },
     {
-      "Name": "SleepingIcon",
+      "Name": "Sleeping Icon",
       "Id": "5013"
     },
     {
-      "Name": "MusicBoxOWRain",
+      "Name": "Otherworldly Music Box (Rain)",
       "Id": "5014"
     },
     {
-      "Name": "MusicBoxOWDay",
+      "Name": "Otherworldly Music Box (Overworld Day)",
       "Id": "5015"
     },
     {
-      "Name": "MusicBoxOWNight",
+      "Name": "Otherworldly Music Box (Night)",
       "Id": "5016"
     },
     {
-      "Name": "MusicBoxOWUnderground",
+      "Name": "Otherworldly Music Box (Underground)",
       "Id": "5017"
     },
     {
-      "Name": "MusicBoxOWDesert",
+      "Name": "Otherworldly Music Box (Desert)",
       "Id": "5018"
     },
     {
-      "Name": "MusicBoxOWOcean",
+      "Name": "Otherworldly Music Box (Ocean)",
       "Id": "5019"
     },
     {
-      "Name": "MusicBoxOWMushroom",
+      "Name": "Otherworldly Music Box (Mushrooms)",
       "Id": "5020"
     },
     {
-      "Name": "MusicBoxOWDungeon",
+      "Name": "Otherworldly Music Box (Dungeon)",
       "Id": "5021"
     },
     {
-      "Name": "MusicBoxOWSpace",
+      "Name": "Otherworldly Music Box (Space)",
       "Id": "5022"
     },
     {
-      "Name": "MusicBoxOWUnderworld",
+      "Name": "Otherworldly Music Box (Underworld)",
       "Id": "5023"
     },
     {
-      "Name": "MusicBoxOWSnow",
+      "Name": "Otherworldly Music Box (Snow)",
       "Id": "5024"
     },
     {
-      "Name": "MusicBoxOWCorruption",
+      "Name": "Otherworldly Music Box (Corruption)",
       "Id": "5025"
     },
     {
-      "Name": "MusicBoxOWUndergroundCorruption",
+      "Name": "Otherworldly Music Box (Underground Corruption)",
       "Id": "5026"
     },
     {
-      "Name": "MusicBoxOWCrimson",
+      "Name": "Otherworldly Music Box (Crimson)",
       "Id": "5027"
     },
     {
-      "Name": "MusicBoxOWUndergroundCrimson",
+      "Name": "Otherworldly Music Box (Underground Crimson)",
       "Id": "5028"
     },
     {
-      "Name": "MusicBoxOWUndergroundSnow",
+      "Name": "Otherworldly Music Box (Ice)",
       "Id": "5029"
     },
     {
-      "Name": "MusicBoxOWUndergroundHallow",
+      "Name": "Otherworldly Music Box (Underground Hallow)",
       "Id": "5030"
     },
     {
-      "Name": "MusicBoxOWBloodMoon",
+      "Name": "Otherworldly Music Box (Eerie)",
       "Id": "5031"
     },
     {
-      "Name": "MusicBoxOWBoss2",
+      "Name": "Otherworldly Music Box (Boss 2)",
       "Id": "5032"
     },
     {
-      "Name": "MusicBoxOWBoss1",
+      "Name": "Otherworldly Music Box (Boss 1)",
       "Id": "5033"
     },
     {
-      "Name": "MusicBoxOWInvasion",
+      "Name": "Otherworldly Music Box (Invasion)",
       "Id": "5034"
     },
     {
-      "Name": "MusicBoxOWTowers",
+      "Name": "Otherworldly Music Box (The Towers)",
       "Id": "5035"
     },
     {
-      "Name": "MusicBoxOWMoonLord",
+      "Name": "Otherworldly Music Box (Lunar Boss)",
       "Id": "5036"
     },
     {
-      "Name": "MusicBoxOWPlantera",
+      "Name": "Otherworldly Music Box (Plantera)",
       "Id": "5037"
     },
     {
-      "Name": "MusicBoxOWJungle",
+      "Name": "Otherworldly Music Box (Jungle)",
       "Id": "5038"
     },
     {
-      "Name": "MusicBoxOWWallOfFlesh",
+      "Name": "Otherworldly Music Box (Wall of Flesh)",
       "Id": "5039"
     },
     {
-      "Name": "MusicBoxOWHallow",
+      "Name": "Otherworldly Music Box (Hallow)",
       "Id": "5040"
     },
     {
-      "Name": "MilkCarton",
+      "Name": "Carton of Milk",
       "Id": "5041"
     },
     {
-      "Name": "CoffeeCup",
+      "Name": "Coffee",
       "Id": "5042"
     },
     {
@@ -48305,19 +48305,19 @@ export var settings: Settings = {
       "Name": "The Strongman"
     },
     {
-      "Name": "FartMinecart",
+      "Name": "Fart Kart",
       "Id": "5125"
     },
     {
-      "Name": "HandOfCreation",
+      "Name": "Hand Of Creation",
       "Id": "5126"
     },
     {
-      "Name": "VioletMoss",
+      "Name": "Neon Moss",
       "Id": "5127"
     },
     {
-      "Name": "RainbowMoss",
+      "Name": "Helium Moss",
       "Id": "5128"
     },
     {
@@ -48325,11 +48325,11 @@ export var settings: Settings = {
       "Id": "5129"
     },
     {
-      "Name": "WolfMountItem",
+      "Name": "Lilith's Necklace",
       "Id": "5130"
     },
     {
-      "Name": "ResplendentDessert",
+      "Name": "Resplendent Dessert",
       "Id": "5131"
     },
     {
@@ -48337,343 +48337,343 @@ export var settings: Settings = {
       "Id": "5132"
     },
     {
-      "Name": "StinkbugCage",
+      "Name": "Stinkbug Cage",
       "Id": "5133"
     },
     {
-      "Name": "Clentaminator2",
+      "Name": "Terraformer",
       "Id": "5134"
     },
     {
-      "Name": "VenomDartTrap",
+      "Name": "Venom Dart Trap",
       "Id": "5135"
     },
     {
-      "Name": "VulkelfEar",
+      "Name": "Vulkelf Ears",
       "Id": "5136"
     },
     {
-      "Name": "StinkbugHousingBlocker",
+      "Name": "Stinkbug Blocker",
       "Id": "5137"
     },
     {
-      "Name": "StinkbugHousingBlockerEcho",
+      "Name": "Ghostly Stinkbug Blocker",
       "Id": "5138"
     },
     {
-      "Name": "FishingBobber",
+      "Name": "Fishing Bobber",
       "Id": "5139"
     },
     {
-      "Name": "FishingBobberGlowingStar",
+      "Name": "Glowing Fishing Bobber",
       "Id": "5140"
     },
     {
-      "Name": "FishingBobberGlowingLava",
+      "Name": "Lava Moss Fishing Bobber",
       "Id": "5141"
     },
     {
-      "Name": "FishingBobberGlowingKrypton",
+      "Name": "Krypton Moss Fishing Bobber",
       "Id": "5142"
     },
     {
-      "Name": "FishingBobberGlowingXenon",
+      "Name": "Xenon Moss Fishing Bobber",
       "Id": "5143"
     },
     {
-      "Name": "FishingBobberGlowingArgon",
+      "Name": "Argon Moss Fishing Bobber",
       "Id": "5144"
     },
     {
-      "Name": "FishingBobberGlowingViolet",
+      "Name": "Neon Moss Fishing Bobber",
       "Id": "5145"
     },
     {
-      "Name": "FishingBobberGlowingRainbow",
+      "Name": "Helium Moss Fishing Bobber",
       "Id": "5146"
     },
     {
-      "Name": "WandofFrosting",
+      "Name": "Wand of Frosting",
       "Id": "5147"
     },
     {
-      "Name": "CoralBathtub",
+      "Name": "Reef Bathtub",
       "Id": "5148"
     },
     {
-      "Name": "CoralBed",
+      "Name": "Reef Bed",
       "Id": "5149"
     },
     {
-      "Name": "CoralBookcase",
+      "Name": "Reef Bookcase",
       "Id": "5150"
     },
     {
-      "Name": "CoralDresser",
+      "Name": "Reef Dresser",
       "Id": "5151"
     },
     {
-      "Name": "CoralCandelabra",
+      "Name": "Reef Candelabra",
       "Id": "5152"
     },
     {
-      "Name": "CoralCandle",
+      "Name": "Reef Candle",
       "Id": "5153"
     },
     {
-      "Name": "CoralChair",
+      "Name": "Reef Chair",
       "Id": "5154"
     },
     {
-      "Name": "CoralChandelier",
+      "Name": "Reef Chandelier",
       "Id": "5155"
     },
     {
-      "Name": "CoralChest",
+      "Name": "Reef Chest",
       "Id": "5156"
     },
     {
-      "Name": "CoralClock",
+      "Name": "Reef Clock",
       "Id": "5157"
     },
     {
-      "Name": "CoralDoor",
+      "Name": "Reef Door",
       "Id": "5158"
     },
     {
-      "Name": "CoralLamp",
+      "Name": "Reef Lamp",
       "Id": "5159"
     },
     {
-      "Name": "CoralLantern",
+      "Name": "Reef Lantern",
       "Id": "5160"
     },
     {
-      "Name": "CoralPiano",
+      "Name": "Reef Piano",
       "Id": "5161"
     },
     {
-      "Name": "CoralPlatform",
+      "Name": "Reef Platform",
       "Id": "5162"
     },
     {
-      "Name": "CoralSink",
+      "Name": "Reef Sink",
       "Id": "5163"
     },
     {
-      "Name": "CoralSofa",
+      "Name": "Reef Sofa",
       "Id": "5164"
     },
     {
-      "Name": "CoralTable",
+      "Name": "Reef Table",
       "Id": "5165"
     },
     {
-      "Name": "CoralWorkbench",
+      "Name": "Reef Work Bench",
       "Id": "5166"
     },
     {
-      "Name": "Fake_CoralChest",
+      "Name": "Trapped Reef Chest",
       "Id": "5167"
     },
     {
-      "Name": "CoralToilet",
+      "Name": "Reef Toilet",
       "Id": "5168"
     },
     {
-      "Name": "BalloonBathtub",
+      "Name": "Balloon Bathtub",
       "Id": "5169"
     },
     {
-      "Name": "BalloonBed",
+      "Name": "Balloon Bed",
       "Id": "5170"
     },
     {
-      "Name": "BalloonBookcase",
+      "Name": "Balloon Bookcase",
       "Id": "5171"
     },
     {
-      "Name": "BalloonDresser",
+      "Name": "Balloon Dresser",
       "Id": "5172"
     },
     {
-      "Name": "BalloonCandelabra",
+      "Name": "Balloon Candelabra",
       "Id": "5173"
     },
     {
-      "Name": "BalloonCandle",
+      "Name": "Balloon Candle",
       "Id": "5174"
     },
     {
-      "Name": "BalloonChair",
+      "Name": "Balloon Chair",
       "Id": "5175"
     },
     {
-      "Name": "BalloonChandelier",
+      "Name": "Balloon Chandelier",
       "Id": "5176"
     },
     {
-      "Name": "BalloonChest",
+      "Name": "Balloon Chest",
       "Id": "5177"
     },
     {
-      "Name": "BalloonClock",
+      "Name": "Balloon Clock",
       "Id": "5178"
     },
     {
-      "Name": "BalloonDoor",
+      "Name": "Balloon Door",
       "Id": "5179"
     },
     {
-      "Name": "BalloonLamp",
+      "Name": "Balloon Lamp",
       "Id": "5180"
     },
     {
-      "Name": "BalloonLantern",
+      "Name": "Balloon Lantern",
       "Id": "5181"
     },
     {
-      "Name": "BalloonPiano",
+      "Name": "Balloon Piano",
       "Id": "5182"
     },
     {
-      "Name": "BalloonPlatform",
+      "Name": "Balloon Platform",
       "Id": "5183"
     },
     {
-      "Name": "BalloonSink",
+      "Name": "Balloon Sink",
       "Id": "5184"
     },
     {
-      "Name": "BalloonSofa",
+      "Name": "Balloon Sofa",
       "Id": "5185"
     },
     {
-      "Name": "BalloonTable",
+      "Name": "Balloon Table",
       "Id": "5186"
     },
     {
-      "Name": "BalloonWorkbench",
+      "Name": "Balloon Work Bench",
       "Id": "5187"
     },
     {
-      "Name": "Fake_BalloonChest",
+      "Name": "Trapped Balloon Chest",
       "Id": "5188"
     },
     {
-      "Name": "BalloonToilet",
+      "Name": "Balloon Toilet",
       "Id": "5189"
     },
     {
-      "Name": "AshWoodBathtub",
+      "Name": "Ash Wood Bathtub",
       "Id": "5190"
     },
     {
-      "Name": "AshWoodBed",
+      "Name": "Ash Wood Bed",
       "Id": "5191"
     },
     {
-      "Name": "AshWoodBookcase",
+      "Name": "Ash Wood Bookcase",
       "Id": "5192"
     },
     {
-      "Name": "AshWoodDresser",
+      "Name": "Ash Wood Dresser",
       "Id": "5193"
     },
     {
-      "Name": "AshWoodCandelabra",
+      "Name": "Ash Wood Candelabra",
       "Id": "5194"
     },
     {
-      "Name": "AshWoodCandle",
+      "Name": "Ash Wood Candle",
       "Id": "5195"
     },
     {
-      "Name": "AshWoodChair",
+      "Name": "Ash Wood Chair",
       "Id": "5196"
     },
     {
-      "Name": "AshWoodChandelier",
+      "Name": "Ash Wood Chandelier",
       "Id": "5197"
     },
     {
-      "Name": "AshWoodChest",
+      "Name": "Ash Wood Chest",
       "Id": "5198"
     },
     {
-      "Name": "AshWoodClock",
+      "Name": "Ash Wood Clock",
       "Id": "5199"
     },
     {
-      "Name": "AshWoodDoor",
+      "Name": "Ash Wood Door",
       "Id": "5200"
     },
     {
-      "Name": "AshWoodLamp",
+      "Name": "Ash Wood Lamp",
       "Id": "5201"
     },
     {
-      "Name": "AshWoodLantern",
+      "Name": "Ash Wood Lantern",
       "Id": "5202"
     },
     {
-      "Name": "AshWoodPiano",
+      "Name": "Ash Wood Piano",
       "Id": "5203"
     },
     {
-      "Name": "AshWoodPlatform",
+      "Name": "Ash Wood Platform",
       "Id": "5204"
     },
     {
-      "Name": "AshWoodSink",
+      "Name": "Ash Wood Sink",
       "Id": "5205"
     },
     {
-      "Name": "AshWoodSofa",
+      "Name": "Ash Wood Sofa",
       "Id": "5206"
     },
     {
-      "Name": "AshWoodTable",
+      "Name": "Ash Wood Table",
       "Id": "5207"
     },
     {
-      "Name": "AshWoodWorkbench",
+      "Name": "Ash Wood Work Bench",
       "Id": "5208"
     },
     {
-      "Name": "Fake_AshWoodChest",
+      "Name": "Trapped Ash Wood Chest",
       "Id": "5209"
     },
     {
-      "Name": "AshWoodToilet",
+      "Name": "Ash Wood Toilet",
       "Id": "5210"
     },
     {
-      "Name": "BiomeSightPotion",
+      "Name": "Biome Sight Potion",
       "Id": "5211"
     },
     {
-      "Name": "ScarletMacaw",
+      "Name": "Scarlet Macaw",
       "Id": "5212"
     },
     {
-      "Name": "ScarletMacawCage",
+      "Name": "Scarlet Macaw Cage",
       "Id": "5213"
     },
     {
-      "Name": "AshGrassSeeds",
+      "Name": "Ash Grass Seeds",
       "Id": "5214"
     },
     {
-      "Name": "AshWood",
+      "Name": "Ash Wood",
       "Id": "5215"
     },
     {
-      "Name": "AshWoodWall",
+      "Name": "Ash Wood Wall",
       "Id": "5216"
     },
     {
-      "Name": "AshWoodFence",
+      "Name": "Ash Wood Fence",
       "Id": "5217"
     },
     {
@@ -48681,19 +48681,19 @@ export var settings: Settings = {
       "Id": "5218"
     },
     {
-      "Name": "FairyGuides",
+      "Name": "Fairy Guides",
       "Id": "5219"
     },
     {
-      "Name": "AHorribleNightforAlchemy",
+      "Name": "A Horrible Night for Alchemy",
       "Id": "5220"
     },
     {
-      "Name": "MorningHunt",
+      "Name": "Morning Hunt",
       "Id": "5221"
     },
     {
-      "Name": "SuspiciouslySparkly",
+      "Name": "Suspiciously Sparkly",
       "Id": "5222"
     },
     {
@@ -48701,35 +48701,35 @@ export var settings: Settings = {
       "Id": "5223"
     },
     {
-      "Name": "CatSword",
+      "Name": "Cat Sword",
       "Id": "5224"
     },
     {
-      "Name": "KargohsSummon",
+      "Name": "Kargoh's Summon",
       "Id": "5225"
     },
     {
-      "Name": "HighPitch",
+      "Name": "High Pitch",
       "Id": "5226"
     },
     {
-      "Name": "AMachineforTerrarians",
+      "Name": "A Machine for Terrarians",
       "Id": "5227"
     },
     {
-      "Name": "TerraBladeChronicles",
+      "Name": "Terra Blade Chronicles",
       "Id": "5228"
     },
     {
-      "Name": "BennyWarhol",
+      "Name": "Benny Warhol",
       "Id": "5229"
     },
     {
-      "Name": "LizardKing",
+      "Name": "Lizard King",
       "Id": "5230"
     },
     {
-      "Name": "MySon",
+      "Name": "My Son",
       "Id": "5231"
     },
     {
@@ -48737,23 +48737,23 @@ export var settings: Settings = {
       "Id": "5232"
     },
     {
-      "Name": "ParsecPals",
+      "Name": "Parsec Pals",
       "Id": "5233"
     },
     {
-      "Name": "RemnantsofDevotion",
+      "Name": "Remnants of Devotion",
       "Id": "5234"
     },
     {
-      "Name": "NotSoLostInParadise",
+      "Name": "Not So Lost In Paradise",
       "Id": "5235"
     },
     {
-      "Name": "OcularResonance",
+      "Name": "Ocular Resonance",
       "Id": "5236"
     },
     {
-      "Name": "WingsofEvil",
+      "Name": "Wings of Evil",
       "Id": "5237"
     },
     {
@@ -48765,23 +48765,23 @@ export var settings: Settings = {
       "Id": "5239"
     },
     {
-      "Name": "DreadoftheRedSea",
+      "Name": "Dread of the Red Sea",
       "Id": "5240"
     },
     {
-      "Name": "DoNotEattheVileMushroom",
+      "Name": "Do Not Eat the Vile Mushroom!",
       "Id": "5241"
     },
     {
-      "Name": "YuumaTheBlueTiger",
+      "Name": "Yuuma, The Blue Tiger",
       "Id": "5242"
     },
     {
-      "Name": "MoonmanandCompany",
+      "Name": "Moonman & Company",
       "Id": "5243"
     },
     {
-      "Name": "SunshineofIsrapony",
+      "Name": "Sunshine of Israpony",
       "Id": "5244"
     },
     {
@@ -48789,19 +48789,19 @@ export var settings: Settings = {
       "Id": "5245"
     },
     {
-      "Name": "SufficientlyAdvanced",
+      "Name": "Sufficiently Advanced",
       "Id": "5246"
     },
     {
-      "Name": "StrangeGrowth",
+      "Name": "Strange Growth",
       "Id": "5247"
     },
     {
-      "Name": "HappyLittleTree",
+      "Name": "Happy Little Tree",
       "Id": "5248"
     },
     {
-      "Name": "StrangeDeadFellows",
+      "Name": "Strange Dead Fellows",
       "Id": "5249"
     },
     {
@@ -48817,15 +48817,15 @@ export var settings: Settings = {
       "Id": "5252"
     },
     {
-      "Name": "TheWerewolf",
+      "Name": "The Werewolf",
       "Id": "5253"
     },
     {
-      "Name": "BlessingfromTheHeavens",
+      "Name": "Blessing from the Heavens",
       "Id": "5254"
     },
     {
-      "Name": "LoveisintheTrashSlot",
+      "Name": "Love is in the Trash Slot",
       "Id": "5255"
     },
     {
@@ -48833,19 +48833,19 @@ export var settings: Settings = {
       "Id": "5256"
     },
     {
-      "Name": "HailtotheKing",
+      "Name": "Hail to the King",
       "Id": "5257"
     },
     {
-      "Name": "SeeTheWorldForWhatItIs",
+      "Name": "See The World For What It Is",
       "Id": "5258"
     },
     {
-      "Name": "WhatLurksBelow",
+      "Name": "What Lurks Below",
       "Id": "5259"
     },
     {
-      "Name": "ThisIsGettingOutOfHand",
+      "Name": "This Is Getting Out Of Hand",
       "Id": "5260"
     },
     {
@@ -48853,23 +48853,23 @@ export var settings: Settings = {
       "Id": "5261"
     },
     {
-      "Name": "MidnightSun",
+      "Name": "Midnight Sun",
       "Id": "5262"
     },
     {
-      "Name": "CouchGag",
+      "Name": "Couch Gag",
       "Id": "5263"
     },
     {
-      "Name": "SilentFish",
+      "Name": "Silent Fish",
       "Id": "5264"
     },
     {
-      "Name": "TheDuke",
+      "Name": "The Duke",
       "Id": "5265"
     },
     {
-      "Name": "RoyalRomance",
+      "Name": "Royal Romance",
       "Id": "5266"
     },
     {
@@ -48881,7 +48881,7 @@ export var settings: Settings = {
       "Id": "5268"
     },
     {
-      "Name": "VikingVoyage",
+      "Name": "Viking Voyage",
       "Id": "5269"
     },
     {
@@ -48893,27 +48893,27 @@ export var settings: Settings = {
       "Id": "5271"
     },
     {
-      "Name": "ForestTroll",
+      "Name": "Forest Troll",
       "Id": "5272"
     },
     {
-      "Name": "AuroraBorealis",
+      "Name": "Aurora Borealis",
       "Id": "5273"
     },
     {
-      "Name": "LadyOfTheLake",
+      "Name": "Lady Of The Lake",
       "Id": "5274"
     },
     {
-      "Name": "JojaCola",
+      "Name": "Joja Cola",
       "Id": "5275"
     },
     {
-      "Name": "JunimoPetItem",
+      "Name": "Stardrop",
       "Id": "5276"
     },
     {
-      "Name": "SpicyPepper",
+      "Name": "Spicy Pepper",
       "Id": "5277"
     },
     {
@@ -48921,79 +48921,79 @@ export var settings: Settings = {
       "Id": "5278"
     },
     {
-      "Name": "AshWoodHelmet",
+      "Name": "Ash Wood Helmet",
       "Id": "5279"
     },
     {
-      "Name": "AshWoodBreastplate",
+      "Name": "Ash Wood Breastplate",
       "Id": "5280"
     },
     {
-      "Name": "AshWoodGreaves",
+      "Name": "Ash Wood Greaves",
       "Id": "5281"
     },
     {
-      "Name": "AshWoodBow",
+      "Name": "Ash Wood Bow",
       "Id": "5282"
     },
     {
-      "Name": "AshWoodHammer",
+      "Name": "Ash Wood Hammer",
       "Id": "5283"
     },
     {
-      "Name": "AshWoodSword",
+      "Name": "Ash Wood Sword",
       "Id": "5284"
     },
     {
-      "Name": "MoonGlobe",
+      "Name": "Moon Globe",
       "Id": "5285"
     },
     {
-      "Name": "RepairedLifeCrystal",
+      "Name": "Repaired Life Crystal",
       "Id": "5286"
     },
     {
-      "Name": "RepairedManaCrystal",
+      "Name": "Repaired Mana Crystal",
       "Id": "5287"
     },
     {
-      "Name": "TerraFartMinecart",
+      "Name": "Terra Fart Kart",
       "Id": "5288"
     },
     {
-      "Name": "MinecartPowerup",
+      "Name": "Minecart Upgrade Kit",
       "Id": "5289"
     },
     {
-      "Name": "JimsCap",
+      "Name": "Jim's Cap",
       "Id": "5290"
     },
     {
-      "Name": "EchoWall",
+      "Name": "Echo Wall",
       "Id": "5291"
     },
     {
-      "Name": "EchoPlatform",
+      "Name": "Echo Platform",
       "Id": "5292"
     },
     {
-      "Name": "MushroomTorch",
+      "Name": "Mushroom Torch",
       "Id": "5293"
     },
     {
-      "Name": "HiveFive",
+      "Name": "Hive-Five",
       "Id": "5294"
     },
     {
-      "Name": "AcornAxe",
+      "Name": "Axe of Regrowth",
       "Id": "5295"
     },
     {
-      "Name": "ChlorophyteExtractinator",
+      "Name": "Chlorophyte Extractinator",
       "Id": "5296"
     },
     {
-      "Name": "BlueEgg",
+      "Name": "Blue Chicken Egg",
       "Id": "5297"
     },
     {
@@ -49001,51 +49001,51 @@ export var settings: Settings = {
       "Id": "5298"
     },
     {
-      "Name": "MushroomCampfire",
+      "Name": "Mushroom Campfire",
       "Id": "5299"
     },
     {
-      "Name": "BlueMacaw",
+      "Name": "Blue Macaw",
       "Id": "5300"
     },
     {
-      "Name": "BlueMacawCage",
+      "Name": "Blue Macaw Cage",
       "Id": "5301"
     },
     {
-      "Name": "BottomlessHoneyBucket",
+      "Name": "Bottomless Honey Bucket",
       "Id": "5302"
     },
     {
-      "Name": "HoneyAbsorbantSponge",
+      "Name": "Honey Absorbant Sponge",
       "Id": "5303"
     },
     {
-      "Name": "UltraAbsorbantSponge",
+      "Name": "Ultra Absorbant Sponge",
       "Id": "5304"
     },
     {
-      "Name": "GoblorcEar",
+      "Name": "Goblorc Ears",
       "Id": "5305"
     },
     {
-      "Name": "ReefBlock",
+      "Name": "Reef Block",
       "Id": "5306"
     },
     {
-      "Name": "ReefWall",
+      "Name": "Reef Wall",
       "Id": "5307"
     },
     {
-      "Name": "PlacePainting",
+      "Name": "r/Terraria",
       "Id": "5308"
     },
     {
-      "Name": "DontHurtNatureBook",
+      "Name": "Guide to Environmental Preservation",
       "Id": "5309"
     },
     {
-      "Name": "PrincessStyle",
+      "Name": "Princess Style",
       "Id": "5310"
     },
     {
@@ -49053,123 +49053,123 @@ export var settings: Settings = {
       "Id": "5311"
     },
     {
-      "Name": "YellowCockatiel",
+      "Name": "Yellow Cockatiel",
       "Id": "5312"
     },
     {
-      "Name": "GrayCockatiel",
+      "Name": "Gray Cockatiel",
       "Id": "5313"
     },
     {
-      "Name": "ToucanCage",
+      "Name": "Toucan Cage",
       "Id": "5314"
     },
     {
-      "Name": "YellowCockatielCage",
+      "Name": "Yellow Cockatiel Cage",
       "Id": "5315"
     },
     {
-      "Name": "GrayCockatielCage",
+      "Name": "Gray Cockatiel Cage",
       "Id": "5316"
     },
     {
-      "Name": "MacawStatue",
+      "Name": "Macaw Statue",
       "Id": "5317"
     },
     {
-      "Name": "ToucanStatue",
+      "Name": "Toucan Statue",
       "Id": "5318"
     },
     {
-      "Name": "CockatielStatue",
+      "Name": "Cockatiel Statue",
       "Id": "5319"
     },
     {
-      "Name": "PlaceableHealingPotion",
+      "Name": "Decorative Healing Potion",
       "Id": "5320"
     },
     {
-      "Name": "PlaceableManaPotion",
+      "Name": "Decorative Mana Potion",
       "Id": "5321"
     },
     {
-      "Name": "ShadowCandle",
+      "Name": "Shadow Candle",
       "Id": "5322"
     },
     {
-      "Name": "DontHurtComboBook",
+      "Name": "Guide to Peaceful Coexistence",
       "Id": "5323"
     },
     {
-      "Name": "RubblemakerSmall",
+      "Name": "Rubblemaker (Small)",
       "Id": "5324"
     },
     {
-      "Name": "ClosedVoidBag",
+      "Name": "Closed Void Bag",
       "Id": "5325"
     },
     {
-      "Name": "ArtisanLoaf",
+      "Name": "Artisan Loaf",
       "Id": "5326"
     },
     {
-      "Name": "TNTBarrel",
+      "Name": "TNT Barrel",
       "Id": "5327"
     },
     {
-      "Name": "ChestLock",
+      "Name": "Chest Lock",
       "Id": "5328"
     },
     {
-      "Name": "RubblemakerMedium",
+      "Name": "Rubblemaker (Medium)",
       "Id": "5329"
     },
     {
-      "Name": "RubblemakerLarge",
+      "Name": "Rubblemaker (Large)",
       "Id": "5330"
     },
     {
-      "Name": "HorseshoeBundle",
+      "Name": "Bundle of Horseshoe Balloons",
       "Id": "5331"
     },
     {
-      "Name": "SpiffoPlush",
+      "Name": "Spiffo Plush",
       "Id": "5332"
     },
     {
-      "Name": "GlowTulip",
+      "Name": "Glow Tulip",
       "Id": "5333"
     },
     {
-      "Name": "MechdusaSummon",
+      "Name": "Ocram's Razor",
       "Id": "5334"
     },
     {
-      "Name": "RodOfHarmony",
+      "Name": "Rod of Harmony",
       "Id": "5335"
     },
     {
-      "Name": "CombatBookVolumeTwo",
+      "Name": "Advanced Combat Techniques: Volume Two",
       "Id": "5336"
     },
     {
-      "Name": "AegisCrystal",
+      "Name": "Vital Crystal",
       "Id": "5337"
     },
     {
-      "Name": "AegisFruit",
+      "Name": "Aegis Fruit",
       "Id": "5338"
     },
     {
-      "Name": "ArcaneCrystal",
+      "Name": "Arcane Crystal",
       "Id": "5339"
     },
     {
-      "Name": "GalaxyPearl",
+      "Name": "Galaxy Pearl",
       "Id": "5340"
     },
     {
-      "Name": "GummyWorm",
+      "Name": "Gummy Worm",
       "Id": "5341"
     },
     {
@@ -49177,383 +49177,383 @@ export var settings: Settings = {
       "Id": "5342"
     },
     {
-      "Name": "PeddlersSatchel",
+      "Name": "Peddler's Satchel",
       "Id": "5343"
     },
     {
-      "Name": "EchoCoating",
+      "Name": "Echo Coating",
       "Id": "5344"
     },
     {
-      "Name": "EchoMonolith",
+      "Name": "Echo Chamber",
       "Id": "5345"
     },
     {
-      "Name": "GasTrap",
+      "Name": "Gas Trap",
       "Id": "5346"
     },
     {
-      "Name": "ShimmerMonolith",
+      "Name": "Aether Monolith",
       "Id": "5347"
     },
     {
-      "Name": "ShimmerArrow",
+      "Name": "Shimmer Arrow",
       "Id": "5348"
     },
     {
-      "Name": "ShimmerBlock",
+      "Name": "Aetherium Block",
       "Id": "5349"
     },
     {
-      "Name": "Shimmerfly",
+      "Name": "Faeling",
       "Id": "5350"
     },
     {
-      "Name": "ShimmerflyinaBottle",
+      "Name": "Faeling in a Bottle",
       "Id": "5351"
     },
     {
-      "Name": "ShimmerSlimeBanner",
+      "Name": "Shimmer Slime Banner",
       "Id": "5352"
     },
     {
-      "Name": "ShimmerTorch",
+      "Name": "Aether Torch",
       "Id": "5353"
     },
     {
-      "Name": "ReflectiveShades",
+      "Name": "Reflective Shades",
       "Id": "5354"
     },
     {
-      "Name": "ShimmerCloak",
+      "Name": "Chromatic Cloak",
       "Id": "5355"
     },
     {
-      "Name": "UsedGasTrap",
+      "Name": "Used Gas Trap",
       "Id": "5356"
     },
     {
-      "Name": "ShimmerCampfire",
+      "Name": "Aether Campfire",
       "Id": "5357"
     },
     {
-      "Name": "Shellphone",
+      "Name": "Shellphone (Home)",
       "Id": "5358"
     },
     {
-      "Name": "ShellphoneSpawn",
+      "Name": "Shellphone (Spawn)",
       "Id": "5359"
     },
     {
-      "Name": "ShellphoneOcean",
+      "Name": "Shellphone (Ocean)",
       "Id": "5360"
     },
     {
-      "Name": "ShellphoneHell",
+      "Name": "Shellphone (Underworld)",
       "Id": "5361"
     },
     {
-      "Name": "MusicBoxShimmer",
+      "Name": "Music Box (Aether)",
       "Id": "5362"
     },
     {
-      "Name": "SpiderWallUnsafe",
+      "Name": "Infested Spider Wall",
       "Id": "5363"
     },
     {
-      "Name": "BottomlessShimmerBucket",
+      "Name": "Bottomless Shimmer Bucket",
       "Id": "5364"
     },
     {
-      "Name": "BlueBrickWallUnsafe",
+      "Name": "Cursed Blue Brick Wall",
       "Id": "5365"
     },
     {
-      "Name": "BlueSlabWallUnsafe",
+      "Name": "Cursed Blue Slab Wall",
       "Id": "5366"
     },
     {
-      "Name": "BlueTiledWallUnsafe",
+      "Name": "Cursed Blue Tiled Wall",
       "Id": "5367"
     },
     {
-      "Name": "PinkBrickWallUnsafe",
+      "Name": "Cursed Pink Brick Wall",
       "Id": "5368"
     },
     {
-      "Name": "PinkSlabWallUnsafe",
+      "Name": "Cursed Pink Slab Wall",
       "Id": "5369"
     },
     {
-      "Name": "PinkTiledWallUnsafe",
+      "Name": "Cursed Pink Tiled Wall",
       "Id": "5370"
     },
     {
-      "Name": "GreenBrickWallUnsafe",
+      "Name": "Cursed Green Brick Wall",
       "Id": "5371"
     },
     {
-      "Name": "GreenSlabWallUnsafe",
+      "Name": "Cursed Green Slab Wall",
       "Id": "5372"
     },
     {
-      "Name": "GreenTiledWallUnsafe",
+      "Name": "Cursed Green Tiled Wall",
       "Id": "5373"
     },
     {
-      "Name": "SandstoneWallUnsafe",
+      "Name": "Treacherous Sandstone Wall",
       "Id": "5374"
     },
     {
-      "Name": "HardenedSandWallUnsafe",
+      "Name": "Treacherous Hardened Sand Wall",
       "Id": "5375"
     },
     {
-      "Name": "LihzahrdWallUnsafe",
+      "Name": "Forbidden Lihzahrd Brick Wall",
       "Id": "5376"
     },
     {
-      "Name": "SpelunkerFlare",
+      "Name": "Spelunker Flare",
       "Id": "5377"
     },
     {
-      "Name": "CursedFlare",
+      "Name": "Cursed Flare",
       "Id": "5378"
     },
     {
-      "Name": "RainbowFlare",
+      "Name": "Rainbow Flare",
       "Id": "5379"
     },
     {
-      "Name": "ShimmerFlare",
+      "Name": "Shimmer Flare",
       "Id": "5380"
     },
     {
-      "Name": "Moondial",
+      "Name": "Enchanted Moondial",
       "Id": "5381"
     },
     {
-      "Name": "WaffleIron",
+      "Name": "Waffle's Iron",
       "Id": "5382"
     },
     {
-      "Name": "BouncyBoulder",
+      "Name": "Bouncy Boulder",
       "Id": "5383"
     },
     {
-      "Name": "LifeCrystalBoulder",
+      "Name": "Life Crystal Boulder",
       "Id": "5384"
     },
     {
-      "Name": "DizzyHat",
+      "Name": "Dizzy's Rare Gecko Chester",
       "Id": "5385"
     },
     {
-      "Name": "LincolnsHoodie",
+      "Name": "Raynbro's Hoodie",
       "Id": "5386"
     },
     {
-      "Name": "LincolnsPants",
+      "Name": "Raynbro's Pants",
       "Id": "5387"
     },
     {
-      "Name": "SunOrnament",
+      "Name": "Eye of the Sun",
       "Id": "5388"
     },
     {
-      "Name": "HoplitePizza",
+      "Name": "Cheesy Pizza Poster",
       "Id": "5389"
     },
     {
-      "Name": "LincolnsHood",
+      "Name": "Raynbro's Hood",
       "Id": "5390"
     },
     {
-      "Name": "UncumberingStone",
+      "Name": "Uncumbering Stone",
       "Id": "5391"
     },
     {
-      "Name": "SandSolution",
+      "Name": "Yellow Solution",
       "Id": "5392"
     },
     {
-      "Name": "SnowSolution",
+      "Name": "White Solution",
       "Id": "5393"
     },
     {
-      "Name": "DirtSolution",
+      "Name": "Brown Solution",
       "Id": "5394"
     },
     {
-      "Name": "PoopBlock",
+      "Name": "Poo",
       "Id": "5395"
     },
     {
-      "Name": "PoopWall",
+      "Name": "Poo Wall",
       "Id": "5396"
     },
     {
-      "Name": "ShimmerWall",
+      "Name": "Aetherium Wall",
       "Id": "5397"
     },
     {
-      "Name": "ShimmerBrick",
+      "Name": "Aetherium Brick",
       "Id": "5398"
     },
     {
-      "Name": "ShimmerBrickWall",
+      "Name": "Aetherium Brick Wall",
       "Id": "5399"
     },
     {
-      "Name": "DirtiestBlock",
+      "Name": "The Dirtiest Block",
       "Id": "5400"
     },
     {
-      "Name": "LunarRustBrick",
+      "Name": "Lunar Rust Brick",
       "Id": "5401"
     },
     {
-      "Name": "DarkCelestialBrick",
+      "Name": "Dark Celestial Brick",
       "Id": "5402"
     },
     {
-      "Name": "AstraBrick",
+      "Name": "Astra Brick",
       "Id": "5403"
     },
     {
-      "Name": "CosmicEmberBrick",
+      "Name": "Cosmic Ember Brick",
       "Id": "5404"
     },
     {
-      "Name": "CryocoreBrick",
+      "Name": "Cryocore Brick",
       "Id": "5405"
     },
     {
-      "Name": "MercuryBrick",
+      "Name": "Mercury Brick",
       "Id": "5406"
     },
     {
-      "Name": "StarRoyaleBrick",
+      "Name": "Star Royale Brick",
       "Id": "5407"
     },
     {
-      "Name": "HeavenforgeBrick",
+      "Name": "Heavenforge Brick",
       "Id": "5408"
     },
     {
-      "Name": "LunarRustBrickWall",
+      "Name": "Lunar Rust Brick Wall",
       "Id": "5409"
     },
     {
-      "Name": "DarkCelestialBrickWall",
+      "Name": "Dark Celestial Brick Wall",
       "Id": "5410"
     },
     {
-      "Name": "AstraBrickWall",
+      "Name": "Astra Brick Wall",
       "Id": "5411"
     },
     {
-      "Name": "CosmicEmberBrickWall",
+      "Name": "Cosmic Ember Brick Wall",
       "Id": "5412"
     },
     {
-      "Name": "CryocoreBrickWall",
+      "Name": "Cryocore Brick Wall",
       "Id": "5413"
     },
     {
-      "Name": "MercuryBrickWall",
+      "Name": "Mercury Brick Wall",
       "Id": "5414"
     },
     {
-      "Name": "StarRoyaleBrickWall",
+      "Name": "Star Royale Brick Wall",
       "Id": "5415"
     },
     {
-      "Name": "HeavenforgeBrickWall",
+      "Name": "Heavenforge Brick Wall",
       "Id": "5416"
     },
     {
-      "Name": "AncientBlueDungeonBrick",
+      "Name": "Ancient Blue Brick",
       "Id": "5417"
     },
     {
-      "Name": "AncientBlueDungeonBrickWall",
+      "Name": "Ancient Blue Brick Wall",
       "Id": "5418"
     },
     {
-      "Name": "AncientGreenDungeonBrick",
+      "Name": "Ancient Green Brick",
       "Id": "5419"
     },
     {
-      "Name": "AncientGreenDungeonBrickWall",
+      "Name": "Ancient Green Brick Wall",
       "Id": "5420"
     },
     {
-      "Name": "AncientPinkDungeonBrick",
+      "Name": "Ancient Pink Brick",
       "Id": "5421"
     },
     {
-      "Name": "AncientPinkDungeonBrickWall",
+      "Name": "Ancient Pink Brick Wall",
       "Id": "5422"
     },
     {
-      "Name": "AncientGoldBrick",
+      "Name": "Ancient Gold Brick",
       "Id": "5423"
     },
     {
-      "Name": "AncientGoldBrickWall",
+      "Name": "Ancient Gold Brick Wall",
       "Id": "5424"
     },
     {
-      "Name": "AncientSilverBrick",
+      "Name": "Ancient Silver Brick",
       "Id": "5425"
     },
     {
-      "Name": "AncientSilverBrickWall",
+      "Name": "Ancient Silver Brick Wall",
       "Id": "5426"
     },
     {
-      "Name": "AncientCopperBrick",
+      "Name": "Ancient Copper Brick",
       "Id": "5427"
     },
     {
-      "Name": "AncientCopperBrickWall",
+      "Name": "Ancient Copper Brick Wall",
       "Id": "5428"
     },
     {
-      "Name": "AncientCobaltBrick",
+      "Name": "Ancient Cobalt Brick",
       "Id": "5429"
     },
     {
-      "Name": "AncientCobaltBrickWall",
+      "Name": "Ancient Cobalt Brick Wall",
       "Id": "5430"
     },
     {
-      "Name": "AncientMythrilBrick",
+      "Name": "Ancient Mythril Brick",
       "Id": "5431"
     },
     {
-      "Name": "AncientMythrilBrickWall",
+      "Name": "Ancient Mythril Brick Wall",
       "Id": "5432"
     },
     {
-      "Name": "AncientObsidianBrick",
+      "Name": "Ancient Obsidian Brick",
       "Id": "5433"
     },
     {
-      "Name": "AncientObsidianBrickWall",
+      "Name": "Ancient Obsidian Brick Wall",
       "Id": "5434"
     },
     {
-      "Name": "AncientHellstoneBrick",
+      "Name": "Ancient Hellstone Brick",
       "Id": "5435"
     },
     {
-      "Name": "AncientHellstoneBrickWall",
+      "Name": "Ancient Hellstone Brick Wall",
       "Id": "5436"
     },
     {
-      "Name": "ShellphoneDummy",
+      "Name": "Shellphone",
       "Id": "5437"
     },
     {
@@ -49561,199 +49561,199 @@ export var settings: Settings = {
       "Id": "5438"
     },
     {
-      "Name": "LavaMossBlock",
+      "Name": "Lava Moss Brick",
       "Id": "5439"
     },
     {
-      "Name": "ArgonMossBlock",
+      "Name": "Argon Moss Brick",
       "Id": "5440"
     },
     {
-      "Name": "KryptonMossBlock",
+      "Name": "Krypton Moss Brick",
       "Id": "5441"
     },
     {
-      "Name": "XenonMossBlock",
+      "Name": "Xenon Moss Brick",
       "Id": "5442"
     },
     {
-      "Name": "VioletMossBlock",
+      "Name": "Neon Moss Brick",
       "Id": "5443"
     },
     {
-      "Name": "RainbowMossBlock",
+      "Name": "Helium Moss Brick",
       "Id": "5444"
     },
     {
-      "Name": "LavaMossBlockWall",
+      "Name": "Lava Moss Brick Wall",
       "Id": "5445"
     },
     {
-      "Name": "ArgonMossBlockWall",
+      "Name": "Argon Moss Brick Wall",
       "Id": "5446"
     },
     {
-      "Name": "KryptonMossBlockWall",
+      "Name": "Krypton Moss Brick Wall",
       "Id": "5447"
     },
     {
-      "Name": "XenonMossBlockWall",
+      "Name": "Xenon Moss Brick Wall",
       "Id": "5448"
     },
     {
-      "Name": "VioletMossBlockWall",
+      "Name": "Neon Moss Brick Wall",
       "Id": "5449"
     },
     {
-      "Name": "RainbowMossBlockWall",
+      "Name": "Helium Moss Brick Wall",
       "Id": "5450"
     },
     {
-      "Name": "JimsDrone",
+      "Name": "Kwad Racer Drone",
       "Id": "5451"
     },
     {
-      "Name": "JimsDroneVisor",
+      "Name": "FPV Goggles",
       "Id": "5452"
     },
     {
-      "Name": "DontHurtCrittersBookInactive",
+      "Name": "Guide to Critter Companionship (Inactive)",
       "Id": "5453"
     },
     {
-      "Name": "DontHurtNatureBookInactive",
+      "Name": "Guide to Environmental Preservation (Inactive)",
       "Id": "5454"
     },
     {
-      "Name": "DontHurtComboBookInactive",
+      "Name": "Guide to Peaceful Coexistence (Inactive)",
       "Id": "5455"
     },
     {
-      "Name": "DeadCellsMushroomBoiSummonItem",
+      "Name": "Mushroom Staff",
       "Id": "5456"
     },
     {
-      "Name": "DeadCellsBeheadedHead",
+      "Name": "The Beheaded's Head",
       "Id": "5457"
     },
     {
-      "Name": "DeadCellsBeheadedBody",
+      "Name": "The Beheaded's Cuirass",
       "Id": "5458"
     },
     {
-      "Name": "DeadCellsBeheadedLegs",
+      "Name": "The Beheaded's Trousers",
       "Id": "5459"
     },
     {
-      "Name": "DeadCellsBarrelLauncher",
+      "Name": "Barrel Launcher",
       "Id": "5460"
     },
     {
-      "Name": "DeadCellsKillingDeck",
+      "Name": "Killing Deck",
       "Id": "5461"
     },
     {
-      "Name": "DeadCellsFlint",
+      "Name": "Flint",
       "Id": "5462"
     },
     {
-      "Name": "DeadCellsBarnacleSummonItem",
+      "Name": "Barnacle Staff",
       "Id": "5463"
     },
     {
-      "Name": "MiteyTitey",
+      "Name": "Mitey-Titey",
       "Id": "5464"
     },
     {
-      "Name": "DeadCellsRamRune",
+      "Name": "Ram Rune",
       "Id": "5465"
     },
     {
-      "Name": "DeadCellsSwarmGrenade",
+      "Name": "Swarm Grenade",
       "Id": "5466"
     },
     {
-      "Name": "DemonAltarReplica",
+      "Name": "Replica Demon Altar",
       "Id": "5467"
     },
     {
-      "Name": "CrimsonAltarReplica",
+      "Name": "Replica Crimson Altar",
       "Id": "5468"
     },
     {
-      "Name": "ShadowOrbReplica",
+      "Name": "Replica Shadow Orb",
       "Id": "5469"
     },
     {
-      "Name": "CrimsonHeartReplica",
+      "Name": "Replica Crimson Heart",
       "Id": "5470"
     },
     {
-      "Name": "CobwebReplica",
+      "Name": "Decorative Cobweb",
       "Id": "5471"
     },
     {
-      "Name": "DeadCellsDisplayJar",
+      "Name": "Item Flask",
       "Id": "5472"
     },
     {
-      "Name": "CobWhip",
+      "Name": "Cobwhip",
       "Id": "5473"
     },
     {
-      "Name": "CorruptWhip",
+      "Name": "Soulscourge",
       "Id": "5474"
     },
     {
-      "Name": "CrimsonWhip",
+      "Name": "Vasculash",
       "Id": "5475"
     },
     {
-      "Name": "MeteorWhip",
+      "Name": "Starcrash",
       "Id": "5476"
     },
     {
-      "Name": "FlowerWhip",
+      "Name": "Vulgar Display of Flower",
       "Id": "5477"
     },
     {
-      "Name": "EelWhip",
+      "Name": "Electric Eel",
       "Id": "5478"
     },
     {
-      "Name": "ConstellationWhip",
+      "Name": "Constellation",
       "Id": "5479"
     },
     {
-      "Name": "MoonLordWhip",
+      "Name": "Possession",
       "Id": "5480"
     },
     {
-      "Name": "PortableKiln",
+      "Name": "Portable Kiln",
       "Id": "5481"
     },
     {
-      "Name": "DeadCellsPotionStation",
+      "Name": "Alchemy Flask",
       "Id": "5482"
     },
     {
-      "Name": "QueenOfBees",
+      "Name": "Queen of Bees",
       "Id": "5483"
     },
     {
-      "Name": "PlayerVoiceCowbellItem",
+      "Name": "Cow Bell",
       "Id": "5484"
     },
     {
-      "Name": "PlayerVoiceChickenFeetItem",
+      "Name": "Chicken Charm",
       "Id": "5485"
     },
     {
-      "Name": "TheSeaOfSilence",
+      "Name": "The Sea of Silence",
       "Id": "5486"
     },
     {
-      "Name": "HeroesFromAnotherWorld",
+      "Name": "Heroes From Another World",
       "Id": "5487"
     },
     {
@@ -49761,91 +49761,91 @@ export var settings: Settings = {
       "Id": "5488"
     },
     {
-      "Name": "EaterOfLife",
+      "Name": "Eater Of Life",
       "Id": "5489"
     },
     {
-      "Name": "ThisIsCanonNow",
+      "Name": "Brasilian Skies",
       "Id": "5490"
     },
     {
-      "Name": "WinterAtVaringskollen",
+      "Name": "Winter At Varingskollen",
       "Id": "5491"
     },
     {
-      "Name": "MagicShimmerDropper",
+      "Name": "Magic Shimmer Dropper",
       "Id": "5492"
     },
     {
-      "Name": "ShimmerFallBlock",
+      "Name": "Shimmerfall Block",
       "Id": "5493"
     },
     {
-      "Name": "ShimmerFallWall",
+      "Name": "Shimmerfall Wall",
       "Id": "5494"
     },
     {
-      "Name": "ShimmerGun",
+      "Name": "Shimmer Gun",
       "Id": "5495"
     },
     {
-      "Name": "LifeFruitHealingPotion",
+      "Name": "Jungle Juice",
       "Id": "5496"
     },
     {
-      "Name": "PinkBanner",
+      "Name": "Pink Banner",
       "Id": "5497"
     },
     {
-      "Name": "WhiteBanner",
+      "Name": "White Banner",
       "Id": "5498"
     },
     {
-      "Name": "PlayerVoiceFrogItem",
+      "Name": "Froggy Neckband",
       "Id": "5499"
     },
     {
-      "Name": "PlayerVoiceGoatItem",
+      "Name": "Goat's Tuft",
       "Id": "5500"
     },
     {
-      "Name": "PlayerVoiceRetroItem",
+      "Name": "Old Companion Locket",
       "Id": "5501"
     },
     {
-      "Name": "PlayerVoiceCatItem",
+      "Name": "Cat Chime",
       "Id": "5502"
     },
     {
-      "Name": "PlayerVoiceDogItem",
+      "Name": "Dog Collar",
       "Id": "5503"
     },
     {
-      "Name": "PlayerVoiceTurkeyItem",
+      "Name": "Turkey Wattle Necklace",
       "Id": "5504"
     },
     {
-      "Name": "PlayerVoiceGoblinItem",
+      "Name": "Mean Goblin's Spikes",
       "Id": "5505"
     },
     {
-      "Name": "PlayerVoiceCrowItem",
+      "Name": "Crow's Beak",
       "Id": "5506"
     },
     {
-      "Name": "PlayerVoiceBalloonItem",
+      "Name": "Balloony Beads",
       "Id": "5507"
     },
     {
-      "Name": "PlayerVoiceUndeadItem",
+      "Name": "Grim Old Barb",
       "Id": "5508"
     },
     {
-      "Name": "PlayerVoiceVampireItem",
+      "Name": "Vampire Pendant",
       "Id": "5509"
     },
     {
-      "Name": "VelociraptorMountItem",
+      "Name": "Slasher's Mysterious Skull",
       "Id": "5510"
     },
     {
@@ -49853,31 +49853,31 @@ export var settings: Settings = {
       "Id": "5511"
     },
     {
-      "Name": "PufferfishCage",
+      "Name": "Pufferfish Cage",
       "Id": "5512"
     },
     {
-      "Name": "PufferfishPet",
+      "Name": "Puffer Shrimp",
       "Id": "5513"
     },
     {
-      "Name": "RainbowBoulder",
+      "Name": "Rainbow Boulder",
       "Id": "5514"
     },
     {
-      "Name": "MoonLordBody",
+      "Name": "Moon Lord Torso",
       "Id": "5515"
     },
     {
-      "Name": "Poulder",
+      "Name": "Poo Boulder",
       "Id": "5516"
     },
     {
-      "Name": "AxeFairyPetItem",
+      "Name": "Faecorn",
       "Id": "5517"
     },
     {
-      "Name": "SuperFertilizer",
+      "Name": "Infused Fertilizer",
       "Id": "5518"
     },
     {
@@ -49885,11 +49885,11 @@ export var settings: Settings = {
       "Id": "5519"
     },
     {
-      "Name": "LavaBoulder",
+      "Name": "Lava Boulder",
       "Id": "5520"
     },
     {
-      "Name": "SpiderBoulder",
+      "Name": "Spider Boulder",
       "Id": "5521"
     },
     {
@@ -49897,751 +49897,751 @@ export var settings: Settings = {
       "Id": "5522"
     },
     {
-      "Name": "BoulderPet",
+      "Name": "Friendly Boulder",
       "Id": "5523"
     },
     {
-      "Name": "ChlorophyteVisor",
+      "Name": "Chlorophyte Visor",
       "Id": "5524"
     },
     {
-      "Name": "RatMountItem",
+      "Name": "Cursed Piper Flute",
       "Id": "5525"
     },
     {
-      "Name": "FlaironFlail",
+      "Name": "Flairon",
       "Id": "5526"
     },
     {
-      "Name": "OfSeaAndDreams",
+      "Name": "Of Sea and Dreams",
       "Id": "5527"
     },
     {
-      "Name": "TheRunicPixie",
+      "Name": "The Runic Pixie",
       "Id": "5528"
     },
     {
-      "Name": "BannerOfTheBeast",
+      "Name": "Banner of the Beast",
       "Id": "5529"
     },
     {
-      "Name": "StickmanVsTerrTerr",
+      "Name": "Stickman vs Terr Terr",
       "Id": "5530"
     },
     {
-      "Name": "CozyWindow",
+      "Name": "Cozy Window",
       "Id": "5531"
     },
     {
-      "Name": "DemonAltar",
+      "Name": "Demon Altar",
       "Id": "5532"
     },
     {
-      "Name": "CrimsonAltar",
+      "Name": "Crimson Altar",
       "Id": "5533"
     },
     {
-      "Name": "PlayerVoiceFairyItem",
+      "Name": "Fairy Choker",
       "Id": "5534"
     },
     {
-      "Name": "PinkPhaseblade",
+      "Name": "Pink Phaseblade",
       "Id": "5535"
     },
     {
-      "Name": "PinkPhasesaber",
+      "Name": "Pink Phasesaber",
       "Id": "5536"
     },
     {
-      "Name": "BlackenedFish",
+      "Name": "Blackened Fish",
       "Id": "5537"
     },
     {
-      "Name": "MusicBoxQueenBee",
+      "Name": "Music Box (Queen Bee)",
       "Id": "5538"
     },
     {
-      "Name": "MusicBoxTwins",
+      "Name": "Music Box (The Twins)",
       "Id": "5539"
     },
     {
-      "Name": "MagicString",
+      "Name": "Magic String",
       "Id": "5540"
     },
     {
-      "Name": "MagicYoyoBag",
+      "Name": "Magic Yoyo Bag",
       "Id": "5541"
     },
     {
-      "Name": "FreezeBomb",
+      "Name": "Freeze Bomb",
       "Id": "5542"
     },
     {
-      "Name": "StressBall",
+      "Name": "Stress Ball",
       "Id": "5543"
     },
     {
-      "Name": "CloudPlatform",
+      "Name": "Cloud Platform",
       "Id": "5544"
     },
     {
-      "Name": "LivingWoodWallUnsafe",
+      "Name": "Overgrown Living Wood Wall",
       "Id": "5545"
     },
     {
-      "Name": "DirtWallUnsafe",
+      "Name": "Natural Dirt Wall",
       "Id": "5546"
     },
     {
-      "Name": "StrungCounterweight",
+      "Name": "Strung Counterweight",
       "Id": "5547"
     },
     {
-      "Name": "AetheriumBathtub",
+      "Name": "Aetherium Bathtub",
       "Id": "5548"
     },
     {
-      "Name": "AetheriumBed",
+      "Name": "Aetherium Bed",
       "Id": "5549"
     },
     {
-      "Name": "AetheriumBookcase",
+      "Name": "Aetherium Bookcase",
       "Id": "5550"
     },
     {
-      "Name": "AetheriumDresser",
+      "Name": "Aetherium Dresser",
       "Id": "5551"
     },
     {
-      "Name": "AetheriumCandelabra",
+      "Name": "Aetherium Candelabra",
       "Id": "5552"
     },
     {
-      "Name": "AetheriumCandle",
+      "Name": "Aetherium Candle",
       "Id": "5553"
     },
     {
-      "Name": "AetheriumChair",
+      "Name": "Aetherium Chair",
       "Id": "5554"
     },
     {
-      "Name": "AetheriumChandelier",
+      "Name": "Aetherium Chandelier",
       "Id": "5555"
     },
     {
-      "Name": "AetheriumChest",
+      "Name": "Aetherium Chest",
       "Id": "5556"
     },
     {
-      "Name": "AetheriumClock",
+      "Name": "Aetherium Clock",
       "Id": "5557"
     },
     {
-      "Name": "AetheriumDoor",
+      "Name": "Aetherium Door",
       "Id": "5558"
     },
     {
-      "Name": "AetheriumLamp",
+      "Name": "Aetherium Lamp",
       "Id": "5559"
     },
     {
-      "Name": "AetheriumLantern",
+      "Name": "Aetherium Lantern",
       "Id": "5560"
     },
     {
-      "Name": "AetheriumPiano",
+      "Name": "Aetherium Piano",
       "Id": "5561"
     },
     {
-      "Name": "AetheriumPlatform",
+      "Name": "Aetherium Platform",
       "Id": "5562"
     },
     {
-      "Name": "AetheriumSink",
+      "Name": "Aetherium Sink",
       "Id": "5563"
     },
     {
-      "Name": "AetheriumSofa",
+      "Name": "Aetherium Sofa",
       "Id": "5564"
     },
     {
-      "Name": "AetheriumTable",
+      "Name": "Aetherium Table",
       "Id": "5565"
     },
     {
-      "Name": "AetheriumWorkbench",
+      "Name": "Aetherium Work Bench",
       "Id": "5566"
     },
     {
-      "Name": "Fake_AetheriumChest",
+      "Name": "Trapped Aetherium Chest",
       "Id": "5567"
     },
     {
-      "Name": "AetheriumToilet",
+      "Name": "Aetherium Toilet",
       "Id": "5568"
     },
     {
-      "Name": "LavaCloud",
+      "Name": "Lava Cloud",
       "Id": "5569"
     },
     {
-      "Name": "StarCloud",
+      "Name": "Star Cloud",
       "Id": "5570"
     },
     {
-      "Name": "RainbowCloud",
+      "Name": "Rainbow Cloud",
       "Id": "5571"
     },
     {
-      "Name": "MudBallPlayer",
+      "Name": "Mud Ball",
       "Id": "5572"
     },
     {
-      "Name": "TorchGodPotion",
+      "Name": "Torch God's Flavor",
       "Id": "5573"
     },
     {
-      "Name": "LuckyClover",
+      "Name": "Lucky Clover",
       "Id": "5574"
     },
     {
-      "Name": "WiltedClover",
+      "Name": "Wilted Clover",
       "Id": "5575"
     },
     {
-      "Name": "RavenFeather",
+      "Name": "Raven Feather",
       "Id": "5576"
     },
     {
-      "Name": "PrettyMirror",
+      "Name": "Pretty Mirror",
       "Id": "5577"
     },
     {
-      "Name": "MusicBoxKingSlime",
+      "Name": "Music Box (King Slime)",
       "Id": "5578"
     },
     {
-      "Name": "MusicBoxQueenBeeAlt",
+      "Name": "Music Box (Alt Queen Bee)",
       "Id": "5579"
     },
     {
-      "Name": "MusicBoxLunaticCultist",
+      "Name": "Music Box (Lunatic Cultist)",
       "Id": "5580"
     },
     {
-      "Name": "MusicBoxSkeletronPrime",
+      "Name": "Music Box (Skeletron Prime)",
       "Id": "5581"
     },
     {
-      "Name": "MusicBoxDestroyer",
+      "Name": "Music Box (The Destroyer)",
       "Id": "5582"
     },
     {
-      "Name": "ChickenBonesHead",
+      "Name": "Chicken Bones' Visor",
       "Id": "5583"
     },
     {
-      "Name": "ChickenBonesBody",
+      "Name": "Chicken Bones' Vest",
       "Id": "5584"
     },
     {
-      "Name": "ChickenBonesLegs",
+      "Name": "Chicken Bones' Pants",
       "Id": "5585"
     },
     {
-      "Name": "ChickenBonesWings",
+      "Name": "Chicken Bones' Wings",
       "Id": "5586"
     },
     {
-      "Name": "ChickenBonesRobe",
+      "Name": "Chicken Bones' Robe",
       "Id": "5587"
     },
     {
-      "Name": "UpgradedMiningHead",
+      "Name": "Prospector Helmet",
       "Id": "5588"
     },
     {
-      "Name": "UpgradedMiningBody",
+      "Name": "Prospector Shirt",
       "Id": "5589"
     },
     {
-      "Name": "UpgradedMiningLegs",
+      "Name": "Prospector Pants",
       "Id": "5590"
     },
     {
-      "Name": "UpgradedFishingHead",
+      "Name": "Captain Hat",
       "Id": "5591"
     },
     {
-      "Name": "UpgradedFishingBody",
+      "Name": "Captain Vest",
       "Id": "5592"
     },
     {
-      "Name": "UpgradedFishingLegs",
+      "Name": "Captain Pants",
       "Id": "5593"
     },
     {
-      "Name": "SuperBomb",
+      "Name": "Power Bomb",
       "Id": "5594"
     },
     {
-      "Name": "SuperStickyBomb",
+      "Name": "Sticky Power Bomb",
       "Id": "5595"
     },
     {
-      "Name": "WeldingMask",
+      "Name": "Welding Mask",
       "Id": "5596"
     },
     {
-      "Name": "BatMountItem",
+      "Name": "Amulet of the Night",
       "Id": "5597"
     },
     {
-      "Name": "CRTMonolith",
+      "Name": "CRT Monolith",
       "Id": "5598"
     },
     {
-      "Name": "RetroMonolith",
+      "Name": "Retro Monolith",
       "Id": "5599"
     },
     {
-      "Name": "RollerSkatesBlueMountItem",
+      "Name": "Blue Roller Skates",
       "Id": "5600"
     },
     {
-      "Name": "FallenStarBathtub",
+      "Name": "Fallen Star Bathtub",
       "Id": "5601"
     },
     {
-      "Name": "FallenStarBed",
+      "Name": "Fallen Star Bed",
       "Id": "5602"
     },
     {
-      "Name": "FallenStarBookcase",
+      "Name": "Fallen Star Bookcase",
       "Id": "5603"
     },
     {
-      "Name": "FallenStarDresser",
+      "Name": "Fallen Star Dresser",
       "Id": "5604"
     },
     {
-      "Name": "FallenStarCandelabra",
+      "Name": "Fallen Star Candelabra",
       "Id": "5605"
     },
     {
-      "Name": "FallenStarCandle",
+      "Name": "Fallen Star Candle",
       "Id": "5606"
     },
     {
-      "Name": "FallenStarChair",
+      "Name": "Fallen Star Chair",
       "Id": "5607"
     },
     {
-      "Name": "FallenStarChandelier",
+      "Name": "Fallen Star Chandelier",
       "Id": "5608"
     },
     {
-      "Name": "FallenStarChest",
+      "Name": "Fallen Star Chest",
       "Id": "5609"
     },
     {
-      "Name": "FallenStarClock",
+      "Name": "Fallen Star Clock",
       "Id": "5610"
     },
     {
-      "Name": "FallenStarDoor",
+      "Name": "Fallen Star Door",
       "Id": "5611"
     },
     {
-      "Name": "FallenStarLamp",
+      "Name": "Fallen Star Lamp",
       "Id": "5612"
     },
     {
-      "Name": "FallenStarLantern",
+      "Name": "Fallen Star Lantern",
       "Id": "5613"
     },
     {
-      "Name": "FallenStarPiano",
+      "Name": "Fallen Star Piano",
       "Id": "5614"
     },
     {
-      "Name": "FallenStarPlatform",
+      "Name": "Fallen Star Platform",
       "Id": "5615"
     },
     {
-      "Name": "FallenStarSink",
+      "Name": "Fallen Star Sink",
       "Id": "5616"
     },
     {
-      "Name": "FallenStarSofa",
+      "Name": "Fallen Star Sofa",
       "Id": "5617"
     },
     {
-      "Name": "FallenStarTable",
+      "Name": "Fallen Star Table",
       "Id": "5618"
     },
     {
-      "Name": "FallenStarWorkbench",
+      "Name": "Fallen Star Work Bench",
       "Id": "5619"
     },
     {
-      "Name": "Fake_FallenStarChest",
+      "Name": "Trapped Fallen Star Chest",
       "Id": "5620"
     },
     {
-      "Name": "FallenStarToilet",
+      "Name": "Fallen Star Toilet",
       "Id": "5621"
     },
     {
-      "Name": "FallenStarBlock",
+      "Name": "Fallen Star Block",
       "Id": "5622"
     },
     {
-      "Name": "FallenStarWall",
+      "Name": "Fallen Star Wall",
       "Id": "5623"
     },
     {
-      "Name": "ChippysHead",
+      "Name": "Chippy's Helmet",
       "Id": "5624"
     },
     {
-      "Name": "ChippysBody",
+      "Name": "Chippy's Chestplate",
       "Id": "5625"
     },
     {
-      "Name": "ChippysLegs",
+      "Name": "Chippy's Greaves",
       "Id": "5626"
     },
     {
-      "Name": "ChippysWings",
+      "Name": "Chippy's Cloak",
       "Id": "5627"
     },
     {
-      "Name": "ChippysHeadband",
+      "Name": "Chippy's Headband",
       "Id": "5628"
     },
     {
-      "Name": "AcornSlingshot",
+      "Name": "Acorn Slingshot",
       "Id": "5629"
     },
     {
-      "Name": "PaintingRPlace2023",
+      "Name": "r/Terraria 2023",
       "Id": "5630"
     },
     {
-      "Name": "PaintingBouldChoices",
+      "Name": "Bould and Bash",
       "Id": "5631"
     },
     {
-      "Name": "PaintingDarkForebodings",
+      "Name": "Dark Forebodings",
       "Id": "5632"
     },
     {
-      "Name": "PaintingGermanZenith",
+      "Name": "Oktober",
       "Id": "5633"
     },
     {
-      "Name": "PaintingItsScragglinTime",
+      "Name": "It's Scragglin' Time",
       "Id": "5634"
     },
     {
-      "Name": "PaintingKaguya",
+      "Name": "Kaguya",
       "Id": "5635"
     },
     {
-      "Name": "PaintingGermanBeer",
+      "Name": "Prost",
       "Id": "5636"
     },
     {
-      "Name": "MusicBoxEaterOfWorlds",
+      "Name": "Music Box (Eater of Worlds)",
       "Id": "5637"
     },
     {
-      "Name": "MusicBoxTorchGod",
+      "Name": "Music Box (Torch God)",
       "Id": "5638"
     },
     {
-      "Name": "MusicBoxTorchGodAlt",
+      "Name": "Music Box (Alt Torch God)",
       "Id": "5639"
     },
     {
-      "Name": "RollerSkatesGreenMountItem",
+      "Name": "Green Roller Skates",
       "Id": "5640"
     },
     {
-      "Name": "RollerSkatesClassicMountItem",
+      "Name": "Classic Roller Skates",
       "Id": "5641"
     },
     {
-      "Name": "RollerSkatesPartyMountItem",
+      "Name": "Party Roller Skates",
       "Id": "5642"
     },
     {
-      "Name": "RainbowGlowstick",
+      "Name": "Rainbow Glowstick",
       "Id": "5643"
     },
     {
-      "Name": "ScryingOrb",
+      "Name": "Scrying Orb",
       "Id": "5644"
     },
     {
-      "Name": "RockCandy",
+      "Name": "Rock Candy",
       "Id": "5645"
     },
     {
-      "Name": "BlueBikiniBody",
+      "Name": "Blue Bikini Top",
       "Id": "5646"
     },
     {
-      "Name": "BlueBikiniLegs",
+      "Name": "Blue Bikini Bottom",
       "Id": "5647"
     },
     {
-      "Name": "RedSwimsuit",
+      "Name": "Red Swimsuit",
       "Id": "5648"
     },
     {
-      "Name": "GreenSwimshorts",
+      "Name": "Green Swimshorts",
       "Id": "5649"
     },
     {
-      "Name": "GraySwimshorts",
+      "Name": "Gray Swimshorts",
       "Id": "5650"
     },
     {
-      "Name": "OrcaBanner",
+      "Name": "Orca Banner",
       "Id": "5651"
     },
     {
-      "Name": "TeleportationPylonUnderworld",
+      "Name": "Underworld Pylon",
       "Id": "5652"
     },
     {
-      "Name": "TeleportationPylonShimmer",
+      "Name": "Aether Pylon",
       "Id": "5653"
     },
     {
-      "Name": "RainbowBoulderPet",
+      "Name": "Friendly Rainbow Boulder",
       "Id": "5654"
     },
     {
-      "Name": "NoirMonolith",
+      "Name": "Film Projector",
       "Id": "5655"
     },
     {
-      "Name": "HeroicisHead",
+      "Name": "Heroicis' Hat",
       "Id": "5656"
     },
     {
-      "Name": "HeroicisBody",
+      "Name": "Heroicis' Coat",
       "Id": "5657"
     },
     {
-      "Name": "HeroicisLegs",
+      "Name": "Heroicis' Pants",
       "Id": "5658"
     },
     {
-      "Name": "HeroicisWings",
+      "Name": "Heroicis' Wings",
       "Id": "5659"
     },
     {
-      "Name": "HallowedCrown",
+      "Name": "Hallowed Crown",
       "Id": "5660"
     },
     {
-      "Name": "HeroicisWingsInactive",
+      "Name": "Heroicis' Wings (Inactive)",
       "Id": "5661"
     },
     {
-      "Name": "EnchantedPixieDust",
+      "Name": "Enchanted Pixie Dust",
       "Id": "5662"
     },
     {
-      "Name": "PalworldMinionCattiva",
+      "Name": "Cattiva",
       "Id": "5663"
     },
     {
-      "Name": "PalworldMinionFoxsparks",
+      "Name": "Foxparks",
       "Id": "5664"
     },
     {
-      "Name": "PalworldPetChillet",
+      "Name": "Chillet",
       "Id": "5665"
     },
     {
-      "Name": "PalworldPetChilletIgnis",
+      "Name": "Chillet Ignis",
       "Id": "5666"
     },
     {
-      "Name": "PalworldDigtoise",
+      "Name": "Digtoise",
       "Id": "5667"
     },
     {
-      "Name": "SoundGun",
+      "Name": "The Imploder",
       "Id": "5668"
     },
     {
-      "Name": "TrueCopperShortsword",
+      "Name": "True Copper Shortsword",
       "Id": "5669"
     },
     {
-      "Name": "RainbowPhaseblade",
+      "Name": "Rainbow Phaseblade",
       "Id": "5670"
     },
     {
-      "Name": "RainbowPhasesaber",
+      "Name": "Rainbow Phasesaber",
       "Id": "5671"
     },
     {
-      "Name": "LibrarianSkeletonBanner",
+      "Name": "Librarian Skeleton Banner",
       "Id": "5672"
     },
     {
-      "Name": "WaterBoltMimicBanner",
+      "Name": "Water Bolt Mimic Banner",
       "Id": "5673"
     },
     {
-      "Name": "TeamBlockRedVariant",
+      "Name": "Dull Red Team Block",
       "Id": "5674"
     },
     {
-      "Name": "TeamBlockGreenVariant",
+      "Name": "Dull Green Team Block",
       "Id": "5675"
     },
     {
-      "Name": "TeamBlockBlueVariant",
+      "Name": "Dull Blue Team Block",
       "Id": "5676"
     },
     {
-      "Name": "TeamBlockYellowVariant",
+      "Name": "Dull Yellow Team Block",
       "Id": "5677"
     },
     {
-      "Name": "TeamBlockPinkVariant",
+      "Name": "Dull Pink Team Block",
       "Id": "5678"
     },
     {
-      "Name": "TeamBlockWhiteVariant",
+      "Name": "Dull White Team Block",
       "Id": "5679"
     },
     {
-      "Name": "LilacDuskHead",
+      "Name": "Lilac Dusk Hairclip",
       "Id": "5680"
     },
     {
-      "Name": "LilacDuskBody",
+      "Name": "Lilac Dusk Dress",
       "Id": "5681"
     },
     {
-      "Name": "LilacDuskLegs",
+      "Name": "Lilac Dusk Skirt",
       "Id": "5682"
     },
     {
-      "Name": "KazzymodusHood",
+      "Name": "Kazzymodus' Hood",
       "Id": "5683"
     },
     {
-      "Name": "KazzymodusChestpiece",
+      "Name": "Kazzymodus' Chestpiece",
       "Id": "5684"
     },
     {
-      "Name": "KazzymodusLeggings",
+      "Name": "Kazzymodus' Leggings",
       "Id": "5685"
     },
     {
-      "Name": "KazzymodusWings",
+      "Name": "Kazzymodus' Wings",
       "Id": "5686"
     },
     {
-      "Name": "SlimeSpear",
+      "Name": "Slime Spear",
       "Id": "5687"
     },
     {
-      "Name": "SlimeWhip",
+      "Name": "Slime Whip",
       "Id": "5688"
     },
     {
-      "Name": "FeywoodBathtub",
+      "Name": "Feywood Bathtub",
       "Id": "5689"
     },
     {
-      "Name": "FeywoodBed",
+      "Name": "Feywood Bed",
       "Id": "5690"
     },
     {
-      "Name": "FeywoodBookcase",
+      "Name": "Feywood Bookcase",
       "Id": "5691"
     },
     {
-      "Name": "FeywoodDresser",
+      "Name": "Feywood Dresser",
       "Id": "5692"
     },
     {
-      "Name": "FeywoodCandelabra",
+      "Name": "Feywood Candelabra",
       "Id": "5693"
     },
     {
-      "Name": "FeywoodCandle",
+      "Name": "Feywood Candle",
       "Id": "5694"
     },
     {
-      "Name": "FeywoodChair",
+      "Name": "Feywood Chair",
       "Id": "5695"
     },
     {
-      "Name": "FeywoodChandelier",
+      "Name": "Feywood Chandelier",
       "Id": "5696"
     },
     {
-      "Name": "FeywoodChest",
+      "Name": "Feywood Chest",
       "Id": "5697"
     },
     {
-      "Name": "FeywoodClock",
+      "Name": "Feywood Clock",
       "Id": "5698"
     },
     {
-      "Name": "FeywoodDoor",
+      "Name": "Feywood Door",
       "Id": "5699"
     },
     {
-      "Name": "FeywoodLamp",
+      "Name": "Feywood Lamp",
       "Id": "5700"
     },
     {
-      "Name": "FeywoodLantern",
+      "Name": "Feywood Lantern",
       "Id": "5701"
     },
     {
-      "Name": "FeywoodPiano",
+      "Name": "Feywood Piano",
       "Id": "5702"
     },
     {
-      "Name": "FeywoodPlatform",
+      "Name": "Feywood Platform",
       "Id": "5703"
     },
     {
-      "Name": "FeywoodSink",
+      "Name": "Feywood Sink",
       "Id": "5704"
     },
     {
-      "Name": "FeywoodSofa",
+      "Name": "Feywood Sofa",
       "Id": "5705"
     },
     {
-      "Name": "FeywoodTable",
+      "Name": "Feywood Table",
       "Id": "5706"
     },
     {
-      "Name": "FeywoodWorkbench",
+      "Name": "Feywood Work Bench",
       "Id": "5707"
     },
     {
-      "Name": "Fake_FeywoodChest",
+      "Name": "Trapped Feywood Chest",
       "Id": "5708"
     },
     {
-      "Name": "FeywoodToilet",
+      "Name": "Feywood Toilet",
       "Id": "5709"
     },
     {
@@ -50649,1739 +50649,1739 @@ export var settings: Settings = {
       "Id": "5710"
     },
     {
-      "Name": "FeywoodWall",
+      "Name": "Feywood Wall",
       "Id": "5711"
     },
     {
-      "Name": "HallowedBathtub",
+      "Name": "Hallowed Bathtub",
       "Id": "5712"
     },
     {
-      "Name": "HallowedBed",
+      "Name": "Hallowed Bed",
       "Id": "5713"
     },
     {
-      "Name": "HallowedBookcase",
+      "Name": "Hallowed Bookcase",
       "Id": "5714"
     },
     {
-      "Name": "HallowedDresser",
+      "Name": "Hallowed Dresser",
       "Id": "5715"
     },
     {
-      "Name": "HallowedCandelabra",
+      "Name": "Hallowed Candelabra",
       "Id": "5716"
     },
     {
-      "Name": "HallowedCandle",
+      "Name": "Hallowed Candle",
       "Id": "5717"
     },
     {
-      "Name": "HallowedChair",
+      "Name": "Hallowed Chair",
       "Id": "5718"
     },
     {
-      "Name": "HallowedChandelier",
+      "Name": "Hallowed Chandelier",
       "Id": "5719"
     },
     {
-      "Name": "HallowedFurnitureChest",
+      "Name": "Fancy Hallowed Chest",
       "Id": "5720"
     },
     {
-      "Name": "HallowedClock",
+      "Name": "Hallowed Clock",
       "Id": "5721"
     },
     {
-      "Name": "HallowedDoor",
+      "Name": "Hallowed Door",
       "Id": "5722"
     },
     {
-      "Name": "HallowedLamp",
+      "Name": "Hallowed Lamp",
       "Id": "5723"
     },
     {
-      "Name": "HallowedLantern",
+      "Name": "Hallowed Lantern",
       "Id": "5724"
     },
     {
-      "Name": "HallowedPiano",
+      "Name": "Hallowed Piano",
       "Id": "5725"
     },
     {
-      "Name": "HallowedPlatform",
+      "Name": "Hallowed Platform",
       "Id": "5726"
     },
     {
-      "Name": "HallowedSink",
+      "Name": "Hallowed Sink",
       "Id": "5727"
     },
     {
-      "Name": "HallowedSofa",
+      "Name": "Hallowed Sofa",
       "Id": "5728"
     },
     {
-      "Name": "HallowedTable",
+      "Name": "Hallowed Table",
       "Id": "5729"
     },
     {
-      "Name": "HallowedWorkbench",
+      "Name": "Hallowed Work Bench",
       "Id": "5730"
     },
     {
-      "Name": "Fake_HallowedFurnitureChest",
+      "Name": "Trapped Fancy Hallowed Chest",
       "Id": "5731"
     },
     {
-      "Name": "HallowedToilet",
+      "Name": "Hallowed Toilet",
       "Id": "5732"
     },
     {
-      "Name": "HallowedBrick",
+      "Name": "Hallowed Brick",
       "Id": "5733"
     },
     {
-      "Name": "HallowedBrickWall",
+      "Name": "Hallowed Brick Wall",
       "Id": "5734"
     },
     {
-      "Name": "PalworldPalMetalArmorBody",
+      "Name": "Pal Metal Chestplate",
       "Id": "5735"
     },
     {
-      "Name": "PalworldPalMetalArmorLegs",
+      "Name": "Pal Metal Leggings",
       "Id": "5736"
     },
     {
-      "Name": "ChippysWingsInactive",
+      "Name": "Chippy's Cloak (Inactive)",
       "Id": "5737"
     },
     {
-      "Name": "RemoteControlCar",
+      "Name": "Wall Racer Car",
       "Id": "5738"
     },
     {
-      "Name": "GothicBathtub",
+      "Name": "Gothic Bathtub",
       "Id": "5739"
     },
     {
-      "Name": "GothicBed",
+      "Name": "Gothic Bed",
       "Id": "5740"
     },
     {
-      "Name": "GothicDresser",
+      "Name": "Gothic Dresser",
       "Id": "5741"
     },
     {
-      "Name": "GothicCandelabra",
+      "Name": "Gothic Candelabra",
       "Id": "5742"
     },
     {
-      "Name": "GothicCandle",
+      "Name": "Gothic Candle",
       "Id": "5743"
     },
     {
-      "Name": "GothicChandelier",
+      "Name": "Gothic Chandelier",
       "Id": "5744"
     },
     {
-      "Name": "GothicChest",
+      "Name": "Gothic Chest",
       "Id": "5745"
     },
     {
-      "Name": "GothicClock",
+      "Name": "Gothic Clock",
       "Id": "5746"
     },
     {
-      "Name": "GothicDoor",
+      "Name": "Gothic Door",
       "Id": "5747"
     },
     {
-      "Name": "GothicLamp",
+      "Name": "Gothic Lamp",
       "Id": "5748"
     },
     {
-      "Name": "GothicLantern",
+      "Name": "Gothic Lantern",
       "Id": "5749"
     },
     {
-      "Name": "GothicPiano",
+      "Name": "Gothic Piano",
       "Id": "5750"
     },
     {
-      "Name": "GothicPlatform",
+      "Name": "Gothic Platform",
       "Id": "5751"
     },
     {
-      "Name": "GothicSink",
+      "Name": "Gothic Sink",
       "Id": "5752"
     },
     {
-      "Name": "GothicSofa",
+      "Name": "Gothic Sofa",
       "Id": "5753"
     },
     {
-      "Name": "Fake_GothicChest",
+      "Name": "Trapped Gothic Chest",
       "Id": "5754"
     },
     {
-      "Name": "GothicToilet",
+      "Name": "Gothic Toilet",
       "Id": "5755"
     },
     {
-      "Name": "DemoniteBathtub",
+      "Name": "Demonite Bathtub",
       "Id": "5756"
     },
     {
-      "Name": "DemoniteBed",
+      "Name": "Demonite Bed",
       "Id": "5757"
     },
     {
-      "Name": "DemoniteBookcase",
+      "Name": "Demonite Bookcase",
       "Id": "5758"
     },
     {
-      "Name": "DemoniteCandelabra",
+      "Name": "Demonite Candelabra",
       "Id": "5759"
     },
     {
-      "Name": "DemoniteCandle",
+      "Name": "Demonite Candle",
       "Id": "5760"
     },
     {
-      "Name": "DemoniteChair",
+      "Name": "Demonite Chair",
       "Id": "5761"
     },
     {
-      "Name": "DemoniteChandelier",
+      "Name": "Demonite Chandelier",
       "Id": "5762"
     },
     {
-      "Name": "DemoniteChest",
+      "Name": "Demonite Chest",
       "Id": "5763"
     },
     {
-      "Name": "DemoniteClock",
+      "Name": "Demonite Clock",
       "Id": "5764"
     },
     {
-      "Name": "DemoniteDoor",
+      "Name": "Demonite Door",
       "Id": "5765"
     },
     {
-      "Name": "DemoniteDresser",
+      "Name": "Demonite Dresser",
       "Id": "5766"
     },
     {
-      "Name": "DemoniteLamp",
+      "Name": "Demonite Lamp",
       "Id": "5767"
     },
     {
-      "Name": "DemoniteLantern",
+      "Name": "Demonite Lantern",
       "Id": "5768"
     },
     {
-      "Name": "DemonitePiano",
+      "Name": "Demonite Piano",
       "Id": "5769"
     },
     {
-      "Name": "DemonitePlatform",
+      "Name": "Demonite Platform",
       "Id": "5770"
     },
     {
-      "Name": "DemoniteSink",
+      "Name": "Demonite Sink",
       "Id": "5771"
     },
     {
-      "Name": "DemoniteSofa",
+      "Name": "Demonite Sofa",
       "Id": "5772"
     },
     {
-      "Name": "DemoniteTable",
+      "Name": "Demonite Table",
       "Id": "5773"
     },
     {
-      "Name": "DemoniteToilet",
+      "Name": "Demonite Toilet",
       "Id": "5774"
     },
     {
-      "Name": "DemoniteWorkbench",
+      "Name": "Demonite Work Bench",
       "Id": "5775"
     },
     {
-      "Name": "Fake_DemoniteChest",
+      "Name": "Trapped Demonite Chest",
       "Id": "5776"
     },
     {
-      "Name": "CrimtaneBathtub",
+      "Name": "Crimtane Bathtub",
       "Id": "5777"
     },
     {
-      "Name": "CrimtaneBed",
+      "Name": "Crimtane Bed",
       "Id": "5778"
     },
     {
-      "Name": "CrimtaneBookcase",
+      "Name": "Crimtane Bookcase",
       "Id": "5779"
     },
     {
-      "Name": "CrimtaneCandelabra",
+      "Name": "Crimtane Candelabra",
       "Id": "5780"
     },
     {
-      "Name": "CrimtaneCandle",
+      "Name": "Crimtane Candle",
       "Id": "5781"
     },
     {
-      "Name": "CrimtaneChair",
+      "Name": "Crimtane Chair",
       "Id": "5782"
     },
     {
-      "Name": "CrimtaneChandelier",
+      "Name": "Crimtane Chandelier",
       "Id": "5783"
     },
     {
-      "Name": "CrimtaneChest",
+      "Name": "Crimtane Chest",
       "Id": "5784"
     },
     {
-      "Name": "CrimtaneClock",
+      "Name": "Crimtane Clock",
       "Id": "5785"
     },
     {
-      "Name": "CrimtaneDoor",
+      "Name": "Crimtane Door",
       "Id": "5786"
     },
     {
-      "Name": "CrimtaneDresser",
+      "Name": "Crimtane Dresser",
       "Id": "5787"
     },
     {
-      "Name": "CrimtaneLamp",
+      "Name": "Crimtane Lamp",
       "Id": "5788"
     },
     {
-      "Name": "CrimtaneLantern",
+      "Name": "Crimtane Lantern",
       "Id": "5789"
     },
     {
-      "Name": "CrimtanePiano",
+      "Name": "Crimtane Piano",
       "Id": "5790"
     },
     {
-      "Name": "CrimtanePlatform",
+      "Name": "Crimtane Platform",
       "Id": "5791"
     },
     {
-      "Name": "CrimtaneSink",
+      "Name": "Crimtane Sink",
       "Id": "5792"
     },
     {
-      "Name": "CrimtaneSofa",
+      "Name": "Crimtane Sofa",
       "Id": "5793"
     },
     {
-      "Name": "CrimtaneTable",
+      "Name": "Crimtane Table",
       "Id": "5794"
     },
     {
-      "Name": "CrimtaneToilet",
+      "Name": "Crimtane Toilet",
       "Id": "5795"
     },
     {
-      "Name": "CrimtaneWorkbench",
+      "Name": "Crimtane Work Bench",
       "Id": "5796"
     },
     {
-      "Name": "Fake_CrimtaneChest",
+      "Name": "Trapped Crimtane Chest",
       "Id": "5797"
     },
     {
-      "Name": "SnowBathtub",
+      "Name": "Snow Bathtub",
       "Id": "5798"
     },
     {
-      "Name": "SnowBed",
+      "Name": "Snow Bed",
       "Id": "5799"
     },
     {
-      "Name": "SnowBookcase",
+      "Name": "Snow Bookcase",
       "Id": "5800"
     },
     {
-      "Name": "SnowCandelabra",
+      "Name": "Snow Candelabra",
       "Id": "5801"
     },
     {
-      "Name": "SnowCandle",
+      "Name": "Snow Candle",
       "Id": "5802"
     },
     {
-      "Name": "SnowChair",
+      "Name": "Snow Chair",
       "Id": "5803"
     },
     {
-      "Name": "SnowChandelier",
+      "Name": "Snow Chandelier",
       "Id": "5804"
     },
     {
-      "Name": "SnowChest",
+      "Name": "Snow Chest",
       "Id": "5805"
     },
     {
-      "Name": "SnowClock",
+      "Name": "Snow Clock",
       "Id": "5806"
     },
     {
-      "Name": "SnowDoor",
+      "Name": "Snow Door",
       "Id": "5807"
     },
     {
-      "Name": "SnowDresser",
+      "Name": "Snow Dresser",
       "Id": "5808"
     },
     {
-      "Name": "SnowLamp",
+      "Name": "Snow Lamp",
       "Id": "5809"
     },
     {
-      "Name": "SnowLantern",
+      "Name": "Snow Lantern",
       "Id": "5810"
     },
     {
-      "Name": "SnowPiano",
+      "Name": "Snow Piano",
       "Id": "5811"
     },
     {
-      "Name": "SnowPlatform",
+      "Name": "Snow Platform",
       "Id": "5812"
     },
     {
-      "Name": "SnowSink",
+      "Name": "Snow Sink",
       "Id": "5813"
     },
     {
-      "Name": "SnowSofa",
+      "Name": "Snow Sofa",
       "Id": "5814"
     },
     {
-      "Name": "SnowTable",
+      "Name": "Snow Table",
       "Id": "5815"
     },
     {
-      "Name": "SnowToilet",
+      "Name": "Snow Toilet",
       "Id": "5816"
     },
     {
-      "Name": "SnowWorkbench",
+      "Name": "Snow Work Bench",
       "Id": "5817"
     },
     {
-      "Name": "Fake_SnowChest",
+      "Name": "Trapped Snow Chest",
       "Id": "5818"
     },
     {
-      "Name": "FlinxFurBathtub",
+      "Name": "Flinx Fur Bathtub",
       "Id": "5819"
     },
     {
-      "Name": "FlinxFurBed",
+      "Name": "Flinx Fur Bed",
       "Id": "5820"
     },
     {
-      "Name": "FlinxFurBookcase",
+      "Name": "Flinx Fur Bookcase",
       "Id": "5821"
     },
     {
-      "Name": "FlinxFurCandelabra",
+      "Name": "Flinx Fur Candelabra",
       "Id": "5822"
     },
     {
-      "Name": "FlinxFurCandle",
+      "Name": "Flinx Fur Candle",
       "Id": "5823"
     },
     {
-      "Name": "FlinxFurChair",
+      "Name": "Flinx Fur Chair",
       "Id": "5824"
     },
     {
-      "Name": "FlinxFurChandelier",
+      "Name": "Flinx Fur Chandelier",
       "Id": "5825"
     },
     {
-      "Name": "FlinxFurChest",
+      "Name": "Flinx Fur Chest",
       "Id": "5826"
     },
     {
-      "Name": "FlinxFurClock",
+      "Name": "Flinx Fur Clock",
       "Id": "5827"
     },
     {
-      "Name": "FlinxFurDoor",
+      "Name": "Flinx Fur Door",
       "Id": "5828"
     },
     {
-      "Name": "FlinxFurDresser",
+      "Name": "Flinx Fur Dresser",
       "Id": "5829"
     },
     {
-      "Name": "FlinxFurLamp",
+      "Name": "Flinx Fur Lamp",
       "Id": "5830"
     },
     {
-      "Name": "FlinxFurLantern",
+      "Name": "Flinx Fur Lantern",
       "Id": "5831"
     },
     {
-      "Name": "FlinxFurPiano",
+      "Name": "Flinx Fur Piano",
       "Id": "5832"
     },
     {
-      "Name": "FlinxFurPlatform",
+      "Name": "Flinx Fur Platform",
       "Id": "5833"
     },
     {
-      "Name": "FlinxFurSink",
+      "Name": "Flinx Fur Sink",
       "Id": "5834"
     },
     {
-      "Name": "FlinxFurSofa",
+      "Name": "Flinx Fur Sofa",
       "Id": "5835"
     },
     {
-      "Name": "FlinxFurTable",
+      "Name": "Flinx Fur Table",
       "Id": "5836"
     },
     {
-      "Name": "FlinxFurToilet",
+      "Name": "Flinx Fur Toilet",
       "Id": "5837"
     },
     {
-      "Name": "FlinxFurWorkbench",
+      "Name": "Flinx Fur Work Bench",
       "Id": "5838"
     },
     {
-      "Name": "Fake_FlinxFurChest",
+      "Name": "Trapped Flinx Fur Chest",
       "Id": "5839"
     },
     {
-      "Name": "PineBathtub",
+      "Name": "Pine Bathtub",
       "Id": "5840"
     },
     {
-      "Name": "PineBed",
+      "Name": "Pine Bed",
       "Id": "5841"
     },
     {
-      "Name": "PineBookcase",
+      "Name": "Pine Bookcase",
       "Id": "5842"
     },
     {
-      "Name": "PineCandelabra",
+      "Name": "Pine Candelabra",
       "Id": "5843"
     },
     {
-      "Name": "PineCandle",
+      "Name": "Pine Candle",
       "Id": "5844"
     },
     {
-      "Name": "PineChandelier",
+      "Name": "Pine Chandelier",
       "Id": "5845"
     },
     {
-      "Name": "PineChest",
+      "Name": "Pine Chest",
       "Id": "5846"
     },
     {
-      "Name": "PineClock",
+      "Name": "Pine Clock",
       "Id": "5847"
     },
     {
-      "Name": "PineDresser",
+      "Name": "Pine Dresser",
       "Id": "5848"
     },
     {
-      "Name": "PineLamp",
+      "Name": "Pine Lamp",
       "Id": "5849"
     },
     {
-      "Name": "PineLantern",
+      "Name": "Pine Lantern",
       "Id": "5850"
     },
     {
-      "Name": "PinePiano",
+      "Name": "Pine Piano",
       "Id": "5851"
     },
     {
-      "Name": "PinePlatform",
+      "Name": "Pine Platform",
       "Id": "5852"
     },
     {
-      "Name": "PineSink",
+      "Name": "Pine Sink",
       "Id": "5853"
     },
     {
-      "Name": "PineSofa",
+      "Name": "Pine Sofa",
       "Id": "5854"
     },
     {
-      "Name": "PineToilet",
+      "Name": "Pine Toilet",
       "Id": "5855"
     },
     {
-      "Name": "PineWorkbench",
+      "Name": "Pine Work Bench",
       "Id": "5856"
     },
     {
-      "Name": "Fake_PineChest",
+      "Name": "Trapped Pine Chest",
       "Id": "5857"
     },
     {
-      "Name": "EasterBathtub",
+      "Name": "Easter Bathtub",
       "Id": "5858"
     },
     {
-      "Name": "EasterBed",
+      "Name": "Easter Bed",
       "Id": "5859"
     },
     {
-      "Name": "EasterBookcase",
+      "Name": "Easter Bookcase",
       "Id": "5860"
     },
     {
-      "Name": "EasterCandelabra",
+      "Name": "Easter Candelabra",
       "Id": "5861"
     },
     {
-      "Name": "EasterCandle",
+      "Name": "Easter Candle",
       "Id": "5862"
     },
     {
-      "Name": "EasterChair",
+      "Name": "Easter Chair",
       "Id": "5863"
     },
     {
-      "Name": "EasterChandelier",
+      "Name": "Easter Chandelier",
       "Id": "5864"
     },
     {
-      "Name": "EasterChest",
+      "Name": "Easter Chest",
       "Id": "5865"
     },
     {
-      "Name": "EasterClock",
+      "Name": "Easter Clock",
       "Id": "5866"
     },
     {
-      "Name": "EasterDoor",
+      "Name": "Easter Door",
       "Id": "5867"
     },
     {
-      "Name": "EasterDresser",
+      "Name": "Easter Dresser",
       "Id": "5868"
     },
     {
-      "Name": "EasterLamp",
+      "Name": "Easter Lamp",
       "Id": "5869"
     },
     {
-      "Name": "EasterLantern",
+      "Name": "Easter Lantern",
       "Id": "5870"
     },
     {
-      "Name": "EasterPiano",
+      "Name": "Easter Piano",
       "Id": "5871"
     },
     {
-      "Name": "EasterPlatform",
+      "Name": "Easter Platform",
       "Id": "5872"
     },
     {
-      "Name": "EasterSink",
+      "Name": "Easter Sink",
       "Id": "5873"
     },
     {
-      "Name": "EasterSofa",
+      "Name": "Easter Sofa",
       "Id": "5874"
     },
     {
-      "Name": "EasterTable",
+      "Name": "Easter Table",
       "Id": "5875"
     },
     {
-      "Name": "EasterToilet",
+      "Name": "Easter Toilet",
       "Id": "5876"
     },
     {
-      "Name": "EasterWorkbench",
+      "Name": "Easter Work Bench",
       "Id": "5877"
     },
     {
-      "Name": "Fake_EasterChest",
+      "Name": "Trapped Easter Chest",
       "Id": "5878"
     },
     {
-      "Name": "StoneBathtub",
+      "Name": "Stone Bathtub",
       "Id": "5879"
     },
     {
-      "Name": "StoneBed",
+      "Name": "Stone Bed",
       "Id": "5880"
     },
     {
-      "Name": "StoneBookcase",
+      "Name": "Stone Bookcase",
       "Id": "5881"
     },
     {
-      "Name": "StoneCandelabra",
+      "Name": "Stone Candelabra",
       "Id": "5882"
     },
     {
-      "Name": "StoneCandle",
+      "Name": "Stone Candle",
       "Id": "5883"
     },
     {
-      "Name": "StoneChair",
+      "Name": "Stone Chair",
       "Id": "5884"
     },
     {
-      "Name": "StoneChandelier",
+      "Name": "Stone Chandelier",
       "Id": "5885"
     },
     {
-      "Name": "StoneChest",
+      "Name": "Stone Chest",
       "Id": "5886"
     },
     {
-      "Name": "StoneClock",
+      "Name": "Stone Clock",
       "Id": "5887"
     },
     {
-      "Name": "StoneDresser",
+      "Name": "Stone Dresser",
       "Id": "5888"
     },
     {
-      "Name": "StoneLamp",
+      "Name": "Stone Lamp",
       "Id": "5889"
     },
     {
-      "Name": "StoneLantern",
+      "Name": "Stone Lantern",
       "Id": "5890"
     },
     {
-      "Name": "StonePiano",
+      "Name": "Stone Piano",
       "Id": "5891"
     },
     {
-      "Name": "StoneSink",
+      "Name": "Stone Sink",
       "Id": "5892"
     },
     {
-      "Name": "StoneSofa",
+      "Name": "Stone Sofa",
       "Id": "5893"
     },
     {
-      "Name": "StoneTable",
+      "Name": "Stone Table",
       "Id": "5894"
     },
     {
-      "Name": "StoneToilet",
+      "Name": "Stone Toilet",
       "Id": "5895"
     },
     {
-      "Name": "StoneWorkbench",
+      "Name": "Stone Work Bench",
       "Id": "5896"
     },
     {
-      "Name": "Fake_StoneChest",
+      "Name": "Trapped Stone Chest",
       "Id": "5897"
     },
     {
-      "Name": "JellyfishBathtub",
+      "Name": "Jellyfish Bathtub",
       "Id": "5898"
     },
     {
-      "Name": "JellyfishBed",
+      "Name": "Jellyfish Bed",
       "Id": "5899"
     },
     {
-      "Name": "JellyfishBookcase",
+      "Name": "Jellyfish Bookcase",
       "Id": "5900"
     },
     {
-      "Name": "JellyfishCandelabra",
+      "Name": "Jellyfish Candelabra",
       "Id": "5901"
     },
     {
-      "Name": "JellyfishCandle",
+      "Name": "Jellyfish Candle",
       "Id": "5902"
     },
     {
-      "Name": "JellyfishChair",
+      "Name": "Jellyfish Chair",
       "Id": "5903"
     },
     {
-      "Name": "JellyfishChandelier",
+      "Name": "Jellyfish Chandelier",
       "Id": "5904"
     },
     {
-      "Name": "JellyfishChest",
+      "Name": "Jellyfish Chest",
       "Id": "5905"
     },
     {
-      "Name": "JellyfishClock",
+      "Name": "Jellyfish Clock",
       "Id": "5906"
     },
     {
-      "Name": "JellyfishDoor",
+      "Name": "Jellyfish Door",
       "Id": "5907"
     },
     {
-      "Name": "JellyfishDresser",
+      "Name": "Jellyfish Dresser",
       "Id": "5908"
     },
     {
-      "Name": "JellyfishLamp",
+      "Name": "Jellyfish Lamp",
       "Id": "5909"
     },
     {
-      "Name": "JellyfishLantern",
+      "Name": "Jellyfish Lantern",
       "Id": "5910"
     },
     {
-      "Name": "JellyfishPiano",
+      "Name": "Jellyfish Piano",
       "Id": "5911"
     },
     {
-      "Name": "JellyfishPlatform",
+      "Name": "Jellyfish Platform",
       "Id": "5912"
     },
     {
-      "Name": "JellyfishSink",
+      "Name": "Jellyfish Sink",
       "Id": "5913"
     },
     {
-      "Name": "JellyfishSofa",
+      "Name": "Jellyfish Sofa",
       "Id": "5914"
     },
     {
-      "Name": "JellyfishTable",
+      "Name": "Jellyfish Table",
       "Id": "5915"
     },
     {
-      "Name": "JellyfishToilet",
+      "Name": "Jellyfish Toilet",
       "Id": "5916"
     },
     {
-      "Name": "JellyfishWorkbench",
+      "Name": "Jellyfish Work Bench",
       "Id": "5917"
     },
     {
-      "Name": "Fake_JellyfishChest",
+      "Name": "Trapped Jellyfish Chest",
       "Id": "5918"
     },
     {
-      "Name": "PineTreeBlockWall",
+      "Name": "Pine Tree Wall",
       "Id": "5919"
     },
     {
-      "Name": "EasterBlock",
+      "Name": "Easter Block",
       "Id": "5920"
     },
     {
-      "Name": "EasterBlockWall",
+      "Name": "Easter Wall",
       "Id": "5921"
     },
     {
-      "Name": "GothicBrick",
+      "Name": "Gothic Brick",
       "Id": "5922"
     },
     {
-      "Name": "GothicBrickWall",
+      "Name": "Gothic Brick Wall",
       "Id": "5923"
     },
     {
-      "Name": "FlinxFurBlock",
+      "Name": "Flinx Fur Block",
       "Id": "5924"
     },
     {
-      "Name": "FlinxFurBlockWall",
+      "Name": "Flinx Fur Wall",
       "Id": "5925"
     },
     {
-      "Name": "JellyfishBlock",
+      "Name": "Jellyfish Block",
       "Id": "5926"
     },
     {
-      "Name": "JellyfishBlockWall",
+      "Name": "Jellyfish Wall",
       "Id": "5927"
     },
     {
-      "Name": "ToyBreakerBlock",
+      "Name": "Toybreaker Brick",
       "Id": "5928"
     },
     {
-      "Name": "PaintingRemix",
+      "Name": "Remix",
       "Id": "5929"
     },
     {
-      "Name": "PineWoodBlock",
+      "Name": "Pine Wood",
       "Id": "5930"
     },
     {
-      "Name": "PineWoodBlockWall",
+      "Name": "Pine Wood Wall",
       "Id": "5931"
     },
     {
-      "Name": "HarpyBathtub",
+      "Name": "Harpy Bathtub",
       "Id": "5932"
     },
     {
-      "Name": "HarpyBed",
+      "Name": "Harpy Bed",
       "Id": "5933"
     },
     {
-      "Name": "HarpyBookcase",
+      "Name": "Harpy Bookcase",
       "Id": "5934"
     },
     {
-      "Name": "HarpyCandelabra",
+      "Name": "Harpy Candelabra",
       "Id": "5935"
     },
     {
-      "Name": "HarpyCandle",
+      "Name": "Harpy Candle",
       "Id": "5936"
     },
     {
-      "Name": "HarpyChair",
+      "Name": "Harpy Chair",
       "Id": "5937"
     },
     {
-      "Name": "HarpyChandelier",
+      "Name": "Harpy Chandelier",
       "Id": "5938"
     },
     {
-      "Name": "HarpyChest",
+      "Name": "Harpy Chest",
       "Id": "5939"
     },
     {
-      "Name": "HarpyClock",
+      "Name": "Harpy Clock",
       "Id": "5940"
     },
     {
-      "Name": "HarpyDoor",
+      "Name": "Harpy Door",
       "Id": "5941"
     },
     {
-      "Name": "HarpyDresser",
+      "Name": "Harpy Dresser",
       "Id": "5942"
     },
     {
-      "Name": "HarpyLamp",
+      "Name": "Harpy Lamp",
       "Id": "5943"
     },
     {
-      "Name": "HarpyLantern",
+      "Name": "Harpy Lantern",
       "Id": "5944"
     },
     {
-      "Name": "HarpyPiano",
+      "Name": "Harpy Piano",
       "Id": "5945"
     },
     {
-      "Name": "HarpyPlatform",
+      "Name": "Harpy Platform",
       "Id": "5946"
     },
     {
-      "Name": "HarpySink",
+      "Name": "Harpy Sink",
       "Id": "5947"
     },
     {
-      "Name": "HarpySofa",
+      "Name": "Harpy Sofa",
       "Id": "5948"
     },
     {
-      "Name": "HarpyTable",
+      "Name": "Harpy Table",
       "Id": "5949"
     },
     {
-      "Name": "HarpyToilet",
+      "Name": "Harpy Toilet",
       "Id": "5950"
     },
     {
-      "Name": "HarpyWorkbench",
+      "Name": "Harpy Work Bench",
       "Id": "5951"
     },
     {
-      "Name": "Fake_HarpyChest",
+      "Name": "Trapped Harpy Chest",
       "Id": "5952"
     },
     {
-      "Name": "HarpyBlock",
+      "Name": "Harpy Block",
       "Id": "5953"
     },
     {
-      "Name": "HarpyBlockWall",
+      "Name": "Harpy Wall",
       "Id": "5954"
     },
     {
-      "Name": "CloudBathtub",
+      "Name": "Cloud Bathtub",
       "Id": "5955"
     },
     {
-      "Name": "CloudBed",
+      "Name": "Cloud Bed",
       "Id": "5956"
     },
     {
-      "Name": "CloudBookcase",
+      "Name": "Cloud Bookcase",
       "Id": "5957"
     },
     {
-      "Name": "CloudCandelabra",
+      "Name": "Cloud Candelabra",
       "Id": "5958"
     },
     {
-      "Name": "CloudCandle",
+      "Name": "Cloud Candle",
       "Id": "5959"
     },
     {
-      "Name": "CloudChair",
+      "Name": "Cloud Chair",
       "Id": "5960"
     },
     {
-      "Name": "CloudChandelier",
+      "Name": "Cloud Chandelier",
       "Id": "5961"
     },
     {
-      "Name": "CloudChest",
+      "Name": "Cloud Chest",
       "Id": "5962"
     },
     {
-      "Name": "CloudClock",
+      "Name": "Cloud Clock",
       "Id": "5963"
     },
     {
-      "Name": "CloudDoor",
+      "Name": "Cloud Door",
       "Id": "5964"
     },
     {
-      "Name": "CloudDresser",
+      "Name": "Cloud Dresser",
       "Id": "5965"
     },
     {
-      "Name": "CloudLamp",
+      "Name": "Cloud Lamp",
       "Id": "5966"
     },
     {
-      "Name": "CloudLantern",
+      "Name": "Cloud Lantern",
       "Id": "5967"
     },
     {
-      "Name": "CloudPiano",
+      "Name": "Cloud Piano",
       "Id": "5968"
     },
     {
-      "Name": "CloudSink",
+      "Name": "Cloud Sink",
       "Id": "5969"
     },
     {
-      "Name": "CloudSofa",
+      "Name": "Cloud Sofa",
       "Id": "5970"
     },
     {
-      "Name": "CloudTable",
+      "Name": "Cloud Table",
       "Id": "5971"
     },
     {
-      "Name": "CloudToilet",
+      "Name": "Cloud Toilet",
       "Id": "5972"
     },
     {
-      "Name": "CloudWorkbench",
+      "Name": "Cloud Work Bench",
       "Id": "5973"
     },
     {
-      "Name": "Fake_CloudChest",
+      "Name": "Trapped Cloud Chest",
       "Id": "5974"
     },
     {
-      "Name": "MoonplateBathtub",
+      "Name": "Duskware Bathtub",
       "Id": "5975"
     },
     {
-      "Name": "MoonplateBed",
+      "Name": "Duskware Bed",
       "Id": "5976"
     },
     {
-      "Name": "MoonplateBookcase",
+      "Name": "Duskware Bookcase",
       "Id": "5977"
     },
     {
-      "Name": "MoonplateCandelabra",
+      "Name": "Duskware Candelabra",
       "Id": "5978"
     },
     {
-      "Name": "MoonplateCandle",
+      "Name": "Duskware Candle",
       "Id": "5979"
     },
     {
-      "Name": "MoonplateChair",
+      "Name": "Duskware Chair",
       "Id": "5980"
     },
     {
-      "Name": "MoonplateChandelier",
+      "Name": "Duskware Chandelier",
       "Id": "5981"
     },
     {
-      "Name": "MoonplateChest",
+      "Name": "Duskware Chest",
       "Id": "5982"
     },
     {
-      "Name": "MoonplateClock",
+      "Name": "Duskware Clock",
       "Id": "5983"
     },
     {
-      "Name": "MoonplateDoor",
+      "Name": "Duskware Door",
       "Id": "5984"
     },
     {
-      "Name": "MoonplateDresser",
+      "Name": "Duskware Dresser",
       "Id": "5985"
     },
     {
-      "Name": "MoonplateLamp",
+      "Name": "Duskware Lamp",
       "Id": "5986"
     },
     {
-      "Name": "MoonplateLantern",
+      "Name": "Duskware Lantern",
       "Id": "5987"
     },
     {
-      "Name": "MoonplatePiano",
+      "Name": "Duskware Piano",
       "Id": "5988"
     },
     {
-      "Name": "MoonplatePlatform",
+      "Name": "Duskware Platform",
       "Id": "5989"
     },
     {
-      "Name": "MoonplateSink",
+      "Name": "Duskware Sink",
       "Id": "5990"
     },
     {
-      "Name": "MoonplateSofa",
+      "Name": "Duskware Sofa",
       "Id": "5991"
     },
     {
-      "Name": "MoonplateTable",
+      "Name": "Duskware Table",
       "Id": "5992"
     },
     {
-      "Name": "MoonplateToilet",
+      "Name": "Duskware Toilet",
       "Id": "5993"
     },
     {
-      "Name": "MoonplateWorkbench",
+      "Name": "Duskware Work Bench",
       "Id": "5994"
     },
     {
-      "Name": "Fake_MoonplateChest",
+      "Name": "Trapped Duskware Chest",
       "Id": "5995"
     },
     {
-      "Name": "MoonplateBlock",
+      "Name": "Moonplate Block",
       "Id": "5996"
     },
     {
-      "Name": "MoonplateBlockWall",
+      "Name": "Crescent Wall",
       "Id": "5997"
     },
     {
-      "Name": "LibrarianBathtub",
+      "Name": "Librarian Bathtub",
       "Id": "5998"
     },
     {
-      "Name": "LibrarianBed",
+      "Name": "Librarian Bed",
       "Id": "5999"
     },
     {
-      "Name": "LibrarianBookcase",
+      "Name": "Librarian Bookcase",
       "Id": "6000"
     },
     {
-      "Name": "LibrarianCandelabra",
+      "Name": "Librarian Candelabra",
       "Id": "6001"
     },
     {
-      "Name": "LibrarianCandle",
+      "Name": "Librarian Candle",
       "Id": "6002"
     },
     {
-      "Name": "LibrarianChair",
+      "Name": "Librarian Chair",
       "Id": "6003"
     },
     {
-      "Name": "LibrarianChandelier",
+      "Name": "Librarian Chandelier",
       "Id": "6004"
     },
     {
-      "Name": "LibrarianChest",
+      "Name": "Librarian Chest",
       "Id": "6005"
     },
     {
-      "Name": "LibrarianClock",
+      "Name": "Librarian Clock",
       "Id": "6006"
     },
     {
-      "Name": "LibrarianDoor",
+      "Name": "Librarian Door",
       "Id": "6007"
     },
     {
-      "Name": "LibrarianDresser",
+      "Name": "Librarian Dresser",
       "Id": "6008"
     },
     {
-      "Name": "LibrarianLamp",
+      "Name": "Librarian Lamp",
       "Id": "6009"
     },
     {
-      "Name": "LibrarianLantern",
+      "Name": "Librarian Lantern",
       "Id": "6010"
     },
     {
-      "Name": "LibrarianPiano",
+      "Name": "Librarian Piano",
       "Id": "6011"
     },
     {
-      "Name": "LibrarianPlatform",
+      "Name": "Librarian Platform",
       "Id": "6012"
     },
     {
-      "Name": "LibrarianSink",
+      "Name": "Librarian Sink",
       "Id": "6013"
     },
     {
-      "Name": "LibrarianSofa",
+      "Name": "Librarian Sofa",
       "Id": "6014"
     },
     {
-      "Name": "LibrarianTable",
+      "Name": "Librarian Table",
       "Id": "6015"
     },
     {
-      "Name": "LibrarianToilet",
+      "Name": "Librarian Toilet",
       "Id": "6016"
     },
     {
-      "Name": "LibrarianWorkbench",
+      "Name": "Librarian Work Bench",
       "Id": "6017"
     },
     {
-      "Name": "Fake_LibrarianChest",
+      "Name": "Trapped Librarian Chest",
       "Id": "6018"
     },
     {
-      "Name": "LibrarianBlock",
+      "Name": "Librarian Block",
       "Id": "6019"
     },
     {
-      "Name": "LibrarianBlockWall",
+      "Name": "Librarian Wall",
       "Id": "6020"
     },
     {
-      "Name": "SpikeBathtub",
+      "Name": "Spike Bathtub",
       "Id": "6021"
     },
     {
-      "Name": "SpikeBed",
+      "Name": "Spike Bed",
       "Id": "6022"
     },
     {
-      "Name": "SpikeBookcase",
+      "Name": "Spike Bookcase",
       "Id": "6023"
     },
     {
-      "Name": "SpikeCandelabra",
+      "Name": "Spike Candelabra",
       "Id": "6024"
     },
     {
-      "Name": "SpikeCandle",
+      "Name": "Spike Candle",
       "Id": "6025"
     },
     {
-      "Name": "SpikeChair",
+      "Name": "Spike Chair",
       "Id": "6026"
     },
     {
-      "Name": "SpikeChandelier",
+      "Name": "Spike Chandelier",
       "Id": "6027"
     },
     {
-      "Name": "SpikeChest",
+      "Name": "Spike Chest",
       "Id": "6028"
     },
     {
-      "Name": "SpikeClock",
+      "Name": "Spike Clock",
       "Id": "6029"
     },
     {
-      "Name": "SpikeDoor",
+      "Name": "Spike Door",
       "Id": "6030"
     },
     {
-      "Name": "SpikeDresser",
+      "Name": "Spike Dresser",
       "Id": "6031"
     },
     {
-      "Name": "SpikeLamp",
+      "Name": "Spike Lamp",
       "Id": "6032"
     },
     {
-      "Name": "SpikeLantern",
+      "Name": "Spike Lantern",
       "Id": "6033"
     },
     {
-      "Name": "SpikePiano",
+      "Name": "Spike Piano",
       "Id": "6034"
     },
     {
-      "Name": "SpikePlatform",
+      "Name": "Spike Platform",
       "Id": "6035"
     },
     {
-      "Name": "SpikeSink",
+      "Name": "Spike Sink",
       "Id": "6036"
     },
     {
-      "Name": "SpikeSofa",
+      "Name": "Spike Sofa",
       "Id": "6037"
     },
     {
-      "Name": "SpikeTable",
+      "Name": "Spike Table",
       "Id": "6038"
     },
     {
-      "Name": "SpikeToilet",
+      "Name": "Spike Toilet",
       "Id": "6039"
     },
     {
-      "Name": "SpikeWorkbench",
+      "Name": "Spike Work Bench",
       "Id": "6040"
     },
     {
-      "Name": "Fake_SpikeChest",
+      "Name": "Trapped Spike Chest",
       "Id": "6041"
     },
     {
-      "Name": "SpikeBlock",
+      "Name": "Spike Block",
       "Id": "6042"
     },
     {
-      "Name": "SpikeBlockWall",
+      "Name": "Spike Wall",
       "Id": "6043"
     },
     {
-      "Name": "OfficeBathtub",
+      "Name": "Office Bathtub",
       "Id": "6044"
     },
     {
-      "Name": "OfficeBed",
+      "Name": "Office Bed",
       "Id": "6045"
     },
     {
-      "Name": "OfficeBookcase",
+      "Name": "Office Bookcase",
       "Id": "6046"
     },
     {
-      "Name": "OfficeCandelabra",
+      "Name": "Office Candelabra",
       "Id": "6047"
     },
     {
-      "Name": "OfficeCandle",
+      "Name": "Office Candle",
       "Id": "6048"
     },
     {
-      "Name": "OfficeChair",
+      "Name": "Office Chair",
       "Id": "6049"
     },
     {
-      "Name": "OfficeChandelier",
+      "Name": "Office Chandelier",
       "Id": "6050"
     },
     {
-      "Name": "OfficeChest",
+      "Name": "Office Chest",
       "Id": "6051"
     },
     {
-      "Name": "OfficeClock",
+      "Name": "Office Clock",
       "Id": "6052"
     },
     {
-      "Name": "OfficeDoor",
+      "Name": "Office Door",
       "Id": "6053"
     },
     {
-      "Name": "OfficeDresser",
+      "Name": "Office Dresser",
       "Id": "6054"
     },
     {
-      "Name": "OfficeLamp",
+      "Name": "Office Lamp",
       "Id": "6055"
     },
     {
-      "Name": "OfficeLantern",
+      "Name": "Office Lantern",
       "Id": "6056"
     },
     {
-      "Name": "OfficePiano",
+      "Name": "Office Piano",
       "Id": "6057"
     },
     {
-      "Name": "OfficePlatform",
+      "Name": "Office Platform",
       "Id": "6058"
     },
     {
-      "Name": "OfficeSink",
+      "Name": "Office Sink",
       "Id": "6059"
     },
     {
-      "Name": "OfficeSofa",
+      "Name": "Office Sofa",
       "Id": "6060"
     },
     {
-      "Name": "OfficeTable",
+      "Name": "Office Table",
       "Id": "6061"
     },
     {
-      "Name": "OfficeToilet",
+      "Name": "Office Toilet",
       "Id": "6062"
     },
     {
-      "Name": "OfficeWorkbench",
+      "Name": "Office Work Bench",
       "Id": "6063"
     },
     {
-      "Name": "Fake_OfficeChest",
+      "Name": "Trapped Office Chest",
       "Id": "6064"
     },
     {
-      "Name": "OfficeBlock",
+      "Name": "Office Block",
       "Id": "6065"
     },
     {
-      "Name": "OfficeBlockWall",
+      "Name": "Office Wall",
       "Id": "6066"
     },
     {
-      "Name": "ForbiddenBathtub",
+      "Name": "Forbidden Bathtub",
       "Id": "6067"
     },
     {
-      "Name": "ForbiddenBed",
+      "Name": "Forbidden Bed",
       "Id": "6068"
     },
     {
-      "Name": "ForbiddenBookcase",
+      "Name": "Forbidden Bookcase",
       "Id": "6069"
     },
     {
-      "Name": "ForbiddenCandelabra",
+      "Name": "Forbidden Candelabra",
       "Id": "6070"
     },
     {
-      "Name": "ForbiddenCandle",
+      "Name": "Forbidden Candle",
       "Id": "6071"
     },
     {
-      "Name": "ForbiddenChair",
+      "Name": "Forbidden Chair",
       "Id": "6072"
     },
     {
-      "Name": "ForbiddenChandelier",
+      "Name": "Forbidden Chandelier",
       "Id": "6073"
     },
     {
-      "Name": "ForbiddenChest",
+      "Name": "Forbidden Chest",
       "Id": "6074"
     },
     {
-      "Name": "ForbiddenClock",
+      "Name": "Forbidden Clock",
       "Id": "6075"
     },
     {
-      "Name": "ForbiddenDoor",
+      "Name": "Forbidden Door",
       "Id": "6076"
     },
     {
-      "Name": "ForbiddenDresser",
+      "Name": "Forbidden Dresser",
       "Id": "6077"
     },
     {
-      "Name": "ForbiddenLamp",
+      "Name": "Forbidden Lamp",
       "Id": "6078"
     },
     {
-      "Name": "ForbiddenLantern",
+      "Name": "Forbidden Lantern",
       "Id": "6079"
     },
     {
-      "Name": "ForbiddenPiano",
+      "Name": "Forbidden Piano",
       "Id": "6080"
     },
     {
-      "Name": "ForbiddenPlatform",
+      "Name": "Forbidden Platform",
       "Id": "6081"
     },
     {
-      "Name": "ForbiddenSink",
+      "Name": "Forbidden Sink",
       "Id": "6082"
     },
     {
-      "Name": "ForbiddenSofa",
+      "Name": "Forbidden Sofa",
       "Id": "6083"
     },
     {
-      "Name": "ForbiddenTable",
+      "Name": "Forbidden Table",
       "Id": "6084"
     },
     {
-      "Name": "ForbiddenToilet",
+      "Name": "Forbidden Toilet",
       "Id": "6085"
     },
     {
-      "Name": "ForbiddenWorkbench",
+      "Name": "Forbidden Work Bench",
       "Id": "6086"
     },
     {
-      "Name": "Fake_ForbiddenChest",
+      "Name": "Trapped Forbidden Chest",
       "Id": "6087"
     },
     {
-      "Name": "ForbiddenBlock",
+      "Name": "Forbidden Block",
       "Id": "6088"
     },
     {
-      "Name": "ForbiddenBlockWall",
+      "Name": "Forbidden Wall",
       "Id": "6089"
     },
     {
-      "Name": "WaterBathtub",
+      "Name": "Aquarium Bathtub",
       "Id": "6090"
     },
     {
-      "Name": "WaterBed",
+      "Name": "Aquarium Bed",
       "Id": "6091"
     },
     {
-      "Name": "WaterBookcase",
+      "Name": "Aquarium Bookcase",
       "Id": "6092"
     },
     {
-      "Name": "WaterCandelabra",
+      "Name": "Aquarium Candelabra",
       "Id": "6093"
     },
     {
-      "Name": "WaterFurnitureCandle",
+      "Name": "Aquarium Candle",
       "Id": "6094"
     },
     {
-      "Name": "WaterChair",
+      "Name": "Aquarium Chair",
       "Id": "6095"
     },
     {
-      "Name": "WaterChandelier",
+      "Name": "Aquarium Chandelier",
       "Id": "6096"
     },
     {
-      "Name": "WaterClock",
+      "Name": "Aquarium Clock",
       "Id": "6097"
     },
     {
-      "Name": "WaterDoor",
+      "Name": "Aquarium Door",
       "Id": "6098"
     },
     {
-      "Name": "WaterDresser",
+      "Name": "Aquarium Dresser",
       "Id": "6099"
     },
     {
-      "Name": "WaterLamp",
+      "Name": "Aquarium Lamp",
       "Id": "6100"
     },
     {
-      "Name": "WaterLantern",
+      "Name": "Aquarium Lantern",
       "Id": "6101"
     },
     {
-      "Name": "WaterPiano",
+      "Name": "Aquarium Piano",
       "Id": "6102"
     },
     {
-      "Name": "WaterPlatform",
+      "Name": "Aquarium Platform",
       "Id": "6103"
     },
     {
-      "Name": "WaterSink",
+      "Name": "Aquarium Sink",
       "Id": "6104"
     },
     {
-      "Name": "WaterSofa",
+      "Name": "Aquarium Sofa",
       "Id": "6105"
     },
     {
-      "Name": "WaterTable",
+      "Name": "Aquarium Table",
       "Id": "6106"
     },
     {
-      "Name": "WaterToilet",
+      "Name": "Aquarium Toilet",
       "Id": "6107"
     },
     {
-      "Name": "WaterWorkbench",
+      "Name": "Aquarium Work Bench",
       "Id": "6108"
     },
     {
-      "Name": "WaterBlock",
+      "Name": "Aquarium Block",
       "Id": "6109"
     },
     {
-      "Name": "WaterBlockWall",
+      "Name": "Aquarium Wall",
       "Id": "6110"
     },
     {
-      "Name": "BoulderBathtub",
+      "Name": "Boulder Bathtub",
       "Id": "6111"
     },
     {
-      "Name": "BoulderBed",
+      "Name": "Boulder Bed",
       "Id": "6112"
     },
     {
-      "Name": "BoulderBookcase",
+      "Name": "Boulder Bookcase",
       "Id": "6113"
     },
     {
-      "Name": "BoulderCandelabra",
+      "Name": "Boulder Candelabra",
       "Id": "6114"
     },
     {
-      "Name": "BoulderCandle",
+      "Name": "Boulder Candle",
       "Id": "6115"
     },
     {
-      "Name": "BoulderChair",
+      "Name": "Boulder Chair",
       "Id": "6116"
     },
     {
-      "Name": "BoulderChandelier",
+      "Name": "Boulder Chandelier",
       "Id": "6117"
     },
     {
-      "Name": "BoulderChest",
+      "Name": "Boulder Chest",
       "Id": "6118"
     },
     {
-      "Name": "BoulderClock",
+      "Name": "Boulder Clock",
       "Id": "6119"
     },
     {
-      "Name": "BoulderDoor",
+      "Name": "Boulder Door",
       "Id": "6120"
     },
     {
-      "Name": "BoulderDresser",
+      "Name": "Boulder Dresser",
       "Id": "6121"
     },
     {
-      "Name": "BoulderLamp",
+      "Name": "Boulder Lamp",
       "Id": "6122"
     },
     {
-      "Name": "BoulderLantern",
+      "Name": "Boulder Lantern",
       "Id": "6123"
     },
     {
-      "Name": "BoulderPiano",
+      "Name": "Boulder Piano",
       "Id": "6124"
     },
     {
-      "Name": "BoulderPlatform",
+      "Name": "Boulder Platform",
       "Id": "6125"
     },
     {
-      "Name": "BoulderSink",
+      "Name": "Boulder Sink",
       "Id": "6126"
     },
     {
-      "Name": "BoulderSofa",
+      "Name": "Boulder Sofa",
       "Id": "6127"
     },
     {
-      "Name": "BoulderTable",
+      "Name": "Boulder Table",
       "Id": "6128"
     },
     {
-      "Name": "BoulderToilet",
+      "Name": "Boulder Toilet",
       "Id": "6129"
     },
     {
-      "Name": "BoulderWorkbench",
+      "Name": "Boulder Work Bench",
       "Id": "6130"
     },
     {
-      "Name": "Fake_BoulderChest",
+      "Name": "Trapped Boulder Chest",
       "Id": "6131"
     },
     {
-      "Name": "BoulderBlock",
+      "Name": "Boulder Block",
       "Id": "6132"
     },
     {
-      "Name": "BoulderBlockWall",
+      "Name": "Boulder Wall",
       "Id": "6133"
     },
     {
-      "Name": "DamagingSpikeBlock",
+      "Name": "Sharp Spike Block",
       "Id": "6134"
     },
     {
-      "Name": "DemonAltarIcon",
+      "Name": "Demon Altar",
       "Id": "6135"
     },
     {
-      "Name": "CrimsonAltarIcon",
+      "Name": "Crimson Altar",
       "Id": "6136"
     },
     {
-      "Name": "LunasHead",
+      "Name": "Luna's Runic Pixie Hood",
       "Id": "6137"
     },
     {
-      "Name": "LunasBody",
+      "Name": "Luna's Runic Pixie Shirt",
       "Id": "6138"
     },
     {
-      "Name": "LunasLegs",
+      "Name": "Luna's Runic Pixie Pants",
       "Id": "6139"
     },
     {
-      "Name": "LunasWings",
+      "Name": "Luna's Runic Pixie Wings",
       "Id": "6140"
     },
     {
-      "Name": "LunasCloak",
+      "Name": "Luna's Runic Pixie Cloak",
       "Id": "6141"
     },
     {
-      "Name": "PalworldChilletEgg",
+      "Name": "Huge Dragon Egg",
       "Id": "6142"
     },
     {
-      "Name": "FoxparksTagEffect",
+      "Name": "Foxparks Tag Effect",
       "Id": "6143"
     },
     {
-      "Name": "MusicBoxSkeletron",
+      "Name": "Music Box (Skeletron)",
       "Id": "6144"
     }
   ],
