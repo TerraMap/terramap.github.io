@@ -135,7 +135,9 @@ export default function App() {
 
     const total = w.tiles.length;
     const startIdx = selectionPos.x * w.height + selectionPos.y;
-    let i = (startIdx + direction + total) % total;
+    let i = startIdx + direction;
+    if (i < 0) i = total - 1;
+    else if (i >= total) i = 0;
 
     for (let count = 0; count < total; count++) {
       const tile = w.tiles[i];
@@ -145,9 +147,11 @@ export default function App() {
         setSelectionPos({ x, y });
         canvasRef.current?.drawSelection(x, y);
         canvasRef.current?.panToTile(x, y);
-        break;
+        return;
       }
-      i = (i + direction + total) % total;
+      i += direction;
+      if (i < 0) i = total - 1;
+      else if (i >= total) i = 0;
     }
   }, [worldRef, selectionPos, getSelectedInfos]);
 

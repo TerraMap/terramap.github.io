@@ -176,17 +176,25 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         const ctx = overlayCtxRef.current!;
         const overlay = overlayRef.current!;
         ctx.clearRect(0, 0, overlay.width, overlay.height);
-        ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
-        ctx.fillRect(0, 0, overlay.width, overlay.height);
 
         if (matchFn && world) {
+          const w = overlay.width;
+          const h = overlay.height;
+          const imageData = ctx.createImageData(w, h);
+          const data = imageData.data;
+
           let x = 0;
           let y = 0;
           for (let i = 0; i < world.tiles.length; i++) {
             const tile = world.tiles[i];
+            const pxIdx = (y * w + x) * 4;
             if (matchFn(tile)) {
-              ctx.fillStyle = "rgb(255, 255, 255)";
-              ctx.fillRect(x, y, 1, 1);
+              data[pxIdx] = 255;
+              data[pxIdx + 1] = 255;
+              data[pxIdx + 2] = 255;
+              data[pxIdx + 3] = 255;
+            } else {
+              data[pxIdx + 3] = 192;
             }
             y++;
             if (y >= world.height) {
@@ -194,6 +202,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
               x++;
             }
           }
+          ctx.putImageData(imageData, 0, 0);
         }
       },
 
