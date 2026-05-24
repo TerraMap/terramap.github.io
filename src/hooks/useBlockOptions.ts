@@ -10,6 +10,7 @@ export interface BlockOption {
   id: string;
   dataU?: number;
   dataV?: number;
+  frameIndex?: number;
 }
 
 export function useBlockOptions() {
@@ -47,6 +48,7 @@ export function useBlockOptions() {
             id: String(i),
             dataU: frame.U,
             dataV: frame.V,
+            frameIndex: f,
           });
         }
       }

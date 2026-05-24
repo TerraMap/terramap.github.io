@@ -30,7 +30,7 @@ export function BlockSelectorModal({
   const filteredOptions = useMemo(() => {
     const filtered = filter === 'All' ? options : options.filter(o => o.type === filter);
     return filtered.filter(o => o.label !== '[empty]').map(o => ({
-      value: `${o.value}|${o.dataU ?? ''}|${o.dataV ?? ''}`,
+      value: `${o.value}|${o.dataU ?? ''}|${o.dataV ?? ''}|${o.frameIndex ?? ''}`,
       label: o.label,
       type: o.type,
       id: o.id,
@@ -74,7 +74,7 @@ export function BlockSelectorModal({
             if (option?.id.toLowerCase().includes(inputLower)) return true;
             if (`${option?.type} ${option?.id}`.toLowerCase().includes(inputLower)) return true;
             return false;
-          }
+          },
         }}
         optionRender={(option) => (
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

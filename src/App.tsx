@@ -162,13 +162,13 @@ export default function App() {
     for (const entry of set.Entries) {
       const e = entry as any;
       if (e.U !== undefined || e.V !== undefined) {
-        values.push(`${e.Id}|${e.U ?? ''}|${e.V ?? ''}`);
+        values.push(`${e.Id}|${e.U ?? ''}|${e.V ?? ''}|`);
       } else if (e.isTile) {
-        values.push(`${e.Id}||`);
+        values.push(`${e.Id}|||`);
       } else if (e.isItem) {
-        values.push(`item${e.Id}||`);
+        values.push(`item${e.Id}|||`);
       } else if (e.isWall) {
-        values.push(`wall${e.Id}||`);
+        values.push(`wall${e.Id}|||`);
       }
     }
     setSelectedBlocks(values);
