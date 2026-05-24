@@ -1,12 +1,13 @@
 import { useMemo } from 'react';
 import { settings } from '../settings';
 
-export type BlockType = 'tile' | 'item' | 'wall';
+export type BlockType = 'Tile' | 'Item' | 'Wall';
 
 export interface BlockOption {
   value: string;
   label: string;
   type: BlockType;
+  id: string;
   dataU?: number;
   dataV?: number;
 }
@@ -21,8 +22,9 @@ export function useBlockOptions() {
 
       options.push({
         value: String(i),
-        label: `${tile.Name} (Tile ${i})`,
-        type: 'tile',
+        label: tile.Name,
+        type: 'Tile',
+        id: String(i),
       });
 
       if (tile.Frames) {
@@ -37,12 +39,12 @@ export function useBlockOptions() {
           if (frame.Variety) {
             text += ` - ${frame.Variety}`;
           }
-          text += ` (Tile ${i})`;
 
           options.push({
             value: `${i}`,
             label: text,
-            type: 'tile',
+            type: 'Tile',
+            id: String(i),
             dataU: frame.U,
             dataV: frame.V,
           });
@@ -55,8 +57,9 @@ export function useBlockOptions() {
       item.isItem = true;
       options.push({
         value: `item${item.Id}`,
-        label: `${item.Name} (Item ${item.Id})`,
-        type: 'item',
+        label: item.Name,
+        type: 'Item',
+        id: item.Id,
       });
     }
 
@@ -65,8 +68,9 @@ export function useBlockOptions() {
       wall.isWall = true;
       options.push({
         value: `wall${wall.Id}`,
-        label: `${wall.Name} (Wall)`,
-        type: 'wall',
+        label: wall.Name,
+        type: 'Wall',
+        id: wall.Id,
       });
     }
 
