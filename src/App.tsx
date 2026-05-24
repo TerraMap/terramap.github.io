@@ -9,7 +9,7 @@ import { useBlockOptions } from './hooks/useBlockOptions';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import { useWorldLoader } from './hooks/useWorldLoader';
 import { getItemText, getTileAt, getTileText } from './lib/tileInfo';
-import { getTileInfoFrom, isTileMatch } from './lib/tileSearch';
+import { getTileInfoFrom, isTileMatch, isTileOrigin } from './lib/tileSearch';
 import { sets } from './sets';
 import { settings } from './settings';
 
@@ -133,23 +133,21 @@ export default function App() {
     const infos = getSelectedInfos();
     if (infos.length === 0) return;
 
-    let x = selectionPos.x;
-    let y = selectionPos.y + direction;
-    const start = x * w.height + y;
+    const total = w.tiles.length;
+    const startIdx = selectionPos.x * w.height + selectionPos.y;
+    let i = (startIdx + direction + total) % total;
 
-    for (let i = start; i >= 0 && i < w.tiles.length; i += direction) {
+    for (let count = 0; count < total; count++) {
       const tile = w.tiles[i];
-      if (isTileMatch(tile, infos)) {
+      if (isTileMatch(tile, infos) && isTileOrigin(tile)) {
+        const x = Math.floor(i / w.height);
+        const y = i % w.height;
         setSelectionPos({ x, y });
         canvasRef.current?.drawSelection(x, y);
         canvasRef.current?.panToTile(x, y);
         break;
       }
-      y += direction;
-      if (y < 0 || y >= w.height) {
-        y = direction > 0 ? 0 : w.height - 1;
-        x += direction;
-      }
+      i = (i + direction + total) % total;
     }
   }, [worldRef, selectionPos, getSelectedInfos]);
 

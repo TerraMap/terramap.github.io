@@ -49,6 +49,15 @@ export function isTileMatch(tile: any, selectedInfos: any[]): boolean {
   return false;
 }
 
+export function isTileOrigin(tile: any): boolean {
+  if (!tile || !tile.info) return true;
+  const info = tile.info;
+  if (info.parent) {
+    return tile.TextureU === (info.U ?? 0) && tile.TextureV === (info.V ?? 0);
+  }
+  return tile.TextureU <= 0 && tile.TextureV <= 0;
+}
+
 export function getTileInfoFrom(id: any, u: any, v: any): any {
   const tileInfo = settings.Tiles[id];
 
