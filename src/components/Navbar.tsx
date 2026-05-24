@@ -1,6 +1,6 @@
 import {
   CameraOutlined,
-  ClearOutlined,
+  CloseOutlined,
   ExpandOutlined,
   HighlightOutlined,
   LeftOutlined,
@@ -8,7 +8,7 @@ import {
   ReloadOutlined,
   RightOutlined,
   SearchOutlined,
-  UploadOutlined,
+  UploadOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Button, Drawer, Dropdown, Flex, Input, Space, Tooltip } from 'antd';
@@ -120,7 +120,7 @@ export function Navbar({
             <Tooltip title="Find Previous Block"><Button icon={<LeftOutlined />} onClick={onPrevBlock} disabled={!worldLoaded} /></Tooltip>
             <Tooltip title="Find Next Block"><Button icon={<RightOutlined />} onClick={onNextBlock} disabled={!worldLoaded} /></Tooltip>
             <Tooltip title="Highlight All Matching Blocks"><Button icon={<HighlightOutlined />} onClick={onHighlightAll} disabled={!worldLoaded} /></Tooltip>
-            <Tooltip title="Clear Highlighted Blocks"><Button icon={<ClearOutlined />} onClick={onClearHighlight} disabled={!worldLoaded} /></Tooltip>
+            <Tooltip title="Clear Highlighted Blocks"><Button icon={<CloseOutlined />} onClick={onClearHighlight} disabled={!worldLoaded} /></Tooltip>
           </Space.Compact>
 
           <Space.Compact>
