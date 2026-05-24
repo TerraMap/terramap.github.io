@@ -10,8 +10,9 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "types": ["jquery"]
+    "jsx": "react-jsx",
+    "types": []
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["src/WorldLoader.ts", "src/__tests__"]
 }

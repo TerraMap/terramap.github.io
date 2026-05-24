@@ -1,182 +1,29 @@
 <!DOCTYPE html>
-
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta name="description" content="TerraMap is an interactive Terraria v1.4.5 world map viewer that loads quickly and lets you pan, zoom, find blocks, ores, items in chests, dungeons, NPCs, etc.">
+  <meta name="description"
+    content="TerraMap is an interactive Terraria v1.4.5 world map viewer that loads quickly and lets you pan, zoom, find blocks, ores, items in chests, dungeons, NPCs, etc.">
   <meta name="author" content="Jason Coon">
   <link rel="icon" href="favicon.ico">
 
   <title>TerraMap</title>
-
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-
-  <!-- Custom styles for this template -->
-  <link rel="stylesheet" href="resources/css/styles.css">
-
-  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-  <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
 </head>
 
-<body>
-
-  <nav id="main-navbar" class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-top" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#"><img alt="TerraMap" src="resources/images/TerraMap16.png" /></a>
-        <a class="navbar-brand" href="#">TerraMap</a>
-      </div>
-
-      <div class="collapse navbar-collapse" id="navbar-top">
-        <ul class="nav navbar-nav">
-          <li><a href="windows.html">Windows</a></li>
-        </ul>
-        <form class="navbar-form navbar-left">
-          <div class="form-group">
-            <input type="file" id="file" name="file" class="form-control" />
-          </div>
-        </form>
-        <button title="Choose Blocks" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#chooseBlocksModal">Blocks...</button>
-        <button title="Find Previous" onclick="previousBlock()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-chevron-left"></span></button>
-        <button title="Find Next" onclick="nextBlock()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-chevron-right"></span></button>
-        <button title="Highlight All" onclick="highlightAll()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-screenshot"></span></button>
-        <button title="Clear Highlight" onclick="clearHighlight()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-remove"></span></button>
-        <button title="Zoom To Fit" onclick="resetPanZoom()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-fullscreen"></span></button>
-        <button title="Save Map Image" onclick="saveMapImage()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-save"></span></button>
-        <button title="Reload World" onclick="reloadWorld()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-refresh"></span></button>
-        <ul class="nav navbar-nav">
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sets <span class="caret"></span></a>
-            <ul id="setList" class="dropdown-menu">
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">NPCs <span class="caret"></span></a>
-            <ul id="npcList" class="dropdown-menu" role="menu">
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">World Properties <span class="caret"></span></a>
-            <ul id="worldPropertyList" class="dropdown-menu scrollable-menu" role="menu">
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="tile">Tile Info</span> <span class="caret"></span></a>
-            <ul id="tileInfoList" class="dropdown-menu scrollable-menu" role="menu">
-            </ul>
-          </li>
-        </ul>
-        <ul class="nav navbar-nav">
-          <li><a href="about.html" target="_blank">Help</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Modal -->
-  <div class="modal fade" id="chooseBlocksModal" tabindex="-1" role="dialog" aria-labelledby="chooseBlocksLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="chooseBlocksLabel">Choose Blocks</h4>
-          <input id="blocksFilter" type="text" />
-        </div>
-        <div class="modal-body">
-          <select id="blocks" class="form-control" multiple="multiple" size="10"></select>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="container-fluid">
-    <div id="help">
-      To get started, open your Terraria world file.
-      <ol>
-        <li>Click <strong>Choose File</strong> above.</li>
-        <li>Browse to the Terraria data directory, usually at:</li>
-        <ul>
-          <li>
-            <strong>Windows</strong>: %USERPROFILE%\Documents\My
-            Games\Terraria\Worlds
-          </li>
-          <li>
-            <strong>Windows (Steam Cloud)</strong>: C:\Program Files (x86)\Steam\userdata\{YOUR_USER_ID}\105600\remote\worlds
-          </li>
-          <li>
-            <strong>MacOS</strong>: ~/Library/Application
-            Support/Terraria/Worlds
-          </li>
-          <li>
-            <strong>MacOS (Steam Cloud)</strong>: ~/Library/Application Support/Steam/userdata/{YOUR_USER_ID}/105600/remote/worlds
-          </li>
-          <li>
-            <strong>Linux</strong>: ~/.local/share/Terraria/Worlds
-          </li>
-          <li>
-            <strong>Linux (Steam Cloud)</strong>: ~/.local/share/Steam/userdata/{YOUR_USER_ID}/105600/remote/worlds
-          </li>
-        </ul>
-      </ol>
-    </div>
-    <div id="canvasContainer">
-      <div id="panzoomContainer">
-        <canvas id="canvas" style="position: absolute; left: 0; top: 0;"></canvas>
-        <canvas id="overlayCanvas" style="position: absolute; left: 0; top: 0;"></canvas>
-        <canvas id="selectionCanvas" style="position: absolute; left: 0; top: 0;">Your browser does not support the HTML5 canvas tag.</canvas>
-      </div>
-    </div>
-  </div>
-
-  <nav class="navbar navbar-inverse navbar-fixed-bottom">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-bottom" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-      </div>
-      <div class="collapse navbar-collapse" id="navbar-bottom">
-        <p id="status" class="navbar-text navbar-right"></p>
-      </div>
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4263195580051724"
-        crossorigin="anonymous"></script>
-      <!-- TerraMap Responsive -->
-      <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-4263195580051724"
-        data-ad-slot="9553900295"></ins>
-      <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
-    </div>
-  </nav>
-
-  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
-  <script type="module" src="/src/main.ts"></script>
+<body style="margin: 0; overflow: hidden; background: rgb(20, 20, 20);">
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6BJH8276R"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-P6BJH8276R');
   </script>
 </body>
+
 </html>

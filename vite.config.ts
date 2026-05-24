@@ -1,22 +1,11 @@
 import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   base: process.env.BASE_PATH || '/',
+  plugins: [react()],
   build: {
     outDir: 'dist',
-    rollupOptions: {
-      external: ['jquery'],
-      output: {
-        globals: {
-          jquery: 'jQuery',
-        },
-      },
-    },
-  },
-  resolve: {
-    alias: {
-      jquery: '/src/jquery-shim.ts',
-    },
   },
   test: {
     globals: true,
