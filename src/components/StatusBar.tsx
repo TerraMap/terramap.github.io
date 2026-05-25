@@ -22,7 +22,9 @@ export function StatusBar({ status, isLoading }: StatusBarProps) {
   }, []);
 
   return (
-    <div
+    <Space
+      size="small"
+      orientation="vertical"
       style={{
         position: 'fixed',
         bottom: 0,
@@ -30,22 +32,21 @@ export function StatusBar({ status, isLoading }: StatusBarProps) {
         right: 0,
         padding: '4px 16px',
         background: '#001529',
-        color: '#fff',
-        fontSize: 13,
+        // color: '#fff',
+        // fontSize: 13,
         zIndex: 1000,
-        display: 'flex',
-        alignItems: 'center',
-        gap: 16,
+        // display: 'flex',
+        // gap: 16,
       }}
     >
       <span style={{ flexShrink: 0 }}><Space>{isLoading && <Spin />}{status}</Space></span>
       <ins
         ref={adRef}
         className="adsbygoogle"
-        style={{ display: 'inline-block', width: 728, height: 90 }}
+        style={{ display: 'inline-block', width: 728, height: 90, border: '1px solid black' }}
         data-ad-client="ca-pub-4263195580051724"
         data-ad-slot="9553900295"
       />
-    </div>
+    </Space>
   );
 }
