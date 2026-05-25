@@ -229,8 +229,8 @@ export default function App() {
         />
 
         <div style={{ paddingTop: 52, paddingBottom: 32, height: '100vh', boxSizing: 'border-box' }}>
-          {!world && <HelpPanel />}
-          <div style={{ display: world ? 'block' : 'none', height: '100%' }}>
+          {!world && !isLoading && <HelpPanel />}
+          <div style={{ display: world || isLoading ? 'block' : 'none', height: '100%' }}>
             <CanvasContainer
               ref={canvasRef}
               onTileHover={handleTileHover}
