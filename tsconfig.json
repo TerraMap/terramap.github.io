@@ -11,8 +11,8 @@
     "forceConsistentCasingInFileNames": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "jsx": "react-jsx",
-    "types": []
+    "types": ["node", "vitest/globals"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["src/WorldLoader.ts", "src/__tests__"]
+  "exclude": ["src/WorldLoader.ts"]
 }

@@ -1,17 +1,18 @@
-import { describe, it, expect, vi, beforeAll } from 'vitest';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { DataStream } from '../DataStream';
 
 const postMessageMock = vi.fn();
-(globalThis as any).self = {
+(globalThis as unknown as Record<string, unknown>).self = {
   addEventListener: vi.fn(),
   postMessage: postMessageMock,
 };
 
 const { readFileFormatHeader, readHeader, readTiles, readChests, readSigns, readNpcs, readTileEntities } = await import('../WorldLoader');
+type WorldRecord = import('../WorldLoader').WorldRecord;
 
-function loadWorld(filename: string): any {
+function loadWorld(filename: string): DataStream {
   const filePath = resolve(__dirname, '../../Worlds', filename);
   const fileBuffer = readFileSync(filePath);
   const arrayBuffer = fileBuffer.buffer.slice(
@@ -23,9 +24,9 @@ function loadWorld(filename: string): any {
   return ds;
 }
 
-function parseWorld(filename: string): { world: any; positions: number[] } {
+function parseWorld(filename: string): { world: WorldRecord; positions: number[] } {
   const reader = loadWorld(filename);
-  const world: any = {};
+  const world = {} as WorldRecord;
   postMessageMock.mockClear();
 
   const positions = readFileFormatHeader(reader, world);
@@ -47,7 +48,7 @@ function parseWorld(filename: string): { world: any; positions: number[] } {
     reader.seek(positions[3]);
   }
 
-  readSigns(reader, world);
+  readSigns(reader);
 
   if (positions[4] !== undefined && reader.position !== positions[4]) {
     reader.seek(positions[4]);
@@ -59,20 +60,20 @@ function parseWorld(filename: string): { world: any; positions: number[] } {
     reader.seek(positions[5]);
   }
 
-  readTileEntities(reader, world);
+  readTileEntities(reader);
 
   return { world, positions };
 }
 
 describe('WorldLoader integration', () => {
   describe('SmCrptClsc1_4_5_0.wld (vanilla v1.4.5.0 small classic)', () => {
-    let world: any;
-    let positions: number[];
+    let world: WorldRecord;
+    // let positions: number[];
 
     beforeAll(() => {
       const result = parseWorld('SmCrptClsc1_4_5_0.wld');
       world = result.world;
-      positions = result.positions;
+      // positions = result.positions;
     });
 
     it('should parse the version', () => {
@@ -129,7 +130,7 @@ describe('WorldLoader integration', () => {
   });
 
   describe('jagged_rocks.wld', () => {
-    let world: any;
+    let world: WorldRecord;
 
     beforeAll(() => {
       const result = parseWorld('jagged_rocks.wld');
@@ -150,7 +151,7 @@ describe('WorldLoader integration', () => {
   });
 
   describe('The_Sus_Bog.wld (tModLoader world)', () => {
-    let world: any;
+    let world: WorldRecord;
 
     beforeAll(() => {
       const result = parseWorld('The_Sus_Bog.wld');

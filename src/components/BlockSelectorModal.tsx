@@ -1,5 +1,6 @@
 import { Modal, Segmented, Select, Tag } from 'antd';
-import { useMemo, useState } from 'react';
+import { useRef, useMemo, useState } from 'react';
+import type { RefSelectProps } from 'antd/es/select';
 import type { BlockOption, BlockType } from '../hooks/useBlockOptions';
 
 const typeColors: Record<BlockType, string> = {
@@ -26,6 +27,7 @@ export function BlockSelectorModal({
   onSelectionChange,
 }: BlockSelectorModalProps) {
   const [filter, setFilter] = useState<FilterType>('All');
+  const selectRef = useRef<RefSelectProps>(null);
 
   const filteredOptions = useMemo(() => {
     const filtered = filter === 'All' ? options : options.filter(o => o.type === filter);
@@ -45,6 +47,7 @@ export function BlockSelectorModal({
       onOk={onClose}
       width={600}
       destroyOnHidden={false}
+      afterOpenChange={(open) => { if (open) selectRef.current?.focus(); }}
     >
       <Segmented
         block
@@ -59,6 +62,7 @@ export function BlockSelectorModal({
         style={{ marginBottom: 12 }}
       />
       <Select
+        ref={selectRef}
         allowClear
         mode="multiple"
         onChange={onSelectionChange}

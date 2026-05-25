@@ -1,4 +1,6 @@
-export var sets = [
+import type { BlockSet } from './types/settings';
+
+export const sets: BlockSet[] = [
   {
     "Name": "Chests",
     "Entries": [

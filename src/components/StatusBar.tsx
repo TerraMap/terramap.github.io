@@ -14,8 +14,8 @@ export function StatusBar({ status, isLoading }: StatusBarProps) {
     if (adRef.current && !adPushed.current) {
       adPushed.current = true;
       try {
-        ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
-      } catch (e) {
+        ((window as unknown as Record<string, unknown[]>).adsbygoogle = (window as unknown as Record<string, unknown[]>).adsbygoogle || []).push({});
+      } catch {
         // ad blocker or script not loaded
       }
     }

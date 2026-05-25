@@ -10,11 +10,11 @@ export function rgb(r: number, g: number, b: number): Color {
 
 // Decompiled from the Terraria source code
 
-export var tileColors = new Array(753);
-export var liquidColors = new Array(4);
-export var wallColors = new Array(367);
+export const tileColors = new Array(753);
+export const liquidColors = new Array(4);
+export const wallColors = new Array(367);
 
-for (var i = 0; i < tileColors.length; i++) {
+for (let i = 0; i < tileColors.length; i++) {
   tileColors[i] = new Array(13);
 }
 
@@ -40,12 +40,12 @@ tileColors[529][1] = rgb(139, 154, 64);
 tileColors[529][2] = rgb(34, 129, 168);
 tileColors[529][3] = rgb(180, 82, 82);
 tileColors[529][4] = rgb(113, 108, 205);
-var color = rgb(151, 107, 75);
+let color = rgb(151, 107, 75);
 tileColors[0][0] = color;
 tileColors[668][0] = color;
 tileColors[5][0] = color;
 tileColors[5][1] = rgb(182, 175, 130);
-var color2 = rgb(127, 127, 127);
+const color2 = rgb(127, 127, 127);
 tileColors[583][0] = color2;
 tileColors[584][0] = color2;
 tileColors[585][0] = color2;
@@ -264,16 +264,13 @@ tileColors[535][0] = rgb(114, 254, 2);
 tileColors[537][0] = rgb(0, 197, 208);
 tileColors[540][0] = rgb(208, 0, 126);
 tileColors[626][0] = rgb(220, 12, 237);
-for (var j = 0; j < tileColors[628].length; j++)
-{
+for (let j = 0; j < tileColors[628].length; j++) {
   tileColors[628][j] = tileColors[627][j];
 }
-for (var k = 0; k < tileColors[692].length; k++)
-{
+for (let k = 0; k < tileColors[692].length; k++) {
   tileColors[692][k] = tileColors[627][k];
 }
-for (var l = 0; l < tileColors[160].length; l++)
-{
+for (let l = 0; l < tileColors[160].length; l++) {
   tileColors[160][l] = tileColors[627][l];
 }
 tileColors[184][0] = rgb(29, 106, 88);
@@ -564,8 +561,7 @@ tileColors[28][5] = rgb(148, 159, 67);
 tileColors[28][6] = rgb(138, 172, 67);
 tileColors[28][7] = rgb(226, 122, 47);
 tileColors[28][8] = rgb(198, 87, 93);
-for (var m = 0; m < tileColors[653].length; m++)
-{
+for (let m = 0; m < tileColors[653].length; m++) {
   tileColors[653][m] = tileColors[28][m];
 }
 tileColors[29][0] = rgb(175, 105, 128);
@@ -700,8 +696,7 @@ tileColors[165][0] = rgb(115, 173, 229);
 tileColors[165][1] = rgb(100, 100, 100);
 tileColors[165][2] = rgb(152, 152, 152);
 tileColors[165][3] = rgb(227, 125, 22);
-for (var n = 0; n < tileColors[693].length; n++)
-{
+for (let n = 0; n < tileColors[693].length; n++) {
   tileColors[693][n] = tileColors[165][n];
   tileColors[694][n] = tileColors[165][n];
 }
@@ -958,8 +953,7 @@ tileColors[467][9] = rgb(190, 200, 200);
 tileColors[467][10] = rgb(230, 170, 100);
 tileColors[467][11] = rgb(165, 168, 26);
 tileColors[467][12] = tileColors[21][0];
-for (var num5 = 0; num5 < 13; num5++)
-{
+for (let num5 = 0; num5 < 13; num5++) {
   tileColors[468][num5] = tileColors[467][num5];
 }
 tileColors[472][0] = rgb(190, 160, 140);
@@ -1021,7 +1015,7 @@ tileColors[597][8] = rgb(241, 233, 158);
 tileColors[597][9] = rgb(238, 85, 70);
 tileColors[597][10] = rgb(247, 228, 254);
 tileColors[617][0] = rgb(233, 207, 94);
-var color3 = rgb(250, 100, 50);
+const color3 = rgb(250, 100, 50);
 tileColors[548][1] = color3;
 tileColors[613][0] = color3;
 tileColors[614][0] = color3;
@@ -1058,7 +1052,7 @@ liquidColors[1] = rgb(253, 32, 3);
 liquidColors[2] = rgb(254, 194, 20);
 liquidColors[3] = rgb(161, 127, 255);
 
-for (var j = 0; j < wallColors.length; j++) {
+for (let j = 0; j < wallColors.length; j++) {
   wallColors[j] = new Array(2);
 }
 
@@ -1421,7 +1415,7 @@ wallColors[321][0] = rgb(91, 108, 130);
 wallColors[322][0] = rgb(91, 108, 130);
 wallColors[347][0] = rgb(100, 65, 130);
 wallColors[348][0] = rgb(120, 75, 75);
-var num7 = 0.5;
+const num7 = 0.5;
 wallColors[351][0] = tileColors[734][0] * num7;
 wallColors[352][0] = tileColors[735][0] * num7;
 wallColors[353][0] = tileColors[170][0] * num7;
@@ -1439,130 +1433,100 @@ wallColors[364][0] = tileColors[747][0] * num7;
 wallColors[365][0] = tileColors[748][0] * num7;
 wallColors[366][0] = tileColors[749][0] * num7;
 
-var array5 = new Array(256);
-var color5 = rgb(50, 40, 255);
-var color6 = rgb(145, 185, 255);
-for (var num8 = 0; num8 < array5.length; num8++)
-{
-  var num9 = num8 / array5.length;
-  var num10 = 1.0 - num9;
+const array5 = new Array(256);
+const color5 = rgb(50, 40, 255);
+const color6 = rgb(145, 185, 255);
+for (let num8 = 0; num8 < array5.length; num8++) {
+  const num9 = num8 / array5.length;
+  const num10 = 1.0 - num9;
   array5[num8] = rgb(Math.floor(color5.r * num10 + color6.r * num9), Math.floor(color5.g * num10 + color6.g * num9), Math.floor(color5.b * num10 + color6.b * num9));
 }
-var array6 = new Array(256);
-var color7 = rgb(88, 61, 46);
-var color8 = rgb(37, 78, 123);
-for (var num11 = 0; num11 < array6.length; num11++)
-{
-  var num12 = num11 / 255.0;
-  var num13 = 1.0 - num12;
+const array6 = new Array(256);
+const color7 = rgb(88, 61, 46);
+let color8 = rgb(37, 78, 123);
+for (let num11 = 0; num11 < array6.length; num11++) {
+  const num12 = num11 / 255.0;
+  const num13 = 1.0 - num12;
   array6[num11] = rgb(Math.floor(color7.r * num13 + color8.r * num12), Math.floor(color7.g * num13 + color8.g * num12), Math.floor(color7.b * num13 + color8.b * num12));
 }
-var array7 = new Array(256);
-var color9 = rgb(74, 67, 60);
+const array7 = new Array(256);
+const color9 = rgb(74, 67, 60);
 color8 = rgb(53, 70, 97);
-for (var num14 = 0; num14 < array7.length; num14++)
-{
-  var num15 = num14 / 255.0;
-  var num16 = 1.0 - num15;
+for (let num14 = 0; num14 < array7.length; num14++) {
+  const num15 = num14 / 255.0;
+  const num16 = 1.0 - num15;
   array7[num14] = rgb(Math.floor(color9.r * num16 + color8.r * num15), Math.floor(color9.g * num16 + color8.g * num15), Math.floor(color9.b * num16 + color8.b * num15));
 }
-var color10 = rgb(50, 44, 38);
-var num17 = 0;
-var tileOptionCounts = new Array(tileColors.length);
-for (var num18 = 0; num18 < tileColors.length; num18++)
-{
-  var array8 = tileColors[num18];
-  var num19 = 0;
-  while (num19 < 13 && !(array8[num19] == rgb(0, 0, 0)))
-  {
+const color10 = rgb(50, 44, 38);
+let num17 = 0;
+const tileOptionCounts = new Array(tileColors.length);
+for (let num18 = 0; num18 < tileColors.length; num18++) {
+  const array8 = tileColors[num18];
+  let num19 = 0;
+  while (num19 < 13 && !(array8[num19] == rgb(0, 0, 0))) {
     num19++;
   }
   tileOptionCounts[num18] = num19;
   num17 += num19;
 }
-var wallOptionCounts = new Array(wallColors.length);
-for (var num20 = 0; num20 < wallColors.length; num20++)
-{
-  var array9 = wallColors[num20];
-  var num21 = 0;
-  while (num21 < 2 && !(array9[num21] == rgb(0, 0, 0)))
-  {
+const wallOptionCounts = new Array(wallColors.length);
+for (let num20 = 0; num20 < wallColors.length; num20++) {
+  const array9 = wallColors[num20];
+  let num21 = 0;
+  while (num21 < 2 && !(array9[num21] == rgb(0, 0, 0))) {
     num21++;
   }
   wallOptionCounts[num20] = num21;
   num17 += num21;
 }
 num17 += 774;
-var colorLookup = new Array(num17);
+const colorLookup = new Array(num17);
 colorLookup[0] = rgb(0, 0, 0);
-var num22 = 1;
-var tilePosition = num22;
-var tileLookup = new Array(tileColors.length);
-for (var num23 = 0; num23 < tileColors.length; num23++)
-{
-  if (tileOptionCounts[num23] > 0)
-  {
-    var arg_81FD_0 = tileColors[num23];
+let num22 = 1;
+const tileLookup = new Array(tileColors.length);
+for (let num23 = 0; num23 < tileColors.length; num23++) {
+  if (tileOptionCounts[num23] > 0) {
     tileLookup[num23] = num22;
-    for (var num24 = 0; num24 < tileOptionCounts[num23]; num24++)
-    {
+    for (let num24 = 0; num24 < tileOptionCounts[num23]; num24++) {
       colorLookup[num22] = tileColors[num23][num24];
       num22 += 1;
     }
   }
-  else
-  {
+  else {
     tileLookup[num23] = 0;
   }
 }
-var wallPosition = num22;
-var wallLookup = new Array(wallColors.length);
-var wallRangeStart = num22;
-for (var num25 = 0; num25 < wallColors.length; num25++)
-{
-  if (wallOptionCounts[num25] > 0)
-  {
-    var arg_8288_0 = wallColors[num25];
+const wallLookup = new Array(wallColors.length);
+for (let num25 = 0; num25 < wallColors.length; num25++) {
+  if (wallOptionCounts[num25] > 0) {
     wallLookup[num25] = num22;
-    for (var num26 = 0; num26 < wallOptionCounts[num25]; num26++)
-    {
+    for (let num26 = 0; num26 < wallOptionCounts[num25]; num26++) {
       colorLookup[num22] = wallColors[num25][num26];
       num22 += 1;
     }
   }
-  else
-  {
+  else {
     wallLookup[num25] = 0;
   }
 }
-var wallRangeEnd = num22;
-var liquidPosition = num22;
-for (var num27 = 0; num27 < 4; num27++)
-{
+for (let num27 = 0; num27 < 4; num27++) {
   colorLookup[num22] = liquidColors[num27];
   num22 += 1;
 }
-var skyPosition = num22;
-for (var num28 = 0; num28 < 256; num28++)
-{
+for (let num28 = 0; num28 < 256; num28++) {
   colorLookup[num22] = array5[num28];
   num22 += 1;
 }
-var dirtPosition = num22;
-for (var num29 = 0; num29 < 256; num29++)
-{
+for (let num29 = 0; num29 < 256; num29++) {
   colorLookup[num22] = array6[num29];
   num22 += 1;
 }
-var rockPosition = num22;
-for (var num30 = 0; num30 < 256; num30++)
-{
+for (let num30 = 0; num30 < 256; num30++) {
   colorLookup[num22] = array7[num30];
   num22 += 1;
 }
-var hellPosition = num22;
 colorLookup[num22] = color10;
-var snowTypes = new Array(6);
+const snowTypes = new Array(6);
 snowTypes[0] = tileLookup[147];
 snowTypes[1] = tileLookup[161];
 snowTypes[2] = tileLookup[162];

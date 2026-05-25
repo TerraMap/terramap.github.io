@@ -8,19 +8,23 @@ import {
   ReloadOutlined,
   RightOutlined,
   SearchOutlined,
-  UploadOutlined
+  UploadOutlined,
+  ZoomInOutlined,
+  ZoomOutOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Button, Drawer, Dropdown, Flex, Input, Space, Tooltip } from 'antd';
-import { useRef, useState } from 'react';
+import { Button, Drawer, Dropdown, Flex, Input, Space, Tag, Tooltip } from 'antd';
+import { useState } from 'react';
+import type { BlockSet, WorldNpc } from '../types/settings';
 
 interface NavbarProps {
   isLoading: boolean;
   worldLoaded: boolean;
-  npcs: any[];
-  sets: any[];
-  worldProperties: Record<string, any>;
+  npcs: WorldNpc[];
+  sets: BlockSet[];
+  worldProperties: Record<string, unknown>;
   tileInfoItems: string[];
+  fileInputRef: React.RefObject<HTMLInputElement | null>;
   onFileSelect: (file: File) => void;
   onOpenBlocks: () => void;
   onPrevBlock: () => void;
@@ -28,6 +32,8 @@ interface NavbarProps {
   onHighlightAll: () => void;
   onClearHighlight: () => void;
   onResetZoom: () => void;
+  onZoomIn: () => void;
+  onZoomOut: () => void;
   onSaveImage: () => void;
   onReload: () => void;
   onNpcSelect: (x: number, y: number) => void;
@@ -35,6 +41,7 @@ interface NavbarProps {
 }
 
 export function Navbar({
+  fileInputRef,
   isLoading,
   worldLoaded,
   npcs,
@@ -48,12 +55,13 @@ export function Navbar({
   onHighlightAll,
   onClearHighlight,
   onResetZoom,
+  onZoomIn,
+  onZoomOut,
   onSaveImage,
   onReload,
   onNpcSelect,
   onSetSelect,
 }: NavbarProps) {
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const [propsOpen, setPropsOpen] = useState(false);
   const [propsFilter, setPropsFilter] = useState('');
 
@@ -68,7 +76,7 @@ export function Navbar({
     onClick: () => onNpcSelect(npc.x, npc.y),
   }));
 
-  const setMenuItems: MenuProps['items'] = sets.map((set: any, i: number) => ({
+  const setMenuItems: MenuProps['items'] = sets.map((set, i) => ({
     key: i,
     label: set.Name,
     onClick: () => onSetSelect(i),
@@ -96,7 +104,7 @@ export function Navbar({
     >
       <span style={{ color: '#fff', marginRight: 8, fontFamily: 'inherit' }}>TerraMap</span>
 
-      <Tooltip title="Open Terraria World File">
+      <Tooltip title={<>Open Terraria World File <Tag><kbd>Ctrl</kbd> + <kbd>O</kbd></Tag></>}>
         <input
           ref={fileInputRef}
           type="file"
@@ -112,7 +120,7 @@ export function Navbar({
       {worldLoaded && (
         <>
           <Space.Compact>
-            <Tooltip title="Choose Blocks (b)">
+            <Tooltip title={<>Choose Blocks <Tag><kbd>Ctrl</kbd> + <kbd>F</kbd></Tag></>}>
               <Button icon={<SearchOutlined />} onClick={onOpenBlocks} disabled={!worldLoaded}>
                 Blocks
               </Button>
@@ -124,6 +132,8 @@ export function Navbar({
           </Space.Compact>
 
           <Space.Compact>
+            <Tooltip title={<Space>Zoom In <Tag><kbd>E</kbd></Tag></Space>}><Button icon={<ZoomInOutlined />} onClick={onZoomIn} disabled={!worldLoaded} /></Tooltip>
+            <Tooltip title={<Space>Zoom Out <Tag><kbd>C</kbd></Tag></Space>}><Button icon={<ZoomOutOutlined />} onClick={onZoomOut} disabled={!worldLoaded} /></Tooltip>
             <Tooltip title="Reset Zoom"><Button icon={<ExpandOutlined />} onClick={onResetZoom} disabled={!worldLoaded} /></Tooltip>
             <Tooltip title="Save Image"><Button icon={<CameraOutlined />} onClick={onSaveImage} disabled={!worldLoaded} /></Tooltip>
             <Tooltip title="Reload World"><Button icon={<ReloadOutlined />} onClick={onReload} disabled={!worldLoaded} /></Tooltip>

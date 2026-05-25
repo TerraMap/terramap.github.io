@@ -1,16 +1,17 @@
-import { describe, it, expect, vi, beforeAll } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { DataStream } from '../DataStream';
 
 // Mock worker globals before importing WorldLoader
 const postMessageMock = vi.fn();
-(globalThis as any).self = {
+(globalThis as unknown as Record<string, unknown>).self = {
   addEventListener: vi.fn(),
   postMessage: postMessageMock,
 };
 
-const { readString, readFileFormatHeader, readHeader } = await import('../WorldLoader');
+const { readString, readFileFormatHeader } = await import('../WorldLoader');
+type WorldRecord = import('../WorldLoader').WorldRecord;
 
-function createReader(bytes: number[]): any {
+function createReader(bytes: number[]) {
   const buffer = new ArrayBuffer(bytes.length);
   const view = new Uint8Array(buffer);
   view.set(bytes);
@@ -58,7 +59,7 @@ describe('WorldLoader', () => {
   describe('readFileFormatHeader', () => {
     it('should read version, positions, and importance bits', () => {
       const bytes: number[] = [];
-      const world: any = {};
+      const world = {} as WorldRecord;
 
       // version (Int32 LE) = 279
       bytes.push(0x17, 0x01, 0x00, 0x00);

@@ -1,44 +1,49 @@
 import { settings } from '../settings';
+import type { TileFrame, TileInfo, ItemInfo, WallInfo, WorldTile } from '../types/settings';
 
-export function isTileMatch(tile: any, selectedInfos: any[]): boolean {
+export type SearchableInfo = TileFrame | TileInfo | ItemInfo | WallInfo;
+
+export function isTileMatch(tile: WorldTile, selectedInfos: SearchableInfo[]): boolean {
   if (!tile) return false;
   for (let j = 0; j < selectedInfos.length; j++) {
     const info = selectedInfos[j];
 
-    if (tile.info && info.isTile && (tile.info == info || (!info.parent && tile.Type == info.Id)))
+    if (tile.info && 'isTile' in info && info.isTile && (tile.info == info || (!('parent' in info) && 'Id' in info && tile.Type == Number(info.Id))))
       return true;
 
-    if (info.isWall && tile.WallType == info.Id)
+    if ('isWall' in info && info.isWall && tile.WallType == Number(info.Id))
       return true;
 
     const chest = tile.chest;
-    if (chest && info.isItem) {
+    if (chest && 'isItem' in info && info.isItem) {
       for (let i = 0; i < chest.items.length; i++) {
         const item = chest.items[i];
-        if (info.Id == item.id) {
+        if (Number(info.Id) == item.id) {
           return true;
         }
       }
     }
 
     const tileEntity = tile.tileEntity;
-    if (tileEntity && info.isItem) {
+    if (tileEntity && 'isItem' in info && info.isItem) {
       switch (tileEntity.type) {
         case 1: // item frame
         case 4: // weapon rack
         case 6: // plate
-          if (info.Id == tileEntity.item.id) {
+          if (Number(info.Id) == tileEntity.item?.id) {
             return true;
           }
           break;
         case 3: // mannequin
         case 5: // hat rack
-          for (let i = 0; i < tileEntity.items.length; i++) {
-            if (info.Id == tileEntity.items[i].id) {
-              return true;
-            }
-            if (info.Id == tileEntity.dyes[i].id) {
-              return true;
+          if (tileEntity.items && tileEntity.dyes) {
+            for (let i = 0; i < tileEntity.items.length; i++) {
+              if (Number(info.Id) == tileEntity.items[i].id) {
+                return true;
+              }
+              if (Number(info.Id) == tileEntity.dyes[i].id) {
+                return true;
+              }
             }
           }
           break;
@@ -49,17 +54,17 @@ export function isTileMatch(tile: any, selectedInfos: any[]): boolean {
   return false;
 }
 
-export function isTileOrigin(tile: any): boolean {
+export function isTileOrigin(tile: WorldTile | null): boolean {
   if (!tile || !tile.info) return true;
   const info = tile.info;
-  if (info.parent) {
+  if ('parent' in info && info.parent) {
     return tile.TextureU === (info.U ?? 0) && tile.TextureV === (info.V ?? 0);
   }
-  return tile.TextureU <= 0 && tile.TextureV <= 0;
+  return (tile.TextureU ?? 0) <= 0 && (tile.TextureV ?? 0) <= 0;
 }
 
-export function getTileInfoFrom(id: any, u: any, v: any): any {
-  const tileInfo = settings.Tiles[id];
+export function getTileInfoFrom(id: string, u: string | undefined, v: string | undefined): TileFrame | TileInfo | undefined {
+  const tileInfo = settings.Tiles[Number(id)];
 
   if (tileInfo && tileInfo.Frames) {
     for (let frameIndex = 0; frameIndex < tileInfo.Frames.length; frameIndex++) {

@@ -2,12 +2,13 @@ import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 
 import { usePanZoom } from '../hooks/usePanZoom';
 import { getTileColor } from '../lib/mapRenderer';
 import { getTileInfo } from '../lib/tileInfo';
+import type { WorldData, WorldTile } from '../types/settings';
 
 export interface CanvasContainerHandle {
   setWorldSize: (width: number, height: number) => void;
-  renderTileBatch: (tiles: any[], startX: number, world: any) => void;
+  renderTileBatch: (tiles: WorldTile[], startX: number, world: WorldData) => void;
   finishRender: (worldWidth: number) => void;
-  highlightTiles: (matchFn: ((tile: any) => boolean) | null, world: any) => void;
+  highlightTiles: (matchFn: ((tile: WorldTile) => boolean) | null, world: WorldData) => void;
   drawSelection: (x: number, y: number) => void;
   panToTile: (x: number, y: number) => void;
   clearOverlay: () => void;
@@ -132,7 +133,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         pixelsRef.current = new Uint8ClampedArray(4 * BUFFER_WIDTH * height);
       },
 
-      renderTileBatch(tiles: any[], startX: number, world: any) {
+      renderTileBatch(tiles: WorldTile[], startX: number, world: WorldData) {
         const ctx = ctxRef.current!;
         const pixels = pixelsRef.current!;
         const height = world.height;
@@ -172,7 +173,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         pixelsRef.current = null;
       },
 
-      highlightTiles(matchFn: ((tile: any) => boolean) | null, world: any) {
+      highlightTiles(matchFn: ((tile: WorldTile) => boolean) | null, world: WorldData) {
         const ctx = overlayCtxRef.current!;
         const overlay = overlayRef.current!;
         ctx.clearRect(0, 0, overlay.width, overlay.height);

@@ -1,6 +1,6 @@
 import type { Settings } from './types/settings';
 
-export var settings: Settings = {
+export const settings: Settings = {
   "Tiles": [
     {
       "Id": "0",
@@ -52805,14 +52805,14 @@ export var settings: Settings = {
   ]
 };
 
-for (var wall of settings.Walls) {
+for (const wall of settings.Walls) {
   if (wall.Color) {
-    (wall as any).Color = hexToRgb(wall.Color as string);
+    wall.Color = hexToRgb(wall.Color as string);
   }
 }
 
 function hexToRgb(hex: string) {
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? {
     r: parseInt(result[2], 16),
     g: parseInt(result[3], 16),

@@ -4,6 +4,7 @@ interface ShortcutHandlers {
   onZoomIn: () => void;
   onZoomOut: () => void;
   onOpenBlocks: () => void;
+  onOpenWorld: () => void;
 }
 
 export function useKeyboardShortcuts(handlers: ShortcutHandlers) {
@@ -13,9 +14,15 @@ export function useKeyboardShortcuts(handlers: ShortcutHandlers) {
         return;
       }
 
-      if (e.ctrlKey && e.key === 'b') {
+      if (e.ctrlKey && e.key === 'f') {
         e.preventDefault();
         handlers.onOpenBlocks();
+        return;
+      }
+
+      if (e.ctrlKey && e.key === 'o') {
+        e.preventDefault();
+        handlers.onOpenWorld();
         return;
       }
 

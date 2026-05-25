@@ -1,20 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 import type { CanvasContainerHandle } from '../components/CanvasContainer';
-
-export interface WorldData {
-  width: number;
-  height: number;
-  worldSurfaceY: number;
-  rockLayerY: number;
-  hellLayerY: number;
-  name: string;
-  tiles: any[];
-  chests: any[];
-  signs: any[];
-  npcs: any[];
-  tileEntities: Map<any, any>;
-  [key: string]: any;
-}
+import type { WorldData } from '../types/settings';
 
 export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle | null>) {
   const [world, setWorld] = useState<WorldData | null>(null);
@@ -114,7 +100,7 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
           const idx = pos.x * w.height + pos.y;
           const tile = w.tiles[idx];
           if (tile) {
-            const size = tile.info?.Size;
+            const size = tile.info && 'Size' in tile.info ? tile.info.Size : undefined;
             let sizeX = 1;
             let sizeY = 1;
             if (size) {

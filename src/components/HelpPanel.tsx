@@ -1,9 +1,8 @@
-import { theme, Typography } from 'antd';
+import { Typography } from 'antd';
 
 const { Title, Paragraph, Text } = Typography;
 
 export function HelpPanel() {
-  const { token: { colorBgContainer } } = theme.useToken();
   return (
     <div style={{ padding: '80px 32px 32px', maxWidth: 700, margin: '0 auto' }}>
       <Typography>
@@ -32,7 +31,7 @@ export function HelpPanel() {
         <Paragraph>
           <Text keyboard>E</Text> Zoom in<br />
           <Text keyboard>C</Text> Zoom out<br />
-          <Text keyboard>Ctrl+B</Text> Open block search
+          <Text keyboard>Ctrl+F</Text> Open block search
         </Paragraph>
       </Typography>
     </div>

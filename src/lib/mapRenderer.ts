@@ -1,8 +1,9 @@
 import { settings } from '../settings';
 import { tileColors, liquidColors, wallColors } from '../MapHelper';
+import type { WorldData, WorldTile } from '../types/settings';
 
-export function getTileColor(y: number, tile: any, world: any): { r: number; g: number; b: number } | undefined {
-  if (tile.IsActive && tileColors.length > tile.Type) {
+export function getTileColor(y: number, tile: WorldTile, world: WorldData): { r: number; g: number; b: number } | undefined {
+  if (tile.IsActive && tile.Type != null && tileColors.length > tile.Type) {
     return tileColors[tile.Type][0];
   }
 
@@ -17,11 +18,11 @@ export function getTileColor(y: number, tile: any, world: any): { r: number; g: 
       return liquidColors[0];
   }
 
-  if (tile.IsWallPresent) {
+  if (tile.IsWallPresent && tile.WallType != null) {
     const color = wallColors[tile.WallType][0];
     if (!color || (color.r === 0 && color.g === 0 && color.b === 0)) {
-      const wall = settings.Walls.find((w) => w.Id === tile.WallType.toString());
-      if (wall && wall.Color) return wall.Color as any;
+      const wall = settings.Walls.find((w) => w.Id === tile.WallType!.toString());
+      if (wall && wall.Color) return wall.Color as { r: number; g: number; b: number };
     }
     return color;
   }

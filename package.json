@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "vite",
-    "test": "npm run typecheck && npm run vitest",
+    "test": "npm run lint && npm run typecheck && npm run vitest",
+    "lint": "eslint",
     "dev": "vite",
     "build": "vite build",
     "typecheck": "tsc --noEmit",
@@ -17,12 +18,17 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@eslint/js": "^9.39.4",
     "@types/file-saver": "^2.0.7",
     "@types/node": "^25.9.1",
     "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^4.7.0",
+    "eslint": "^9.39.4",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^17.6.0",
     "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.4",
     "vite": "^6.4.2",
     "vitest": "^4.1.7"
   },

@@ -9,12 +9,13 @@ import { useBlockOptions } from './hooks/useBlockOptions';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import { useWorldLoader } from './hooks/useWorldLoader';
 import { getItemText, getTileAt, getTileText } from './lib/tileInfo';
-import { getTileInfoFrom, isTileMatch, isTileOrigin } from './lib/tileSearch';
+import { getTileInfoFrom, isTileMatch, isTileOrigin, type SearchableInfo } from './lib/tileSearch';
 import { sets } from './sets';
 import { settings } from './settings';
 
 export default function App() {
   const canvasRef = useRef<CanvasContainerHandle>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const { world, worldRef, status, loadFile, isLoading } = useWorldLoader(canvasRef);
   const blockOptions = useBlockOptions();
 
@@ -29,7 +30,7 @@ export default function App() {
 
   const worldProperties = useMemo(() => {
     if (!world) return {};
-    const props: Record<string, any> = {};
+    const props: Record<string, unknown> = {};
     Object.keys(world).forEach((key) => {
       const value = world[key];
       const type = typeof value;
@@ -41,7 +42,7 @@ export default function App() {
   }, [world]);
 
   const getSelectedInfos = useCallback(() => {
-    const infos: any[] = [];
+    const infos: SearchableInfo[] = [];
     for (const encoded of selectedBlocks) {
       const [value, u, v] = encoded.split('|');
       if (value.startsWith('item')) {
@@ -97,16 +98,18 @@ export default function App() {
         switch (tileEntity.type) {
           case 3:
           case 5:
-            for (let i = 0; i < tileEntity.items.length; i++) {
-              if (tileEntity.items[i].id > 0) items.push(getItemText(tileEntity.items[i]));
-              if (tileEntity.dyes[i].id > 0) items.push(getItemText(tileEntity.dyes[i]));
+            if (tileEntity.items && tileEntity.dyes) {
+              for (let i = 0; i < tileEntity.items.length; i++) {
+                if (tileEntity.items[i].id > 0) items.push(getItemText(tileEntity.items[i]));
+                if (tileEntity.dyes[i].id > 0) items.push(getItemText(tileEntity.dyes[i]));
+              }
             }
             break;
         }
       }
 
       const sign = tile.sign;
-      if (sign?.text?.length > 0) items.push(sign.text);
+      if (sign && sign.text && sign.text.length > 0) items.push(sign.text);
 
       setTileInfoItems(items);
     }
@@ -160,15 +163,14 @@ export default function App() {
     if (!set) return;
     const values: string[] = [];
     for (const entry of set.Entries) {
-      const e = entry as any;
-      if (e.U !== undefined || e.V !== undefined) {
-        values.push(`${e.Id}|${e.U ?? ''}|${e.V ?? ''}|`);
-      } else if (e.isTile) {
-        values.push(`${e.Id}|||`);
-      } else if (e.isItem) {
-        values.push(`item${e.Id}|||`);
-      } else if (e.isWall) {
-        values.push(`wall${e.Id}|||`);
+      if (entry.U !== undefined || entry.V !== undefined) {
+        values.push(`${entry.Id}|${entry.U ?? ''}|${entry.V ?? ''}|`);
+      } else if (entry.isTile) {
+        values.push(`${entry.Id}|||`);
+      } else if (entry.isItem) {
+        values.push(`item${entry.Id}|||`);
+      } else if (entry.isWall) {
+        values.push(`wall${entry.Id}|||`);
       }
     }
     setSelectedBlocks(values);
@@ -177,7 +179,7 @@ export default function App() {
       if (value.startsWith('item')) return settings.Items.find(it => `item${it.Id}` === value);
       if (value.startsWith('wall')) return settings.Walls.find(w => `wall${w.Id}` === value);
       return getTileInfoFrom(value, u || undefined, v || undefined);
-    }).filter(Boolean);
+    }).filter((info): info is SearchableInfo => Boolean(info));
     const w = worldRef.current;
     if (w && infos.length > 0) {
       canvasRef.current?.highlightTiles((tile) => isTileMatch(tile, infos), w);
@@ -197,6 +199,7 @@ export default function App() {
     onZoomIn: () => canvasRef.current?.zoomIn(),
     onZoomOut: () => canvasRef.current?.zoomOut(),
     onOpenBlocks: () => setBlocksModalOpen(true),
+    onOpenWorld: () => fileInputRef.current?.click(),
   }), []);
 
   useKeyboardShortcuts(shortcutHandlers);
@@ -205,6 +208,7 @@ export default function App() {
     <ConfigProvider theme={{ algorithm: theme.darkAlgorithm }}>
       <AntApp style={{ height: '100%' }}>
         <Navbar
+          fileInputRef={fileInputRef}
           worldLoaded={!!world}
           isLoading={isLoading}
           npcs={world?.npcs ?? []}
@@ -218,6 +222,8 @@ export default function App() {
           onHighlightAll={handleHighlightAll}
           onClearHighlight={handleClearHighlight}
           onResetZoom={() => canvasRef.current?.resetZoom()}
+          onZoomIn={() => canvasRef.current?.zoomIn()}
+          onZoomOut={() => canvasRef.current?.zoomOut()}
           onSaveImage={handleSaveImage}
           onReload={handleReload}
           onNpcSelect={(x, y) => {
