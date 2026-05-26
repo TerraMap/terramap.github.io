@@ -20,6 +20,7 @@ import { useState } from 'react';
 import firstBy from 'thenby';
 import useThemeMenuItems from '../hooks/useThemeMenuItems';
 import { useThemeName } from '../hooks/useThemeName';
+import { capitalizeFirstLetter } from '../lib/string';
 import type { BlockSet, WorldNpc } from '../types/settings';
 import ToolbarButton from './ToolbarButton';
 
@@ -70,7 +71,7 @@ export function Navbar({
     token: { colorBgLayout },
   } = theme.useToken();
 
-  const { isDarkMode } = useThemeName();
+  const { isDarkMode, themeName } = useThemeName();
   const themeMenuItems = useThemeMenuItems();
   const [propsOpen, setPropsOpen] = useState(false);
   const [propsFilter, setPropsFilter] = useState('');
@@ -215,9 +216,11 @@ export function Navbar({
         </>
       )}
 
-      <Dropdown menu={{ items: themeMenuItems }} trigger={['click']}>
-        <Button icon={isDarkMode ? <MoonOutlined /> : <SunOutlined />} />
-      </Dropdown>
+      <Tooltip title={`Theme - ${capitalizeFirstLetter(themeName)} Mode`}>
+        <Dropdown menu={{ items: themeMenuItems }} trigger={['click']}>
+          <Button icon={isDarkMode ? <MoonOutlined /> : <SunOutlined />} />
+        </Dropdown>
+      </Tooltip>
 
       <Tooltip title="About">
         <Button
