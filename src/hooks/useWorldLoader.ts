@@ -4,14 +4,14 @@ import type { WorldData } from '../types/settings';
 
 export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle | null>) {
   const [world, setWorld] = useState<WorldData | null>(null);
-  const [status, setStatus] = useState('Please choose a Terraria .wld file');
+  const [status, setStatus] = useState<string | undefined>('Please choose a Terraria .wld file');
   const [isLoading, setIsLoading] = useState(false);
   const worldRef = useRef<WorldData | null>(null);
   const workerRef = useRef<Worker | null>(null);
   const statusRef = useRef(status);
   const lastStatusFlush = useRef(0);
 
-  const loadFile = useCallback((file: File) => {
+  const loadWorldFile = useCallback((file: File) => {
     if (workerRef.current) {
       workerRef.current.terminate();
     }
@@ -122,7 +122,7 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
       if (e.data.done) {
         setWorld(worldRef.current);
         setIsLoading(false);
-        setStatus('Done');
+        setStatus(undefined);
         worker.terminate();
         workerRef.current = null;
       }
@@ -131,5 +131,5 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
     worker.postMessage(file);
   }, [canvasRef]);
 
-  return { world, worldRef, status, isLoading, loadFile };
+  return { world, worldRef, status, isLoading, loadWorldFile };
 }

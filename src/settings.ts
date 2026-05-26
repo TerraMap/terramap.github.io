@@ -17456,7 +17456,7 @@ export const settings: Settings = {
     },
     {
       "Id": "135",
-      "Name": "Red Pressure Plate",
+      "Name": "Pressure Plate",
       "Frames": [
         {
           "U": 0,

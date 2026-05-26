@@ -11,7 +11,7 @@ export function HelpPanel() {
           TerraMap is an interactive Terraria world map viewer.
         </Paragraph>
         <Paragraph>
-          Click <Text strong>Open</Text> to select a Terraria <Text code>.wld</Text> file from your computer.
+          Click the <Text code strong underline>World</Text> button to select a Terraria <Text code>.wld</Text> file from your computer.
         </Paragraph>
         <Paragraph>
           World files are usually located at:
@@ -24,6 +24,20 @@ export function HelpPanel() {
           <li><Text strong>Windows (Steam Cloud)</Text>: <Text code>C:\Program Files (x86)\Steam\userdata\&#123;YOUR_USER_ID&#125;\105600\remote\worlds</Text></li>
           <li><Text strong>Windows</Text>: <Text code>%USERPROFILE%\Documents\My Games\Terraria\Worlds</Text></li>
         </ul>
+        {/* <Paragraph>
+          Then choose <Text code>All Spoilers</Text> or click <Text code>Player Map</Text> and browse to your player .map file.
+        </Paragraph>
+        <Paragraph>
+          Player map files are usually located at:
+        </Paragraph>
+        <ul>
+          <li><Text strong>Linux (Steam Cloud)</Text>: <Text code>~/.local/share/Steam/userdata/&#123;YOUR_USER_ID&#125;/105600/remote/worlds</Text></li>
+          <li><Text strong>Linux</Text>: <Text code>~/.local/share/Terraria/Worlds</Text></li>
+          <li><Text strong>MacOS (Steam Cloud)</Text>: <Text code>~/Library/Application Support/Steam/userdata/&#123;YOUR_USER_ID&#125;/105600/remote/worlds</Text></li>
+          <li><Text strong>MacOS</Text>: <Text code>~/Library/Application Support/Terraria/Players/</Text></li>
+          <li><Text strong>Windows (Steam Cloud)</Text>: <Text code>C:\Program Files (x86)\Steam\userdata\&#123;YOUR_USER_ID&#125;\105600\remote\worlds</Text></li>
+          <li><Text strong>Windows</Text>: <Text code>%USERPROFILE%\Documents\My Games\Terraria\Worlds</Text></li>
+        </ul> */}
         <Paragraph>
           Once loaded, you can pan and zoom the map, search for blocks, view chest contents, and more.
         </Paragraph>

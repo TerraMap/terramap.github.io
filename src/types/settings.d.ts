@@ -115,10 +115,18 @@ export interface WorldTile {
   IsBlueWirePresent?: boolean;
   IsYellowWirePresent?: boolean;
   IsActuatorPresent?: boolean;
+  slope?: number;
+  tileColor?: number;
+  echoBlock?: boolean;
+  echoWall?: boolean;
+  illuminantBlock?: boolean;
+  illuminantWall?: boolean;
   info?: TileFrame | TileInfo;
   chest?: Chest;
   sign?: Sign;
   tileEntity?: TileEntity;
+  x?: number;
+  y?: number;
 }
 
 export interface WorldData {

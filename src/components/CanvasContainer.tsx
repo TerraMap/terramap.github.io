@@ -9,6 +9,8 @@ export interface CanvasContainerHandle {
   renderTileBatch: (tiles: WorldTile[], startX: number, world: WorldData) => void;
   finishRender: (worldWidth: number) => void;
   highlightTiles: (matchFn: ((tile: WorldTile) => boolean) | null, world: WorldData) => void;
+  renderWireOverlay: (world: WorldData) => void;
+  clearWireOverlay: () => void;
   drawSelection: (x: number, y: number) => void;
   panToTile: (x: number, y: number) => void;
   clearOverlay: () => void;
@@ -32,10 +34,12 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
     const panzoomRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const overlayRef = useRef<HTMLCanvasElement>(null);
+    const wireRef = useRef<HTMLCanvasElement>(null);
     const selectionRef = useRef<HTMLCanvasElement>(null);
     const pixelsRef = useRef<Uint8ClampedArray | null>(null);
     const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
     const overlayCtxRef = useRef<CanvasRenderingContext2D | null>(null);
+    const wireCtxRef = useRef<CanvasRenderingContext2D | null>(null);
     const selectionCtxRef = useRef<CanvasRenderingContext2D | null>(null);
     const isDraggingRef = useRef(false);
     const dragStartRef = useRef<{ x: number; y: number } | null>(null);
@@ -43,10 +47,9 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
     const { zoomIn, zoomOut, reset, panToPoint } = usePanZoom(panzoomRef);
 
     const getMousePos = useCallback((evt: MouseEvent | PointerEvent) => {
-      const el = panzoomRef.current;
       const canvas = canvasRef.current;
-      if (!el || !canvas) return { x: 0, y: 0 };
-      const rect = el.getBoundingClientRect();
+      if (!canvas) return { x: 0, y: 0 };
+      const rect = canvas.getBoundingClientRect();
       const scaleX = canvas.width / rect.width;
       const scaleY = canvas.height / rect.height;
       return {
@@ -106,6 +109,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         const el = panzoomRef.current!;
         const canvas = canvasRef.current!;
         const overlay = overlayRef.current!;
+        const wire = wireRef.current!;
         const selection = selectionRef.current!;
 
         el.style.width = `${width}px`;
@@ -114,11 +118,14 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         canvas.height = height;
         overlay.width = width;
         overlay.height = height;
+        wire.width = width;
+        wire.height = height;
         selection.width = width;
         selection.height = height;
 
         ctxRef.current = canvas.getContext('2d')!;
         overlayCtxRef.current = overlay.getContext('2d')!;
+        wireCtxRef.current = wire.getContext('2d')!;
         selectionCtxRef.current = selection.getContext('2d')!;
 
         const displayWidth = window.innerWidth * 0.99;
@@ -127,8 +134,13 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         el.style.width = `${displayWidth}px`;
         el.style.height = `${displayHeight}px`;
         canvas.style.width = `${displayWidth}px`;
+        canvas.style.height = `${displayHeight}px`;
         overlay.style.width = `${displayWidth}px`;
+        overlay.style.height = `${displayHeight}px`;
+        wire.style.width = `${displayWidth}px`;
+        wire.style.height = `${displayHeight}px`;
         selection.style.width = `${displayWidth}px`;
+        selection.style.height = `${displayHeight}px`;
 
         pixelsRef.current = new Uint8ClampedArray(4 * BUFFER_WIDTH * height);
       },
@@ -207,6 +219,47 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         }
       },
 
+      renderWireOverlay(world: WorldData) {
+        const ctx = wireCtxRef.current!;
+        const wire = wireRef.current!;
+        ctx.clearRect(0, 0, wire.width, wire.height);
+
+        const w = wire.width;
+        const imageData = ctx.createImageData(w, world.height);
+        const data = imageData.data;
+
+        let x = 0;
+        let y = 0;
+        for (let i = 0; i < world.tiles.length; i++) {
+          const tile = world.tiles[i];
+          const pxIdx = (y * w + x) * 4;
+          let r = 0, g = 0, b = 0, count = 0;
+          if (tile.IsRedWirePresent) { r += 255; count++; }
+          if (tile.IsGreenWirePresent) { g += 255; count++; }
+          if (tile.IsBlueWirePresent) { b += 255; count++; }
+          if (tile.IsYellowWirePresent) { r += 255; g += 255; count++; }
+          if (count > 0) {
+            data[pxIdx] = Math.min(r, 255);
+            data[pxIdx + 1] = Math.min(g, 255);
+            data[pxIdx + 2] = Math.min(b, 255);
+            data[pxIdx + 3] = 160;
+          } else {
+            data[pxIdx + 3] = 192;
+          }
+          y++;
+          if (y >= world.height) {
+            y = 0;
+            x++;
+          }
+        }
+        ctx.putImageData(imageData, 0, 0);
+      },
+
+      clearWireOverlay() {
+        const wire = wireRef.current!;
+        wireCtxRef.current!.clearRect(0, 0, wire.width, wire.height);
+      },
+
       drawSelection(x: number, y: number) {
         const ctx = selectionCtxRef.current!;
         const selection = selectionRef.current!;
@@ -217,10 +270,10 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
 
         ctx.clearRect(0, 0, selection.width, selection.height);
         ctx.lineWidth = 12;
-        ctx.strokeStyle = "rgba(255, 0, 0, 0.85)";
+        ctx.strokeStyle = "rgb(255, 0, 0)";
         ctx.strokeRect(cx - half, cy - half, targetWidth, targetWidth);
 
-        ctx.strokeStyle = "rgba(255, 0, 0, 0.75)";
+        ctx.strokeStyle = "rgba(255, 0, 0, 0.65)";
         ctx.lineWidth = 1;
         ctx.beginPath(); ctx.moveTo(cx - half, cy); ctx.lineTo(cx - 1, cy); ctx.stroke();
         ctx.beginPath(); ctx.moveTo(cx + half, cy); ctx.lineTo(cx + 1, cy); ctx.stroke();
@@ -241,6 +294,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
       saveImage(filename: string) {
         const canvas = canvasRef.current!;
         const overlay = overlayRef.current!;
+        const wire = wireRef.current!;
         const selection = selectionRef.current!;
         const newCanvas = document.createElement("canvas");
         const newCtx = newCanvas.getContext("2d")!;
@@ -248,6 +302,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         newCanvas.height = canvas.height;
         newCtx.drawImage(canvas, 0, 0);
         newCtx.drawImage(overlay, 0, 0);
+        newCtx.drawImage(wire, 0, 0);
         newCtx.drawImage(selection, 0, 0);
         newCanvas.toBlob((blob) => {
           if (blob) {
@@ -275,6 +330,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         <div ref={panzoomRef} style={{ position: 'relative' }}>
           <canvas ref={canvasRef} style={{ position: 'absolute', left: 0, top: 0, imageRendering: 'pixelated' }} />
           <canvas ref={overlayRef} style={{ position: 'absolute', left: 0, top: 0, imageRendering: 'pixelated' }} />
+          <canvas ref={wireRef} style={{ position: 'absolute', left: 0, top: 0, imageRendering: 'pixelated' }} />
           <canvas ref={selectionRef} style={{ position: 'absolute', left: 0, top: 0, imageRendering: 'pixelated' }} />
         </div>
       </div>

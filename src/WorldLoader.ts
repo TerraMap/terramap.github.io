@@ -94,7 +94,6 @@ function readWorldFile(reader: DataStream, world: WorldRecord): void {
   seekToPosition(position++, positions, reader, 'entities');
 
   self.postMessage({
-    'status': "Done.",
     'done': true
   });
   console.log(world)
@@ -164,10 +163,18 @@ function readHeader(reader: DataStream, world: WorldRecord): void {
   reader.readUint32();
   reader.readUint32();
 
-  // UUID
+  const uuidBytes: number[] = [];
   for (let i = 0; i < 16; i++) {
-    reader.readUint8();
+    uuidBytes.push(reader.readUint8());
   }
+  const hex = uuidBytes.map(b => b.toString(16).padStart(2, '0'));
+  world.uniqueId = [
+    hex.slice(0, 4).join(''),
+    hex.slice(4, 6).join(''),
+    hex.slice(6, 8).join(''),
+    hex.slice(8, 10).join(''),
+    hex.slice(10, 16).join(''),
+  ].join('-');
 
   world.id = reader.readInt32();
 
@@ -523,7 +530,7 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
       let num2 = -1;
       let b2 = 0;
       let b = 0;
-      const tile: WorldTile = {};
+      const tile: WorldTile = { x, y };
       const b4 = reader.readUint8();
       let flag = false;
       if ((b4 & 1) == 1) {
@@ -535,8 +542,9 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
         flag2 = true;
         b = reader.readUint8();
       }
+      let b3 = 0;
       if (flag2 && (b & 1) == 1) {
-        reader.readUint8();
+        b3 = reader.readUint8();
       }
       let b5 = 0;
       if ((b4 & 2) == 2) {
@@ -562,8 +570,7 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
           tile.TextureV = -1;
         }
         if ((b & 8) == 8) {
-          // 	tile.ColorValue = reader.readUint8();
-          reader.readUint8();
+          tile.tileColor = reader.readUint8();
         }
       }
       if ((b4 & 4) == 4) {
@@ -603,6 +610,9 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
           tile.IsBlueWirePresent = true;
         }
         b5 = (b2 & 112) >> 4;
+        if (b5 !== 0) {
+          tile.slope = b5;
+        }
       }
       if (b > 1) {
         if ((b & 2) == 2) {
@@ -620,6 +630,20 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
           if (tile.WallType >= settings.Walls.length) {
             tile.WallType = 0;
           }
+        }
+      }
+      if (b3 > 0) {
+        if ((b3 & 2) == 2) {
+          tile.illuminantBlock = true;
+        }
+        if ((b3 & 4) == 4) {
+          tile.echoBlock = true;
+        }
+        if ((b3 & 8) == 8) {
+          tile.illuminantWall = true;
+        }
+        if ((b3 & 16) == 16) {
+          tile.echoWall = true;
         }
       }
       b5 = (b4 & 192) >> 6;
@@ -904,10 +928,8 @@ function readTileEntities(reader: DataStream): void {
   const byPosition = new Map<{ x: number; y: number }, TileEntity>();
   const count = reader.readInt32();
   let lastPosition: { x: number; y: number } | undefined;
-  // console.log({tileEntityCount: count});
   for (let i = 0; i < count; i++) {
     const tileEntity = readTileEntity(reader);
-    // console.log({tileEntity});
     if (!tileEntity) {
       console.error({ tileEntity, lastPosition });
       continue;

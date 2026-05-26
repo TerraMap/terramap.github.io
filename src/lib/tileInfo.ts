@@ -73,13 +73,15 @@ export function getTileText(tile: WorldTile | null): string {
       text = tileInfo.Name ?? text;
     }
     else {
-      text = parent.Name;
+      text = parent.Size
+        ? `${tileInfo.Name ?? parent.Name} ${parent.Size.replace(',', 'x')}`
+        : parent.Name;
 
       if (tileInfo.Name) {
-        text = `${text} - ${tileInfo.Name}`;
+        // text = `${text} - ${tileInfo.Name}`;
 
         if (variety)
-          text = `${text} - ${variety}`;
+          text = `${variety} - ${text}`;
       }
       else if (variety) {
         text = `${text} - ${variety}`;
@@ -88,10 +90,8 @@ export function getTileText(tile: WorldTile | null): string {
 
     const u = tile.TextureU ?? 0;
     const v = tile.TextureV ?? 0;
-    if (u > 0 && v > 0)
+    if (u > 0 || v > 0)
       text = `${text} (${tile.Type}, ${u}, ${v})`;
-    else if (u > 0)
-      text = `${text} (${tile.Type}, ${u})`;
     else
       text = `${text} (${tile.Type})`;
 
@@ -128,34 +128,40 @@ export function getTileText(tile: WorldTile | null): string {
     }
   }
 
+  const extra: string[] = [];
+
   if (tile.IsLiquidPresent) {
     if (text === "Nothing") text = "";
 
     if (tile.IsLiquidLava) {
-      text += text ? " Lava" : "Lava";
+      extra.push('Lava');
     }
     else if (tile.IsLiquidHoney) {
-      text += text ? " Honey" : "Honey";
+      extra.push("Honey");
     }
     else if (tile.Shimmer) {
-      text += text ? " Shimmer" : "Shimmer";
+      extra.push("Shimmer");
     }
     else {
-      text += text ? " Water" : "Water";
+      extra.push("Water");
     }
   }
 
   if (tile.IsRedWirePresent)
-    text += " (Red Wire)";
+    extra.push("Red Wire");
 
   if (tile.IsGreenWirePresent)
-    text += " (Green Wire)";
+    extra.push("Green Wire");
 
   if (tile.IsBlueWirePresent)
-    text += " (Blue Wire)";
+    extra.push("Blue Wire");
 
   if (tile.IsYellowWirePresent)
-    text += " (Yellow Wire)";
+    extra.push("Yellow Wire");
+
+  if (extra.length) {
+    text = `${text} (${extra.join(', ')})`;
+  }
 
   return text;
 }

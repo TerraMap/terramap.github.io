@@ -86,6 +86,7 @@ export function BlockSelectorModal({
           virtual
           placeholder={filter === 'All' ? "Search tiles, items, and walls..." : filter === 'Item' ? 'Search items...' : filter === 'Tile' ? 'Search tiles...' : 'Search walls...'}
           showSearch={{
+            autoClearSearchValue: false,
             filterOption: (input, option) => {
               const inputLower = input.toLowerCase();
               if ((option?.label as string ?? '').toLowerCase().includes(inputLower)) return true;

@@ -1,12 +1,15 @@
 import { Space, Spin, theme } from 'antd';
 import { useEffect, useRef } from 'react';
+import type { WorldTile } from '../types/settings';
+import TileTags from './TileTags';
 
 interface StatusBarProps {
-  status: string;
   isLoading: boolean;
+  selectedTile: WorldTile | null;
+  status?: string;
 }
 
-export function StatusBar({ status, isLoading }: StatusBarProps) {
+export function StatusBar({ isLoading, selectedTile, status }: StatusBarProps) {
   const adRef = useRef<HTMLModElement>(null);
   const adPushed = useRef(false);
 
@@ -35,11 +38,20 @@ export function StatusBar({ status, isLoading }: StatusBarProps) {
         left: 0,
         right: 0,
         padding: '4px 16px',
+        marginRight: 48,
         background: colorBgLayout,
         zIndex: 1000,
       }}
     >
-      <span style={{ flexShrink: 0 }}><Space>{isLoading && <Spin />}{status}</Space></span>
+      <span style={{ flexShrink: 0 }}>
+        <Space>
+          {isLoading && <Spin />}
+          {status}
+          {selectedTile && (
+            <TileTags selectedTile={selectedTile} />
+          )}
+        </Space>
+      </span>
       <ins
         ref={adRef}
         className="adsbygoogle"
