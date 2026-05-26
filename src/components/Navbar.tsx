@@ -4,21 +4,26 @@ import {
   ExpandOutlined,
   HighlightOutlined,
   LeftOutlined,
+  MoonOutlined,
   QuestionCircleOutlined,
   ReloadOutlined,
   RightOutlined,
   SearchOutlined,
+  SunOutlined,
   UploadOutlined,
   ZoomInOutlined,
   ZoomOutOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Button, Drawer, Dropdown, Flex, Input, Space, Tag, Tooltip } from 'antd';
+import { Button, Drawer, Dropdown, Flex, Input, Space, theme, Tooltip } from 'antd';
 import { useState } from 'react';
+import firstBy from 'thenby';
+import useThemeMenuItems from '../hooks/useThemeMenuItems';
+import { useThemeName } from '../hooks/useThemeName';
 import type { BlockSet, WorldNpc } from '../types/settings';
+import ToolbarButton from './ToolbarButton';
 
 interface NavbarProps {
-  isLoading: boolean;
   worldLoaded: boolean;
   npcs: WorldNpc[];
   sets: BlockSet[];
@@ -42,7 +47,6 @@ interface NavbarProps {
 
 export function Navbar({
   fileInputRef,
-  isLoading,
   worldLoaded,
   npcs,
   sets,
@@ -62,6 +66,12 @@ export function Navbar({
   onNpcSelect,
   onSetSelect,
 }: NavbarProps) {
+  const {
+    token: { colorBgLayout },
+  } = theme.useToken();
+
+  const { isDarkMode } = useThemeName();
+  const themeMenuItems = useThemeMenuItems();
   const [propsOpen, setPropsOpen] = useState(false);
   const [propsFilter, setPropsFilter] = useState('');
 
@@ -72,9 +82,9 @@ export function Navbar({
 
   const npcMenuItems: MenuProps['items'] = npcs.map((npc, i) => ({
     key: i,
-    label: npc.name !== npc.type ? `${npc.name} the ${npc.type}` : npc.name,
+    label: npc.name !== npc.type ? `${npc.type} - ${npc.name}` : npc.name,
     onClick: () => onNpcSelect(npc.x, npc.y),
-  }));
+  })).sort(firstBy('label'));
 
   const setMenuItems: MenuProps['items'] = sets.map((set, i) => ({
     key: i,
@@ -94,7 +104,7 @@ export function Navbar({
       wrap="wrap"
       style={{
         padding: '8px 16px',
-        background: '#001529',
+        background: colorBgLayout,
         position: 'fixed',
         top: 0,
         left: 0,
@@ -102,9 +112,9 @@ export function Navbar({
         zIndex: 1000,
       }}
     >
-      <span style={{ color: '#fff', marginRight: 8, fontFamily: 'inherit' }}>TerraMap</span>
+      <span style={{ marginRight: 8, fontFamily: 'inherit' }}>TerraMap</span>
 
-      <Tooltip title={<>Open Terraria World File <Tag><kbd>Ctrl</kbd> + <kbd>O</kbd></Tag></>}>
+      <Space.Compact>
         <input
           ref={fileInputRef}
           type="file"
@@ -112,31 +122,81 @@ export function Navbar({
           onChange={handleFileChange}
           style={{ display: 'none' }}
         />
-        <Button icon={<UploadOutlined />} loading={isLoading} onClick={() => fileInputRef.current?.click()}>
+        <ToolbarButton
+          keyboardShortcut="O"
+          icon={<UploadOutlined />}
+          onClick={() => fileInputRef.current?.click()}
+          tooltip="Open Terraria World File">
           Open
-        </Button>
-      </Tooltip>
+        </ToolbarButton>
+        <ToolbarButton
+          keyboardShortcut="R"
+          icon={<ReloadOutlined />}
+          onClick={onReload}
+          tooltip="Reload World"
+        />
+      </Space.Compact>
 
       {worldLoaded && (
         <>
           <Space.Compact>
-            <Tooltip title={<>Choose Blocks <Tag><kbd>Ctrl</kbd> + <kbd>F</kbd></Tag></>}>
-              <Button icon={<SearchOutlined />} onClick={onOpenBlocks} disabled={!worldLoaded}>
-                Blocks
-              </Button>
-            </Tooltip>
-            <Tooltip title="Find Previous Block"><Button icon={<LeftOutlined />} onClick={onPrevBlock} disabled={!worldLoaded} /></Tooltip>
-            <Tooltip title="Find Next Block"><Button icon={<RightOutlined />} onClick={onNextBlock} disabled={!worldLoaded} /></Tooltip>
-            <Tooltip title="Highlight All Matching Blocks"><Button icon={<HighlightOutlined />} onClick={onHighlightAll} disabled={!worldLoaded} /></Tooltip>
-            <Tooltip title="Clear Highlighted Blocks"><Button icon={<CloseOutlined />} onClick={onClearHighlight} disabled={!worldLoaded} /></Tooltip>
+            <ToolbarButton
+              keyboardShortcut="F"
+              icon={<SearchOutlined />}
+              onClick={onOpenBlocks}
+              tooltip="Choose Blocks">
+              Blocks
+            </ToolbarButton>
+            <ToolbarButton
+              keyboardShortcut={["Shift", "G"]}
+              icon={<LeftOutlined />}
+              onClick={onPrevBlock}
+              tooltip="Find Previous Block"
+            />
+            <ToolbarButton
+              keyboardShortcut="G"
+              icon={<RightOutlined />}
+              onClick={onNextBlock}
+              tooltip="Find Next Block"
+            />
+            <ToolbarButton
+              keyboardShortcut="H"
+              icon={<HighlightOutlined />}
+              onClick={onHighlightAll}
+              tooltip="Highlight All Matching Blocks"
+            />
+            <ToolbarButton
+              keyboardShortcut="X"
+              icon={<CloseOutlined />}
+              onClick={onClearHighlight}
+              tooltip="Clear Highlighted Blocks"
+            />
           </Space.Compact>
 
           <Space.Compact>
-            <Tooltip title={<Space>Zoom In <Tag><kbd>E</kbd></Tag></Space>}><Button icon={<ZoomInOutlined />} onClick={onZoomIn} disabled={!worldLoaded} /></Tooltip>
-            <Tooltip title={<Space>Zoom Out <Tag><kbd>C</kbd></Tag></Space>}><Button icon={<ZoomOutOutlined />} onClick={onZoomOut} disabled={!worldLoaded} /></Tooltip>
-            <Tooltip title="Reset Zoom"><Button icon={<ExpandOutlined />} onClick={onResetZoom} disabled={!worldLoaded} /></Tooltip>
-            <Tooltip title="Save Image"><Button icon={<CameraOutlined />} onClick={onSaveImage} disabled={!worldLoaded} /></Tooltip>
-            <Tooltip title="Reload World"><Button icon={<ReloadOutlined />} onClick={onReload} disabled={!worldLoaded} /></Tooltip>
+            <ToolbarButton
+              keyboardShortcut="E"
+              icon={<ZoomInOutlined />}
+              onClick={onZoomIn}
+              tooltip="Zoom In"
+            />
+            <ToolbarButton
+              keyboardShortcut="C"
+              icon={<ZoomOutOutlined />}
+              onClick={onZoomOut}
+              tooltip="Zoom Out"
+            />
+            <ToolbarButton
+              keyboardShortcut="Z"
+              icon={<ExpandOutlined />}
+              onClick={onResetZoom}
+              tooltip="Reset Zoom"
+            />
+            <ToolbarButton
+              icon={<CameraOutlined />}
+              onClick={onSaveImage}
+              tooltip="Save Image"
+            />
           </Space.Compact>
 
           <Dropdown menu={{ items: setMenuItems }} trigger={['click']}>
@@ -146,6 +206,7 @@ export function Navbar({
             <Button>NPCs</Button>
           </Dropdown>
           <Button onClick={() => setPropsOpen(true)} disabled={propsOpen}>World Properties</Button>
+
           {tileInfoItems.length > 0 && (
             <Dropdown menu={{ items: tileInfoMenuItems }} trigger={['click']}>
               <Button>Tile Info</Button>
@@ -154,13 +215,18 @@ export function Navbar({
         </>
       )}
 
+      <Dropdown menu={{ items: themeMenuItems }} trigger={['click']}>
+        <Button icon={isDarkMode ? <MoonOutlined /> : <SunOutlined />} />
+      </Dropdown>
+
       <Tooltip title="About">
         <Button
           type="link"
           icon={<QuestionCircleOutlined />}
           href="about.html"
           target="_blank"
-          style={{ color: '#fff', marginLeft: 'auto' }}
+          rel="noopener noreferrer"
+          style={{ marginLeft: 'auto' }}
         />
       </Tooltip>
 

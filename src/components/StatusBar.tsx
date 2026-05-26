@@ -1,4 +1,4 @@
-import { Space, Spin } from 'antd';
+import { Space, Spin, theme } from 'antd';
 import { useEffect, useRef } from 'react';
 
 interface StatusBarProps {
@@ -9,6 +9,10 @@ interface StatusBarProps {
 export function StatusBar({ status, isLoading }: StatusBarProps) {
   const adRef = useRef<HTMLModElement>(null);
   const adPushed = useRef(false);
+
+  const {
+    token: { colorBgLayout },
+  } = theme.useToken();
 
   useEffect(() => {
     if (adRef.current && !adPushed.current) {
@@ -31,12 +35,8 @@ export function StatusBar({ status, isLoading }: StatusBarProps) {
         left: 0,
         right: 0,
         padding: '4px 16px',
-        background: '#001529',
-        // color: '#fff',
-        // fontSize: 13,
+        background: colorBgLayout,
         zIndex: 1000,
-        // display: 'flex',
-        // gap: 16,
       }}
     >
       <span style={{ flexShrink: 0 }}><Space>{isLoading && <Spin />}{status}</Space></span>

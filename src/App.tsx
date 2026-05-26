@@ -7,6 +7,7 @@ import { Navbar } from './components/Navbar';
 import { StatusBar } from './components/StatusBar';
 import { useBlockOptions } from './hooks/useBlockOptions';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
+import { ThemeNameContext, useThemeName, type ThemeNames } from './hooks/useThemeName';
 import { useWorldLoader } from './hooks/useWorldLoader';
 import { getItemText, getTileAt, getTileText } from './lib/tileInfo';
 import { getTileInfoFrom, isTileMatch, isTileOrigin, type SearchableInfo } from './lib/tileSearch';
@@ -14,6 +15,41 @@ import { sets } from './sets';
 import { settings } from './settings';
 
 export default function App() {
+  const { defaultAlgorithm, darkAlgorithm } = theme;
+  const { isDarkMode, themeName, setTheme } = useThemeName();
+
+  const updateThemeName = (value: ThemeNames) => {
+    setTheme(value);
+  };
+
+  return (
+    <ConfigProvider
+      theme={{
+        algorithm: isDarkMode ? darkAlgorithm : defaultAlgorithm,
+        components: {
+          Layout: { triggerHeight: 32 },
+          Cascader: {
+            dropdownHeight: 425,
+          },
+        },
+      }}
+    >
+      <AntApp style={{ height: '100%' }}>
+        <ThemeNameContext
+          value={{
+            isDarkMode,
+            themeName,
+            setThemeName: updateThemeName,
+          }}
+        >
+          <AppContent />
+        </ThemeNameContext>
+      </AntApp>
+    </ConfigProvider>
+  );
+}
+
+function AppContent() {
   const canvasRef = useRef<CanvasContainerHandle>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { world, worldRef, status, loadFile, isLoading } = useWorldLoader(canvasRef);
@@ -25,6 +61,8 @@ export default function App() {
   const [statusText, setStatusText] = useState('');
   const [tileInfoItems, setTileInfoItems] = useState<string[]>([]);
   const [file, setFile] = useState<File | null>(null);
+
+  const { token: { colorBgContainer } } = theme.useToken();
 
   const displayStatus = statusText || status;
 
@@ -196,65 +234,76 @@ export default function App() {
   }, [file, loadFile]);
 
   const shortcutHandlers = useMemo(() => ({
-    onZoomIn: () => canvasRef.current?.zoomIn(),
-    onZoomOut: () => canvasRef.current?.zoomOut(),
+    onClearHighlight: () => handleClearHighlight(),
+    onFindNext: () => findBlock(1),
+    onFindPrevious: () => findBlock(-1),
+    onHighlight: () => handleHighlightAll(),
     onOpenBlocks: () => setBlocksModalOpen(true),
     onOpenWorld: () => fileInputRef.current?.click(),
-  }), []);
+    onReloadWorld: () => handleReload(),
+    onResetZoom: () => canvasRef.current?.resetZoom(),
+    onZoomIn: () => canvasRef.current?.zoomIn(),
+    onZoomOut: () => canvasRef.current?.zoomOut(),
+  }), [findBlock]);
 
   useKeyboardShortcuts(shortcutHandlers);
 
+
   return (
-    <ConfigProvider theme={{ algorithm: theme.darkAlgorithm }}>
-      <AntApp style={{ height: '100%' }}>
-        <Navbar
-          fileInputRef={fileInputRef}
-          worldLoaded={!!world}
-          isLoading={isLoading}
-          npcs={world?.npcs ?? []}
-          sets={sets}
-          worldProperties={worldProperties}
-          tileInfoItems={tileInfoItems}
-          onFileSelect={handleFileSelect}
-          onOpenBlocks={() => setBlocksModalOpen(true)}
-          onPrevBlock={() => findBlock(-1)}
-          onNextBlock={() => findBlock(1)}
-          onHighlightAll={handleHighlightAll}
-          onClearHighlight={handleClearHighlight}
-          onResetZoom={() => canvasRef.current?.resetZoom()}
-          onZoomIn={() => canvasRef.current?.zoomIn()}
-          onZoomOut={() => canvasRef.current?.zoomOut()}
-          onSaveImage={handleSaveImage}
-          onReload={handleReload}
-          onNpcSelect={(x, y) => {
-            setSelectionPos({ x, y });
-            canvasRef.current?.drawSelection(x, y);
-            canvasRef.current?.panToTile(x, y);
-          }}
-          onSetSelect={handleSetSelect}
-        />
+    <>
+      <Navbar
+        fileInputRef={fileInputRef}
+        worldLoaded={!!world}
+        npcs={world?.npcs ?? []}
+        sets={sets}
+        worldProperties={worldProperties}
+        tileInfoItems={tileInfoItems}
+        onFileSelect={handleFileSelect}
+        onOpenBlocks={() => setBlocksModalOpen(true)}
+        onPrevBlock={() => findBlock(-1)}
+        onNextBlock={() => findBlock(1)}
+        onHighlightAll={handleHighlightAll}
+        onClearHighlight={handleClearHighlight}
+        onResetZoom={() => canvasRef.current?.resetZoom()}
+        onZoomIn={() => canvasRef.current?.zoomIn()}
+        onZoomOut={() => canvasRef.current?.zoomOut()}
+        onSaveImage={handleSaveImage}
+        onReload={handleReload}
+        onNpcSelect={(x, y) => {
+          setSelectionPos({ x, y });
+          canvasRef.current?.drawSelection(x, y);
+          canvasRef.current?.panToTile(x, y);
+        }}
+        onSetSelect={handleSetSelect}
+      />
 
-        <div style={{ paddingTop: 52, paddingBottom: 32, height: '100vh', boxSizing: 'border-box' }}>
-          {!world && !isLoading && <HelpPanel />}
-          <div style={{ display: world || isLoading ? 'block' : 'none', height: '100%' }}>
-            <CanvasContainer
-              ref={canvasRef}
-              onTileHover={handleTileHover}
-              onTileClick={handleTileClick}
-            />
-          </div>
+      <div style={{ paddingTop: 52, paddingBottom: 32, height: '100vh', boxSizing: 'border-box', backgroundColor: colorBgContainer }}>
+        {!world && !isLoading && <HelpPanel />}
+        <div style={{ display: world || isLoading ? 'block' : 'none', height: '100%' }}>
+          <CanvasContainer
+            ref={canvasRef}
+            onTileHover={handleTileHover}
+            onTileClick={handleTileClick}
+          />
         </div>
+      </div>
 
-        <StatusBar status={displayStatus} isLoading={isLoading} />
+      <StatusBar status={displayStatus} isLoading={isLoading} />
 
-        <BlockSelectorModal
-          open={blocksModalOpen}
-          onClose={() => setBlocksModalOpen(false)}
-          options={blockOptions}
-          selectedValues={selectedBlocks}
-          onSelectionChange={setSelectedBlocks}
-        />
-      </AntApp>
-    </ConfigProvider>
+      <BlockSelectorModal
+        open={blocksModalOpen}
+        onClose={(ok) => {
+          setBlocksModalOpen(false);
+          if (ok) {
+            handleHighlightAll();
+          } else {
+            handleClearHighlight();
+          }
+        }}
+        options={blockOptions}
+        selectedValues={selectedBlocks}
+        onSelectionChange={setSelectedBlocks}
+      />
+    </>
   );
 }

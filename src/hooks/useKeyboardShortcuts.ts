@@ -1,10 +1,16 @@
 import { useEffect } from 'react';
 
 interface ShortcutHandlers {
-  onZoomIn: () => void;
-  onZoomOut: () => void;
+  onClearHighlight: () => void;
+  onFindNext: () => void;
+  onFindPrevious: () => void;
+  onHighlight: () => void;
   onOpenBlocks: () => void;
   onOpenWorld: () => void;
+  onReloadWorld: () => void;
+  onResetZoom: () => void;
+  onZoomIn: () => void;
+  onZoomOut: () => void;
 }
 
 export function useKeyboardShortcuts(handlers: ShortcutHandlers) {
@@ -14,24 +20,56 @@ export function useKeyboardShortcuts(handlers: ShortcutHandlers) {
         return;
       }
 
-      if (e.ctrlKey && e.key === 'f') {
+      if (e.key.toLowerCase() === 'f') {
         e.preventDefault();
         handlers.onOpenBlocks();
         return;
       }
 
-      if (e.ctrlKey && e.key === 'o') {
+      if (e.key.toLowerCase() === 'o') {
         e.preventDefault();
         handlers.onOpenWorld();
         return;
       }
 
-      if (e.key === 'e' || e.key === 'E') {
+      if (e.shiftKey && e.key === 'G') {
+        e.preventDefault();
+        handlers.onFindPrevious();
+        return;
+      }
+
+      if (e.key === 'g') {
+        e.preventDefault();
+        handlers.onFindNext();
+        return;
+      }
+
+      if (e.key.toLowerCase() === 'h') {
+        e.preventDefault();
+        handlers.onHighlight();
+        return;
+      }
+
+      if (e.key.toLowerCase() === 'x') {
+        e.preventDefault();
+        handlers.onClearHighlight();
+        return;
+      }
+
+      if (e.key.toLowerCase() === 'e') {
         handlers.onZoomIn();
       }
 
-      if (e.key === 'c' || e.key === 'C') {
+      if (e.key.toLowerCase() === 'c') {
         handlers.onZoomOut();
+      }
+
+      if (e.key.toLowerCase() === 'z') {
+        handlers.onResetZoom();
+      }
+
+      if (e.key.toLowerCase() === 'r') {
+        handlers.onReloadWorld();
       }
     };
 

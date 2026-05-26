@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import firstBy from 'thenby';
 import { settings } from '../settings';
 
 export type BlockType = 'Tile' | 'Item' | 'Wall';
@@ -80,7 +81,7 @@ export function useBlockOptions() {
       });
     }
 
-    options.sort((a, b) => a.label.localeCompare(b.label));
+    options.sort(firstBy('label'));
     return options;
   }, []);
 }
