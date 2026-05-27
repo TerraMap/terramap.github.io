@@ -33,14 +33,8 @@ export function StatusBar({ isLoading, selectedTile, status }: StatusBarProps) {
       size="small"
       orientation="vertical"
       style={{
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        right: 0,
         padding: '4px 16px',
-        marginRight: 48,
         background: colorBgLayout,
-        zIndex: 1000,
       }}
     >
       <span style={{ flexShrink: 0 }}>

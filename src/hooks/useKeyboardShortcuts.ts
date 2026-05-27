@@ -1,17 +1,7 @@
 import { useEffect } from 'react';
+import { keyboardShortcuts, type ShortcutHandlers } from '../lib/keyboardShortcuts';
 
-interface ShortcutHandlers {
-  onClearHighlight: () => void;
-  onFindNext: () => void;
-  onFindPrevious: () => void;
-  onHighlight: () => void;
-  onOpenBlocks: () => void;
-  onOpenWorld: () => void;
-  onReloadWorld: () => void;
-  onResetZoom: () => void;
-  onZoomIn: () => void;
-  onZoomOut: () => void;
-}
+export type { ShortcutHandlers };
 
 export function useKeyboardShortcuts(handlers: ShortcutHandlers) {
   useEffect(() => {
@@ -20,56 +10,14 @@ export function useKeyboardShortcuts(handlers: ShortcutHandlers) {
         return;
       }
 
-      if (e.key.toLowerCase() === 'f') {
+      if (e.ctrlKey || e.altKey || e.metaKey) return;
+
+      const match = keyboardShortcuts.find(
+        s => s.key.toLowerCase() === e.key.toLowerCase() && !!s.shift === e.shiftKey
+      );
+      if (match) {
         e.preventDefault();
-        handlers.onOpenBlocks();
-        return;
-      }
-
-      if (e.key.toLowerCase() === 'o') {
-        e.preventDefault();
-        handlers.onOpenWorld();
-        return;
-      }
-
-      if (e.shiftKey && e.key === 'G') {
-        e.preventDefault();
-        handlers.onFindPrevious();
-        return;
-      }
-
-      if (e.key === 'g') {
-        e.preventDefault();
-        handlers.onFindNext();
-        return;
-      }
-
-      if (e.key.toLowerCase() === 'h') {
-        e.preventDefault();
-        handlers.onHighlight();
-        return;
-      }
-
-      if (e.key.toLowerCase() === 'x') {
-        e.preventDefault();
-        handlers.onClearHighlight();
-        return;
-      }
-
-      if (e.key.toLowerCase() === 'e') {
-        handlers.onZoomIn();
-      }
-
-      if (e.key.toLowerCase() === 'c') {
-        handlers.onZoomOut();
-      }
-
-      if (e.key.toLowerCase() === 'z') {
-        handlers.onResetZoom();
-      }
-
-      if (e.key.toLowerCase() === 'r') {
-        handlers.onReloadWorld();
+        handlers[match.handler]();
       }
     };
 

@@ -1,46 +1,41 @@
 import {
   CameraOutlined,
-  CloseOutlined,
-  ExpandOutlined,
-  GlobalOutlined,
-  HighlightOutlined,
-  LeftOutlined,
   MoonOutlined,
   QuestionCircleOutlined,
-  ReloadOutlined,
-  RightOutlined,
-  SearchOutlined,
-  SunOutlined,
-  ZoomInOutlined,
-  ZoomOutOutlined
+  SunOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Button, Drawer, Dropdown, Input, Space, Switch, Tooltip } from 'antd';
-import { useState } from 'react';
+import { Button, Dropdown, Space, Switch, Tag, Tooltip } from 'antd';
 import firstBy from 'thenby';
 import useThemeMenuItems from '../hooks/useThemeMenuItems';
 import { useThemeName } from '../hooks/useThemeName';
+import { getShortcutsByHandler } from '../lib/keyboardShortcuts';
 import { capitalizeFirstLetter } from '../lib/string';
 import type { BlockSet, WorldNpc } from '../types/settings';
 import ToolbarButton from './ToolbarButton';
 
+export interface DirectoryFiles { worldFiles: File[], mapFiles: File[] };
+
 interface NavbarProps {
+  directoryInputRef: React.RefObject<HTMLInputElement | null>;
   npcs: WorldNpc[];
   onClearHighlight: () => void;
+  onGoToTile: () => void;
+  onHideTargetIndicator: () => void;
   onHighlightAll: () => void;
   onNextBlock: () => void;
   onNpcSelect: (x: number, y: number) => void;
   onOpenBlocks: () => void;
-  // onPlayerFileSelect: (file: File) => void;
   onPrevBlock: () => void;
   onReloadWorld: () => void;
   onResetZoom: () => void;
   onSaveImage: () => void;
   onSetSelect: (index: number) => void;
+  onToggleWorldProps: () => void;
+  onWorldFilesFromDirectory: (directoryFiles: DirectoryFiles) => void;
   onWorldFileSelect: (file: File) => void;
   onZoomIn: () => void;
   onZoomOut: () => void;
-  // playerFileInputRef: React.RefObject<HTMLInputElement | null>;
   sets: BlockSet[];
   setTilePropsOpen: (value: boolean) => void;
   showWires: boolean;
@@ -52,22 +47,25 @@ interface NavbarProps {
 }
 
 export function Navbar({
+  directoryInputRef,
   npcs,
   onClearHighlight,
+  onGoToTile,
+  onHideTargetIndicator,
   onHighlightAll,
   onNextBlock,
   onNpcSelect,
   onOpenBlocks,
-  // onPlayerFileSelect,
   onPrevBlock,
   onReloadWorld,
   onResetZoom,
   onSaveImage,
   onSetSelect,
+  onToggleWorldProps,
+  onWorldFilesFromDirectory,
   onWorldFileSelect,
   onZoomIn,
   onZoomOut,
-  // playerFileInputRef,
   sets,
   setShowWires,
   setTilePropsOpen,
@@ -79,22 +77,23 @@ export function Navbar({
 }: NavbarProps) {
   const { isDarkMode, themeName } = useThemeName();
   const themeMenuItems = useThemeMenuItems();
-  const [worldPropsOpen, setWorldPropsOpen] = useState(false);
-  const [propsFilter, setPropsFilter] = useState('');
 
   const handleWorldFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) onWorldFileSelect(file);
   };
 
-  // const handlePlayerFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = e.target.files?.[0];
-  //   if (file) onPlayerFileSelect(file);
-  // };
+  const handleDirectoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+    const worldFiles = Array.from(files).filter(f => /\.wld(\.bak\d*)?$/.test(f.name));
+    const mapFiles = Array.from(files).filter(f => f.name.endsWith('.map'));
+    onWorldFilesFromDirectory({ worldFiles, mapFiles });
+  };
 
   const npcMenuItems: MenuProps['items'] = npcs.map((npc, i) => ({
     key: i,
-    label: npc.name !== npc.type ? `${npc.type} - ${npc.name}` : npc.name,
+    label: !npc.name ? npc.type : npc.name !== npc.type ? `${npc.type} - ${npc.name}` : npc.name,
     onClick: () => onNpcSelect(npc.x, npc.y),
   })).sort(firstBy('label'));
 
@@ -105,249 +104,182 @@ export function Navbar({
   }));
 
   return (
-    <Space wrap align="center">
-      <span style={{ marginRight: 8, fontFamily: 'inherit' }}>TerraMap</span>
+    <>
+      <Space wrap align="center">
+        <span style={{ marginRight: 8, fontFamily: 'inherit' }}>TerraMap</span>
 
-      <Space.Compact>
-        <ToolbarButton
-          keyboardShortcut="W"
-          icon={<GlobalOutlined />}
-          onClick={() => worldFileInputRef.current?.click()}
-          tooltip="Open Terraria World File">
-          {typeof worldProperties?.name === 'string' ? worldProperties.name : 'World'}
-        </ToolbarButton>
-        <input
-          ref={worldFileInputRef}
-          type="file"
-          accept=".wld"
-          onChange={handleWorldFileChange}
-          style={{ display: 'none' }}
-        />
-        {/* <ToolbarButton
-          keyboardShortcut="P"
-          icon={<CompassOutlined />}
-          onClick={() => playerFileInputRef.current?.click()}
-          tooltip="Open Terraria Player Map File">
-          Player
-        </ToolbarButton>
-        <Select defaultValue="No Spoilers" popupMatchSelectWidth={false}
-          style={{ width: 125 }}
-          onSelect={(value) => {
-            if (value === 'Player Map') {
-              playerFileInputRef.current?.click();
-            }
-          }}
-          options={[
-            {
-              key: 'No Spoilers',
-              label: 'No Spoilers',
-              value: 'No Spoilers'
-            },
-            {
-              key: 'All Spoilers',
-              label: 'All Spoilers',
-              value: 'All Spoilers'
-            },
-            {
-              key: 'Player Map uniqueId',
-              label:
-                <>
-                  Player Map {worldLoaded && worldProperties.uniqueId &&
-                    <Tag>
-                      {`${worldProperties.uniqueId}.map`}
-                    </Tag>
-                  }
-                </>,
-              value: 'Player Map'
-            },
-            {
-              key: 'Player Map id',
-              label:
-                <>
-                  Player Map {worldLoaded && worldProperties.id &&
-                    <Tag>
-                      {`${worldProperties.id}.map`}
-                    </Tag>
-                  }
-                </>,
-              value: 'Player Map'
-            }
-          ]}
-        />
-        <input
-          ref={playerFileInputRef}
-          type="file"
-          accept={worldLoaded && worldProperties.uniqueId ? `${worldProperties.uniqueId}.map` : ".map"}
-          onChange={handlePlayerFileChange}
-          style={{ display: 'none' }}
-        /> */}
-        {worldLoaded && (
+        <Space.Compact>
           <ToolbarButton
-            keyboardShortcut="R"
-            icon={<ReloadOutlined />}
-            onClick={onReloadWorld}
-            tooltip="Reload World & Player Map"
-          />)}
-      </Space.Compact>
+            shortcutHandler="onOpenFolder"
+            onClick={() => directoryInputRef.current?.click()}>
+            Folder
+          </ToolbarButton>
+          <ToolbarButton
+            shortcutHandler="onOpenWorld"
+            onClick={() => worldFileInputRef.current?.click()}>
+            {typeof worldProperties?.name === 'string' ? worldProperties.name : 'World'}
+          </ToolbarButton>
+          {worldLoaded && (
+            <ToolbarButton
+              shortcutHandler="onReloadWorld"
+              onClick={onReloadWorld}
+            />)}
+        </Space.Compact>
 
-      {worldLoaded && (
-        <>
-          <Space.Compact>
-            <Dropdown menu={{ items: setMenuItems }}>
-              <Button>Sets</Button>
-            </Dropdown>
+        {worldLoaded && (
+          <>
+            <Space.Compact>
+              <Dropdown menu={{ items: setMenuItems }}>
+                <Button>Sets</Button>
+              </Dropdown>
 
-            <ToolbarButton
-              keyboardShortcut="F"
-              icon={<SearchOutlined />}
-              onClick={onOpenBlocks}
-              tooltip="Choose Blocks">
-              Blocks
-            </ToolbarButton>
-            <ToolbarButton
-              keyboardShortcut={["Shift", "G"]}
-              icon={<LeftOutlined />}
-              onClick={onPrevBlock}
-              tooltip="Find Previous Block"
-            />
-            <ToolbarButton
-              keyboardShortcut="G"
-              icon={<RightOutlined />}
-              onClick={onNextBlock}
-              tooltip="Find Next Block"
-            />
-            <ToolbarButton
-              keyboardShortcut="H"
-              icon={<HighlightOutlined />}
-              onClick={onHighlightAll}
-              tooltip="Highlight All Matching Blocks"
-            />
-            <ToolbarButton
-              keyboardShortcut="X"
-              icon={<CloseOutlined />}
-              onClick={onClearHighlight}
-              tooltip="Clear Highlighted Blocks"
-            />
-          </Space.Compact>
+              <ToolbarButton
+                shortcutHandler="onOpenBlocks"
+                onClick={onOpenBlocks}>
+                Blocks
+              </ToolbarButton>
+              <ToolbarButton
+                shortcutHandler="onFindPrevious"
+                onClick={onPrevBlock}
+              />
+              <ToolbarButton
+                shortcutHandler="onFindNext"
+                onClick={onNextBlock}
+              />
+              <ToolbarButton
+                shortcutHandler="onHighlight"
+                onClick={onHighlightAll}
+              />
+              <ToolbarButton
+                shortcutHandler="onClearHighlight"
+                onClick={onClearHighlight}
+              />
+            </Space.Compact>
 
-          <Space.Compact>
-            <ToolbarButton
-              keyboardShortcut="E"
-              icon={<ZoomInOutlined />}
-              onClick={onZoomIn}
-              tooltip="Zoom In"
-            />
-            <ToolbarButton
-              keyboardShortcut="C"
-              icon={<ZoomOutOutlined />}
-              onClick={onZoomOut}
-              tooltip="Zoom Out"
-            />
-            <ToolbarButton
-              keyboardShortcut="Z"
-              icon={<ExpandOutlined />}
-              onClick={onResetZoom}
-              tooltip="Reset Zoom"
-            />
-            <ToolbarButton
-              icon={<CameraOutlined />}
-              onClick={onSaveImage}
-              tooltip="Save Image"
-            />
-          </Space.Compact>
+            <Space.Compact>
+              <ToolbarButton
+                shortcutHandler="onZoomIn"
+                onClick={onZoomIn}
+              />
+              <ToolbarButton
+                shortcutHandler="onZoomOut"
+                onClick={onZoomOut}
+              />
+              <ToolbarButton
+                shortcutHandler="onResetZoom"
+                onClick={onResetZoom}
+              />
+              <ToolbarButton
+                icon={<CameraOutlined />}
+                onClick={onSaveImage}
+                tooltip="Save Image"
+              />
+            </Space.Compact>
 
-          <Space.Compact>
-            <Dropdown menu={{
-              items: [
-                {
-                  key: "NPCs",
-                  label: "NPCs",
-                  children: npcMenuItems
-                },
-                {
-                  key: "Tile Info",
-                  label: tilePropsOpen ? "Hide Tile Info" : "Show Tile Info",
-                  onClick: () => setTilePropsOpen(!tilePropsOpen)
-                },
-                {
-                  key: "Theme",
-                  label: "Theme",
-                  children: themeMenuItems
-                },
-                {
-                  key: 'Wires',
-                  label: showWires ? "Hide Wires" : "Show Wires",
-                  onClick: () => setShowWires(!showWires)
-                },
-                {
-                  key: 'World Properties',
-                  label: 'World Properties',
-                  onClick: () => setWorldPropsOpen(true)
-                }
-              ]
-            }}>
-              <Button>View</Button>
-            </Dropdown>
+            <Space.Compact>
+              <Dropdown menu={{
+                items: [
+                  {
+                    key: "Go To Location",
+                    label: <>Go To Location <Tag><kbd>l</kbd></Tag></>,
+                    onClick: () => onGoToTile()
+                  },
+                  {
+                    key: "Hide Tile Indicator",
+                    label: <>Hide Tile Indicator <Tag><kbd>escape</kbd></Tag></>,
+                    onClick: () => onHideTargetIndicator()
+                  },
+                  {
+                    key: "NPCs",
+                    label: "NPCs",
+                    children: npcMenuItems
+                  },
+                  {
+                    key: "Theme",
+                    label: "Theme",
+                    children: themeMenuItems
+                  },
+                  {
+                    key: "Tile Info",
+                    label: <>Tile Info  <Switch checked={tilePropsOpen} /> <Tag><kbd>t</kbd></Tag></>,
+                    onClick: () => setTilePropsOpen(!tilePropsOpen)
+                  },
+                  {
+                    key: 'Wires',
+                    label: <>Wires <Switch checked={showWires} /> <Tag><kbd>w</kbd></Tag></>,
+                    onClick: () => setShowWires(!showWires)
+                  },
+                  {
+                    key: 'World Properties',
+                    label: <>World Properties <Tag><kbd>p</kbd></Tag></>,
+                    onClick: () => onToggleWorldProps()
+                  }
+                ]
+              }}>
+                <Button>View</Button>
+              </Dropdown>
+              <Dropdown menu={{ items: themeMenuItems }}>
+                <Button icon={isDarkMode ? <MoonOutlined /> : <SunOutlined />} />
+              </Dropdown>
+            </Space.Compact>
+
+            <Tooltip title={<Space>
+              {tilePropsOpen ? 'Hide Tile Info Pane' : 'Show Tile Info Pane'}
+              {getShortcutsByHandler('onToggleTileInfoPane').map(s => (
+                <Tag key={s.key}><kbd>{s.key}</kbd></Tag>
+              ))}
+            </Space>}>
+              <Switch
+                checkedChildren="Tile Info"
+                unCheckedChildren="Tile Info"
+                checked={tilePropsOpen}
+                onChange={(checked) => setTilePropsOpen(checked)}
+              />
+            </Tooltip>
+          </>
+        )
+        }
+
+        {
+          !worldLoaded && (
             <Tooltip title={`Theme - ${capitalizeFirstLetter(themeName)} Mode`}>
               <Dropdown menu={{ items: themeMenuItems }}>
                 <Button icon={isDarkMode ? <MoonOutlined /> : <SunOutlined />} />
               </Dropdown>
             </Tooltip>
-          </Space.Compact>
+          )
+        }
 
-          <Switch
-            checkedChildren="Tile Info"
-            unCheckedChildren="Tile Info"
-            checked={tilePropsOpen}
-            onChange={(checked) => setTilePropsOpen(checked)}
+        <Tooltip title="About">
+          <Button
+            type="link"
+            icon={<QuestionCircleOutlined />}
+            href="about.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ marginLeft: 'auto' }}
           />
-        </>
-      )}
+        </Tooltip>
 
+      </Space >
 
-      <Tooltip title="About">
-        <Button
-          type="link"
-          icon={<QuestionCircleOutlined />}
-          href="about.html"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ marginLeft: 'auto' }}
-        />
-      </Tooltip>
+      <input
+        ref={worldFileInputRef}
+        type="file"
+        accept=".wld"
+        onChange={handleWorldFileChange}
+        style={{ display: 'none', visibility: 'collapse', width: 0 }}
+      />
 
-      <Drawer
-        title={
-          <Space>
-            <Button size="small" type="text" icon={<CloseOutlined />} onClick={() => setWorldPropsOpen(false)} />
-            World Properties
-          </Space>}
-        mask={false}
-        open={worldPropsOpen}
-        closable={false}
-        zIndex={1100}
-      >
-        <Input
-          placeholder="Filter world properties..."
-          allowClear
-          value={propsFilter}
-          onChange={(e) => setPropsFilter(e.target.value)}
-          style={{ marginBottom: 12 }}
-        />
-        <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-          {Object.keys(worldProperties).filter(k => !k.startsWith('_')).sort()
-            .filter((key) => {
-              if (!propsFilter) return true;
-              const q = propsFilter.toLowerCase();
-              return key.toLowerCase().includes(q) || String(worldProperties[key]).toLowerCase().includes(q);
-            })
-            .map((key) => (
-              <li key={key} style={{ padding: '4px 0' }}>
-                <strong>{key}:</strong> {String(worldProperties[key])}
-              </li>
-            ))}
-        </ul>
-      </Drawer>
-    </Space>
+      <input
+        ref={directoryInputRef}
+        type="file"
+        // @ts-expect-error webkitdirectory is not in the React type definitions
+        webkitdirectory=""
+        onChange={handleDirectoryChange}
+        style={{ display: 'none', visibility: 'collapse', width: 0 }}
+      />
+
+    </>
   );
 }

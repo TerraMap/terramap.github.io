@@ -1,98 +1,92 @@
-import { Descriptions, Space } from "antd";
-import { paintColors } from "../lib/paintColors";
-import { slopeLabels } from "../lib/slopeLabels";
-import { getTileText } from "../lib/tileInfo";
-import type { TileFrame, WorldTile } from "../types/settings";
+import { Descriptions } from "antd";
+import { getTileDisplayFields } from "../lib/tileDisplayFields";
+import { getItemText } from "../lib/tileInfo";
+import type { WorldItem, WorldTile } from "../types/settings";
 
-export default function TileDescriptions(
-  {
-    selectedTile,
-    tileInfoItems
-  }: {
-    selectedTile: WorldTile;
-    tileInfoItems: string[];
-  }) {
-  const selectedTileParent = selectedTile?.info && 'parent' in selectedTile.info ? (selectedTile.info as TileFrame).parent : undefined;
+const entityTypeNames: Record<number, string> = {
+  0: 'Target Dummy',
+  1: 'Item Frame',
+  2: 'Logic Sensor',
+  3: 'Mannequin',
+  4: 'Weapon Rack',
+  5: 'Hat Rack',
+  6: 'Food Plate',
+  7: 'Pylon',
+  8: 'Display Jar',
+  9: 'Kite Anchor',
+  10: 'Critter Anchor',
+};
+
+function ItemList({ label, items }: { label?: string; items: WorldItem[] }) {
+  const nonEmpty = items.filter(i => i.id > 0);
+  if (!nonEmpty.length) return null;
+  return (
+    <div style={{ marginTop: 8 }}>
+      {label && (<strong>{label}</strong>)}
+      <ul style={{ padding: 0, margin: 0, marginLeft: 16 }}>
+        {nonEmpty.map((item, i) => (
+          <li key={i} style={{ padding: '4px 0' }}>{getItemText(item)}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function PairedItemList({ label, items, dyes }: { label?: string; items: WorldItem[]; dyes: WorldItem[] }) {
+  const pairs: { item: WorldItem; dye: WorldItem | undefined }[] = [];
+  for (let i = 0; i < items.length; i++) {
+    if (items[i].id > 0) {
+      pairs.push({ item: items[i], dye: dyes[i]?.id > 0 ? dyes[i] : undefined });
+    }
+  }
+  if (!pairs.length) return null;
+  return (
+    <div style={{ marginTop: 8 }}>
+      {label && (<strong>{label}</strong>)}
+      <ul style={{ padding: 0, margin: 0, marginLeft: 16 }}>
+        {pairs.map(({ item, dye }, i) => (
+          <li key={i} style={{ padding: '4px 0' }}>
+            {getItemText(item)}
+            {dye && <span style={{ opacity: 0.7 }}> — {getItemText(dye)}</span>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default function TileDescriptions({ selectedTile }: { selectedTile: WorldTile }) {
+  const fields = getTileDisplayFields(selectedTile);
+  const { chest, tileEntity } = selectedTile;
 
   return (
     <>
       <Descriptions column={1} colon={false}>
-        <Descriptions.Item>{getTileText(selectedTile)}</Descriptions.Item>
-        {typeof selectedTile.info?.Variety === 'string' && (
-          <Descriptions.Item label="Variety">{typeof selectedTile.info?.Variety === 'string' ? selectedTile.info.Variety : ''}</Descriptions.Item>
-        )}
-        {selectedTile.info?.Name && (
-          <Descriptions.Item label="Name">{selectedTile.info?.Name}</Descriptions.Item>
-        )}
-        {selectedTileParent?.Size && (
-          <Descriptions.Item label="Size">{selectedTileParent.Size ? selectedTileParent.Size?.replace(',', ' x ') : ''}</Descriptions.Item>
-        )}
-        {selectedTile.Type ? (
-          <Descriptions.Item label="Type">{selectedTile.Type}</Descriptions.Item>
-        ) : undefined}
-        {selectedTile.WallType && (
-          <Descriptions.Item label="Wall Type">{selectedTile.WallType}</Descriptions.Item>
-        )}
-        {((selectedTile.TextureU ?? 0) > 0 || (selectedTile.TextureV ?? 0) > 0) && (
-          <Descriptions.Item label="UV">{selectedTile.TextureU}, {selectedTile.TextureV}</Descriptions.Item>
-        )}
-        {selectedTileParent && (
-          <Descriptions.Item label="Parent">{selectedTileParent.Name}</Descriptions.Item>
-        )}
-        {selectedTile.slope && (
-          <Descriptions.Item label="Slope">{slopeLabels[selectedTile.slope] ?? selectedTile.slope}</Descriptions.Item>
-        )}
-        {selectedTile.tileColor && (
-          <Descriptions.Item label="Paint (Block)">{paintColors[selectedTile.tileColor] ?? selectedTile.tileColor}</Descriptions.Item>
-        )}
-        {selectedTile.WallColor && (
-          <Descriptions.Item label="Paint (Wall)">{paintColors[selectedTile.WallColor] ?? selectedTile.WallColor}</Descriptions.Item>
-        )}
-        {selectedTile.echoBlock && (
-          <Descriptions.Item label="Echo">Block</Descriptions.Item>
-        )}
-        {selectedTile.echoWall && (
-          <Descriptions.Item label="Echo">Wall</Descriptions.Item>
-        )}
-        {selectedTile.illuminantBlock && (
-          <Descriptions.Item label="Illuminant">Block</Descriptions.Item>
-        )}
-        {selectedTile.illuminantWall && (
-          <Descriptions.Item label="Illuminant">Wall</Descriptions.Item>
-        )}
-        <Descriptions.Item label="Location">{selectedTile.x}, {selectedTile.y}</Descriptions.Item>
-        <Descriptions.Item label="Wires">
-          <Space>
-            {selectedTile.IsRedWirePresent ? 'Red' : ''}
-            {selectedTile.IsGreenWirePresent ? 'Green' : ''}
-            {selectedTile.IsBlueWirePresent ? 'Blue' : ''}
-            {!selectedTile.IsRedWirePresent && !selectedTile.IsGreenWirePresent && !selectedTile.IsBlueWirePresent ? 'None' : ''}
-          </Space>
-        </Descriptions.Item>
-        {selectedTile.IsLiquidPresent && (
-          <Descriptions.Item label="Liquid">
-            <Space>
-              {selectedTile.IsLiquidHoney ? 'Honey' :
-                selectedTile.IsLiquidLava ? 'Lava' :
-                  selectedTile.Shimmer ? 'Shimmer' :
-                    'Water'}
-              {selectedTile.LiquidAmount && `(${selectedTile.LiquidAmount})`}
-            </Space>
-          </Descriptions.Item>
-        )}
-        {(tileInfoItems?.length ?? 0) > 0 && (
-          <Descriptions.Item label={selectedTile.chest ? `Chest: ${selectedTile.chest?.name}` : selectedTile.sign ? 'Sign' : ''} />
-        )}
+        {fields.map(({ label, value }, i) => (
+          <Descriptions.Item key={i} label={label || undefined}>{value}</Descriptions.Item>
+        ))}
       </Descriptions>
-      {(tileInfoItems?.length ?? 0) > 0 && (
-        <ul style={{ padding: 0, margin: 0, marginTop: 8 }}>
-          {tileInfoItems
-            .map((item) => (
-              <li key={item} style={{ padding: '4px 0' }}>
-                {item}
-              </li>
-            ))}
-        </ul>
+
+      {chest && chest.items.length > 0 && (
+        <ItemList items={chest.items} />
+      )}
+
+      {tileEntity && (
+        <>
+          {entityTypeNames[tileEntity.type] && (
+            <div style={{ marginTop: 8 }}>
+              <strong>{entityTypeNames[tileEntity.type]}</strong>
+            </div>
+          )}
+          {tileEntity.item && tileEntity.item.id > 0 && (
+            <ItemList items={[tileEntity.item]} />
+          )}
+          {tileEntity.items && tileEntity.dyes ? (
+            <PairedItemList items={tileEntity.items} dyes={tileEntity.dyes} />
+          ) : tileEntity.items ? (
+            <ItemList items={tileEntity.items} />
+          ) : null}
+        </>
       )}
     </>
   );

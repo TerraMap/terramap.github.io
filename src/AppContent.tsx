@@ -1,0 +1,285 @@
+import CloseOutlined from '@ant-design/icons/es/icons/CloseOutlined';
+import { App as AntApp, Button, Layout, Space, theme } from 'antd';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { BlockSelectorModal } from './components/BlockSelectorModal';
+import { CanvasContainer, CanvasContainerHandle } from './components/CanvasContainer';
+import { DirectoryPickerModal } from './components/DirectoryPickerModal';
+import { DropOverlay } from './components/DropOverlay';
+import { HelpPanel } from './components/HelpPanel';
+import { DirectoryFiles, Navbar } from './components/Navbar';
+import { StatusBar } from './components/StatusBar';
+import TileDescriptions from './components/TileDescriptions';
+import { WorldPropertiesDrawer } from './components/WorldPropertiesDrawer';
+import { useBlockHighlight } from './hooks/useBlockHighlight';
+import { useBlockOptions } from './hooks/useBlockOptions';
+import { useFileDrop } from './hooks/useFileDrop';
+import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
+import { useThemeName } from './hooks/useThemeName';
+import { useTileSelection } from './hooks/useTileSelection';
+import { useWorldLoader } from './hooks/useWorldLoader';
+import { readPlayerMap, type PlayerMap } from './lib/readPlayerMap';
+import { sets } from './sets';
+
+export default function AppContent() {
+  const canvasRef = useRef<CanvasContainerHandle>(null);
+  const directoryInputRef = useRef<HTMLInputElement>(null);
+  const worldFileInputRef = useRef<HTMLInputElement>(null);
+  const playerMapRef = useRef<PlayerMap | null>(null);
+  const { world, worldRef, status, loadWorldFile, isLoading } = useWorldLoader(canvasRef, () => {
+    if (playerMapRef.current) canvasRef.current?.renderFogOverlay(playerMapRef.current);
+  });
+  const blockOptions = useBlockOptions();
+
+  const [showWires, setShowWires] = useState(false);
+  const [siderCollapsed, setSiderCollapsed] = useState(true);
+  const [blocksModalOpen, setBlocksModalOpen] = useState(false);
+  const [selectedBlocks, setSelectedBlocks] = useState<string[]>([]);
+  const [worldFile, setWorldFile] = useState<File | null>(null);
+  const [worldPropsOpen, setWorldPropsOpen] = useState(false);
+  const [directoryFiles, setDirectoryFiles] = useState<DirectoryFiles>();
+  const [directoryPickerOpen, setDirectoryPickerOpen] = useState(false);
+  const [mapFile, setMapFile] = useState<File | null>(null);
+  const [playerMap, setPlayerMapState] = useState<PlayerMap | null>(null);
+  const setPlayerMap = useCallback((map: PlayerMap | null) => {
+    playerMapRef.current = map;
+    setPlayerMapState(map);
+  }, []);
+
+  const { token: { colorBgContainer, colorBgBase } } = theme.useToken();
+  const { isDarkMode } = useThemeName();
+  const antThemeName = isDarkMode ? 'dark' : 'light';
+
+  const {
+    selectedTile,
+    hoveredTile,
+    handleTileHover,
+    handleTileClick,
+    handleGoToTile,
+    hideTileIndicator,
+    selectTile,
+    findBlock,
+  } = useTileSelection(canvasRef, worldRef);
+
+  const {
+    getSelectedInfos,
+    handleHighlightAll,
+    handleClearHighlight,
+    handleSetSelect,
+  } = useBlockHighlight(canvasRef, worldRef, selectedBlocks, setShowWires);
+
+  const handleWorldFileSelect = useCallback((f: File) => {
+    setWorldFile(f);
+    loadWorldFile(f);
+  }, [loadWorldFile]);
+
+  const { isDragging, invalidDrop, dragProps } = useFileDrop(handleWorldFileSelect);
+
+  useEffect(() => {
+    if (worldFile?.name) {
+      document.title = `${worldFile.name} | TerraMap`;
+    } else {
+      document.title = 'TerraMap';
+    }
+  }, [worldFile]);
+
+  useEffect(() => {
+    const w = worldRef.current;
+    if (!w) return;
+    if (showWires) {
+      canvasRef.current?.renderWireOverlay(w);
+    } else {
+      canvasRef.current?.clearWireOverlay();
+    }
+  }, [showWires, world, worldRef]);
+
+  useEffect(() => {
+    if (playerMap && world) {
+      canvasRef.current?.renderFogOverlay(playerMap);
+    } else {
+      canvasRef.current?.clearFogOverlay();
+    }
+  }, [playerMap, world]);
+
+  const worldProperties = useMemo(() => {
+    if (!world) return {};
+    const props: Record<string, unknown> = {};
+    Object.keys(world).forEach((key) => {
+      const value = world[key];
+      const type = typeof value;
+      if (type === 'string' || type === 'number' || type === 'boolean' || type === 'bigint') {
+        props[key] = value;
+      }
+    });
+    return props;
+  }, [world]);
+
+  const handleWorldFilesFromDirectory = useCallback((directoryFiles: DirectoryFiles) => {
+    setDirectoryFiles(directoryFiles);
+    setDirectoryPickerOpen(true);
+  }, []);
+
+  const handleDirectoryWorldSelected = useCallback((file: File, parsedMap: PlayerMap | null) => {
+    setMapFile(parsedMap ? file : null);
+    setPlayerMap(parsedMap);
+    handleWorldFileSelect(file);
+  }, [handleWorldFileSelect, setPlayerMap]);
+
+  const handleReloadWorld = useCallback(async () => {
+    if (mapFile) {
+      const parsed = await readPlayerMap(mapFile);
+      setPlayerMap(parsed);
+    }
+    if (worldFile) loadWorldFile(worldFile);
+  }, [worldFile, mapFile, loadWorldFile, setPlayerMap]);
+
+  const handleSaveImage = useCallback(() => {
+    const w = worldRef.current;
+    if (w) canvasRef.current?.saveImage(`${w.name}.png`);
+  }, [worldRef]);
+
+  const handleFindNext = useCallback(() => findBlock(1, getSelectedInfos()), [findBlock, getSelectedInfos]);
+  const handleFindPrev = useCallback(() => findBlock(-1, getSelectedInfos()), [findBlock, getSelectedInfos]);
+  const handleSetSelectWrapped = useCallback((index: number) => {
+    const values = handleSetSelect(index, sets);
+    if (values) setSelectedBlocks(values);
+  }, [handleSetSelect]);
+
+  const shortcutHandlers = useMemo(() => ({
+    onClearHighlight: () => handleClearHighlight(),
+    onFindNext: handleFindNext,
+    onFindPrevious: handleFindPrev,
+    onGoToTile: () => handleGoToTile(),
+    onHideTileIndicator: () => hideTileIndicator(),
+    onHighlight: () => handleHighlightAll(),
+    onOpenBlocks: () => setBlocksModalOpen(true),
+    onOpenFolder: () => directoryInputRef.current?.click(),
+    onOpenWorld: () => worldFileInputRef.current?.click(),
+    onReloadWorld: () => handleReloadWorld(),
+    onResetZoom: () => canvasRef.current?.resetZoom(),
+    onToggleTileInfoPane: () => setSiderCollapsed((siderCollapsed) => !siderCollapsed),
+    onToggleWires: () => setShowWires((showWires) => !showWires),
+    onToggleWorldInfoPane: () => setWorldPropsOpen(v => !v),
+    onZoomIn: () => canvasRef.current?.zoomIn(),
+    onZoomOut: () => canvasRef.current?.zoomOut(),
+  }), [handleFindNext, handleFindPrev, handleGoToTile, hideTileIndicator, handleHighlightAll, handleClearHighlight, handleReloadWorld]);
+
+  useKeyboardShortcuts(shortcutHandlers);
+
+  return (
+    <AntApp style={{ height: '100%' }}>
+      <div
+        {...dragProps}
+        style={{ height: '100%', position: 'relative', backgroundColor: colorBgContainer }}
+      >
+        <DropOverlay isDragging={isDragging} invalidDrop={invalidDrop} />
+        <Layout style={{ height: '100%' }}>
+          <Layout.Header style={{ backgroundColor: colorBgBase, height: 'auto', lineHeight: 'normal', padding: '8px', display: 'flex', alignItems: 'center' }}>
+            <Navbar
+              directoryInputRef={directoryInputRef}
+              npcs={world?.npcs ?? []}
+              onClearHighlight={handleClearHighlight}
+              onHideTargetIndicator={hideTileIndicator}
+              onHighlightAll={handleHighlightAll}
+              onNextBlock={handleFindNext}
+              onNpcSelect={(x, y) => selectTile(x, y)}
+              onOpenBlocks={() => setBlocksModalOpen(true)}
+              onPrevBlock={handleFindPrev}
+              onReloadWorld={handleReloadWorld}
+              onResetZoom={() => canvasRef.current?.resetZoom()}
+              onSaveImage={handleSaveImage}
+              onSetSelect={handleSetSelectWrapped}
+              onGoToTile={handleGoToTile}
+              onToggleWorldProps={() => setWorldPropsOpen(v => !v)}
+              onWorldFilesFromDirectory={handleWorldFilesFromDirectory}
+              onWorldFileSelect={handleWorldFileSelect}
+              onZoomIn={() => canvasRef.current?.zoomIn()}
+              onZoomOut={() => canvasRef.current?.zoomOut()}
+              sets={sets}
+              setTilePropsOpen={(tilePropsOpen) => setSiderCollapsed(!tilePropsOpen)}
+              showWires={showWires}
+              setShowWires={setShowWires}
+              tilePropsOpen={!siderCollapsed}
+              worldFileInputRef={worldFileInputRef}
+              worldLoaded={!!world}
+              worldProperties={worldProperties}
+            />
+          </Layout.Header>
+          <Layout style={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
+            <Layout.Content
+              style={{
+                padding: 0,
+                margin: 0,
+                background: colorBgContainer,
+                overflow: 'auto',
+              }}>
+              {!world && !isLoading && <HelpPanel
+                worldFileInputRef={worldFileInputRef} directoryInputRef={directoryInputRef} />}
+              <div style={{ display: world || isLoading ? 'block' : 'none', height: '100%' }}>
+                <CanvasContainer
+                  ref={canvasRef}
+                  onTileHover={handleTileHover}
+                  onTileClick={handleTileClick}
+                  handleTileDoubleClick={hideTileIndicator}
+                />
+              </div>
+            </Layout.Content>
+            <Layout.Sider
+              collapsed={siderCollapsed}
+              collapsedWidth={0}
+              onCollapse={(collapsed) => setSiderCollapsed(collapsed)}
+              collapsible
+              reverseArrow
+              style={{
+                overflow: 'auto',
+                scrollbarWidth: 'thin',
+                zIndex: 1001
+              }}
+              theme={antThemeName}
+              width={200}
+            >
+              <div style={{ padding: 16 }}>
+                <Space style={{ marginBottom: 16 }}>
+                  <Button size="small" type="text" icon={<CloseOutlined />} onClick={() => setSiderCollapsed(true)} /> Tile Info
+                </Space>
+                {siderCollapsed || !selectedTile ? (<></>) : (
+                  <TileDescriptions selectedTile={selectedTile} />
+                )}
+              </div>
+            </Layout.Sider>
+          </Layout>
+          <Layout.Footer style={{ padding: 0 }}>
+            <StatusBar selectedTile={hoveredTile} status={status} isLoading={isLoading} />
+          </Layout.Footer>
+        </Layout>
+
+        <WorldPropertiesDrawer
+          open={worldPropsOpen}
+          onClose={() => setWorldPropsOpen(false)}
+          worldProperties={worldProperties}
+        />
+
+        <BlockSelectorModal
+          open={blocksModalOpen}
+          onClose={(ok) => {
+            setBlocksModalOpen(false);
+            if (ok) {
+              handleHighlightAll();
+            } else {
+              handleClearHighlight();
+            }
+          }}
+          options={blockOptions}
+          selectedValues={selectedBlocks}
+          onSelectionChange={setSelectedBlocks}
+        />
+
+        <DirectoryPickerModal
+          open={directoryPickerOpen}
+          directoryFiles={directoryFiles}
+          onClose={() => setDirectoryPickerOpen(false)}
+          onWorldSelected={handleDirectoryWorldSelected}
+        />
+      </div>
+    </AntApp>
+  );
+}

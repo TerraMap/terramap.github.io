@@ -2,6 +2,7 @@ import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 
 import { usePanZoom } from '../hooks/usePanZoom';
 import { getTileColor } from '../lib/mapRenderer';
 import { getTileInfo } from '../lib/tileInfo';
+import type { PlayerMap } from '../lib/readPlayerMap';
 import type { WorldData, WorldTile } from '../types/settings';
 
 export interface CanvasContainerHandle {
@@ -11,6 +12,8 @@ export interface CanvasContainerHandle {
   highlightTiles: (matchFn: ((tile: WorldTile) => boolean) | null, world: WorldData) => void;
   renderWireOverlay: (world: WorldData) => void;
   clearWireOverlay: () => void;
+  renderFogOverlay: (playerMap: PlayerMap) => void;
+  clearFogOverlay: () => void;
   drawSelection: (x: number, y: number) => void;
   panToTile: (x: number, y: number) => void;
   clearOverlay: () => void;
@@ -24,22 +27,25 @@ export interface CanvasContainerHandle {
 interface CanvasContainerProps {
   onTileHover?: (x: number, y: number) => void;
   onTileClick?: (x: number, y: number) => void;
+  handleTileDoubleClick?: () => void;
 }
 
 const BUFFER_WIDTH = 200;
 
 export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainerProps>(
-  function CanvasContainer({ onTileHover, onTileClick }, ref) {
+  function CanvasContainer({ onTileHover, onTileClick, handleTileDoubleClick }, ref) {
     const wrapperRef = useRef<HTMLDivElement>(null);
     const panzoomRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const overlayRef = useRef<HTMLCanvasElement>(null);
     const wireRef = useRef<HTMLCanvasElement>(null);
+    const fogRef = useRef<HTMLCanvasElement>(null);
     const selectionRef = useRef<HTMLCanvasElement>(null);
     const pixelsRef = useRef<Uint8ClampedArray | null>(null);
     const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
     const overlayCtxRef = useRef<CanvasRenderingContext2D | null>(null);
     const wireCtxRef = useRef<CanvasRenderingContext2D | null>(null);
+    const fogCtxRef = useRef<CanvasRenderingContext2D | null>(null);
     const selectionCtxRef = useRef<CanvasRenderingContext2D | null>(null);
     const isDraggingRef = useRef(false);
     const dragStartRef = useRef<{ x: number; y: number } | null>(null);
@@ -91,18 +97,38 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         isDraggingRef.current = false;
       };
 
+      const handleDblClick = () => {
+        handleTileDoubleClick?.();
+      };
+
       el.addEventListener('mousemove', handleMouseMove);
       el.addEventListener('pointerdown', handlePointerDown);
       el.addEventListener('pointermove', handlePointerMove);
       el.addEventListener('pointerup', handlePointerUp);
+      el.addEventListener('dblclick', handleDblClick);
 
       return () => {
         el.removeEventListener('mousemove', handleMouseMove);
         el.removeEventListener('pointerdown', handlePointerDown);
         el.removeEventListener('pointermove', handlePointerMove);
         el.removeEventListener('pointerup', handlePointerUp);
+        el.removeEventListener('dblclick', handleDblClick);
       };
-    }, [getMousePos, onTileHover, onTileClick]);
+    }, [getMousePos, onTileHover, onTileClick, handleTileDoubleClick]);
+
+    const fitToContainer = useCallback(() => {
+      const el = panzoomRef.current;
+      const canvas = canvasRef.current;
+      const wrapper = wrapperRef.current;
+      if (!el || !canvas || !wrapper) return;
+      const displayWidth = wrapper.clientWidth;
+      const ratio = canvas.height / canvas.width;
+      const displayHeight = displayWidth * ratio;
+      for (const c of [el, canvas, overlayRef.current!, wireRef.current!, fogRef.current!, selectionRef.current!]) {
+        c.style.width = `${displayWidth}px`;
+        c.style.height = `${displayHeight}px`;
+      }
+    }, []);
 
     useImperativeHandle(ref, () => ({
       setWorldSize(width: number, height: number) {
@@ -110,6 +136,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         const canvas = canvasRef.current!;
         const overlay = overlayRef.current!;
         const wire = wireRef.current!;
+        const fog = fogRef.current!;
         const selection = selectionRef.current!;
 
         el.style.width = `${width}px`;
@@ -120,27 +147,18 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         overlay.height = height;
         wire.width = width;
         wire.height = height;
+        fog.width = width;
+        fog.height = height;
         selection.width = width;
         selection.height = height;
 
         ctxRef.current = canvas.getContext('2d')!;
         overlayCtxRef.current = overlay.getContext('2d')!;
         wireCtxRef.current = wire.getContext('2d')!;
+        fogCtxRef.current = fog.getContext('2d')!;
         selectionCtxRef.current = selection.getContext('2d')!;
 
-        const displayWidth = window.innerWidth * 0.99;
-        const ratio = height / width;
-        const displayHeight = displayWidth * ratio;
-        el.style.width = `${displayWidth}px`;
-        el.style.height = `${displayHeight}px`;
-        canvas.style.width = `${displayWidth}px`;
-        canvas.style.height = `${displayHeight}px`;
-        overlay.style.width = `${displayWidth}px`;
-        overlay.style.height = `${displayHeight}px`;
-        wire.style.width = `${displayWidth}px`;
-        wire.style.height = `${displayHeight}px`;
-        selection.style.width = `${displayWidth}px`;
-        selection.style.height = `${displayHeight}px`;
+        fitToContainer();
 
         pixelsRef.current = new Uint8ClampedArray(4 * BUFFER_WIDTH * height);
       },
@@ -260,6 +278,32 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         wireCtxRef.current!.clearRect(0, 0, wire.width, wire.height);
       },
 
+      renderFogOverlay(playerMap: PlayerMap) {
+        const ctx = fogCtxRef.current!;
+        const fog = fogRef.current!;
+        ctx.clearRect(0, 0, fog.width, fog.height);
+
+        const w = fog.width;
+        const h = fog.height;
+        const imageData = ctx.createImageData(w, h);
+        const data = imageData.data;
+
+        for (let x = 0; x < playerMap.width && x < w; x++) {
+          for (let y = 0; y < playerMap.height && y < h; y++) {
+            if (!playerMap.explored[x * playerMap.height + y]) {
+              const pxIdx = (y * w + x) * 4;
+              data[pxIdx + 3] = 255;
+            }
+          }
+        }
+        ctx.putImageData(imageData, 0, 0);
+      },
+
+      clearFogOverlay() {
+        const fog = fogRef.current;
+        fogCtxRef.current?.clearRect(0, 0, fog?.width ?? 0, fog?.height ?? 0);
+      },
+
       drawSelection(x: number, y: number) {
         const ctx = selectionCtxRef.current!;
         const selection = selectionRef.current!;
@@ -295,6 +339,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         const canvas = canvasRef.current!;
         const overlay = overlayRef.current!;
         const wire = wireRef.current!;
+        const fog = fogRef.current!;
         const selection = selectionRef.current!;
         const newCanvas = document.createElement("canvas");
         const newCtx = newCanvas.getContext("2d")!;
@@ -303,6 +348,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         newCtx.drawImage(canvas, 0, 0);
         newCtx.drawImage(overlay, 0, 0);
         newCtx.drawImage(wire, 0, 0);
+        newCtx.drawImage(fog, 0, 0);
         newCtx.drawImage(selection, 0, 0);
         newCanvas.toBlob((blob) => {
           if (blob) {
@@ -322,7 +368,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
 
       zoomIn() { zoomIn(); },
       zoomOut() { zoomOut(); },
-      resetZoom() { reset(); },
+      resetZoom() { fitToContainer(); reset(); },
     }));
 
     return (
@@ -331,6 +377,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
           <canvas ref={canvasRef} style={{ position: 'absolute', left: 0, top: 0, imageRendering: 'pixelated' }} />
           <canvas ref={overlayRef} style={{ position: 'absolute', left: 0, top: 0, imageRendering: 'pixelated' }} />
           <canvas ref={wireRef} style={{ position: 'absolute', left: 0, top: 0, imageRendering: 'pixelated' }} />
+          <canvas ref={fogRef} style={{ position: 'absolute', left: 0, top: 0, imageRendering: 'pixelated' }} />
           <canvas ref={selectionRef} style={{ position: 'absolute', left: 0, top: 0, imageRendering: 'pixelated' }} />
         </div>
       </div>

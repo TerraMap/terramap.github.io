@@ -1,7 +1,9 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
+import type { TileEntity } from '../../src/types/settings';
 import { DataStream } from '../DataStream';
+
 
 const postMessageMock = vi.fn();
 (globalThis as unknown as Record<string, unknown>).self = {
@@ -173,6 +175,84 @@ describe('WorldLoader integration', () => {
     it('should post tile data', () => {
       const tileMessages = postMessageMock.mock.calls.filter(c => c[0].tiles);
       expect(tileMessages.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('Builders_Workshop.wld', () => {
+    let world: WorldRecord;
+
+    beforeAll(() => {
+      const result = parseWorld('Builders_Workshop.wld');
+      world = result.world;
+    });
+
+    it('should parse successfully', () => {
+      expect(world.version).toBeGreaterThan(0);
+      expect(world.name).toBeTruthy();
+      expect(world.width).toBeGreaterThan(0);
+      expect(world.height).toBeGreaterThan(0);
+    });
+
+    it('should parse worldSurfaceY correctly', () => {
+      expect(world.worldSurfaceY).toBeGreaterThan(0);
+      expect(world.worldSurfaceY).toBeLessThan(world.height);
+    });
+
+    it('should post tile data', () => {
+      const tileMessages = postMessageMock.mock.calls.filter(c => c[0].tiles);
+      expect(tileMessages.length).toBeGreaterThan(0);
+    });
+
+    it('should have a tile entity with dyes', () => {
+      const entitiesMsg = postMessageMock.mock.calls.find(c => c[0].tileEntities);
+      expect(entitiesMsg).toBeDefined();
+
+      const tileEntities = entitiesMsg![0].tileEntities as Map<{ x: number; y: number }, TileEntity>;
+      let dyeEntity: TileEntity | undefined;
+
+      for (const [, entity] of tileEntities) {
+        if (entity.dyes?.some(d => d.id !== 0)) {
+          dyeEntity = entity;
+          break;
+        }
+      }
+      expect(dyeEntity).toBeDefined();
+      console.log('Tile entity with dyes:', JSON.stringify(dyeEntity));
+    });
+
+    it('should have a painted tile', () => {
+      const tileMessages = postMessageMock.mock.calls.filter(c => c[0].tiles);
+      let paintedTile: { tileColor: number; x: number; y: number } | undefined;
+
+      for (const call of tileMessages) {
+        for (const tile of call[0].tiles) {
+          if (tile.tileColor) {
+            paintedTile = tile;
+            break;
+          }
+        }
+        if (paintedTile) break;
+      }
+
+      expect(paintedTile).toBeDefined();
+      expect(paintedTile!.tileColor).toBeGreaterThan(0);
+      console.log('Tile with paint:', JSON.stringify(paintedTile));
+    });
+
+    it('should find hat racks with items', () => {
+      const entitiesMsg = postMessageMock.mock.calls.find(c => c[0].tileEntities);
+      const tileEntities = entitiesMsg![0].tileEntities as Map<{ x: number; y: number }, TileEntity>;
+      const hatRacks: TileEntity[] = [];
+      for (const [, entity] of tileEntities) {
+        if (entity.type === 5 && entity.items?.some(i => i.id > 0)) {
+          hatRacks.push(entity);
+        }
+      }
+      console.log(`Hat racks with items: ${hatRacks.length}`);
+      for (const hr of hatRacks) {
+        console.log(JSON.stringify(hr));
+      }
+      expect(hatRacks.length).toBeGreaterThan(0);
     });
   });
 });

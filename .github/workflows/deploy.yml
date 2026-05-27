@@ -36,6 +36,7 @@ jobs:
           path: dist
 
   deploy:
+    if: github.repository == 'TerraMap/terramap.github.io'
     needs: build
     runs-on: ubuntu-latest
     environment:

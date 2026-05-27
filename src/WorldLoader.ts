@@ -168,10 +168,11 @@ function readHeader(reader: DataStream, world: WorldRecord): void {
     uuidBytes.push(reader.readUint8());
   }
   const hex = uuidBytes.map(b => b.toString(16).padStart(2, '0'));
+  // .NET Guid stores the first three groups in little-endian byte order
   world.uniqueId = [
-    hex.slice(0, 4).join(''),
-    hex.slice(4, 6).join(''),
-    hex.slice(6, 8).join(''),
+    hex.slice(0, 4).reverse().join(''),
+    hex.slice(4, 6).reverse().join(''),
+    hex.slice(6, 8).reverse().join(''),
     hex.slice(8, 10).join(''),
     hex.slice(10, 16).join(''),
   ].join('-');
@@ -604,10 +605,10 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
           tile.IsRedWirePresent = true;
         }
         if ((b2 & 4) == 4) {
-          tile.IsGreenWirePresent = true;
+          tile.IsBlueWirePresent = true;
         }
         if ((b2 & 8) == 8) {
-          tile.IsBlueWirePresent = true;
+          tile.IsGreenWirePresent = true;
         }
         b5 = (b2 & 112) >> 4;
         if (b5 !== 0) {

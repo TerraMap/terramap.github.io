@@ -1,53 +1,102 @@
-import { Typography } from 'antd';
+import { FolderOutlined, GlobalOutlined } from '@ant-design/icons';
+import { Space, Table, Typography } from 'antd';
+import firstBy from 'thenby';
+import { useDetectOS, type PathEntry } from '../hooks/useDetectOS';
+import { keyboardShortcuts } from '../lib/keyboardShortcuts';
+import PathOsTabs from './PathOsTabs';
+import ToolbarButton from './ToolbarButton';
 
 const { Title, Paragraph, Text } = Typography;
 
-export function HelpPanel() {
+const worldPaths: PathEntry[] = [
+  { os: 'linux', label: '', path: '~/.local/share/Terraria' },
+  { os: 'linux', label: '(Steam Cloud)', path: '~/.local/share/Steam/userdata/{YOUR_USER_ID}/105600/remote', copyPath: '~/.local/share/Steam/userdata/' },
+  { os: 'macos', label: '', path: '~/Library/Application Support/Terraria' },
+  { os: 'macos', label: '(Steam Cloud)', path: '~/Library/Application Support/Steam/userdata/{YOUR_USER_ID}/105600/remote', copyPath: '~/Library/Application Support/Steam/userdata/' },
+  { os: 'windows', label: '', path: '%USERPROFILE%\\Documents\\My Games\\Terraria\\Worlds' },
+  { os: 'windows', label: '(Steam Cloud)', path: 'C:\\Program Files (x86)\\Steam\\userdata\\{YOUR_USER_ID}\\105600\\remote', copyPath: 'C:\\Program Files (x86)\\Steam\\userdata\\' },
+];
+
+export function HelpPanel(
+  { directoryInputRef, worldFileInputRef }:
+    {
+      directoryInputRef: React.RefObject<HTMLInputElement | null>;
+      worldFileInputRef: React.RefObject<HTMLInputElement | null>;
+    }
+) {
+  const userOS = useDetectOS();
+
   return (
-    <div style={{ padding: '80px 32px 32px', maxWidth: 700, margin: '0 auto' }}>
+    <div style={{ padding: '0px 32px 32px', maxWidth: 900, margin: '0 auto' }}>
       <Typography>
         <Title level={3}>Getting Started</Title>
         <Paragraph>
           TerraMap is an interactive Terraria world map viewer.
         </Paragraph>
         <Paragraph>
-          Click the <Text code strong underline>World</Text> button to select a Terraria <Text code>.wld</Text> file from your computer.
+          To use TerraMap, please start by doing one of the following:
         </Paragraph>
-        <Paragraph>
-          World files are usually located at:
-        </Paragraph>
+
+        To avoid spoilers:
+
         <ul>
-          <li><Text strong>Linux (Steam Cloud)</Text>: <Text code>~/.local/share/Steam/userdata/&#123;YOUR_USER_ID&#125;/105600/remote/worlds</Text></li>
-          <li><Text strong>Linux</Text>: <Text code>~/.local/share/Terraria/Worlds</Text></li>
-          <li><Text strong>MacOS (Steam Cloud)</Text>: <Text code>~/Library/Application Support/Steam/userdata/&#123;YOUR_USER_ID&#125;/105600/remote/worlds</Text></li>
-          <li><Text strong>MacOS</Text>: <Text code>~/Library/Application Support/Terraria/Worlds</Text></li>
-          <li><Text strong>Windows (Steam Cloud)</Text>: <Text code>C:\Program Files (x86)\Steam\userdata\&#123;YOUR_USER_ID&#125;\105600\remote\worlds</Text></li>
-          <li><Text strong>Windows</Text>: <Text code>%USERPROFILE%\Documents\My Games\Terraria\Worlds</Text></li>
+          <li>
+            Click the <ToolbarButton
+              shortcutHandler="onOpenFolder"
+              icon={<FolderOutlined />}
+              onClick={() => directoryInputRef.current?.click()}
+            >
+              Folder
+            </ToolbarButton> button to select a folder that contains world and player map files from your computer.<br />
+            <b>Note</b>: you may see a warning about {"Uploading"} files. The files are read in your browser and will not actually be uploaded.
+          </li>
         </ul>
-        {/* <Paragraph>
-          Then choose <Text code>All Spoilers</Text> or click <Text code>Player Map</Text> and browse to your player .map file.
-        </Paragraph>
-        <Paragraph>
-          Player map files are usually located at:
-        </Paragraph>
+
+        {"If you don't care about spoilers:"}
+
         <ul>
-          <li><Text strong>Linux (Steam Cloud)</Text>: <Text code>~/.local/share/Steam/userdata/&#123;YOUR_USER_ID&#125;/105600/remote/worlds</Text></li>
-          <li><Text strong>Linux</Text>: <Text code>~/.local/share/Terraria/Worlds</Text></li>
-          <li><Text strong>MacOS (Steam Cloud)</Text>: <Text code>~/Library/Application Support/Steam/userdata/&#123;YOUR_USER_ID&#125;/105600/remote/worlds</Text></li>
-          <li><Text strong>MacOS</Text>: <Text code>~/Library/Application Support/Terraria/Players/</Text></li>
-          <li><Text strong>Windows (Steam Cloud)</Text>: <Text code>C:\Program Files (x86)\Steam\userdata\&#123;YOUR_USER_ID&#125;\105600\remote\worlds</Text></li>
-          <li><Text strong>Windows</Text>: <Text code>%USERPROFILE%\Documents\My Games\Terraria\Worlds</Text></li>
-        </ul> */}
+          <li>
+            Click the <ToolbarButton
+              shortcutHandler="onOpenWorld"
+              icon={<GlobalOutlined />}
+              onClick={() => worldFileInputRef.current?.click()}
+            >
+              World
+            </ToolbarButton> button to select a Terraria <Text code>.wld</Text> file from your computer.
+          </li>
+          <li>Drag and drop a Terraria <Text code>.wld</Text> file from your computer into this page.</li>
+        </ul>
         <Paragraph>
-          Once loaded, you can pan and zoom the map, search for blocks, view chest contents, and more.
+          Terraria world and player map files are usually located at (click to copy path):
+        </Paragraph>
+        <PathOsTabs userOS={userOS} paths={worldPaths} />
+        <Paragraph>
+          Once a world file is loaded, you can pan and zoom the map, search for blocks & items, view chest contents, and more.
         </Paragraph>
         <Title level={4}>Keyboard Shortcuts</Title>
-        <Paragraph>
-          <Text keyboard>E</Text> Zoom in<br />
-          <Text keyboard>C</Text> Zoom out<br />
-          <Text keyboard>Ctrl+F</Text> Open block search
-        </Paragraph>
       </Typography>
-    </div>
+
+      <Table
+        dataSource={keyboardShortcuts}
+        rowKey="label"
+        pagination={false}
+        size="small"
+        columns={[
+          {
+            dataIndex: 'key',
+            title: "Shortcut",
+            render: (key: string, { shift }) => <kbd>{shift ? `Shift + ${key}` : key}</kbd>,
+            sorter: firstBy('key').thenBy('shift')
+          },
+          {
+            dataIndex: 'label',
+            title: "Command",
+            render: (label: string, { icon }) => <Space>{icon ?? <span style={{ paddingLeft: 14 }} />}{label}</Space>,
+            sorter: firstBy('label')
+          }
+        ]}
+      />
+
+    </div >
   );
 }

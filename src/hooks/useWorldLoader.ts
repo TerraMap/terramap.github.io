@@ -2,7 +2,7 @@ import { useCallback, useRef, useState } from 'react';
 import type { CanvasContainerHandle } from '../components/CanvasContainer';
 import type { WorldData } from '../types/settings';
 
-export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle | null>) {
+export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle | null>, onWorldSized?: () => void) {
   const [world, setWorld] = useState<WorldData | null>(null);
   const [status, setStatus] = useState<string | undefined>('Please choose a Terraria .wld file');
   const [isLoading, setIsLoading] = useState(false);
@@ -40,6 +40,7 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
         w.npcs = [];
         worldRef.current = w;
         canvasRef.current?.setWorldSize(w.width, w.height);
+        onWorldSized?.();
         setStatus(statusRef.current);
       }
 
