@@ -27,6 +27,15 @@ jobs:
 
       - run: npm ci
       - run: npm test
+      - name: Run benchmarks
+        run: |
+          {
+            echo '## Benchmark Results'
+            echo ''
+            echo '```'
+            npx vitest bench --run 2>&1 | sed -n '/^ ✓/,$ p'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
       - run: npm run build
         env:
           BASE_PATH: ${{ github.event.repository.name == format('{0}.github.io', github.repository_owner) && '/' || format('/{0}/', github.event.repository.name) }}
