@@ -1,42 +1,145 @@
+import convert from 'color-convert';
 import { settings } from '../settings';
-import { tileColors, liquidColors, wallColors } from '../MapHelper';
+import { tileColors, liquidColors, wallColors, type Color } from '../MapHelper';
 import type { WorldData, WorldTile } from '../types/settings';
+import { paintColors } from './paintColors';
 
-export function getTileColor(y: number, tile: WorldTile, world: WorldData): { r: number; g: number; b: number } | undefined {
-  if (tile.IsActive && tile.Type != null && tileColors.length > tile.Type) {
-    return tileColors[tile.Type][0];
+/**
+ * Directly blend two colors by weighted average.
+ */
+function blendColor(base: Color, tint: Color, strength: number): Color {
+  return {
+    r: base.r + Math.round(strength * (tint.r - base.r)),
+    g: base.g + Math.round(strength * (tint.g - base.g)),
+    b: base.b + Math.round(strength * (tint.b - base.b)),
   }
+}
 
-  if (tile.IsLiquidPresent) {
-    if (tile.IsLiquidLava)
-      return liquidColors[1];
-    else if (tile.IsLiquidHoney)
-      return liquidColors[2];
-    else if (tile.Shimmer)
-      return liquidColors[3];
-    else
-      return liquidColors[0];
+function doBlendHue(base: Color, tint: Color): Color {
+  // Colorspace conversions are slow.
+  const baseHsv = convert.rgb.hsv(base.r, base.g, base.b);
+  const tintHsv = convert.rgb.hsv(tint.r, tint.g, tint.b);
+  const hueMatch = convert.hsv.rgb(
+    tintHsv[0],
+    // Only copy saturation if grayscale.
+    tintHsv[1] === 0 ? 0 : baseHsv[1],
+    baseHsv[2]
+  );
+  return blendColor(
+    { r: hueMatch[0], g: hueMatch[1], b: hueMatch[2] },
+    tint,
+    0.3
+  );
+}
+
+const hueBlendCache = new Map<string, Color>();
+
+/**
+ * Blend colors, shifting hue to match supplied tint.
+ */
+function blendHue(base: Color, tint: Color): Color {
+  const key = `${base.r}-${base.g}-${base.b}-${tint.r}-${tint.g}-${tint.b}`;
+  let color = hueBlendCache.get(key);
+  if (color == null) {
+    color = doBlendHue(base, tint);
+    hueBlendCache.set(key, color);
   }
+  return color;
+}
 
-  if (tile.IsWallPresent && tile.WallType != null) {
-    const color = wallColors[tile.WallType][0];
-    if (!color || (color.r === 0 && color.g === 0 && color.b === 0)) {
-      const wall = settings.Walls.find((w) => w.Id === tile.WallType!.toString());
-      if (wall && wall.Color) return wall.Color as { r: number; g: number; b: number };
+function getLayerColor(y: number, world: WorldData): Color {
+  if (y < world.worldSurfaceY) {
+    // TODO: if remix seed:
+    //    return { r: 0, g: 0, b: 0 };
+    // if world version < 315:
+    //   return { r: 132, g: 170, b: 248 };
+    return blendColor(
+      { r: 55, g: 58, b: 248 }, // Space.
+      { r: 150, g: 180, b: 251 }, // Surface.
+      y / world.worldSurfaceY
+    );
+  } else if (y < world.rockLayerY) {
+    return { r: 88, g: 61, b: 46 }; // Underground.
+  } else if (y < world.hellLayerY) {
+    return { r: 74, g: 67, b: 60 }; // Cavern.
+  } else {
+    return { r: 0, g: 0, b: 0 }; // Underworld.
+  }
+}
+
+function getWallColor(tile: WorldTile): Color | undefined {
+  if (tile.WallType == null) {
+    return undefined;
+  }
+  let color = wallColors[tile.WallType][0];
+  if (!color || (color.r === 0 && color.g === 0 && color.b === 0)) {
+    const wallTypeStr = tile.WallType.toString();
+    const wall = settings.Walls.find((w) => w.Id === wallTypeStr);
+    if (wall != null && wall.Color != null && typeof wall.Color != 'string') {
+      color = wall.Color;
     }
+  }
+  if (!color || tile.WallColor == null) {
     return color;
   }
+  const paint = paintColors[tile.WallColor];
+  return paint == null ? color : blendHue(color, paint);
+}
 
-  if (y < world.worldSurfaceY)
-    return { r: 132, g: 170, b: 248 };
+function getBlockColor(tile: WorldTile): Color | undefined {
+  if (tile.Type == null || tile.Type >= tileColors.length) {
+    return undefined;
+  }
+  let color = tileColors[tile.Type][0];
+  if (!color) {
+    return color;
+  }
+  if (!tile.IsActive) {
+    // Darken actuated blocks.
+    color = blendColor(color, { r: 0, g: 0, b: 0 }, 0.3);
+  }
+  if (tile.tileColor == null) {
+    return color;
+  }
+  const paint = paintColors[tile.tileColor];
+  return paint == null ? color : blendHue(color, paint);
+}
 
-  if (y < world.rockLayerY)
-    return { r: 88, g: 61, b: 46 };
+function getLiquidColor(tile: WorldTile): Color {
+  if (tile.IsLiquidLava) {
+    return liquidColors[1];
+  } else if (tile.IsLiquidHoney) {
+    return liquidColors[2];
+  } else if (tile.Shimmer) {
+    return liquidColors[3];
+  } else {
+    return liquidColors[0];
+  }
+}
 
-  if (y < world.hellLayerY)
-    return { r: 74, g: 67, b: 60 };
+export function getTileColor(y: number, tile: WorldTile, world: WorldData): Color {
+  const bColor = getBlockColor(tile);
+  if (bColor != null && !tile.echoBlock) {
+    return bColor;
+  }
 
-  return { r: 0, g: 0, b: 0 };
+  let color: Color;
+  if (tile.IsLiquidPresent) {
+    color = getLiquidColor(tile);
+  } else {
+    const wColor = getWallColor(tile);
+    if (wColor != null) {
+      color = tile.echoWall ? blendColor(getLayerColor(y, world), wColor, 0.1) : wColor;
+    } else {
+      color = getLayerColor(y, world);
+    }
+  }
+
+  if (bColor != null) {
+    color = blendColor(color, bColor, 0.15); // Echo coat block.
+  }
+
+  return color;
 }
 
 export function drawSelectionIndicator(

@@ -1,6 +1,6 @@
 import { settings } from '../settings';
 import type { TileFrame, WorldTile } from '../types/settings';
-import { paintColors } from './paintColors';
+import { paintNames } from './paintColors';
 import { slopeLabels } from './slopeLabels';
 
 export interface TileDisplayField {
@@ -48,11 +48,11 @@ export function getTileDisplayFields(tile: WorldTile): TileDisplayField[] {
   }
 
   if (tile.tileColor) {
-    fields.push({ label: 'Paint (Block)', value: paintColors[tile.tileColor] ?? String(tile.tileColor) });
+    fields.push({ label: 'Paint (Block)', value: paintNames[tile.tileColor] ?? String(tile.tileColor) });
   }
 
   if (tile.WallColor) {
-    fields.push({ label: 'Paint (Wall)', value: paintColors[tile.WallColor] ?? String(tile.WallColor) });
+    fields.push({ label: 'Paint (Wall)', value: paintNames[tile.WallColor] ?? String(tile.WallColor) });
   }
 
   if (tile.echoBlock) fields.push({ label: 'Echo', value: 'Block' });
