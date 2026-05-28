@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { describe, expect, it, vi } from 'vitest';
 import { DataStream } from '../DataStream';
-import { getTileColor } from '../lib/mapRenderer';
+import { clearCaches, getTileColor } from '../lib/mapRenderer';
 import { getTileInfo } from '../lib/tileInfo';
 import type { WorldData, WorldTile } from '../types/settings';
 
@@ -74,10 +74,11 @@ function collectTiles(): WorldTile[] {
   return tiles;
 }
 
-function time(fn: () => void, runs = 3): number {
+function time(fn: () => void, { runs = 3, beforeEach }: { runs?: number; beforeEach?: () => void } = {}): number {
   fn(); // warmup — JIT compiles without affecting measurement
   let total = 0;
   for (let i = 0; i < runs; i++) {
+    beforeEach?.();
     const start = performance.now();
     fn();
     total += performance.now() - start;
@@ -122,7 +123,9 @@ describe('Performance', () => {
         for (let i = 0; i < tileCount; i++) {
           getTileInfo(tiles[i]);
         }
-      });
+      }
+      , { beforeEach: clearCaches }
+    );
 
       rows.push(
         `| ${label.padEnd(20)} | ${tileCount.toLocaleString().padStart(14)} | ${String(parseMs).padStart(10)} | ${String(colorMs).padStart(10)} | ${String(infoMs).padStart(10)} |`,

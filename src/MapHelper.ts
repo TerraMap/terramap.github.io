@@ -8,11 +8,19 @@ export function rgb(r: number, g: number, b: number): Color {
   return { r, g, b };
 }
 
+function colorMult(color: Color, scalar: number): Color {
+  return {
+    r: Math.round(scalar * color.r),
+    g: Math.round(scalar * color.g),
+    b: Math.round(scalar * color.b),
+  };
+}
+
 // Decompiled from the Terraria source code
 
-export const tileColors = new Array(753);
-export const liquidColors = new Array(4);
-export const wallColors = new Array(367);
+export const tileColors = new Array<Color[]>(753);
+export const liquidColors = new Array<Color>(4);
+export const wallColors = new Array<Color[]>(367);
 
 for (let i = 0; i < tileColors.length; i++) {
   tileColors[i] = new Array(13);
@@ -1044,8 +1052,8 @@ tileColors[745][0] = rgb(120, 114, 108);
 tileColors[746][0] = rgb(122, 78, 21);
 tileColors[747][0] = rgb(231, 178, 28);
 tileColors[748][0] = rgb(2, 114, 206);
-tileColors[749][0] = tileColors[138][0] * 0.95;
-tileColors[750][0] = tileColors[48][0] * 0.95;
+tileColors[749][0] = colorMult(tileColors[138][0], 0.95);
+tileColors[750][0] = colorMult(tileColors[48][0], 0.95);
 
 liquidColors[0] = rgb(9, 61, 191);
 liquidColors[1] = rgb(253, 32, 3);
@@ -1416,22 +1424,22 @@ wallColors[322][0] = rgb(91, 108, 130);
 wallColors[347][0] = rgb(100, 65, 130);
 wallColors[348][0] = rgb(120, 75, 75);
 const num7 = 0.5;
-wallColors[351][0] = tileColors[734][0] * num7;
-wallColors[352][0] = tileColors[735][0] * num7;
-wallColors[353][0] = tileColors[170][0] * num7;
-wallColors[354][0] = tileColors[736][0] * num7;
-wallColors[355][0] = tileColors[737][0] * num7;
-wallColors[356][0] = tileColors[738][0] * num7;
-wallColors[357][0] = tileColors[739][0] * num7;
-wallColors[358][0] = tileColors[741][0] * num7;
-wallColors[359][0] = tileColors[742][0] * num7;
+wallColors[351][0] = colorMult(tileColors[734][0], num7);
+wallColors[352][0] = colorMult(tileColors[735][0], num7);
+wallColors[353][0] = colorMult(tileColors[170][0], num7);
+wallColors[354][0] = colorMult(tileColors[736][0], num7);
+wallColors[355][0] = colorMult(tileColors[737][0], num7);
+wallColors[356][0] = colorMult(tileColors[738][0], num7);
+wallColors[357][0] = colorMult(tileColors[739][0], num7);
+wallColors[358][0] = colorMult(tileColors[741][0], num7);
+wallColors[359][0] = colorMult(tileColors[742][0], num7);
 wallColors[360][0] = rgb(73, 93, 116);
-wallColors[361][0] = tileColors[744][0] * num7;
-wallColors[362][0] = tileColors[745][0] * num7;
-wallColors[363][0] = tileColors[746][0] * num7;
-wallColors[364][0] = tileColors[747][0] * num7;
-wallColors[365][0] = tileColors[748][0] * num7;
-wallColors[366][0] = tileColors[749][0] * num7;
+wallColors[361][0] = colorMult(tileColors[744][0], num7);
+wallColors[362][0] = colorMult(tileColors[745][0], num7);
+wallColors[363][0] = colorMult(tileColors[746][0], num7);
+wallColors[364][0] = colorMult(tileColors[747][0], num7);
+wallColors[365][0] = colorMult(tileColors[748][0], num7);
+wallColors[366][0] = colorMult(tileColors[749][0], num7);
 
 const array5 = new Array(256);
 const color5 = rgb(50, 40, 255);

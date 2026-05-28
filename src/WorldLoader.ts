@@ -635,16 +635,16 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
       }
       if (b3 > 0) {
         if ((b3 & 2) == 2) {
-          tile.illuminantBlock = true;
-        }
-        if ((b3 & 4) == 4) {
           tile.echoBlock = true;
         }
+        if ((b3 & 4) == 4) {
+          tile.echoWall = true;
+        }
         if ((b3 & 8) == 8) {
-          tile.illuminantWall = true;
+          tile.illuminantBlock = true;
         }
         if ((b3 & 16) == 16) {
-          tile.echoWall = true;
+          tile.illuminantWall = true;
         }
       }
       b5 = (b4 & 192) >> 6;
