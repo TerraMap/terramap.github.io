@@ -75,6 +75,7 @@ function collectTiles(): WorldTile[] {
 }
 
 function time(fn: () => void, runs = 3): number {
+  fn(); // warmup — JIT compiles without affecting measurement
   let total = 0;
   for (let i = 0; i < runs; i++) {
     const start = performance.now();
