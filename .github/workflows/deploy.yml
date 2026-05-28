@@ -27,14 +27,12 @@ jobs:
 
       - run: npm ci
       - run: npm test
-      - name: Run benchmarks
+      - name: Run performance tests
         run: |
           {
-            echo '## Benchmark Results'
+            echo '## Performance Results'
             echo ''
-            echo '```'
-            npx vitest bench --run 2>&1 | sed -n '/^ ✓/,$ p'
-            echo '```'
+            npx vitest run -c vitest.perf.config.ts --reporter=verbose 2>&1 | sed -n '/^|/p'
           } >> "$GITHUB_STEP_SUMMARY"
       - run: npm run build
         env:

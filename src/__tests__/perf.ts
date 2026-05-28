@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import { bench, describe, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { DataStream } from '../DataStream';
 import { getTileColor } from '../lib/mapRenderer';
 import { getTileInfo } from '../lib/tileInfo';
@@ -74,6 +74,16 @@ function collectTiles(): WorldTile[] {
   return tiles;
 }
 
+function time(fn: () => void, runs = 3): number {
+  let total = 0;
+  for (let i = 0; i < runs; i++) {
+    const start = performance.now();
+    fn();
+    total += performance.now() - start;
+  }
+  return Math.round(total / runs);
+}
+
 const worldFiles = [
   { name: 'SmCrptClsc1_4_5_0.wld', label: 'small classic' },
   { name: 'jagged_rocks.wld', label: 'jagged rocks' },
@@ -81,63 +91,54 @@ const worldFiles = [
   { name: 'Builders_Workshop.wld', label: 'builders workshop' },
 ];
 
-describe('World parsing', () => {
+describe('Performance', () => {
+  const rows: string[] = [];
+
   for (const { name, label } of worldFiles) {
-    bench(`parse ${label} (${name})`, () => {
-      parseWorld(name);
-    }, { iterations: 10, warmupIterations: 2 });
+    it(`${label} (${name})`, { timeout: 30_000 }, () => {
+      const parseMs = time(() => parseWorld(name));
+
+      const { world } = parseWorld(name);
+      const tiles = collectTiles();
+      const worldData = {
+        ...world,
+        tiles,
+        chests: [],
+        signs: [],
+        npcs: [],
+        tileEntities: new Map(),
+      } as unknown as WorldData;
+      const tileCount = tiles.length;
+
+      const colorMs = time(() => {
+        const height = worldData.height;
+        for (let i = 0; i < tileCount; i++) {
+          getTileColor(i % height, tiles[i], worldData);
+        }
+      });
+
+      const infoMs = time(() => {
+        for (let i = 0; i < tileCount; i++) {
+          getTileInfo(tiles[i]);
+        }
+      });
+
+      rows.push(
+        `| ${label.padEnd(20)} | ${tileCount.toLocaleString().padStart(14)} | ${String(parseMs).padStart(10)} | ${String(colorMs).padStart(10)} | ${String(infoMs).padStart(10)} |`,
+      );
+
+      expect(parseMs).toBeGreaterThan(0);
+    });
   }
-});
 
-describe('Tile color computation', () => {
-  for (const { name, label } of worldFiles) {
-    const { world } = parseWorld(name);
-    const tiles = collectTiles();
-    const worldData = {
-      ...world,
-      tiles,
-      chests: [],
-      signs: [],
-      npcs: [],
-      tileEntities: new Map(),
-    } as unknown as WorldData;
-
-    bench(`getTileColor all tiles - ${label} (${tiles.length.toLocaleString()} tiles)`, () => {
-      const height = worldData.height;
-      for (let i = 0; i < tiles.length; i++) {
-        const y = i % height;
-        getTileColor(y, tiles[i], worldData);
-      }
-    }, { iterations: 5, warmupIterations: 1 });
-  }
-});
-
-describe('getTileInfo computation', () => {
-  for (const { name, label } of worldFiles) {
-    parseWorld(name);
-    const tiles = collectTiles();
-
-    bench(`getTileInfo all tiles - ${label} (${tiles.length.toLocaleString()} tiles)`, () => {
-      for (let i = 0; i < tiles.length; i++) {
-        getTileInfo(tiles[i]);
-      }
-    }, { iterations: 5, warmupIterations: 1 });
-  }
-});
-
-describe('Memory usage', () => {
-  for (const { name, label } of worldFiles) {
-    bench(`heap after parse - ${label}`, () => {
-      global.gc?.();
-      const before = process.memoryUsage().heapUsed;
-      parseWorld(name);
-      const after = process.memoryUsage().heapUsed;
-      const deltaKB = Math.round((after - before) / 1024);
-      if (deltaKB > 0) {
-        // Vitest bench doesn't have a native way to report custom metrics,
-        // but the delta is visible in the iteration timing context.
-        void deltaKB;
-      }
-    }, { iterations: 3, warmupIterations: 1 });
-  }
+  it('summary', () => {
+    const header = [
+      '',
+      `| ${'World'.padEnd(20)} | ${'Tiles'.padStart(14)} | ${'Parse (ms)'.padStart(10)} | ${'Color (ms)'.padStart(10)} | ${'Info (ms)'.padStart(10)} |`,
+      `| ${'-'.repeat(20)} | ${'-'.repeat(14)} | ${'-'.repeat(10)} | ${'-'.repeat(10)} | ${'-'.repeat(10)} |`,
+      ...rows,
+      '',
+    ];
+    console.log(header.join('\n'));
+  });
 });
