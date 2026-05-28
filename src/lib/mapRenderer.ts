@@ -32,13 +32,14 @@ function doBlendHue(base: Color, tint: Color): Color {
   );
 }
 
-const hueBlendCache = new Map<string, Color>();
+const hueBlendCache = new Map<number, Color>();
 
 /**
  * Blend colors, shifting hue to match supplied tint.
  */
 function blendHue(base: Color, tint: Color): Color {
-  const key = `${base.r}-${base.g}-${base.b}-${tint.r}-${tint.g}-${tint.b}`;
+  // Risk of hash collision, but massively faster than stringification.
+  const key = (base.r << 23) ^ (base.g << 18) ^ (base.b << 14) ^ (tint.r << 9) ^ (tint.g << 4) ^ tint.b;
   let color = hueBlendCache.get(key);
   if (color == null) {
     color = doBlendHue(base, tint);
@@ -47,17 +48,25 @@ function blendHue(base: Color, tint: Color): Color {
   return color;
 }
 
+const skyGradientCache = new Map<number, Color>();
+
 function getLayerColor(y: number, world: WorldData): Color {
   if (y < world.worldSurfaceY) {
     // TODO: if remix seed:
     //    return { r: 0, g: 0, b: 0 };
     // if world version < 315:
     //   return { r: 132, g: 170, b: 248 };
-    return blendColor(
-      { r: 55, g: 58, b: 248 }, // Space.
-      { r: 150, g: 180, b: 251 }, // Surface.
-      y / world.worldSurfaceY
-    );
+    const key = (world.worldSurfaceY << 12) ^ y;
+    let color = skyGradientCache.get(key);
+    if (color == null) {
+      color = blendColor(
+        { r: 55, g: 58, b: 248 }, // Space.
+        { r: 150, g: 180, b: 251 }, // Surface.
+        y / world.worldSurfaceY
+      );
+      skyGradientCache.set(key, color);
+    }
+    return color;
   } else if (y < world.rockLayerY) {
     return { r: 88, g: 61, b: 46 }; // Underground.
   } else if (y < world.hellLayerY) {
