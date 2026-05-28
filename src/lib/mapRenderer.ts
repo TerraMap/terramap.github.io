@@ -52,10 +52,11 @@ const skyGradientCache = new Map<number, Color>();
 
 function getLayerColor(y: number, world: WorldData): Color {
   if (y < world.worldSurfaceY) {
-    // TODO: if remix seed:
-    //    return { r: 0, g: 0, b: 0 };
-    // if world version < 315:
-    //   return { r: 132, g: 170, b: 248 };
+    if (world.remixWorld > 0) {
+      return { r: 0, g: 0, b: 0 };
+    } else if (world.version < 315) {
+      return { r: 132, g: 170, b: 248 };
+    }
     const key = (world.worldSurfaceY << 12) ^ y;
     let color = skyGradientCache.get(key);
     if (color == null) {

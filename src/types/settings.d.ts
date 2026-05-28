@@ -136,6 +136,8 @@ export interface WorldData {
   rockLayerY: number;
   hellLayerY: number;
   name: string;
+  version: number;
+  remixWorld: number;
   tiles: WorldTile[];
   chests: Chest[];
   signs: Sign[];
