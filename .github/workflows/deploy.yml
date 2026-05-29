@@ -32,7 +32,7 @@ jobs:
           {
             echo '## Performance Results'
             echo ''
-            npx vitest run -c vitest.perf.config.ts --reporter=verbose 2>&1
+            NO_COLOR=1 npx vitest run -c vitest.perf.config.ts --reporter=verbose 2>&1
           } >> "$GITHUB_STEP_SUMMARY"
       - run: npm run build
         env:
