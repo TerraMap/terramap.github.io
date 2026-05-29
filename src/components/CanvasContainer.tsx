@@ -307,8 +307,8 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
       drawSelection(x: number, y: number) {
         const ctx = selectionCtxRef.current!;
         const selection = selectionRef.current!;
-        const cx = x + 0.5;
-        const cy = y + 0.5;
+        const cx = Math.round(x) + 0.5;
+        const cy = Math.round(y) + 0.5;
         const targetWidth = 39;
         const half = targetWidth / 2;
 
