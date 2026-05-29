@@ -1,6 +1,6 @@
 import convert from 'color-convert';
 import { liquidColors, tileColors, wallColors, type Color } from '../MapHelper';
-import { settings } from '../settings';
+import { walls } from '../walls';
 import type { WorldData, WorldTile } from '../types/settings';
 import { paintColors } from './paintColors';
 
@@ -89,7 +89,7 @@ function getWallColor(tile: WorldTile): Color | undefined {
   let color = wallColors[tile.WallType][0];
   if (!color || (color.r === 0 && color.g === 0 && color.b === 0)) {
     const wallTypeStr = tile.WallType.toString();
-    const wall = settings.Walls.find((w) => w.Id === wallTypeStr);
+    const wall = walls.find((w) => w.Id === wallTypeStr);
     if (wall != null && wall.Color != null && typeof wall.Color != 'string') {
       color = wall.Color;
     }

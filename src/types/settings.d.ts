@@ -12,7 +12,7 @@ export interface TileInfo {
   Name: string;
   Size?: string;
   Frames?: TileFrame[];
-  CheckTypes?: string[];
+
   isTile?: boolean;
   [key: string]: unknown;
 }
@@ -39,13 +39,6 @@ export interface ItemPrefixInfo {
   Name: string;
 }
 
-export interface Settings {
-  Tiles: TileInfo[];
-  Items: ItemInfo[];
-  Walls: WallInfo[];
-  Npcs: NpcInfo[];
-  ItemPrefix: ItemPrefixInfo[];
-}
 
 export interface WorldItem {
   id: number;

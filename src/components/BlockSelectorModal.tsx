@@ -1,4 +1,4 @@
-import { Button, Col, Modal, Row, Segmented, Select, Space, Tag } from 'antd';
+import { Button, Col, Modal, Row, Segmented, Select, Space, Tag, theme } from 'antd';
 import type { RefSelectProps } from 'antd/es/select';
 import { useMemo, useRef, useState } from 'react';
 import type { BlockOption, BlockType } from '../hooks/useBlockOptions';
@@ -27,7 +27,10 @@ export function BlockSelectorModal({
   onSelectionChange,
 }: BlockSelectorModalProps) {
   const [filter, setFilter] = useState<FilterType>('All');
+  const [searchValue, setSearchValue] = useState('');
   const selectRef = useRef<RefSelectProps>(null);
+
+  const { token: { colorWarning, colorPrimary, colorSuccess } } = theme.useToken();
 
   const filteredOptions = useMemo(() => {
     const filtered = filter === 'All' ? options : options.filter(o => o.type === filter);
@@ -38,6 +41,15 @@ export function BlockSelectorModal({
       id: o.id,
     }));
   }, [options, filter]);
+
+  const selectedOptionsByValue = useMemo(() => {
+    const map = new Map<string, { type: BlockType; id: string }>();
+    for (const o of options) {
+      const key = `${o.value}|${o.dataU ?? ''}|${o.dataV ?? ''}|${o.frameIndex ?? ''}`;
+      map.set(key, { type: o.type, id: o.id });
+    }
+    return map;
+  }, [options]);
 
   return (
     <Modal
@@ -56,12 +68,15 @@ export function BlockSelectorModal({
             <Segmented
               block
               value={filter}
-              onChange={setFilter as (value: string | number) => void}
+              onChange={(v) => {
+                setFilter(v as FilterType);
+                selectRef.current?.focus();
+              }}
               options={[
-                { value: 'All', label: 'All' },
-                { value: 'Tile', label: 'Tiles' },
-                { value: 'Item', label: 'Items' },
-                { value: 'Wall', label: 'Walls' },
+                { value: 'All', label: <span>All</span> },
+                { value: 'Tile', label: <span style={{ color: colorPrimary }}>Tiles</span> },
+                { value: 'Item', label: <span style={{ color: colorSuccess }}>Items</span> },
+                { value: 'Wall', label: <span style={{ color: colorWarning }}>Walls</span> },
               ]}
             />
           </Col>
@@ -87,6 +102,8 @@ export function BlockSelectorModal({
           placeholder={filter === 'All' ? "Search tiles, items, and walls..." : filter === 'Item' ? 'Search items...' : filter === 'Tile' ? 'Search tiles...' : 'Search walls...'}
           showSearch={{
             autoClearSearchValue: false,
+            searchValue,
+            onSearch: setSearchValue,
             filterOption: (input, option) => {
               const inputLower = input.toLowerCase();
               if ((option?.label as string ?? '').toLowerCase().includes(inputLower)) return true;
@@ -94,6 +111,19 @@ export function BlockSelectorModal({
               if (`${option?.type} ${option?.id}`.toLowerCase().includes(inputLower)) return true;
               return false;
             },
+          }}
+          tagRender={({ value, closable, onClose, label }) => {
+            const info = selectedOptionsByValue.get(value as string);
+            return (
+              <Tag
+                closable={closable}
+                onClose={onClose}
+                color={info ? typeColors[info.type] : undefined}
+                style={{ marginInlineEnd: 4 }}
+              >
+                {label} ({info?.type})
+              </Tag>
+            );
           }}
           optionRender={(option) => (
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

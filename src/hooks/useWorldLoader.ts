@@ -132,5 +132,5 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
     worker.postMessage(file);
   }, [canvasRef]);
 
-  return { world, worldRef, status, isLoading, loadWorldFile };
+  return { world, worldRef, status, isWorldLoading: isLoading, loadWorldFile };
 }

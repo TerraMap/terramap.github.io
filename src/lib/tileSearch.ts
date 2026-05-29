@@ -1,4 +1,4 @@
-import { settings } from '../settings';
+import { tiles } from '../tiles';
 import type { TileFrame, TileInfo, ItemInfo, WallInfo, WorldTile } from '../types/settings';
 
 export type SearchableInfo = TileFrame | TileInfo | ItemInfo | WallInfo;
@@ -64,7 +64,7 @@ export function isTileOrigin(tile: WorldTile | null): boolean {
 }
 
 export function getTileInfoFrom(id: string, u: string | undefined, v: string | undefined): TileFrame | TileInfo | undefined {
-  const tileInfo = settings.Tiles[Number(id)];
+  const tileInfo = tiles[Number(id)];
 
   if (tileInfo && tileInfo.Frames) {
     for (let frameIndex = 0; frameIndex < tileInfo.Frames.length; frameIndex++) {

@@ -18,6 +18,9 @@ export interface DirectoryFiles { worldFiles: File[], mapFiles: File[] };
 
 interface NavbarProps {
   directoryInputRef: React.RefObject<HTMLInputElement | null>;
+  isHighlighting: boolean;
+  isSearching: boolean;
+  isWorldLoading: boolean;
   npcs: WorldNpc[];
   onClearHighlight: () => void;
   onGoToTile: () => void;
@@ -32,14 +35,14 @@ interface NavbarProps {
   onSaveImage: () => void;
   onSetSelect: (index: number) => void;
   onToggleWorldProps: () => void;
-  onWorldFilesFromDirectory: (directoryFiles: DirectoryFiles) => void;
   onWorldFileSelect: (file: File) => void;
+  onWorldFilesFromDirectory: (directoryFiles: DirectoryFiles) => void;
   onZoomIn: () => void;
   onZoomOut: () => void;
   sets: BlockSet[];
+  setShowWires: (value: boolean) => void;
   setTilePropsOpen: (value: boolean) => void;
   showWires: boolean;
-  setShowWires: (value: boolean) => void;
   tilePropsOpen: boolean;
   worldFileInputRef: React.RefObject<HTMLInputElement | null>;
   worldLoaded: boolean;
@@ -48,6 +51,9 @@ interface NavbarProps {
 
 export function Navbar({
   directoryInputRef,
+  isHighlighting,
+  isSearching,
+  isWorldLoading,
   npcs,
   onClearHighlight,
   onGoToTile,
@@ -62,8 +68,8 @@ export function Navbar({
   onSaveImage,
   onSetSelect,
   onToggleWorldProps,
-  onWorldFilesFromDirectory,
   onWorldFileSelect,
+  onWorldFilesFromDirectory,
   onZoomIn,
   onZoomOut,
   sets,
@@ -110,23 +116,26 @@ export function Navbar({
 
         <Space.Compact>
           <ToolbarButton
+            loading={isWorldLoading}
             shortcutHandler="onOpenFolder"
             onClick={() => directoryInputRef.current?.click()}>
             Folder
           </ToolbarButton>
           <ToolbarButton
+            loading={isWorldLoading}
             shortcutHandler="onOpenWorld"
             onClick={() => worldFileInputRef.current?.click()}>
             {typeof worldProperties?.name === 'string' ? worldProperties.name : 'World'}
           </ToolbarButton>
           {worldLoaded && (
             <ToolbarButton
+              loading={isWorldLoading}
               shortcutHandler="onReloadWorld"
               onClick={onReloadWorld}
             />)}
         </Space.Compact>
 
-        {worldLoaded && (
+        {!isWorldLoading && worldLoaded && (
           <>
             <Space.Compact>
               <Dropdown menu={{ items: setMenuItems }}>
@@ -141,18 +150,22 @@ export function Navbar({
               <ToolbarButton
                 shortcutHandler="onFindPrevious"
                 onClick={onPrevBlock}
+                loading={isSearching}
               />
               <ToolbarButton
                 shortcutHandler="onFindNext"
                 onClick={onNextBlock}
+                loading={isSearching}
               />
               <ToolbarButton
                 shortcutHandler="onHighlight"
                 onClick={onHighlightAll}
+                loading={isHighlighting}
               />
               <ToolbarButton
                 shortcutHandler="onClearHighlight"
                 onClick={onClearHighlight}
+                loading={isHighlighting}
               />
             </Space.Compact>
 
@@ -237,8 +250,7 @@ export function Navbar({
               />
             </Tooltip>
           </>
-        )
-        }
+        )}
 
         {
           !worldLoaded && (

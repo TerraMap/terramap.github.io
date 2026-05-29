@@ -22,6 +22,7 @@ export default function ToolbarButton(
   {
     children,
     disabled,
+    loading,
     shortcutHandler,
     icon,
     onClick,
@@ -30,6 +31,7 @@ export default function ToolbarButton(
     {
       children?: ReactNode;
       disabled?: boolean;
+      loading?: boolean;
       shortcutHandler?: keyof ShortcutHandlers;
       icon?: ReactNode;
       onClick: () => void;
@@ -45,7 +47,7 @@ export default function ToolbarButton(
       {shortcutHandler && <ShortcutTag handler={shortcutHandler} />}
     </Space>
   }>
-    <Button icon={resolvedIcon} onClick={onClick} disabled={disabled}>
+    <Button icon={resolvedIcon} onClick={onClick} disabled={disabled} loading={loading}>
       {children}
     </Button>
   </Tooltip>);

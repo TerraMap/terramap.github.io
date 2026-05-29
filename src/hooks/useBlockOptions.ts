@@ -1,6 +1,8 @@
 import { useMemo } from 'react';
 import firstBy from 'thenby';
-import { settings } from '../settings';
+import { items } from '../items';
+import { tiles } from '../tiles';
+import { walls } from '../walls';
 
 export type BlockType = 'Tile' | 'Item' | 'Wall';
 
@@ -18,8 +20,8 @@ export function useBlockOptions() {
   return useMemo(() => {
     const options: BlockOption[] = [];
 
-    for (let i = 0; i < settings.Tiles.length; i++) {
-      const tile = settings.Tiles[i];
+    for (let i = 0; i < tiles.length; i++) {
+      const tile = tiles[i];
       tile.isTile = true;
 
       options.push({
@@ -59,8 +61,8 @@ export function useBlockOptions() {
       }
     }
 
-    for (let i = 0; i < settings.Items.length; i++) {
-      const item = settings.Items[i];
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
       item.isItem = true;
       options.push({
         value: `item${item.Id}`,
@@ -70,8 +72,8 @@ export function useBlockOptions() {
       });
     }
 
-    for (let i = 0; i < settings.Walls.length; i++) {
-      const wall = settings.Walls[i];
+    for (let i = 0; i < walls.length; i++) {
+      const wall = walls[i];
       wall.isWall = true;
       options.push({
         value: `wall${wall.Id}`,

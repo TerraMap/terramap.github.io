@@ -4,5 +4,13 @@
     "lib": ["ES2020", "WebWorker"],
     "types": []
   },
-  "include": ["src/WorldLoader.ts", "src/DataStream.ts", "src/MapHelper.ts", "src/settings.ts"]
+  "include": [
+    "src/WorldLoader.ts", 
+    "src/DataStream.ts", 
+    "src/MapHelper.ts", 
+    "src/tiles.ts", 
+    "src/walls.ts", 
+    "src/items.ts", 
+    "src/npcs.ts", "src/itemPrefixes.ts"
+  ]
 }

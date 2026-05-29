@@ -1,8 +1,9 @@
 /// <reference lib="webworker" />
 
 import { DataStream } from './DataStream';
-import { settings } from './settings';
+import { npcs } from './npcs';
 import type { Chest, TileEntity, WorldItem, WorldNpc, WorldTile } from './types/settings';
+import { walls } from './walls';
 
 interface WorldRecord {
   [key: string]: unknown;
@@ -27,7 +28,7 @@ const start = function (file: File): void {
   const fileReader = new FileReaderSync();
 
   self.postMessage({
-    'status': "Reading world file..."
+    status: "Reading world file..."
   });
 
   const buffer = fileReader.readAsArrayBuffer(file);
@@ -39,7 +40,7 @@ const start = function (file: File): void {
   const world = {} as WorldRecord;
 
   self.postMessage({
-    'status': "Loading world file..."
+    status: "Loading world file..."
   });
 
   readWorldFile(ds, world);
@@ -94,21 +95,21 @@ function readWorldFile(reader: DataStream, world: WorldRecord): void {
   seekToPosition(position++, positions, reader, 'entities');
 
   self.postMessage({
-    'done': true
+    done: true
   });
   console.log(world)
 }
 
 function readFileFormatHeader(reader: DataStream, world: WorldRecord): number[] {
   self.postMessage({
-    'status': "Reading world version..."
+    status: "Reading world version..."
   });
 
   world.version = reader.readInt32();
 
   self.postMessage({
-    'status': "Reading world header...",
-    'version': world.version,
+    status: "Reading world header...",
+    version: world.version,
   });
 
   // read file metadata
@@ -511,8 +512,8 @@ function readHeader(reader: DataStream, world: WorldRecord): void {
 
 function readTiles(reader: DataStream, world: WorldRecord): void {
   self.postMessage({
-    'status': "Reading world tiles...",
-    'world': world,
+    status: "Reading world tiles...",
+    world: world,
   });
 
   // 	world.tiles = [world.width, world.height];
@@ -576,7 +577,7 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
       }
       if ((b4 & 4) == 4) {
         tile.WallType = reader.readUint8();
-        if (tile.WallType >= settings.Walls.length) {
+        if (tile.WallType >= walls.length) {
           tile.WallType = 0;
         }
         tile.IsWallPresent = true;
@@ -628,7 +629,7 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
         if ((b & 64) == 64) {
           b5 = reader.readUint8();
           tile.WallType = (b5 << 8 | (tile.WallType ?? 0));
-          if (tile.WallType >= settings.Walls.length) {
+          if (tile.WallType >= walls.length) {
             tile.WallType = 0;
           }
         }
@@ -672,11 +673,11 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
 
     if (x % 2 == 1) {
       self.postMessage({
-        'status': `Reading tile ${tilesProcessed.toLocaleString()} of ${world.totalTileCount.toLocaleString()}`,
+        status: `Reading tile ${tilesProcessed.toLocaleString()} of ${world.totalTileCount.toLocaleString()}`,
         // 'tilesProcessed': tilesProcessed,
         // 'totalTileCount': world.totalTileCount,
-        'x': x - 1,
-        'tiles': tiles,
+        x: x - 1,
+        tiles: tiles,
       });
       tiles = [];
     }
@@ -741,7 +742,7 @@ function readChests(reader: DataStream, world: WorldRecord): void {
   }
 
   self.postMessage({
-    'chests': chests,
+    chests: chests,
   });
 }
 
@@ -763,12 +764,12 @@ function readSigns(reader: DataStream): void {
   }
 
   self.postMessage({
-    'signs': signs,
+    signs: signs,
   });
 }
 
 function getNpcType(id: number): string {
-  const npc = settings.Npcs.find((element) => element.Id === id);
+  const npc = npcs.find((element) => element.Id === id);
 
   if (npc) {
     return npc.Name;
@@ -823,7 +824,7 @@ function readNpcs(reader: DataStream, world: WorldRecord): void {
   }
 
   self.postMessage({
-    'npcs': npcs,
+    npcs: npcs,
   });
 }
 
@@ -939,7 +940,7 @@ function readTileEntities(reader: DataStream): void {
     byPosition.set(tileEntity.position, tileEntity);
   }
   self.postMessage({
-    'tileEntities': byPosition,
+    tileEntities: byPosition,
   });
 }
 

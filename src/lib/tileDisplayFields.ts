@@ -1,4 +1,4 @@
-import { settings } from '../settings';
+import { walls } from '../walls';
 import type { TileFrame, WorldTile } from '../types/settings';
 import { paintNames } from './paintColors';
 import { slopeLabels } from './slopeLabels';
@@ -31,7 +31,7 @@ export function getTileDisplayFields(tile: WorldTile): TileDisplayField[] {
   }
 
   if (tile.WallType) {
-    const wallName = settings.Walls[tile.WallType]?.Name;
+    const wallName = walls[tile.WallType]?.Name;
     fields.push({ label: 'Wall', value: wallName ? `${wallName} (${tile.WallType})` : String(tile.WallType) });
   }
 

@@ -5,13 +5,26 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default defineConfig([
+  { ignores: ["dist/"] },
   {
-    files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+    files: [
+      "**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"
+    ],
     plugins: { js },
-    extends: ["js/recommended"],
-    languageOptions: { globals: globals.browser }
+    extends: [
+      "js/recommended"
+    ],
+    languageOptions: {
+      globals: globals.browser
+    }
   },
   tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
-  pluginReact.configs.flat['jsx-runtime']
+  pluginReact.configs.flat['jsx-runtime'],
+  { settings: { react: { version: "detect" } } },
+  {
+    rules: {
+      "quote-props": ["error", "as-needed"]
+    }
+  }
 ]);

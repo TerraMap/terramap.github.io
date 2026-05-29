@@ -1,12 +1,12 @@
 import { Space, Spin, theme } from 'antd';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
 import type { WorldTile } from '../types/settings';
 import TileTags from './TileTags';
 
 interface StatusBarProps {
   isLoading: boolean;
   selectedTile: WorldTile | null;
-  status?: string;
+  status?: ReactNode;
 }
 
 export function StatusBar({ isLoading, selectedTile, status }: StatusBarProps) {

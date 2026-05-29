@@ -1,8 +1,10 @@
-import { settings } from '../settings';
+import { itemPrefixes } from '../itemPrefixes';
+import { items } from '../items';
+import { tiles } from '../tiles';
 import type { TileFrame, TileInfo, WorldData, WorldItem, WorldTile } from '../types/settings';
 
 export function getTileInfo(tile: WorldTile): TileFrame | TileInfo | undefined {
-  const tileInfo = settings.Tiles[tile.Type!];
+  const tileInfo = tiles[tile.Type!];
 
   if (!tileInfo) return tileInfo;
 
@@ -42,12 +44,12 @@ export function getTileAt(world: WorldData | null, x: number, y: number): WorldT
 export function getItemText(item: WorldItem): string {
   let prefix = "";
 
-  if (item.prefixId > 0 && item.prefixId < settings.ItemPrefix.length)
-    prefix = settings.ItemPrefix[item.prefixId].Name;
+  if (item.prefixId > 0 && item.prefixId < itemPrefixes.length)
+    prefix = itemPrefixes[item.prefixId].Name;
 
   let itemName: string | number = item.id;
-  for (let itemIndex = 0; itemIndex < settings.Items.length; itemIndex++) {
-    const itemSettings = settings.Items[itemIndex];
+  for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
+    const itemSettings = items[itemIndex];
     if (Number(itemSettings.Id) === item.id) {
       itemName = itemSettings.Name;
       break;

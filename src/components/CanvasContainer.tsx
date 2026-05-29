@@ -1,15 +1,15 @@
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
 import { usePanZoom } from '../hooks/usePanZoom';
 import { getTileColor } from '../lib/mapRenderer';
-import { getTileInfo } from '../lib/tileInfo';
 import type { PlayerMap } from '../lib/readPlayerMap';
+import { getTileInfo } from '../lib/tileInfo';
 import type { WorldData, WorldTile } from '../types/settings';
 
 export interface CanvasContainerHandle {
   setWorldSize: (width: number, height: number) => void;
   renderTileBatch: (tiles: WorldTile[], startX: number, world: WorldData) => void;
   finishRender: (worldWidth: number) => void;
-  highlightTiles: (matchFn: ((tile: WorldTile) => boolean) | null, world: WorldData) => void;
+  highlightTiles: (matchFn: ((tile: WorldTile) => boolean) | null, world: WorldData, onProgress?: (pct: number, matchCount: number) => void) => void;
   renderWireOverlay: (world: WorldData) => void;
   clearWireOverlay: () => void;
   renderFogOverlay: (playerMap: PlayerMap) => void;
@@ -47,6 +47,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
     const wireCtxRef = useRef<CanvasRenderingContext2D | null>(null);
     const fogCtxRef = useRef<CanvasRenderingContext2D | null>(null);
     const selectionCtxRef = useRef<CanvasRenderingContext2D | null>(null);
+    const highlightIdRef = useRef(0);
     const isDraggingRef = useRef(false);
     const dragStartRef = useRef<{ x: number; y: number } | null>(null);
 
@@ -203,37 +204,66 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         pixelsRef.current = null;
       },
 
-      highlightTiles(matchFn: ((tile: WorldTile) => boolean) | null, world: WorldData) {
+      highlightTiles(matchFn: ((tile: WorldTile) => boolean) | null, world: WorldData, onProgress?: (pct: number, matchCount: number) => void) {
         const ctx = overlayCtxRef.current!;
         const overlay = overlayRef.current!;
         ctx.clearRect(0, 0, overlay.width, overlay.height);
+
+        const id = ++highlightIdRef.current;
 
         if (matchFn && world) {
           const w = overlay.width;
           const h = overlay.height;
           const imageData = ctx.createImageData(w, h);
           const data = imageData.data;
+          const total = world.tiles.length;
+          const chunkSize = 500_000;
 
-          let x = 0;
-          let y = 0;
-          for (let i = 0; i < world.tiles.length; i++) {
-            const tile = world.tiles[i];
-            const pxIdx = (y * w + x) * 4;
-            if (matchFn(tile)) {
-              data[pxIdx] = 255;
-              data[pxIdx + 1] = 255;
-              data[pxIdx + 2] = 255;
-              data[pxIdx + 3] = 255;
-            } else {
-              data[pxIdx + 3] = 192;
-            }
-            y++;
-            if (y >= world.height) {
-              y = 0;
-              x++;
-            }
+          // Pre-fill with dim overlay so unprocessed areas appear dimmed immediately
+          for (let p = 3; p < data.length; p += 4) {
+            data[p] = 192;
           }
           ctx.putImageData(imageData, 0, 0);
+
+          let idx = 0;
+          let x = 0;
+          let y = 0;
+          let matches = 0;
+
+          const processChunk = () => {
+            if (id !== highlightIdRef.current) return;
+
+            const end = Math.min(idx + chunkSize, total);
+            while (idx < end) {
+              const tile = world.tiles[idx];
+              if (matchFn(tile)) {
+                const pxIdx = (y * w + x) * 4;
+                data[pxIdx] = 255;
+                data[pxIdx + 1] = 255;
+                data[pxIdx + 2] = 255;
+                data[pxIdx + 3] = 255;
+                matches++;
+              }
+              y++;
+              if (y >= world.height) {
+                y = 0;
+                x++;
+              }
+              idx++;
+            }
+
+            ctx.putImageData(imageData, 0, 0);
+
+            if (idx < total) {
+              onProgress?.(Math.round((idx / total) * 100), matches);
+              setTimeout(processChunk, 0);
+            } else {
+              onProgress?.(100, matches);
+            }
+          };
+
+          onProgress?.(0, 0);
+          processChunk();
         }
       },
 

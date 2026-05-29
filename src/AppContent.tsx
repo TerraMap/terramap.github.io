@@ -1,5 +1,6 @@
 import CloseOutlined from '@ant-design/icons/es/icons/CloseOutlined';
 import { App as AntApp, Button, Layout, Space, theme } from 'antd';
+import useApp from 'antd/es/app/useApp';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { BlockSelectorModal } from './components/BlockSelectorModal';
 import { CanvasContainer, CanvasContainerHandle } from './components/CanvasContainer';
@@ -20,15 +21,22 @@ import { useWorldLoader } from './hooks/useWorldLoader';
 import { readPlayerMap, type PlayerMap } from './lib/readPlayerMap';
 import { sets } from './sets';
 
+function NotificationBridge({ notificationRef }: { notificationRef: React.RefObject<ReturnType<typeof useApp>['notification'] | null> }) {
+  const { notification } = useApp();
+  notificationRef.current = notification;
+  return null;
+}
+
 export default function AppContent() {
   const canvasRef = useRef<CanvasContainerHandle>(null);
   const directoryInputRef = useRef<HTMLInputElement>(null);
   const worldFileInputRef = useRef<HTMLInputElement>(null);
   const playerMapRef = useRef<PlayerMap | null>(null);
-  const { world, worldRef, status, loadWorldFile, isLoading } = useWorldLoader(canvasRef, () => {
+  const { world, worldRef, status, loadWorldFile, isWorldLoading } = useWorldLoader(canvasRef, () => {
     if (playerMapRef.current) canvasRef.current?.renderFogOverlay(playerMapRef.current);
   });
   const blockOptions = useBlockOptions();
+  const notificationRef = useRef<ReturnType<typeof useApp>['notification'] | null>(null);
 
   const [showWires, setShowWires] = useState(false);
   const [siderCollapsed, setSiderCollapsed] = useState(true);
@@ -58,14 +66,26 @@ export default function AppContent() {
     hideTileIndicator,
     selectTile,
     findBlock,
-  } = useTileSelection(canvasRef, worldRef);
+    isSearching,
+    searchStatus,
+  } = useTileSelection(canvasRef, worldRef, () => {
+    notificationRef.current?.warning({ message: `No matches found` });
+  });
 
   const {
-    getSelectedInfos,
+    selectedInfos,
+    isHighlighting,
+    highlightStatus,
     handleHighlightAll,
     handleClearHighlight,
     handleSetSelect,
-  } = useBlockHighlight(canvasRef, worldRef, selectedBlocks, setShowWires);
+  } = useBlockHighlight(canvasRef, worldRef, selectedBlocks, setShowWires, (count) => {
+    if (count) {
+      notificationRef.current?.success({ message: `Highlighted ${count.toLocaleString()} matches` });
+    } else {
+      notificationRef.current?.warning({ message: `No matches found` });
+    }
+  });
 
   const handleWorldFileSelect = useCallback((f: File) => {
     setWorldFile(f);
@@ -137,8 +157,8 @@ export default function AppContent() {
     if (w) canvasRef.current?.saveImage(`${w.name}.png`);
   }, [worldRef]);
 
-  const handleFindNext = useCallback(() => findBlock(1, getSelectedInfos()), [findBlock, getSelectedInfos]);
-  const handleFindPrev = useCallback(() => findBlock(-1, getSelectedInfos()), [findBlock, getSelectedInfos]);
+  const handleFindNext = useCallback(() => findBlock(1, selectedInfos), [findBlock, selectedInfos]);
+  const handleFindPrev = useCallback(() => findBlock(-1, selectedInfos), [findBlock, selectedInfos]);
   const handleSetSelectWrapped = useCallback((index: number) => {
     const values = handleSetSelect(index, sets);
     if (values) setSelectedBlocks(values);
@@ -167,6 +187,7 @@ export default function AppContent() {
 
   return (
     <AntApp style={{ height: '100%' }}>
+      <NotificationBridge notificationRef={notificationRef} />
       <div
         {...dragProps}
         style={{ height: '100%', position: 'relative', backgroundColor: colorBgContainer }}
@@ -176,8 +197,12 @@ export default function AppContent() {
           <Layout.Header style={{ backgroundColor: colorBgBase, height: 'auto', lineHeight: 'normal', padding: '8px', display: 'flex', alignItems: 'center' }}>
             <Navbar
               directoryInputRef={directoryInputRef}
+              isHighlighting={isHighlighting}
+              isSearching={isSearching}
+              isWorldLoading={isWorldLoading}
               npcs={world?.npcs ?? []}
               onClearHighlight={handleClearHighlight}
+              onGoToTile={handleGoToTile}
               onHideTargetIndicator={hideTileIndicator}
               onHighlightAll={handleHighlightAll}
               onNextBlock={handleFindNext}
@@ -188,16 +213,15 @@ export default function AppContent() {
               onResetZoom={() => canvasRef.current?.resetZoom()}
               onSaveImage={handleSaveImage}
               onSetSelect={handleSetSelectWrapped}
-              onGoToTile={handleGoToTile}
               onToggleWorldProps={() => setWorldPropsOpen(v => !v)}
-              onWorldFilesFromDirectory={handleWorldFilesFromDirectory}
               onWorldFileSelect={handleWorldFileSelect}
+              onWorldFilesFromDirectory={handleWorldFilesFromDirectory}
               onZoomIn={() => canvasRef.current?.zoomIn()}
               onZoomOut={() => canvasRef.current?.zoomOut()}
               sets={sets}
+              setShowWires={setShowWires}
               setTilePropsOpen={(tilePropsOpen) => setSiderCollapsed(!tilePropsOpen)}
               showWires={showWires}
-              setShowWires={setShowWires}
               tilePropsOpen={!siderCollapsed}
               worldFileInputRef={worldFileInputRef}
               worldLoaded={!!world}
@@ -212,9 +236,9 @@ export default function AppContent() {
                 background: colorBgContainer,
                 overflow: 'auto',
               }}>
-              {!world && !isLoading && <HelpPanel
+              {!world && !isWorldLoading && <HelpPanel
                 worldFileInputRef={worldFileInputRef} directoryInputRef={directoryInputRef} />}
-              <div style={{ display: world || isLoading ? 'block' : 'none', height: '100%' }}>
+              <div style={{ display: world || isWorldLoading ? 'block' : 'none', height: '100%' }}>
                 <CanvasContainer
                   ref={canvasRef}
                   onTileHover={handleTileHover}
@@ -248,7 +272,7 @@ export default function AppContent() {
             </Layout.Sider>
           </Layout>
           <Layout.Footer style={{ padding: 0 }}>
-            <StatusBar selectedTile={hoveredTile} status={status} isLoading={isLoading} />
+            <StatusBar selectedTile={hoveredTile} status={highlightStatus || searchStatus || status} isLoading={isWorldLoading || isSearching || !!highlightStatus} />
           </Layout.Footer>
         </Layout>
 

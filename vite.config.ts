@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   base: process.env.BASE_PATH || '/',
@@ -10,7 +10,9 @@ export default defineConfig({
       output: {
         manualChunks: {
           antd: ['antd', '@ant-design/icons'],
-          settings: ['./src/settings.ts', './src/MapHelper.ts'],
+          tiles: ['./src/tiles.ts'],
+          items: ['./src/items.ts'],
+          gamedata: ['./src/walls.ts', './src/npcs.ts', './src/itemPrefixes.ts', './src/MapHelper.ts'],
         },
       },
     },
