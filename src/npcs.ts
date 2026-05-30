@@ -2,123 +2,123 @@ import type { NpcInfo } from './types/settings';
 
 export const npcs: NpcInfo[] = [
   {
-    Id: 17,
-    Name: "Merchant"
+    id: 17,
+    name: "Merchant"
   },
   {
-    Id: 18,
-    Name: "Nurse"
+    id: 18,
+    name: "Nurse"
   },
   {
-    Id: 19,
-    Name: "Arms Dealer"
+    id: 19,
+    name: "Arms Dealer"
   },
   {
-    Id: 20,
-    Name: "Dryad"
+    id: 20,
+    name: "Dryad"
   },
   {
-    Id: 22,
-    Name: "Guide"
+    id: 22,
+    name: "Guide"
   },
   {
-    Id: 37,
-    Name: "Old Man"
+    id: 37,
+    name: "Old Man"
   },
   {
-    Id: 38,
-    Name: "Demolitionist"
+    id: 38,
+    name: "Demolitionist"
   },
   {
-    Id: 54,
-    Name: "Clothier"
+    id: 54,
+    name: "Clothier"
   },
   {
-    Id: 107,
-    Name: "Goblin Tinkerer"
+    id: 107,
+    name: "Goblin Tinkerer"
   },
   {
-    Id: 108,
-    Name: "Wizard"
+    id: 108,
+    name: "Wizard"
   },
   {
-    Id: 124,
-    Name: "Mechanic"
+    id: 124,
+    name: "Mechanic"
   },
   {
-    Id: 142,
-    Name: "Santa Claus"
+    id: 142,
+    name: "Santa Claus"
   },
   {
-    Id: 160,
-    Name: "Truffle"
+    id: 160,
+    name: "Truffle"
   },
   {
-    Id: 178,
-    Name: "Steampunker"
+    id: 178,
+    name: "Steampunker"
   },
   {
-    Id: 207,
-    Name: "Dye Trader"
+    id: 207,
+    name: "Dye Trader"
   },
   {
-    Id: 208,
-    Name: "Party Girl"
+    id: 208,
+    name: "Party Girl"
   },
   {
-    Id: 209,
-    Name: "Cyborg"
+    id: 209,
+    name: "Cyborg"
   },
   {
-    Id: 227,
-    Name: "Painter"
+    id: 227,
+    name: "Painter"
   },
   {
-    Id: 228,
-    Name: "Witch Doctor"
+    id: 228,
+    name: "Witch Doctor"
   },
   {
-    Id: 229,
-    Name: "Pirate"
+    id: 229,
+    name: "Pirate"
   },
   {
-    Id: 353,
-    Name: "Stylist"
+    id: 353,
+    name: "Stylist"
   },
   {
-    Id: 369,
-    Name: "Angler"
+    id: 369,
+    name: "Angler"
   },
   {
-    Id: 441,
-    Name: "Tax Collector"
+    id: 441,
+    name: "Tax Collector"
   },
   {
-    Id: 550,
-    Name: "Tavernkeep"
+    id: 550,
+    name: "Tavernkeep"
   },
   {
-    Id: 588,
-    Name: "Golfer"
+    id: 588,
+    name: "Golfer"
   },
   {
-    Id: 633,
-    Name: "Zoologist"
+    id: 633,
+    name: "Zoologist"
   },
   {
-    Id: 637,
-    Name: "Town Cat"
+    id: 637,
+    name: "Town Cat"
   },
   {
-    Id: 638,
-    Name: "Town Dog"
+    id: 638,
+    name: "Town Dog"
   },
   {
-    Id: 656,
-    Name: "Town Bunny"
+    id: 656,
+    name: "Town Bunny"
   },
   {
-    Id: 663,
-    Name: "Princess"
+    id: 663,
+    name: "Princess"
   }
 ];

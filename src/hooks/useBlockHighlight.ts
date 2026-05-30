@@ -18,10 +18,10 @@ export function useBlockHighlight(
     for (const encoded of selectedBlocks) {
       const [value, u, v] = encoded.split('|');
       if (value.startsWith('item')) {
-        const item = items.find(it => `item${it.Id}` === value);
+        const item = items.find(it => `item${it.id}` === value);
         if (item) infos.push(item);
       } else if (value.startsWith('wall')) {
-        const wall = walls.find(w => `wall${w.Id}` === value);
+        const wall = walls.find(w => `wall${w.id}` === value);
         if (wall) infos.push(wall);
       } else {
         const info = getTileInfoFrom(value, u || undefined, v || undefined);
@@ -62,27 +62,27 @@ export function useBlockHighlight(
     const set = sets[index];
     if (!set) return;
     const values: string[] = [];
-    for (const entry of set.Entries) {
-      if (entry.U !== undefined || entry.V !== undefined) {
+    for (const entry of set.entries) {
+      if (entry.u !== undefined || entry.v !== undefined) {
         let frameIndex = '';
-        const tile = tiles[Number(entry.Id)];
-        if (tile?.Frames) {
-          const fi = tile.Frames.findIndex(f => f.U === entry.U && f.V === entry.V);
+        const tile = tiles[entry.id];
+        if (tile?.frames) {
+          const fi = tile.frames.findIndex(f => f.u === entry.u && f.v === entry.v);
           if (fi >= 0) frameIndex = String(fi);
         }
-        values.push(`${entry.Id}|${entry.U ?? ''}|${entry.V ?? ''}|${frameIndex}`);
+        values.push(`${entry.id}|${entry.u ?? ''}|${entry.v ?? ''}|${frameIndex}`);
       } else if (entry.isTile) {
-        values.push(`${entry.Id}|||`);
+        values.push(`${entry.id}|||`);
       } else if (entry.isItem) {
-        values.push(`item${entry.Id}|||`);
+        values.push(`item${entry.id}|||`);
       } else if (entry.isWall) {
-        values.push(`wall${entry.Id}|||`);
+        values.push(`wall${entry.id}|||`);
       }
     }
     const infos = values.map((encoded) => {
       const [value, u, v] = encoded.split('|');
-      if (value.startsWith('item')) return items.find(it => `item${it.Id}` === value);
-      if (value.startsWith('wall')) return walls.find(w => `wall${w.Id}` === value);
+      if (value.startsWith('item')) return items.find(it => `item${it.id}` === value);
+      if (value.startsWith('wall')) return walls.find(w => `wall${w.id}` === value);
       return getTileInfoFrom(value, u || undefined, v || undefined);
     }).filter((info): info is SearchableInfo => Boolean(info));
     const w = worldRef.current;

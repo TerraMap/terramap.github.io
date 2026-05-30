@@ -105,7 +105,7 @@ export function Navbar({
 
   const setMenuItems: MenuProps['items'] = sets.map((set, i) => ({
     key: i,
-    label: set.Name,
+    label: set.name,
     onClick: () => onSetSelect(i),
   }));
 
@@ -119,7 +119,7 @@ export function Navbar({
             loading={isWorldLoading}
             shortcutHandler="onOpenFolder"
             onClick={() => directoryInputRef.current?.click()}>
-            Folder
+            {!worldLoaded ? 'Folder' : undefined}
           </ToolbarButton>
           <ToolbarButton
             loading={isWorldLoading}

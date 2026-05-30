@@ -26,35 +26,35 @@ export function useBlockOptions() {
 
       options.push({
         value: String(i),
-        label: tile.Name,
+        label: tile.name,
         type: 'Tile',
         id: String(i),
       });
 
-      if (tile.Frames) {
-        for (let f = 0; f < tile.Frames.length; f++) {
-          const frame = tile.Frames[f];
+      if (tile.frames) {
+        for (let f = 0; f < tile.frames.length; f++) {
+          const frame = tile.frames[f];
           frame.isTile = true;
 
-          if (frame.Name === 'Default' && frame.Variety === 'Default') continue;
+          if (frame.name === 'Default' && frame.variety === 'Default') continue;
 
-          let text = tile.Name;
-          if (frame.Name && frame.Name !== tile.Name) {
-            text += ` - ${frame.Name}`;
+          let text = tile.name;
+          if (frame.name && frame.name !== tile.name) {
+            text += ` - ${frame.name}`;
           }
-          if (frame.Variety && frame.Variety !== 'Default') {
-            text += ` - ${frame.Variety}`;
+          if (frame.variety && frame.variety !== 'Default') {
+            text += ` - ${frame.variety}`;
           }
 
-          if (text === tile.Name && (frame.U ?? 0) === 0 && (frame.V ?? 0) === 0) continue;
+          if (text === tile.name && (frame.u ?? 0) === 0 && (frame.v ?? 0) === 0) continue;
 
           options.push({
             value: `${i}`,
             label: text,
             type: 'Tile',
             id: String(i),
-            dataU: frame.U,
-            dataV: frame.V,
+            dataU: frame.u,
+            dataV: frame.v,
             frameIndex: f,
           });
         }
@@ -65,10 +65,10 @@ export function useBlockOptions() {
       const item = items[i];
       item.isItem = true;
       options.push({
-        value: `item${item.Id}`,
-        label: item.Name,
+        value: `item${item.id}`,
+        label: item.name,
         type: 'Item',
-        id: item.Id,
+        id: String(item.id),
       });
     }
 
@@ -76,10 +76,10 @@ export function useBlockOptions() {
       const wall = walls[i];
       wall.isWall = true;
       options.push({
-        value: `wall${wall.Id}`,
-        label: wall.Name,
+        value: `wall${wall.id}`,
+        label: wall.name,
         type: 'Wall',
-        id: wall.Id,
+        id: String(wall.id),
       });
     }
 

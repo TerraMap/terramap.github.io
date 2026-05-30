@@ -21,24 +21,24 @@ const teditItems = JSON.parse(readFileSync(resolve(root, "scripts/tedit/items.js
 const mergedTiles = [];
 
 for (const tedit of teditTiles.sort((a, b) => a.id - b.id)) {
-  const tile = { Id: String(tedit.id), Name: tedit.name };
+  const tile = { id: tedit.id, name: tedit.name };
 
   if (tedit.frameSize) {
     const [w, h] = tedit.frameSize[0];
     if (w > 1 || h > 1) {
-      tile.Size = `${w},${h}`;
+      tile.size = `${w},${h}`;
     }
   }
 
   if (tedit.frames && tedit.frames.length > 0) {
-    tile.Frames = tedit.frames.map((f) => {
+    tile.frames = tedit.frames.map((f) => {
       const frame = {};
       if (f.uv) {
-        frame.U = f.uv[0];
-        frame.V = f.uv[1];
+        frame.u = f.uv[0];
+        frame.v = f.uv[1];
       }
-      if (f.name) frame.Name = f.name;
-      if (f.variety) frame.Variety = f.variety;
+      if (f.name) frame.name = f.name;
+      if (f.variety) frame.variety = f.variety;
       return frame;
     });
   }
@@ -52,8 +52,8 @@ writeFile("tiles.ts", "TileInfo", "tiles", mergedTiles);
 
 const mergedWalls = [];
 for (const tedit of teditWalls.sort((a, b) => a.id - b.id)) {
-  const wall = { Id: String(tedit.id), Name: tedit.name };
-  if (tedit.color) wall.Color = tedit.color;
+  const wall = { id: tedit.id, name: tedit.name };
+  if (tedit.color) wall.color = tedit.color;
   mergedWalls.push(wall);
 }
 
@@ -68,8 +68,8 @@ function hexToRgb(hex: string) {
 }
 
 for (const wall of walls) {
-  if (wall.Color) {
-    wall.Color = hexToRgb(wall.Color as string);
+  if (wall.color) {
+    wall.color = hexToRgb(wall.color as string);
   }
 }
 `);
@@ -83,7 +83,7 @@ try {
   const currentSrc = readFileSync(currentItemsPath, "utf8");
   const match = currentSrc.match(/export const items: ItemInfo\[\] = (\[[\s\S]*\]);/);
   if (match) {
-    negativeItems = JSON.parse(match[1]).filter((i) => Number(i.Id) < 0);
+    negativeItems = JSON.parse(match[1]).filter((i) => i.id < 0);
   }
 } catch {
   // No existing file; skip negative-ID preservation
@@ -91,7 +91,7 @@ try {
 
 const mergedItems = [...negativeItems];
 for (const tedit of teditItems.sort((a, b) => a.id - b.id)) {
-  mergedItems.push({ Name: tedit.name, Id: String(tedit.id) });
+  mergedItems.push({ name: tedit.name, id: tedit.id });
 }
 
 writeFile("items.ts", "ItemInfo", "items", mergedItems);

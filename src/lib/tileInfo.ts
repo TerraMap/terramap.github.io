@@ -8,16 +8,16 @@ export function getTileInfo(tile: WorldTile): TileFrame | TileInfo | undefined {
 
   if (!tileInfo) return tileInfo;
 
-  if (!tileInfo.Frames)
+  if (!tileInfo.frames)
     return tileInfo;
 
   let matchingFrame: TileFrame | undefined;
 
-  for (let i = 0; i < tileInfo.Frames.length; i++) {
-    const frame = tileInfo.Frames[i];
+  for (let i = 0; i < tileInfo.frames.length; i++) {
+    const frame = tileInfo.frames[i];
 
-    if ((!frame.U && !tile.TextureU) || (frame.U ?? 0) <= (tile.TextureU ?? 0)) {
-      if ((!frame.V && !tile.TextureV) || (frame.V ?? 0) <= (tile.TextureV ?? 0))
+    if ((!frame.u && !tile.TextureU) || (frame.u ?? 0) <= (tile.TextureU ?? 0)) {
+      if ((!frame.v && !tile.TextureV) || (frame.v ?? 0) <= (tile.TextureV ?? 0))
         matchingFrame = frame;
     }
   }
@@ -45,13 +45,13 @@ export function getItemText(item: WorldItem): string {
   let prefix = "";
 
   if (item.prefixId > 0 && item.prefixId < itemPrefixes.length)
-    prefix = itemPrefixes[item.prefixId].Name;
+    prefix = itemPrefixes[item.prefixId].name;
 
   let itemName: string | number = item.id;
   for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
     const itemSettings = items[itemIndex];
-    if (Number(itemSettings.Id) === item.id) {
-      itemName = itemSettings.Name;
+    if (itemSettings.id === item.id) {
+      itemName = itemSettings.name;
       break;
     }
   }

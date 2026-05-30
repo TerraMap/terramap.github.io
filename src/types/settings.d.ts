@@ -1,42 +1,42 @@
 export interface TileFrame {
-  U?: number;
-  V?: number;
-  Name?: string;
-  Variety?: string;
+  u?: number;
+  v?: number;
+  name?: string;
+  variety?: string;
   isTile?: boolean;
   parent?: TileInfo;
 }
 
 export interface TileInfo {
-  Id: string;
-  Name: string;
-  Size?: string;
-  Frames?: TileFrame[];
+  id: number;
+  name: string;
+  size?: string;
+  frames?: TileFrame[];
 
   isTile?: boolean;
   [key: string]: unknown;
 }
 
 export interface ItemInfo {
-  Id: string;
-  Name: string;
+  id: number;
+  name: string;
   isItem?: boolean;
 }
 
 export interface WallInfo {
-  Id: string;
-  Name: string;
-  Color?: string | { r: number; g: number; b: number } | null;
+  id: number;
+  name: string;
+  color?: string | { r: number; g: number; b: number } | null;
   isWall?: boolean;
 }
 
 export interface NpcInfo {
-  Id: number;
-  Name: string;
+  id: number;
+  name: string;
 }
 
 export interface ItemPrefixInfo {
-  Name: string;
+  name: string;
 }
 
 
@@ -140,18 +140,18 @@ export interface WorldData {
 }
 
 export interface SetEntry {
-  Id: string;
-  Name: string;
+  id: number;
+  name: string;
   isTile?: boolean;
   isItem?: boolean;
   isWall?: boolean;
-  U?: number;
-  V?: number;
-  Variety?: string;
+  u?: number;
+  v?: number;
+  variety?: string;
   parent?: TileInfo;
 }
 
 export interface BlockSet {
-  Name: string;
-  Entries: SetEntry[];
+  name: string;
+  entries: SetEntry[];
 }

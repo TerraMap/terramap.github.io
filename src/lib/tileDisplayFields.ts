@@ -14,16 +14,16 @@ export function getTileDisplayFields(tile: WorldTile): TileDisplayField[] {
 
   fields.push({ label: 'Location', value: `${tile.x}, ${tile.y}` });
 
-  if (tile.info?.Name) {
-    fields.push({ label: 'Tile', value: tile.info.Name });
+  if (tile.info?.name) {
+    fields.push({ label: 'Tile', value: tile.info.name });
   }
 
-  if (typeof tile.info?.Variety === 'string') {
-    fields.push({ label: 'Variety', value: tile.info.Variety });
+  if (typeof tile.info?.variety === 'string') {
+    fields.push({ label: 'Variety', value: tile.info.variety });
   }
 
-  if (parent?.Size) {
-    fields.push({ label: 'Size', value: parent.Size.replace(',', ' x ') });
+  if (parent?.size) {
+    fields.push({ label: 'Size', value: parent.size.replace(',', ' x ') });
   }
 
   if (tile.Type) {
@@ -31,7 +31,7 @@ export function getTileDisplayFields(tile: WorldTile): TileDisplayField[] {
   }
 
   if (tile.WallType) {
-    const wallName = walls[tile.WallType]?.Name;
+    const wallName = walls[tile.WallType]?.name;
     fields.push({ label: 'Wall', value: wallName ? `${wallName} (${tile.WallType})` : String(tile.WallType) });
   }
 
@@ -40,7 +40,7 @@ export function getTileDisplayFields(tile: WorldTile): TileDisplayField[] {
   }
 
   if (parent) {
-    fields.push({ label: 'Parent', value: parent.Name ?? '' });
+    fields.push({ label: 'Parent', value: parent.name ?? '' });
   }
 
   if (tile.slope) {

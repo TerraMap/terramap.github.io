@@ -88,10 +88,9 @@ function getWallColor(tile: WorldTile): Color | undefined {
   }
   let color = wallColors[tile.WallType][0];
   if (!color || (color.r === 0 && color.g === 0 && color.b === 0)) {
-    const wallTypeStr = tile.WallType.toString();
-    const wall = walls.find((w) => w.Id === wallTypeStr);
-    if (wall != null && wall.Color != null && typeof wall.Color != 'string') {
-      color = wall.Color;
+    const wall = walls.find((w) => w.id === tile.WallType);
+    if (wall != null && wall.color != null && typeof wall.color != 'string') {
+      color = wall.color;
     }
   }
   if (!color || tile.WallColor == null) {

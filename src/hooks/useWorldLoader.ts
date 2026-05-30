@@ -101,7 +101,7 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
           const idx = pos.x * w.height + pos.y;
           const tile = w.tiles[idx];
           if (tile) {
-            const size = tile.info && 'Size' in tile.info ? tile.info.Size : undefined;
+            const size = tile.info && 'size' in tile.info ? tile.info.size : undefined;
             let sizeX = 1;
             let sizeY = 1;
             if (size) {

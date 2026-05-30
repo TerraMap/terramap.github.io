@@ -2,297 +2,297 @@ import type { ItemPrefixInfo } from './types/settings';
 
 export const itemPrefixes: ItemPrefixInfo[] = [
   {
-    Name: ""
+    name: ""
   },
   {
-    Name: "Large"
+    name: "Large"
   },
   {
-    Name: "Massive"
+    name: "Massive"
   },
   {
-    Name: "Dangerous"
+    name: "Dangerous"
   },
   {
-    Name: "Savage"
+    name: "Savage"
   },
   {
-    Name: "Sharp"
+    name: "Sharp"
   },
   {
-    Name: "Pointy"
+    name: "Pointy"
   },
   {
-    Name: "Tiny"
+    name: "Tiny"
   },
   {
-    Name: "Terrible"
+    name: "Terrible"
   },
   {
-    Name: "Small"
+    name: "Small"
   },
   {
-    Name: "Dull"
+    name: "Dull"
   },
   {
-    Name: "Unhappy"
+    name: "Unhappy"
   },
   {
-    Name: "Bulky"
+    name: "Bulky"
   },
   {
-    Name: "Shameful"
+    name: "Shameful"
   },
   {
-    Name: "Heavy"
+    name: "Heavy"
   },
   {
-    Name: "Light"
+    name: "Light"
   },
   {
-    Name: "Sighted"
+    name: "Sighted"
   },
   {
-    Name: "Rapid"
+    name: "Rapid"
   },
   {
-    Name: "Hasty (R)"
+    name: "Hasty (R)"
   },
   {
-    Name: "Intimidating"
+    name: "Intimidating"
   },
   {
-    Name: "Deadly (R)"
+    name: "Deadly (R)"
   },
   {
-    Name: "Staunch"
+    name: "Staunch"
   },
   {
-    Name: "Awful"
+    name: "Awful"
   },
   {
-    Name: "Lethargic"
+    name: "Lethargic"
   },
   {
-    Name: "Awkward"
+    name: "Awkward"
   },
   {
-    Name: "Powerful"
+    name: "Powerful"
   },
   {
-    Name: "Mystic"
+    name: "Mystic"
   },
   {
-    Name: "Adept"
+    name: "Adept"
   },
   {
-    Name: "Masterful"
+    name: "Masterful"
   },
   {
-    Name: "Inept"
+    name: "Inept"
   },
   {
-    Name: "Ignorant"
+    name: "Ignorant"
   },
   {
-    Name: "Deranged"
+    name: "Deranged"
   },
   {
-    Name: "Intense"
+    name: "Intense"
   },
   {
-    Name: "Taboo"
+    name: "Taboo"
   },
   {
-    Name: "Celestial"
+    name: "Celestial"
   },
   {
-    Name: "Furious"
+    name: "Furious"
   },
   {
-    Name: "Keen"
+    name: "Keen"
   },
   {
-    Name: "Superior"
+    name: "Superior"
   },
   {
-    Name: "Forceful"
+    name: "Forceful"
   },
   {
-    Name: "Broken"
+    name: "Broken"
   },
   {
-    Name: "Damaged"
+    name: "Damaged"
   },
   {
-    Name: "Shoddy"
+    name: "Shoddy"
   },
   {
-    Name: "Quick (C)"
+    name: "Quick (C)"
   },
   {
-    Name: "Deadly (C)"
+    name: "Deadly (C)"
   },
   {
-    Name: "Agile"
+    name: "Agile"
   },
   {
-    Name: "Nimble"
+    name: "Nimble"
   },
   {
-    Name: "Murderous"
+    name: "Murderous"
   },
   {
-    Name: "Slow"
+    name: "Slow"
   },
   {
-    Name: "Sluggish"
+    name: "Sluggish"
   },
   {
-    Name: "Lazy"
+    name: "Lazy"
   },
   {
-    Name: "Annoying"
+    name: "Annoying"
   },
   {
-    Name: "Nasty"
+    name: "Nasty"
   },
   {
-    Name: "Manic"
+    name: "Manic"
   },
   {
-    Name: "Hurtful"
+    name: "Hurtful"
   },
   {
-    Name: "Strong"
+    name: "Strong"
   },
   {
-    Name: "Unpleasant"
+    name: "Unpleasant"
   },
   {
-    Name: "Weak"
+    name: "Weak"
   },
   {
-    Name: "Ruthless"
+    name: "Ruthless"
   },
   {
-    Name: "Frenzying"
+    name: "Frenzying"
   },
   {
-    Name: "Godly"
+    name: "Godly"
   },
   {
-    Name: "Demonic"
+    name: "Demonic"
   },
   {
-    Name: "Zealous"
+    name: "Zealous"
   },
   {
-    Name: "Hard"
+    name: "Hard"
   },
   {
-    Name: "Guarding"
+    name: "Guarding"
   },
   {
-    Name: "Armored"
+    name: "Armored"
   },
   {
-    Name: "Warding"
+    name: "Warding"
   },
   {
-    Name: "Arcane"
+    name: "Arcane"
   },
   {
-    Name: "Precise"
+    name: "Precise"
   },
   {
-    Name: "Lucky"
+    name: "Lucky"
   },
   {
-    Name: "Jagged"
+    name: "Jagged"
   },
   {
-    Name: "Spiked"
+    name: "Spiked"
   },
   {
-    Name: "Angry"
+    name: "Angry"
   },
   {
-    Name: "Menacing"
+    name: "Menacing"
   },
   {
-    Name: "Brisk"
+    name: "Brisk"
   },
   {
-    Name: "Fleeting"
+    name: "Fleeting"
   },
   {
-    Name: "Hasty (A)"
+    name: "Hasty (A)"
   },
   {
-    Name: "Quick (A)"
+    name: "Quick (A)"
   },
   {
-    Name: "Wild"
+    name: "Wild"
   },
   {
-    Name: "Rash"
+    name: "Rash"
   },
   {
-    Name: "Intrepid"
+    name: "Intrepid"
   },
   {
-    Name: "Violent"
+    name: "Violent"
   },
   {
-    Name: "Legendary"
+    name: "Legendary"
   },
   {
-    Name: "Unreal"
+    name: "Unreal"
   },
   {
-    Name: "Mythical"
+    name: "Mythical"
   },
   {
-    Name: "Legendary 2"
+    name: "Legendary 2"
   },
   {
-    Name: "Fabled"
+    name: "Fabled"
   },
   {
-    Name: "Loyal"
+    name: "Loyal"
   },
   {
-    Name: "Worthy"
+    name: "Worthy"
   },
   {
-    Name: "Focused"
+    name: "Focused"
   },
   {
-    Name: "Patient"
+    name: "Patient"
   },
   {
-    Name: "Rabid"
+    name: "Rabid"
   },
   {
-    Name: "Ill-Tempered"
+    name: "Ill-Tempered"
   },
   {
-    Name: "Petty"
+    name: "Petty"
   },
   {
-    Name: "Feeble"
+    name: "Feeble"
   },
   {
-    Name: "Skittish"
+    name: "Skittish"
   },
   {
-    Name: "Eager"
+    name: "Eager"
   },
   {
-    Name: "Ballistic"
+    name: "Ballistic"
   },
   {
-    Name: "Scraggling"
+    name: "Scraggling"
   }
 ];

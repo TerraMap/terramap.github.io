@@ -769,10 +769,10 @@ function readSigns(reader: DataStream): void {
 }
 
 function getNpcType(id: number): string {
-  const npc = npcs.find((element) => element.Id === id);
+  const npc = npcs.find((element) => element.id === id);
 
   if (npc) {
-    return npc.Name;
+    return npc.name;
   }
 
   if ([670, 678, 679, 680, 681, 682, 683, 684].includes(id)) return 'Slime';
