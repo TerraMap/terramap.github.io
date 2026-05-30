@@ -19,7 +19,7 @@ import { useWorldLoader } from './hooks/useWorldLoader';
 import { readPlayerMap, type PlayerMap } from './lib/readPlayerMap';
 import { sets } from './sets';
 
-function NotificationBridge({ notificationRef }: { notificationRef: React.RefObject<ReturnType<typeof useApp>['notification'] | null> }) {
+function NotificationBridge({ notificationRef }: { notificationRef: React.RefObject<ReturnType<typeof App.useApp>['notification'] | null> }) {
   const { notification } = App.useApp();
   notificationRef.current = notification;
   return null;
@@ -35,7 +35,7 @@ export default function AppContent() {
     if (playerMapRef.current) canvasRef.current?.renderFogOverlay(playerMapRef.current);
   });
   const blockOptions = useBlockOptions();
-  const notificationRef = useRef<ReturnType<typeof useApp>['notification'] | null>(null);
+  const notificationRef = useRef<ReturnType<typeof App.useApp>['notification'] | null>(null);
 
   const [showWires, setShowWires] = useState(false);
   const [infoPaneCollapsed, setInfoPaneCollapsed] = useState(true);
