@@ -1,5 +1,5 @@
 import CloseOutlined from '@ant-design/icons/es/icons/CloseOutlined';
-import { App as AntApp, Button, Layout, Space, theme } from 'antd';
+import { App as AntApp, Button, Drawer, Grid, Layout, Space, theme } from 'antd';
 import useApp from 'antd/es/app/useApp';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { BlockSelectorModal } from './components/BlockSelectorModal';
@@ -56,6 +56,8 @@ export default function AppContent() {
   const { token: { colorBgContainer, colorBgBase } } = theme.useToken();
   const { isDarkMode } = useThemeName();
   const antThemeName = isDarkMode ? 'dark' : 'light';
+  const screens = Grid.useBreakpoint();
+  const isMobile = !screens.md;
 
   const {
     selectedTile,
@@ -247,29 +249,42 @@ export default function AppContent() {
                 />
               </div>
             </Layout.Content>
-            <Layout.Sider
-              collapsed={siderCollapsed}
-              collapsedWidth={0}
-              onCollapse={(collapsed) => setSiderCollapsed(collapsed)}
-              collapsible
-              reverseArrow
-              style={{
-                overflow: 'auto',
-                scrollbarWidth: 'thin',
-                zIndex: 1001
-              }}
-              theme={antThemeName}
-              width={200}
-            >
-              <div style={{ padding: 16 }}>
-                <Space style={{ marginBottom: 16 }}>
-                  <Button size="small" type="text" icon={<CloseOutlined />} onClick={() => setSiderCollapsed(true)} /> Tile Info
-                </Space>
-                {siderCollapsed || !selectedTile ? (<></>) : (
-                  <TileDescriptions selectedTile={selectedTile} />
-                )}
-              </div>
-            </Layout.Sider>
+            {isMobile ? (
+              <Drawer
+                title="Tile Info"
+                placement="bottom"
+                open={!siderCollapsed}
+                mask={false}
+                onClose={() => setSiderCollapsed(true)}
+                styles={{ wrapper: { height: 'auto' }, body: { padding: 16, maxHeight: '50vh', overflow: 'auto' } }}
+              >
+                {selectedTile && <TileDescriptions selectedTile={selectedTile} />}
+              </Drawer>
+            ) : (
+              <Layout.Sider
+                collapsed={siderCollapsed}
+                collapsedWidth={0}
+                onCollapse={(collapsed) => setSiderCollapsed(collapsed)}
+                collapsible
+                reverseArrow
+                style={{
+                  overflow: 'auto',
+                  scrollbarWidth: 'thin',
+                  zIndex: 1001
+                }}
+                theme={antThemeName}
+                width={200}
+              >
+                <div style={{ padding: 16 }}>
+                  <Space style={{ marginBottom: 16 }}>
+                    <Button size="small" type="text" icon={<CloseOutlined />} onClick={() => setSiderCollapsed(true)} /> Tile Info
+                  </Space>
+                  {siderCollapsed || !selectedTile ? (<></>) : (
+                    <TileDescriptions selectedTile={selectedTile} />
+                  )}
+                </div>
+              </Layout.Sider>
+            )}
           </Layout>
           <Layout.Footer style={{ padding: 0 }}>
             <StatusBar selectedTile={hoveredTile} status={highlightStatus || searchStatus || status} isLoading={isWorldLoading || isSearching || !!highlightStatus} />
