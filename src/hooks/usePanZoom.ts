@@ -21,7 +21,7 @@ export function usePanZoom(
     const pz = Panzoom(el, {
       maxScale: 80,
       minScale: 1,
-      step: 0.08,
+      step: 0.3,
       cursor: 'default',
     });
 
