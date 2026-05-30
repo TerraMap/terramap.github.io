@@ -1,6 +1,5 @@
 import { CopyOutlined } from '@ant-design/icons';
-import { Typography } from 'antd';
-import useApp from 'antd/es/app/useApp';
+import { App, Typography } from 'antd';
 import type { ReactNode } from 'react';
 
 const { Text } = Typography;
@@ -9,7 +8,7 @@ export default function Copyable({ label, copyText }: {
   label: string | ReactNode;
   copyText?: string;
 }) {
-  const { message } = useApp();
+  const { notification } = App.useApp();
 
   let textToCopy: string;
 
@@ -19,7 +18,7 @@ export default function Copyable({ label, copyText }: {
 
   const handleClick = () => {
     navigator.clipboard.writeText(textToCopy).then(() => {
-      message.success(`Copied: ${textToCopy}`);
+      notification.success({ message: `Copied: ${textToCopy}`, placement: 'bottomRight' });
     });
   };
 

@@ -1,6 +1,5 @@
 import { CloseOutlined } from '@ant-design/icons';
-import { App as AntApp, Button, Drawer, Grid, Layout, Tabs, theme } from 'antd';
-import useApp from 'antd/es/app/useApp';
+import { App as AntApp, App, Button, Drawer, Grid, Layout, Tabs, theme } from 'antd';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { BlockSelectorModal } from './components/BlockSelectorModal';
 import { CanvasContainer, CanvasContainerHandle } from './components/CanvasContainer';
@@ -21,7 +20,7 @@ import { readPlayerMap, type PlayerMap } from './lib/readPlayerMap';
 import { sets } from './sets';
 
 function NotificationBridge({ notificationRef }: { notificationRef: React.RefObject<ReturnType<typeof useApp>['notification'] | null> }) {
-  const { notification } = useApp();
+  const { notification } = App.useApp();
   notificationRef.current = notification;
   return null;
 }
@@ -68,7 +67,7 @@ export default function AppContent() {
     isSearching,
     searchStatus,
   } = useTileSelection(canvasRef, worldRef, () => {
-    notificationRef.current?.warning({ message: `No matches found` });
+    notificationRef.current?.warning({ message: `No matches found`, placement: 'bottomRight' });
   });
 
   const {
@@ -80,9 +79,9 @@ export default function AppContent() {
     handleSetSelect,
   } = useBlockHighlight(canvasRef, worldRef, selectedBlocks, setShowWires, (count) => {
     if (count) {
-      notificationRef.current?.success({ message: `Highlighted ${count.toLocaleString()} matches` });
+      notificationRef.current?.success({ message: `Highlighted ${count.toLocaleString()} matches`, placement: 'bottomRight' });
     } else {
-      notificationRef.current?.warning({ message: `No matches found` });
+      notificationRef.current?.warning({ message: `No matches found`, placement: 'bottomRight' });
     }
   });
 
