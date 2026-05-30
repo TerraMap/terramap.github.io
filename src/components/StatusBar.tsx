@@ -46,13 +46,17 @@ export function StatusBar({ isLoading, selectedTile, status }: StatusBarProps) {
           )}
         </Space>
       </span>
-      <ins
-        ref={adRef}
-        className="adsbygoogle"
-        style={{ display: 'inline-block', width: 728, height: 90, border: '1px solid black' }}
-        data-ad-client="ca-pub-4263195580051724"
-        data-ad-slot="9553900295"
-      />
+      <div style={{ maxHeight: 200, overflow: 'hidden' }}>
+        <ins
+          ref={adRef}
+          className="adsbygoogle"
+          style={{ display: 'block' }}
+          data-ad-client="ca-pub-4263195580051724"
+          data-ad-slot="9553900295"
+          data-ad-format="horizontal"
+          data-full-width-responsive="false"
+        />
+      </div>
     </Space>
   );
 }
