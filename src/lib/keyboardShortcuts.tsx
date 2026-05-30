@@ -33,9 +33,8 @@ export interface ShortcutHandlers {
   onOpenWorld: () => void;
   onReloadWorld: () => void;
   onResetZoom: () => void;
-  onToggleTileInfoPane: () => void;
+  onToggleInfoPane: () => void;
   onToggleWires: () => void;
-  onToggleWorldInfoPane: () => void;
   onZoomIn: () => void;
   onZoomOut: () => void;
 }
@@ -61,8 +60,7 @@ export const keyboardShortcuts: KeyboardShortcut[] = [
   { key: 'c', label: 'Zoom Out', handler: 'onZoomOut', icon: <ZoomOutOutlined /> },
   { key: 'z', label: 'Zoom To Fit', handler: 'onResetZoom', icon: <ExpandOutlined /> },
   { key: 'l', label: 'Go To Location', handler: 'onGoToTile' },
-  { key: 't', label: 'Tile Info (Show / Hide)', handler: 'onToggleTileInfoPane' },
+  { key: 'i', label: 'Info Pane (Show / Hide)', handler: 'onToggleInfoPane' },
   { key: 'w', label: 'Wires (Show / Hide)', handler: 'onToggleWires' },
-  { key: 'i', label: 'World Info (Show / Hide)', handler: 'onToggleWorldInfoPane' },
   { key: 'escape', label: 'Hide Tile Indicator', handler: 'onHideTileIndicator' },
 ];

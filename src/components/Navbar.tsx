@@ -10,7 +10,7 @@ import firstBy from 'thenby';
 import useThemeMenuItems from '../hooks/useThemeMenuItems';
 import { useThemeName } from '../hooks/useThemeName';
 import { getShortcutsByHandler } from '../lib/keyboardShortcuts';
-import { capitalizeFirstLetter } from '../lib/string';
+import { capitalizeFirstLetter, truncateString } from '../lib/string';
 import type { BlockSet, WorldNpc } from '../types/settings';
 import ToolbarButton from './ToolbarButton';
 
@@ -34,16 +34,15 @@ interface NavbarProps {
   onResetZoom: () => void;
   onSaveImage: () => void;
   onSetSelect: (index: number) => void;
-  onToggleWorldProps: () => void;
   onWorldFileSelect: (file: File) => void;
   onWorldFilesFromDirectory: (directoryFiles: DirectoryFiles) => void;
   onZoomIn: () => void;
   onZoomOut: () => void;
   sets: BlockSet[];
   setShowWires: (value: boolean) => void;
-  setTilePropsOpen: (value: boolean) => void;
+  setInfoPaneOpen: (value: boolean) => void;
   showWires: boolean;
-  tilePropsOpen: boolean;
+  infoPaneOpen: boolean;
   worldFileInputRef: React.RefObject<HTMLInputElement | null>;
   worldLoaded: boolean;
   worldProperties: Record<string, unknown>;
@@ -67,16 +66,15 @@ export function Navbar({
   onResetZoom,
   onSaveImage,
   onSetSelect,
-  onToggleWorldProps,
   onWorldFileSelect,
   onWorldFilesFromDirectory,
   onZoomIn,
   onZoomOut,
   sets,
   setShowWires,
-  setTilePropsOpen,
+  setInfoPaneOpen,
   showWires,
-  tilePropsOpen,
+  infoPaneOpen,
   worldFileInputRef,
   worldLoaded,
   worldProperties,
@@ -125,7 +123,11 @@ export function Navbar({
             loading={isWorldLoading}
             shortcutHandler="onOpenWorld"
             onClick={() => worldFileInputRef.current?.click()}>
-            {typeof worldProperties?.name === 'string' ? worldProperties.name : 'World'}
+            {typeof worldProperties?.name === 'string'
+              ? <span title={worldProperties.name}>
+                {truncateString(worldProperties.name)}
+              </span>
+              : 'World'}
           </ToolbarButton>
           {worldLoaded && (
             <ToolbarButton
@@ -203,6 +205,11 @@ export function Navbar({
                     onClick: () => onHideTargetIndicator()
                   },
                   {
+                    key: "Info Pane",
+                    label: <>Info Pane <Switch checked={infoPaneOpen} /> <Tag><kbd>i</kbd></Tag></>,
+                    onClick: () => setInfoPaneOpen(!infoPaneOpen)
+                  },
+                  {
                     key: "NPCs",
                     label: "NPCs",
                     children: npcMenuItems
@@ -213,19 +220,9 @@ export function Navbar({
                     children: themeMenuItems
                   },
                   {
-                    key: "Tile Info",
-                    label: <>Tile Info  <Switch checked={tilePropsOpen} /> <Tag><kbd>t</kbd></Tag></>,
-                    onClick: () => setTilePropsOpen(!tilePropsOpen)
-                  },
-                  {
                     key: 'Wires',
                     label: <>Wires <Switch checked={showWires} /> <Tag><kbd>w</kbd></Tag></>,
                     onClick: () => setShowWires(!showWires)
-                  },
-                  {
-                    key: 'World Properties',
-                    label: <>World Properties <Tag><kbd>p</kbd></Tag></>,
-                    onClick: () => onToggleWorldProps()
                   }
                 ]
               }}>
@@ -237,16 +234,16 @@ export function Navbar({
             </Space.Compact>
 
             <Tooltip title={<Space>
-              {tilePropsOpen ? 'Hide Tile Info Pane' : 'Show Tile Info Pane'}
-              {getShortcutsByHandler('onToggleTileInfoPane').map(s => (
+              {infoPaneOpen ? 'Hide Info Pane' : 'Show Info Pane'}
+              {getShortcutsByHandler('onToggleInfoPane').map(s => (
                 <Tag key={s.key}><kbd>{s.key}</kbd></Tag>
               ))}
             </Space>}>
               <Switch
-                checkedChildren="Tile Info"
-                unCheckedChildren="Tile Info"
-                checked={tilePropsOpen}
-                onChange={(checked) => setTilePropsOpen(checked)}
+                checkedChildren="Info"
+                unCheckedChildren="Info"
+                checked={infoPaneOpen}
+                onChange={(checked) => setInfoPaneOpen(checked)}
               />
             </Tooltip>
           </>

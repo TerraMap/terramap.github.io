@@ -1,36 +1,19 @@
-import { CloseOutlined } from '@ant-design/icons';
-import { Button, Drawer, Input, Space } from 'antd';
+import { Input } from 'antd';
 import { useState } from 'react';
 
-interface WorldPropertiesDrawerProps {
-  open: boolean;
-  onClose: () => void;
-  worldProperties: Record<string, unknown>;
-}
-
-export function WorldPropertiesDrawer({ open, onClose, worldProperties }: WorldPropertiesDrawerProps) {
+export function WorldPropertiesList({ worldProperties, maxHeight }: { worldProperties: Record<string, unknown>; maxHeight?: string }) {
   const [filter, setFilter] = useState('');
 
   return (
-    <Drawer
-      title={
-        <Space>
-          <Button size="small" type="text" icon={<CloseOutlined />} onClick={onClose} />
-          World Properties
-        </Space>}
-      mask={false}
-      open={open}
-      closable={false}
-      zIndex={1100}
-    >
+    <div style={{ display: 'flex', flexDirection: 'column', maxHeight }}>
       <Input
         placeholder="Filter world properties..."
         allowClear
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
-        style={{ marginBottom: 12 }}
+        style={{ marginBottom: 12, flexShrink: 0 }}
       />
-      <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+      <ul style={{ listStyle: 'none', padding: 0, margin: 0, overflow: 'auto', flex: 1 }}>
         {Object.keys(worldProperties).filter(k => !k.startsWith('_')).sort()
           .filter((key) => {
             if (!filter) return true;
@@ -43,6 +26,6 @@ export function WorldPropertiesDrawer({ open, onClose, worldProperties }: WorldP
             </li>
           ))}
       </ul>
-    </Drawer>
+    </div>
   );
 }

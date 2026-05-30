@@ -1,5 +1,5 @@
-import CloseOutlined from '@ant-design/icons/es/icons/CloseOutlined';
-import { App as AntApp, Button, Drawer, Grid, Layout, Space, theme } from 'antd';
+import { CloseOutlined } from '@ant-design/icons';
+import { App as AntApp, Button, Drawer, Grid, Layout, Tabs, theme } from 'antd';
 import useApp from 'antd/es/app/useApp';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { BlockSelectorModal } from './components/BlockSelectorModal';
@@ -10,12 +10,11 @@ import { HelpPanel } from './components/HelpPanel';
 import { DirectoryFiles, Navbar } from './components/Navbar';
 import { StatusBar } from './components/StatusBar';
 import TileDescriptions from './components/TileDescriptions';
-import { WorldPropertiesDrawer } from './components/WorldPropertiesDrawer';
+import { WorldPropertiesList } from './components/WorldPropertiesList';
 import { useBlockHighlight } from './hooks/useBlockHighlight';
 import { useBlockOptions } from './hooks/useBlockOptions';
 import { useFileDrop } from './hooks/useFileDrop';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
-import { useThemeName } from './hooks/useThemeName';
 import { useTileSelection } from './hooks/useTileSelection';
 import { useWorldLoader } from './hooks/useWorldLoader';
 import { readPlayerMap, type PlayerMap } from './lib/readPlayerMap';
@@ -29,6 +28,7 @@ function NotificationBridge({ notificationRef }: { notificationRef: React.RefObj
 
 export default function AppContent() {
   const canvasRef = useRef<CanvasContainerHandle>(null);
+  const contentAreaRef = useRef<HTMLDivElement>(null);
   const directoryInputRef = useRef<HTMLInputElement>(null);
   const worldFileInputRef = useRef<HTMLInputElement>(null);
   const playerMapRef = useRef<PlayerMap | null>(null);
@@ -39,11 +39,10 @@ export default function AppContent() {
   const notificationRef = useRef<ReturnType<typeof useApp>['notification'] | null>(null);
 
   const [showWires, setShowWires] = useState(false);
-  const [siderCollapsed, setSiderCollapsed] = useState(true);
+  const [infoPaneCollapsed, setInfoPaneCollapsed] = useState(true);
   const [blocksModalOpen, setBlocksModalOpen] = useState(false);
   const [selectedBlocks, setSelectedBlocks] = useState<string[]>([]);
   const [worldFile, setWorldFile] = useState<File | null>(null);
-  const [worldPropsOpen, setWorldPropsOpen] = useState(false);
   const [directoryFiles, setDirectoryFiles] = useState<DirectoryFiles>();
   const [directoryPickerOpen, setDirectoryPickerOpen] = useState(false);
   const [mapFile, setMapFile] = useState<File | null>(null);
@@ -54,8 +53,6 @@ export default function AppContent() {
   }, []);
 
   const { token: { colorBgContainer, colorBgBase } } = theme.useToken();
-  const { isDarkMode } = useThemeName();
-  const antThemeName = isDarkMode ? 'dark' : 'light';
   const screens = Grid.useBreakpoint();
   const isMobile = !screens.md;
 
@@ -178,9 +175,8 @@ export default function AppContent() {
     onOpenWorld: () => worldFileInputRef.current?.click(),
     onReloadWorld: () => handleReloadWorld(),
     onResetZoom: () => canvasRef.current?.resetZoom(),
-    onToggleTileInfoPane: () => setSiderCollapsed((siderCollapsed) => !siderCollapsed),
+    onToggleInfoPane: () => setInfoPaneCollapsed((siderCollapsed) => !siderCollapsed),
     onToggleWires: () => setShowWires((showWires) => !showWires),
-    onToggleWorldInfoPane: () => setWorldPropsOpen(v => !v),
     onZoomIn: () => canvasRef.current?.zoomIn(),
     onZoomOut: () => canvasRef.current?.zoomOut(),
   }), [handleFindNext, handleFindPrev, handleGoToTile, hideTileIndicator, handleHighlightAll, handleClearHighlight, handleReloadWorld]);
@@ -215,22 +211,21 @@ export default function AppContent() {
               onResetZoom={() => canvasRef.current?.resetZoom()}
               onSaveImage={handleSaveImage}
               onSetSelect={handleSetSelectWrapped}
-              onToggleWorldProps={() => setWorldPropsOpen(v => !v)}
               onWorldFileSelect={handleWorldFileSelect}
               onWorldFilesFromDirectory={handleWorldFilesFromDirectory}
               onZoomIn={() => canvasRef.current?.zoomIn()}
               onZoomOut={() => canvasRef.current?.zoomOut()}
               sets={sets}
               setShowWires={setShowWires}
-              setTilePropsOpen={(tilePropsOpen) => setSiderCollapsed(!tilePropsOpen)}
+              setInfoPaneOpen={(value) => setInfoPaneCollapsed(!value)}
               showWires={showWires}
-              tilePropsOpen={!siderCollapsed}
+              infoPaneOpen={!infoPaneCollapsed}
               worldFileInputRef={worldFileInputRef}
               worldLoaded={!!world}
               worldProperties={worldProperties}
             />
           </Layout.Header>
-          <Layout style={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
+          <div ref={contentAreaRef} style={{ flex: 1, minHeight: 0, overflow: 'hidden', position: 'relative', display: 'flex' }}>
             <Layout.Content
               style={{
                 padding: 0,
@@ -249,53 +244,55 @@ export default function AppContent() {
                 />
               </div>
             </Layout.Content>
-            {isMobile ? (
-              <Drawer
-                title="Tile Info"
-                placement="bottom"
-                open={!siderCollapsed}
-                mask={false}
-                onClose={() => setSiderCollapsed(true)}
-                styles={{ wrapper: { height: 'auto' }, body: { padding: 16, maxHeight: '50vh', overflow: 'auto' } }}
-              >
-                {selectedTile && <TileDescriptions selectedTile={selectedTile} />}
-              </Drawer>
-            ) : (
-              <Layout.Sider
-                collapsed={siderCollapsed}
-                collapsedWidth={0}
-                onCollapse={(collapsed) => setSiderCollapsed(collapsed)}
-                collapsible
-                reverseArrow
-                style={{
-                  overflow: 'auto',
-                  scrollbarWidth: 'thin',
-                  zIndex: 1001
-                }}
-                theme={antThemeName}
-                width={200}
-              >
-                <div style={{ padding: 16 }}>
-                  <Space style={{ marginBottom: 16 }}>
-                    <Button size="small" type="text" icon={<CloseOutlined />} onClick={() => setSiderCollapsed(true)} /> Tile Info
-                  </Space>
-                  {siderCollapsed || !selectedTile ? (<></>) : (
-                    <TileDescriptions selectedTile={selectedTile} />
-                  )}
-                </div>
-              </Layout.Sider>
-            )}
-          </Layout>
+
+            <Drawer
+              closable={false}
+              getContainer={() => contentAreaRef.current!}
+              mask={false}
+              open={!infoPaneCollapsed}
+              onClose={() => setInfoPaneCollapsed(true)}
+              placement={isMobile ? "bottom" : "right"}
+              rootStyle={{ position: 'absolute' }}
+              styles={{
+                wrapper: isMobile ? { height: 'auto', maxHeight: '50vh' } : { width: 'auto' },
+                body: {
+                  display: 'flex',
+                  flexDirection: 'column',
+                  maxWidth: !isMobile ? 225 : undefined,
+                  overflow: 'hidden',
+                  padding: '.5rem',
+                  paddingTop: 0
+                }
+              }}
+            >
+              <Tabs
+                tabBarExtraContent={
+                  {
+                    left: <Button size="small" type="text" icon={<CloseOutlined />}
+                      onClick={() => setInfoPaneCollapsed(true)}
+                      style={{ marginRight: '1rem' }}
+                    />
+                  }}
+                items={[
+                  {
+                    key: 'Tile',
+                    label: 'Tile',
+                    children: <div style={{ overflow: 'auto', maxHeight: isMobile ? 'calc(50vh - 100px)' : 'calc(100vh - 100px)' }}>
+                      {selectedTile && <TileDescriptions selectedTile={selectedTile} />}
+                    </div>
+                  },
+                  {
+                    key: "World",
+                    label: 'World',
+                    children: <WorldPropertiesList worldProperties={worldProperties} maxHeight={isMobile ? 'calc(50vh - 100px)' : 'calc(100vh - 100px)'} />
+                  }
+                ]} />
+            </Drawer>
+          </div>
           <Layout.Footer style={{ padding: 0 }}>
             <StatusBar selectedTile={hoveredTile} status={highlightStatus || searchStatus || status} isLoading={isWorldLoading || isSearching || !!highlightStatus} />
           </Layout.Footer>
         </Layout>
-
-        <WorldPropertiesDrawer
-          open={worldPropsOpen}
-          onClose={() => setWorldPropsOpen(false)}
-          worldProperties={worldProperties}
-        />
 
         <BlockSelectorModal
           open={blocksModalOpen}
