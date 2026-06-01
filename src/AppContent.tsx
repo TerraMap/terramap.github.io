@@ -55,18 +55,33 @@ export default function AppContent() {
   const screens = Grid.useBreakpoint();
   const isMobile = !screens.md;
 
+  const worldProperties = useMemo(() => {
+    if (!world) return {};
+    const props: Record<string, unknown> = {};
+    Object.keys(world).forEach((key) => {
+      const value = world[key];
+      const type = typeof value;
+      if (type === 'string' || type === 'number' || type === 'boolean' || type === 'bigint') {
+        props[key] = value;
+      }
+    });
+    return props;
+  }, [world]);
+
   const {
-    selectedTile,
-    hoveredTile,
-    handleTileHover,
-    handleTileClick,
-    handleGoToTile,
-    hideTileIndicator,
-    selectTile,
     findBlock,
+    handleGoToDungeon,
+    handleGoToSpawn,
+    handleGoToTile,
+    handleTileClick,
+    handleTileHover,
+    hideTileIndicator,
+    hoveredTile,
     isSearching,
     searchStatus,
-  } = useTileSelection(canvasRef, worldRef, () => {
+    selectedTile,
+    selectTile,
+  } = useTileSelection(canvasRef, worldRef, worldProperties, () => {
     notificationRef.current?.warning({ message: `No matches found`, placement: 'bottomRight' });
   });
 
@@ -118,19 +133,6 @@ export default function AppContent() {
     }
   }, [playerMap, world]);
 
-  const worldProperties = useMemo(() => {
-    if (!world) return {};
-    const props: Record<string, unknown> = {};
-    Object.keys(world).forEach((key) => {
-      const value = world[key];
-      const type = typeof value;
-      if (type === 'string' || type === 'number' || type === 'boolean' || type === 'bigint') {
-        props[key] = value;
-      }
-    });
-    return props;
-  }, [world]);
-
   const handleWorldFilesFromDirectory = useCallback((directoryFiles: DirectoryFiles) => {
     setDirectoryFiles(directoryFiles);
     setDirectoryPickerOpen(true);
@@ -166,6 +168,8 @@ export default function AppContent() {
     onClearHighlight: () => handleClearHighlight(),
     onFindNext: handleFindNext,
     onFindPrevious: handleFindPrev,
+    onGoToDungeon: () => handleGoToDungeon(),
+    onGoToSpawn: () => handleGoToSpawn(),
     onGoToTile: () => handleGoToTile(),
     onHideTileIndicator: () => hideTileIndicator(),
     onHighlight: () => handleHighlightAll(),
@@ -194,11 +198,14 @@ export default function AppContent() {
           <Layout.Header style={{ backgroundColor: colorBgBase, height: 'auto', lineHeight: 'normal', padding: '8px', display: 'flex', alignItems: 'center' }}>
             <Navbar
               directoryInputRef={directoryInputRef}
+              infoPaneOpen={!infoPaneCollapsed}
               isHighlighting={isHighlighting}
               isSearching={isSearching}
               isWorldLoading={isWorldLoading}
               npcs={world?.npcs ?? []}
               onClearHighlight={handleClearHighlight}
+              onGoToDungeon={handleGoToDungeon}
+              onGoToSpawn={handleGoToSpawn}
               onGoToTile={handleGoToTile}
               onHideTargetIndicator={hideTileIndicator}
               onHighlightAll={handleHighlightAll}
@@ -214,11 +221,10 @@ export default function AppContent() {
               onWorldFilesFromDirectory={handleWorldFilesFromDirectory}
               onZoomIn={() => canvasRef.current?.zoomIn()}
               onZoomOut={() => canvasRef.current?.zoomOut()}
+              setInfoPaneOpen={(value) => setInfoPaneCollapsed(!value)}
               sets={sets}
               setShowWires={setShowWires}
-              setInfoPaneOpen={(value) => setInfoPaneCollapsed(!value)}
               showWires={showWires}
-              infoPaneOpen={!infoPaneCollapsed}
               worldFileInputRef={worldFileInputRef}
               worldLoaded={!!world}
               worldProperties={worldProperties}

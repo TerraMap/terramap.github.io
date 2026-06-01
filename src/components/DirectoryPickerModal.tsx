@@ -1,7 +1,9 @@
-import { Button, List, Modal, Space } from 'antd';
+import { Button, Modal, Space, Table } from 'antd';
 import { useState } from 'react';
+import firstBy from 'thenby';
 import { readPlayerMap, type PlayerMap } from '../lib/readPlayerMap';
 import { readWorldIds } from '../lib/readWorldIds';
+import { formatBytes } from '../lib/string';
 import type { DirectoryFiles } from './Navbar';
 
 interface DirectoryPickerModalProps {
@@ -53,6 +55,7 @@ export function DirectoryPickerModal({ open, directoryFiles, onClose, onWorldSel
       title={step === 'world' ? 'Select a World File' : 'Select a Player Map (Optional)'}
       open={open}
       onCancel={handleClose}
+      width={800}
       footer={step === 'map' ? (
         <Space orientation="vertical">
           <div style={{ textAlign: 'left' }}>
@@ -65,27 +68,82 @@ export function DirectoryPickerModal({ open, directoryFiles, onClose, onWorldSel
       ) : null}
     >
       {step === 'world' && (
-        <List
+        <Table
           dataSource={directoryFiles?.worldFiles}
-          renderItem={(file) => (
-            <List.Item>
-              <Button type="text" onClick={() => handleWorldClick(file)}>
-                {file.name}
-              </Button>
-            </List.Item>
-          )}
+          pagination={false}
+          rowKey="name"
+          size="small"
+          onRow={(file) => ({
+            onClick: () => { handleWorldClick(file) }
+          })}
+          columns={[
+            {
+              dataIndex: 'name',
+              title: "File",
+              sorter: firstBy('name'),
+              onCell: () => ({ style: { cursor: 'pointer' } })
+            },
+            {
+              dataIndex: 'size',
+              sorter: firstBy('size'),
+              title: "Size",
+              onCell: () => ({ style: { cursor: 'pointer' } }),
+              render: (size?: number) => formatBytes(size),
+            },
+            {
+              dataIndex: 'lastModified',
+              defaultSortOrder: 'descend',
+              sorter: firstBy('lastModified'),
+              title: 'Modified',
+              onCell: () => ({ style: { cursor: 'pointer' } }),
+              render: (lastModified: number) => new Date(lastModified).toLocaleString(),
+            }
+          ]}
         />
       )}
+
       {step === 'map' && (
-        <List
+        <Table
           dataSource={matchedMapFiles}
-          renderItem={(file) => (
-            <List.Item>
-              <Button type="text" onClick={() => handleMapClick(file)}>
-                {(() => { const parts = file.webkitRelativePath?.split('/'); return parts ? parts[parts.length - 2] : file.name; })()}
-              </Button>
-            </List.Item>
-          )}
+          pagination={false}
+          rowKey="name"
+          size="small"
+          onRow={(file) => ({
+            onClick: () => { handleMapClick(file) }
+          })}
+          columns={[
+            {
+              dataIndex: 'name',
+              title: "Name",
+              sorter: firstBy('name'),
+              onCell: () => ({ style: { cursor: 'pointer' } }),
+              render: (name: string, file) => {
+                const parts = file.webkitRelativePath?.split('/');
+                return parts ? parts[parts.length - 2] : file.name;
+              }
+            },
+            {
+              dataIndex: 'name',
+              sorter: firstBy('name'),
+              title: "File",
+              onCell: () => ({ style: { cursor: 'pointer' } })
+            },
+            {
+              dataIndex: 'size',
+              sorter: firstBy('size'),
+              title: "Size",
+              onCell: () => ({ style: { cursor: 'pointer' } }),
+              render: (size?: number) => formatBytes(size),
+            },
+            {
+              dataIndex: 'lastModified',
+              defaultSortOrder: 'descend',
+              sorter: firstBy('lastModified'),
+              title: 'Modified',
+              onCell: () => ({ style: { cursor: 'pointer' } }),
+              render: (lastModified: number) => new Date(lastModified).toLocaleString(),
+            }
+          ]}
         />
       )}
     </Modal>
