@@ -1,11 +1,12 @@
 import {
   CameraOutlined,
+  GlobalOutlined,
   MoonOutlined,
   QuestionCircleOutlined,
   SunOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Button, Dropdown, Space, Switch, Tag, Tooltip } from 'antd';
+import { Button, Dropdown, Space, Spin, Switch, Tag, Tooltip } from 'antd';
 import firstBy from 'thenby';
 import useThemeMenuItems from '../hooks/useThemeMenuItems';
 import { useThemeName } from '../hooks/useThemeName';
@@ -22,7 +23,10 @@ interface NavbarProps {
   isHighlighting: boolean;
   isSearching: boolean;
   isWorldLoading: boolean;
+  checkingLocalServer: boolean;
+  localServerAvailable?: boolean;
   npcs: WorldNpc[];
+  onChooseWorld: () => void;
   onClearHighlight: () => void;
   onGoToDungeon: () => void;
   onGoToSpawn: () => void;
@@ -56,7 +60,10 @@ export function Navbar({
   isHighlighting,
   isSearching,
   isWorldLoading,
+  checkingLocalServer,
+  localServerAvailable,
   npcs,
+  onChooseWorld,
   onClearHighlight,
   onGoToDungeon,
   onGoToSpawn,
@@ -81,7 +88,7 @@ export function Navbar({
   showWires,
   worldFileInputRef,
   worldLoaded,
-  worldProperties,
+  worldProperties
 }: NavbarProps) {
   const { isDarkMode, themeName } = useThemeName();
   const themeMenuItems = useThemeMenuItems();
@@ -117,12 +124,16 @@ export function Navbar({
         <span style={{ marginRight: 8, fontFamily: 'inherit' }}>TerraMap</span>
 
         <Space.Compact>
-          <ToolbarButton
-            loading={isWorldLoading}
-            shortcutHandler="onOpenFolder"
-            onClick={() => directoryInputRef.current?.click()}>
-            {!worldLoaded ? 'Folder' : undefined}
-          </ToolbarButton>
+          {checkingLocalServer ? <Spin /> : localServerAvailable ?
+            <Button icon={<GlobalOutlined />} onClick={onChooseWorld}>Choose World</Button>
+            :
+            <ToolbarButton
+              loading={isWorldLoading}
+              shortcutHandler="onOpenFolder"
+              onClick={() => directoryInputRef.current?.click()}>
+              {!worldLoaded ? 'Folder' : undefined}
+            </ToolbarButton>
+          }
           <ToolbarButton
             loading={isWorldLoading}
             shortcutHandler="onOpenWorld"
@@ -131,7 +142,7 @@ export function Navbar({
               ? <span title={worldProperties.name}>
                 {truncateString(worldProperties.name)}
               </span>
-              : 'World'}
+              : 'Open World File'}
           </ToolbarButton>
           {worldLoaded && (
             <ToolbarButton

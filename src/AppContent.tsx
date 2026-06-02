@@ -9,9 +9,11 @@ import { HelpPanel } from './components/HelpPanel';
 import { DirectoryFiles, Navbar } from './components/Navbar';
 import { StatusBar } from './components/StatusBar';
 import TileDescriptions from './components/TileDescriptions';
+import { WorldPickerModal } from './components/WorldPickerModal';
 import { WorldPropertiesList } from './components/WorldPropertiesList';
 import { useBlockHighlight } from './hooks/useBlockHighlight';
 import { useBlockOptions } from './hooks/useBlockOptions';
+import useFetchLocalServer from './hooks/useFetchLocalServer';
 import { useFileDrop } from './hooks/useFileDrop';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import { useTileSelection } from './hooks/useTileSelection';
@@ -44,6 +46,7 @@ export default function AppContent() {
   const [worldFile, setWorldFile] = useState<File | null>(null);
   const [directoryFiles, setDirectoryFiles] = useState<DirectoryFiles>();
   const [directoryPickerOpen, setDirectoryPickerOpen] = useState(false);
+  const [worldPickerOpen, setWorldPickerOpen] = useState(false);
   const [mapFile, setMapFile] = useState<File | null>(null);
   const [playerMap, setPlayerMapState] = useState<PlayerMap | null>(null);
   const setPlayerMap = useCallback((map: PlayerMap | null) => {
@@ -54,6 +57,8 @@ export default function AppContent() {
   const { token: { colorBgContainer, colorBgBase } } = theme.useToken();
   const screens = Grid.useBreakpoint();
   const isMobile = !screens.md;
+
+  const { loading: checkingLocalServer, localServerAvailable } = useFetchLocalServer();
 
   const worldProperties = useMemo(() => {
     if (!world) return {};
@@ -202,7 +207,10 @@ export default function AppContent() {
               isHighlighting={isHighlighting}
               isSearching={isSearching}
               isWorldLoading={isWorldLoading}
+              checkingLocalServer={checkingLocalServer}
+              localServerAvailable={localServerAvailable}
               npcs={world?.npcs ?? []}
+              onChooseWorld={() => setWorldPickerOpen(true)}
               onClearHighlight={handleClearHighlight}
               onGoToDungeon={handleGoToDungeon}
               onGoToSpawn={handleGoToSpawn}
@@ -314,12 +322,20 @@ export default function AppContent() {
           onSelectionChange={setSelectedBlocks}
         />
 
+        {worldPickerOpen && (
+          <WorldPickerModal
+            open={worldPickerOpen}
+            onClose={() => setWorldPickerOpen(false)}
+            onWorldSelected={handleDirectoryWorldSelected} />
+        )}
+
         <DirectoryPickerModal
           open={directoryPickerOpen}
           directoryFiles={directoryFiles}
           onClose={() => setDirectoryPickerOpen(false)}
           onWorldSelected={handleDirectoryWorldSelected}
         />
+
       </div>
     </AntApp>
   );

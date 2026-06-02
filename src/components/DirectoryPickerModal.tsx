@@ -2,7 +2,7 @@ import { Button, Modal, Space, Table } from 'antd';
 import { useState } from 'react';
 import firstBy from 'thenby';
 import { readPlayerMap, type PlayerMap } from '../lib/readPlayerMap';
-import { readWorldIds } from '../lib/readWorldIds';
+import { readWorldHeader } from '../lib/readWorldHeader';
 import { formatBytes } from '../lib/string';
 import type { DirectoryFiles } from './Navbar';
 
@@ -24,19 +24,21 @@ export function DirectoryPickerModal({ open, directoryFiles, onClose, onWorldSel
   };
 
   const handleWorldClick = async (file: File) => {
-    const { uniqueId, id } = await readWorldIds(file);
-    const mapFiles = directoryFiles?.mapFiles ?? [];
-    const matched = mapFiles.filter(f =>
-      f.name === `${uniqueId}.map` || f.name === `${id}.map`
-    );
-    setPendingWorldFile(file);
-    if (matched.length > 0) {
-      setMatchedMapFiles(matched);
-      setStep('map');
-    } else {
-      handleClose();
-      onWorldSelected(file, null);
+    let matched: File[] = [];
+    try {
+      const slice = file.slice(0, 64 * 1024);
+      const buffer = await slice.arrayBuffer();
+      const { uniqueId, id } = readWorldHeader(buffer);
+      const mapFiles = directoryFiles?.mapFiles ?? [];
+      matched = mapFiles.filter(f =>
+        f.name === `${uniqueId}.map` || f.name === `${id}.map`
+      );
+    } catch {
+      // corrupted or truncated file — proceed without map matching
     }
+    setPendingWorldFile(file);
+    setMatchedMapFiles(matched);
+    setStep('map');
   };
 
   const handleMapClick = async (file: File) => {

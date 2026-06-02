@@ -1,0 +1,13 @@
+{
+  "version": "0.1.0",
+  "imports": {
+    "@std/assert": "jsr:@std/assert",
+    "@std/cli": "jsr:@std/cli",
+    "@std/path": "jsr:@std/path"
+  },
+  "tasks": {
+    "dev": "deno run --allow-net --allow-read --allow-env --allow-run main.ts",
+    "build": "deno run --allow-run=deno,git --allow-read --allow-write=build-info.json build.ts",
+    "test": "deno lint && deno check **/*.ts && deno test --allow-net --allow-read --allow-env --allow-run"
+  }
+}

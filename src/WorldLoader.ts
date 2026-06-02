@@ -97,7 +97,6 @@ function readWorldFile(reader: DataStream, world: WorldRecord): void {
   self.postMessage({
     done: true
   });
-  console.log(world)
 }
 
 function readFileFormatHeader(reader: DataStream, world: WorldRecord): number[] {

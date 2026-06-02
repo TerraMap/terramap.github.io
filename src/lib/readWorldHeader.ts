@@ -1,11 +1,14 @@
-export interface WorldIds {
-  uniqueId: string;
+export interface WorldHeader {
+  height: number;
   id: number;
+  name: string;
+  seed: string;
+  uniqueId: string;
+  version: number;
+  width: number;
 }
 
-export async function readWorldIds(file: File): Promise<WorldIds> {
-  const slice = file.slice(0, 64 * 1024);
-  const buffer = await slice.arrayBuffer();
+export function readWorldHeader(buffer: ArrayBuffer): WorldHeader {
   const view = new DataView(buffer);
   let pos = 0;
 
@@ -14,8 +17,20 @@ export async function readWorldIds(file: File): Promise<WorldIds> {
   const readUint8 = () => { const v = view.getUint8(pos); pos += 1; return v; };
   const readUint32 = () => { const v = view.getUint32(pos, true); pos += 4; return v; };
 
-  // version
-  readInt32();
+  function read7BitEncodedInt(): number {
+    let result = 0;
+    let shift = 0;
+    let byte: number;
+    do {
+      byte = readUint8();
+      result |= (byte & 0x7f) << shift;
+      shift += 7;
+    } while (byte & 0x80);
+    return result;
+  }
+
+  const version = readInt32();
+
   // file metadata (uint64)
   readUint32(); readUint32();
   // revision
@@ -36,10 +51,14 @@ export async function readWorldIds(file: File): Promise<WorldIds> {
 
   // world name (length-prefixed string)
   const nameLen = read7BitEncodedInt();
+  const nameBytes = new Uint8Array(buffer, pos, nameLen);
+  const name = new TextDecoder().decode(nameBytes);
   pos += nameLen;
 
   // seed (length-prefixed string)
   const seedLen = read7BitEncodedInt();
+  const seedBytes = new Uint8Array(buffer, pos, seedLen);
+  const seed = new TextDecoder().decode(seedBytes);
   pos += seedLen;
 
   // worldGeneratorVersion (uint64)
@@ -59,17 +78,13 @@ export async function readWorldIds(file: File): Promise<WorldIds> {
 
   const id = readInt32();
 
-  return { uniqueId, id };
+  readInt32(); // left
+  readInt32(); // right
+  readInt32(); // top
+  readInt32(); // bottom
 
-  function read7BitEncodedInt(): number {
-    let result = 0;
-    let shift = 0;
-    let byte: number;
-    do {
-      byte = readUint8();
-      result |= (byte & 0x7f) << shift;
-      shift += 7;
-    } while (byte & 0x80);
-    return result;
-  }
+  const height = readInt32();
+  const width = readInt32();
+
+  return { height, id, name, seed, uniqueId, version, width };
 }
