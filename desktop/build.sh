@@ -16,14 +16,8 @@ cd "$SCRIPT_DIR"
 rm -rf resources/assets resources/index.html resources/about.html resources/ads.txt resources/windows.html resources/resources
 cp -r "$REPO_ROOT/dist/"* resources/
 
-echo "Patching config for production (remote URL)..."
-sed -i.bak 's|"url": "/"|"url": "https://terramap.github.io"|' neutralino.config.json
-
 echo "Building Neutralinojs app..."
 neu build
-
-echo "Restoring dev config..."
-mv neutralino.config.json.bak neutralino.config.json
 
 echo "Packaging archives..."
 cd dist/terramap-desktop
