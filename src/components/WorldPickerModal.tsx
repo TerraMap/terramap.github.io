@@ -1,10 +1,10 @@
 import { CloudOutlined, LeftOutlined } from '@ant-design/icons';
-import { Button, Modal, Space, Table, Tooltip } from 'antd';
+import { App, Button, Modal, Space, Table, Tooltip } from 'antd';
 import { useState } from 'react';
 import firstBy from 'thenby';
 import useFetchPlayers, { type PlayerEntry } from '../hooks/useFetchPlayers';
-import useFetchWorlds, { type WorldEntry } from '../hooks/useFetchWorlds';
-import { downloadFile } from '../lib/localServer';
+import useFetchWorlds from '../hooks/useFetchWorlds';
+import { readFile as neutralinoReadFile, type WorldEntry } from '../lib/neutralino';
 import { readPlayerMap, type PlayerMap } from '../lib/readPlayerMap';
 import { formatBytes } from '../lib/string';
 
@@ -12,14 +12,16 @@ interface WorldPickerModalProps {
   open: boolean;
   onClose: () => void;
   onWorldSelected: (file: File, playerMap: PlayerMap | null) => void;
+  neutralinoReady?: boolean;
 }
 
-export function WorldPickerModal({ open, onClose, onWorldSelected }: WorldPickerModalProps) {
+export function WorldPickerModal({ open, onClose, onWorldSelected, neutralinoReady }: WorldPickerModalProps) {
+  const { notification } = App.useApp();
   const [step, setStep] = useState<'world' | 'player'>('world');
   const [pendingWorld, setPendingWorld] = useState<WorldEntry | null>(null);
   const [downloading, setDownloading] = useState(false);
 
-  const { loading: loadingWorlds, data: worlds } = useFetchWorlds();
+  const { loading: loadingWorlds, data: worlds } = useFetchWorlds(!!neutralinoReady);
   const { loading: loadingPlayers, data: players, execute: loadPlayers } = useFetchPlayers();
 
   const handleClose = () => {
@@ -36,14 +38,17 @@ export function WorldPickerModal({ open, onClose, onWorldSelected }: WorldPicker
   const handleLoadWorld = async (world: WorldEntry, player: PlayerEntry | null) => {
     setDownloading(true);
     try {
-      const worldFile = await downloadFile(world.path, world.name);
+      const worldFile = await neutralinoReadFile(world.path);
       let playerMap: PlayerMap | null = null;
       if (player) {
-        const mapFile = await downloadFile(player.path, player.name);
+        const mapFile = await neutralinoReadFile(player.path);
         playerMap = await readPlayerMap(mapFile);
       }
       handleClose();
       onWorldSelected(worldFile, playerMap);
+    } catch (e) {
+      const message = !!e && typeof e === 'object' && 'message' in e ? e.message : 'unknown';
+      notification.error({ message: `Error loading world: ${message}`, placement: 'bottomRight', duration: 0 });
     } finally {
       setDownloading(false);
     }

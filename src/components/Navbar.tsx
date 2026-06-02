@@ -23,18 +23,16 @@ interface NavbarProps {
   isHighlighting: boolean;
   isSearching: boolean;
   isWorldLoading: boolean;
-  checkingLocalServer: boolean;
-  localServerAvailable?: boolean;
+  checkingNative: boolean;
+  nativeAvailable?: boolean;
   npcs: WorldNpc[];
+  isTileExplored: (x: number, y: number) => boolean;
   onChooseWorld: () => void;
   onClearHighlight: () => void;
-  onGoToDungeon: () => void;
-  onGoToSpawn: () => void;
   onGoToTile: (point?: { x: number, y: number }) => void;
   onHideTargetIndicator: () => void;
   onHighlightAll: () => void;
   onNextBlock: () => void;
-  onNpcSelect: (x: number, y: number) => void;
   onOpenBlocks: () => void;
   onPrevBlock: () => void;
   onReloadWorld: () => void;
@@ -60,18 +58,16 @@ export function Navbar({
   isHighlighting,
   isSearching,
   isWorldLoading,
-  checkingLocalServer,
-  localServerAvailable,
+  checkingNative,
+  nativeAvailable,
   npcs,
+  isTileExplored,
   onChooseWorld,
   onClearHighlight,
-  onGoToDungeon,
-  onGoToSpawn,
   onGoToTile,
   onHideTargetIndicator,
   onHighlightAll,
   onNextBlock,
-  onNpcSelect,
   onOpenBlocks,
   onPrevBlock,
   onReloadWorld,
@@ -109,7 +105,8 @@ export function Navbar({
   const npcMenuItems: MenuProps['items'] = npcs.map((npc, i) => ({
     key: i,
     label: !npc.name ? npc.type : npc.name !== npc.type ? `${npc.type} - ${npc.name}` : npc.name,
-    onClick: () => onNpcSelect(npc.x, npc.y),
+    disabled: !isTileExplored(npc.x, npc.y),
+    onClick: () => onGoToTile({ x: npc.x, y: npc.y }),
   })).sort(firstBy('label'));
 
   const setMenuItems: MenuProps['items'] = sets.map((set, i) => ({
@@ -124,7 +121,7 @@ export function Navbar({
         <span style={{ marginRight: 8, fontFamily: 'inherit' }}>TerraMap</span>
 
         <Space.Compact>
-          {checkingLocalServer ? <Spin /> : localServerAvailable ?
+          {checkingNative ? <Spin /> : nativeAvailable ?
             <Button icon={<GlobalOutlined />} onClick={onChooseWorld}>Choose World</Button>
             :
             <ToolbarButton
@@ -212,7 +209,13 @@ export function Navbar({
                   {
                     key: "Go To Dungeon",
                     label: <>Go To Dungeon <Tag><kbd>d</kbd></Tag></>,
-                    onClick: () => onGoToDungeon()
+                    disabled: typeof worldProperties.dungeonX === 'number' && typeof worldProperties.dungeonY === 'number'
+                      && !isTileExplored(worldProperties.dungeonX, worldProperties.dungeonY),
+                    onClick: () => {
+                      const x = worldProperties.dungeonX;
+                      const y = worldProperties.dungeonY;
+                      if (typeof x === 'number' && typeof y === 'number') onGoToTile({ x, y });
+                    }
                   },
                   {
                     key: "Go To Location",
@@ -222,7 +225,13 @@ export function Navbar({
                   {
                     key: "Go To Spawn",
                     label: <>Go To Spawn <Tag><kbd>s</kbd></Tag></>,
-                    onClick: () => onGoToSpawn()
+                    disabled: typeof worldProperties.spawnX === 'number' && typeof worldProperties.spawnY === 'number'
+                      && !isTileExplored(worldProperties.spawnX, worldProperties.spawnY),
+                    onClick: () => {
+                      const x = worldProperties.spawnX;
+                      const y = worldProperties.spawnY;
+                      if (typeof x === 'number' && typeof y === 'number') onGoToTile({ x, y });
+                    }
                   },
                   {
                     key: "Hide Tile Indicator",

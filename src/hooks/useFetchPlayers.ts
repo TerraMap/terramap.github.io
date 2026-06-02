@@ -1,16 +1,29 @@
-import { LOCAL_SERVER } from "../lib/localServer";
-import { useFetch } from "./useFetch";
-import type { FileEntry, WorldEntry } from "./useFetchWorlds";
+import { useCallback, useState } from 'react';
+import { discoverPlayers, type FileEntry, type WorldEntry } from '../lib/neutralino';
 
 export interface PlayerEntry extends FileEntry {
   playerName: string;
 }
 
 export default function useFetchPlayers() {
-  const result = useFetch<PlayerEntry[]>();
+  const [data, setData] = useState<PlayerEntry[] | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
 
-  return {
-    ...result,
-    execute: async (world: WorldEntry) => await result.execute(`${LOCAL_SERVER}/players?worldId=${world.id}&worldId=${world.uniqueId}`)
-  }
+  const execute = useCallback(async (world: WorldEntry) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const result = await discoverPlayers(world);
+      setData(result);
+      return result;
+    } catch (e) {
+      setError(e as Error);
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  return { data, loading, error, execute };
 }

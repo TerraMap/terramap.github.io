@@ -2,6 +2,7 @@ import { useCallback, useRef, useState } from 'react';
 import type { CanvasContainerHandle } from '../components/CanvasContainer';
 import { getTileAt } from '../lib/tileInfo';
 import { isTileMatch, isTileOrigin, type SearchableInfo } from '../lib/tileSearch';
+import type { PlayerMap } from '../lib/readPlayerMap';
 import type { WorldData, WorldTile } from '../types/settings';
 
 const CHUNK_SIZE = 50_000;
@@ -9,21 +10,29 @@ const CHUNK_SIZE = 50_000;
 export function useTileSelection(
   canvasRef: React.RefObject<CanvasContainerHandle | null>,
   worldRef: React.RefObject<WorldData | null>,
-  worldProperties: Record<string, unknown>,
+  playerMapRef: React.RefObject<PlayerMap | null>,
   onNotFound?: () => void,
 ) {
   const [selectionPos, setSelectionPos] = useState({ x: 0, y: 0 });
   const [selectedTile, setSelectedTile] = useState<WorldTile | null>(null);
   const [hoveredTile, setHoveredTile] = useState<WorldTile | null>(null);
 
-  const handleTileHover = useCallback((x: number, y: number) => {
+  const isExplored = useCallback((x: number, y: number) => {
+    const pm = playerMapRef.current;
+    if (!pm) return true;
+    const w = worldRef.current;
+    if (!w) return true;
+    return !!pm.explored[x * w.height + y];
+  }, [worldRef, playerMapRef]);
+
+  const tileHover = useCallback((x: number, y: number) => {
     const w = worldRef.current;
     if (!w) return;
-    const tile = getTileAt(w, x, y);
-    setHoveredTile(tile ? { ...tile, x, y } : null);
-  }, [worldRef]);
+    const tile = isExplored(x, y) ? getTileAt(w, x, y) : null;
+    setHoveredTile(tile ? { ...tile, x, y } : { x, y } as WorldTile);
+  }, [worldRef, isExplored]);
 
-  const handleTileClick = useCallback((x: number, y: number) => {
+  const tileClick = useCallback((x: number, y: number) => {
     if (selectionPos.x === x && selectionPos.y === y) {
       canvasRef.current?.clearSelection();
       setSelectedTile(null);
@@ -36,11 +45,11 @@ export function useTileSelection(
     setSelectionPos({ x, y });
     canvasRef.current?.drawSelection(x, y);
 
-    const tile = getTileAt(w, x, y);
+    const tile = isExplored(x, y) ? getTileAt(w, x, y) : null;
     setSelectedTile(tile ? { ...tile, x, y } : null);
-  }, [worldRef, canvasRef, selectionPos]);
+  }, [worldRef, canvasRef, selectionPos, isExplored]);
 
-  const handleGoToTile = useCallback((point?: { x: number, y: number }) => {
+  const goToTile = useCallback((point?: { x: number, y: number }) => {
     let x = point?.x;
     let y = point?.y;
 
@@ -61,30 +70,8 @@ export function useTileSelection(
     setSelectedTile(tile ? { ...tile, x, y } : null);
   }, [worldRef, canvasRef]);
 
-  const handleGoToDungeon = useCallback(() => {
-    const x = worldProperties.dungeonX;
-    const y = worldProperties.dungeonY;
-    if (typeof x === 'number' && typeof y === 'number') {
-      handleGoToTile({ x, y });
-    }
-  }, [handleGoToTile, worldProperties]);
-
-  const handleGoToSpawn = useCallback(() => {
-    const x = worldProperties.spawnX;
-    const y = worldProperties.spawnY;
-    if (typeof x === 'number' && typeof y === 'number') {
-      handleGoToTile({ x, y });
-    }
-  }, [handleGoToTile, worldProperties]);
-
   const hideTileIndicator = useCallback(() => {
     canvasRef.current?.clearSelection();
-  }, [canvasRef]);
-
-  const selectTile = useCallback((x: number, y: number) => {
-    setSelectionPos({ x, y });
-    canvasRef.current?.drawSelection(x, y);
-    canvasRef.current?.panToTile(x, y);
   }, [canvasRef]);
 
   const [isSearching, setIsSearching] = useState(false);
@@ -116,7 +103,8 @@ export function useTileSelection(
       const end = Math.min(checked + CHUNK_SIZE, total);
       while (checked < end) {
         const tile = w.tiles[i];
-        if (isTileMatch(tile, infos) && isTileOrigin(tile)) {
+        const pm = playerMapRef.current;
+        if (isTileMatch(tile, infos) && isTileOrigin(tile) && (!pm || pm.explored[i])) {
           const x = Math.floor(i / w.height);
           const y = i % w.height;
           setSelectionPos({ x, y });
@@ -147,17 +135,14 @@ export function useTileSelection(
 
   return {
     findBlock,
-    handleGoToDungeon,
-    handleGoToSpawn,
-    handleGoToTile,
-    handleTileClick,
-    handleTileHover,
+    goToTile,
+    tileClick,
+    tileHover,
     hideTileIndicator,
     hoveredTile,
     isSearching,
     searchStatus,
     selectedTile,
     selectionPos,
-    selectTile,
   };
 }

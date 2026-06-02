@@ -48,7 +48,7 @@ export function HelpPanel(
             >
               Folder
             </ToolbarButton> button to select a folder that contains world and player map files from your computer.<br />
-            <b>Note</b>: you may see a warning about {"Uploading"} files. The files are read in your browser and will not actually be uploaded.
+            <b>Note</b>: you may see a warning about {"Uploading"} files. The files are read in your browser and will not actually be uploaded anywhere.
           </li>
         </ul>
 

@@ -19,6 +19,6 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    exclude: ['local-server/**', 'node_modules/**'],
+    exclude: ['desktop/**', 'node_modules/**'],
   },
 });

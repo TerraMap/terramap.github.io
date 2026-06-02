@@ -3,6 +3,7 @@ import type { CanvasContainerHandle } from '../components/CanvasContainer';
 import { items } from '../items';
 import { getTileInfoFrom, isTileMatch, type SearchableInfo } from '../lib/tileSearch';
 import { tiles } from '../tiles';
+import type { PlayerMap } from '../lib/readPlayerMap';
 import type { BlockSet, WorldData } from '../types/settings';
 import { walls } from '../walls';
 
@@ -11,6 +12,7 @@ export function useBlockHighlight(
   worldRef: React.RefObject<WorldData | null>,
   selectedBlocks: string[],
   setShowWires: (value: boolean) => void,
+  playerMapRef: React.RefObject<PlayerMap | null>,
   onFinished?: (count: number) => void,
 ) {
   const selectedInfos = useMemo((): SearchableInfo[] => {
@@ -40,7 +42,7 @@ export function useBlockHighlight(
     const infos = selectedInfos;
     if (infos.length > 0) {
       setIsHighlighting(true);
-      canvasRef.current?.highlightTiles((tile) => isTileMatch(tile, infos), w, (pct, matchCount) => {
+      canvasRef.current?.highlightTiles((tile) => isTileMatch(tile, infos), w, playerMapRef.current, (pct, matchCount) => {
         if (pct >= 100) {
           setHighlightStatus('');
           setIsHighlighting(false);
@@ -50,7 +52,7 @@ export function useBlockHighlight(
         }
       });
     }
-  }, [worldRef, canvasRef, selectedInfos, onFinished]);
+  }, [worldRef, canvasRef, selectedInfos, playerMapRef, onFinished]);
 
   const handleClearHighlight = useCallback(() => {
     canvasRef.current?.clearOverlay();
@@ -88,7 +90,7 @@ export function useBlockHighlight(
     const w = worldRef.current;
     if (w && infos.length > 0) {
       setIsHighlighting(true);
-      canvasRef.current?.highlightTiles((tile) => isTileMatch(tile, infos), w, (pct, matchCount) => {
+      canvasRef.current?.highlightTiles((tile) => isTileMatch(tile, infos), w, playerMapRef.current, (pct, matchCount) => {
         if (pct >= 100) {
           setHighlightStatus('');
           setIsHighlighting(false);
@@ -99,7 +101,7 @@ export function useBlockHighlight(
       });
     }
     return values;
-  }, [worldRef, canvasRef, onFinished]);
+  }, [worldRef, canvasRef, playerMapRef, onFinished]);
 
   return {
     selectedInfos,

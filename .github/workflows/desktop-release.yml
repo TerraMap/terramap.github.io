@@ -1,0 +1,112 @@
+name: Build & Release Desktop
+
+on:
+  push:
+    tags: ["desktop-v*"]
+    branches: [master]
+    paths: ["desktop/**", "src/**"]
+  pull_request:
+    paths: ["desktop/**", "src/**"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag (e.g. desktop-v0.1.0). Leave blank for a dry-run build with no release."
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: desktop-release
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm test
+
+  build:
+    needs: test
+    if: startsWith(github.ref, 'refs/tags/desktop-v') || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Install Neutralinojs CLI
+        run: npm install -g @neutralinojs/neu
+
+      - name: Download Neutralinojs binaries
+        working-directory: desktop
+        run: neu update
+
+      - name: Build and package desktop app
+        run: desktop/build.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: desktop-binaries
+          path: |
+            desktop/dist/*.tar.gz
+            desktop/dist/*.zip
+
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/desktop-v') || github.event.inputs.tag != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: desktop-binaries
+
+      - name: Determine tag
+        id: tag
+        run: |
+          if [[ "${{ github.ref_type }}" == "tag" ]]; then
+            echo "name=${{ github.ref_name }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "name=${{ github.event.inputs.tag }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.name }}
+          name: TerraMap Desktop ${{ steps.tag.outputs.name }}
+          generate_release_notes: true
+          append_body: true
+          body: |
+            ## TerraMap Desktop
+            TerraMap Desktop is a cross-platform, interactive Terraria v1.4.5 world map viewer that loads quickly and lets you pan, zoom, find blocks, ores, items in chests, dungeons, NPCs, etc.
+
+            It's the same as the web app, but with a better experience for viewing worlds without spoilers.
+            It makes it much easier than the web version to choose a world, then choose a player map for the chosen world.
+            Only the parts of the world that have been seen by the player are shown in TerraMap.
+
+            ## Installation
+            - **macOS**: Download `TerraMap-mac-<arch>.zip`, extract, and double-click `TerraMap.app`.
+            - **Linux**: Download `TerraMap-linux-<arch>.tar.gz`, extract, and run `TerraMap/TerraMap`.
+            - **Windows**: Download `TerraMap-win-x64.zip`, extract, and run `TerraMap/TerraMap.exe`.
+
+            ## macOS note
+            macOS may block the downloaded app. To fix this, run in Terminal:
+            ```
+            xattr -cr TerraMap.app
+            ```
+            Or right-click the app and select **Open** to bypass the warning.
+          files: |
+            *.tar.gz
+            *.zip

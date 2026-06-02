@@ -1,17 +1,8 @@
-import { LOCAL_SERVER } from "../lib/localServer";
-import type { WorldHeader } from "../lib/readWorldHeader";
-import { useFetch } from "./useFetch";
+import { useCallback } from 'react';
+import { discoverWorlds, type WorldEntry } from '../lib/neutralino';
+import { useNativeAsync } from './useNative';
 
-export interface FileEntry {
-  name: string;
-  path: string;
-  size: number;
-  lastModified: number;
-}
-
-export interface WorldEntry extends FileEntry, WorldHeader {
-}
-
-export default function useFetchWorlds() {
-  return useFetch<WorldEntry[]>(`${LOCAL_SERVER}/worlds`, { immediate: true });
+export default function useFetchWorlds(ready: boolean) {
+  const fn = useCallback(() => discoverWorlds(), []);
+  return useNativeAsync<WorldEntry[]>(fn, ready);
 }

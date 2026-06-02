@@ -13,9 +13,9 @@ import { WorldPickerModal } from './components/WorldPickerModal';
 import { WorldPropertiesList } from './components/WorldPropertiesList';
 import { useBlockHighlight } from './hooks/useBlockHighlight';
 import { useBlockOptions } from './hooks/useBlockOptions';
-import useFetchLocalServer from './hooks/useFetchLocalServer';
 import { useFileDrop } from './hooks/useFileDrop';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
+import { useNative } from './hooks/useNative';
 import { useTileSelection } from './hooks/useTileSelection';
 import { useWorldLoader } from './hooks/useWorldLoader';
 import { readPlayerMap, type PlayerMap } from './lib/readPlayerMap';
@@ -58,7 +58,8 @@ export default function AppContent() {
   const screens = Grid.useBreakpoint();
   const isMobile = !screens.md;
 
-  const { loading: checkingLocalServer, localServerAvailable } = useFetchLocalServer();
+  const { available: nativeAvailable, ready: nativeReady } = useNative();
+  const checkingNativeAccess = nativeAvailable && !nativeReady;
 
   const worldProperties = useMemo(() => {
     if (!world) return {};
@@ -75,18 +76,15 @@ export default function AppContent() {
 
   const {
     findBlock,
-    handleGoToDungeon,
-    handleGoToSpawn,
-    handleGoToTile,
-    handleTileClick,
-    handleTileHover,
+    goToTile,
+    tileClick,
+    tileHover,
     hideTileIndicator,
     hoveredTile,
     isSearching,
     searchStatus,
     selectedTile,
-    selectTile,
-  } = useTileSelection(canvasRef, worldRef, worldProperties, () => {
+  } = useTileSelection(canvasRef, worldRef, playerMapRef, () => {
     notificationRef.current?.warning({ message: `No matches found`, placement: 'bottomRight' });
   });
 
@@ -97,7 +95,7 @@ export default function AppContent() {
     handleHighlightAll,
     handleClearHighlight,
     handleSetSelect,
-  } = useBlockHighlight(canvasRef, worldRef, selectedBlocks, setShowWires, (count) => {
+  } = useBlockHighlight(canvasRef, worldRef, selectedBlocks, setShowWires, playerMapRef, (count) => {
     if (count) {
       notificationRef.current?.success({ message: `Highlighted ${count.toLocaleString()} matches`, placement: 'bottomRight' });
     } else {
@@ -107,8 +105,10 @@ export default function AppContent() {
 
   const handleWorldFileSelect = useCallback((f: File) => {
     setWorldFile(f);
+    setMapFile(null);
+    setPlayerMap(null);
     loadWorldFile(f);
-  }, [loadWorldFile]);
+  }, [loadWorldFile, setPlayerMap]);
 
   const { isDragging, invalidDrop, dragProps } = useFileDrop(handleWorldFileSelect);
 
@@ -144,9 +144,9 @@ export default function AppContent() {
   }, []);
 
   const handleDirectoryWorldSelected = useCallback((file: File, parsedMap: PlayerMap | null) => {
+    handleWorldFileSelect(file);
     setMapFile(parsedMap ? file : null);
     setPlayerMap(parsedMap);
-    handleWorldFileSelect(file);
   }, [handleWorldFileSelect, setPlayerMap]);
 
   const handleReloadWorld = useCallback(async () => {
@@ -173,9 +173,17 @@ export default function AppContent() {
     onClearHighlight: () => handleClearHighlight(),
     onFindNext: handleFindNext,
     onFindPrevious: handleFindPrev,
-    onGoToDungeon: () => handleGoToDungeon(),
-    onGoToSpawn: () => handleGoToSpawn(),
-    onGoToTile: () => handleGoToTile(),
+    onGoToDungeon: () => {
+      const x = worldProperties.dungeonX;
+      const y = worldProperties.dungeonY;
+      if (typeof x === 'number' && typeof y === 'number') goToTile({ x, y });
+    },
+    onGoToSpawn: () => {
+      const x = worldProperties.spawnX;
+      const y = worldProperties.spawnY;
+      if (typeof x === 'number' && typeof y === 'number') goToTile({ x, y });
+    },
+    onGoToTile: () => goToTile(),
     onHideTileIndicator: () => hideTileIndicator(),
     onHighlight: () => handleHighlightAll(),
     onOpenBlocks: () => setBlocksModalOpen(true),
@@ -187,7 +195,7 @@ export default function AppContent() {
     onToggleWires: () => setShowWires((showWires) => !showWires),
     onZoomIn: () => canvasRef.current?.zoomIn(),
     onZoomOut: () => canvasRef.current?.zoomOut(),
-  }), [handleFindNext, handleFindPrev, handleGoToTile, hideTileIndicator, handleHighlightAll, handleClearHighlight, handleReloadWorld]);
+  }), [handleFindNext, handleFindPrev, goToTile, hideTileIndicator, handleHighlightAll, handleClearHighlight, handleReloadWorld]);
 
   useKeyboardShortcuts(shortcutHandlers);
 
@@ -207,18 +215,20 @@ export default function AppContent() {
               isHighlighting={isHighlighting}
               isSearching={isSearching}
               isWorldLoading={isWorldLoading}
-              checkingLocalServer={checkingLocalServer}
-              localServerAvailable={localServerAvailable}
+              checkingNative={checkingNativeAccess}
+              nativeAvailable={nativeAvailable}
               npcs={world?.npcs ?? []}
+              isTileExplored={(x, y) => {
+                const pm = playerMapRef.current;
+                if (!pm || !world) return true;
+                return !!pm.explored[Math.floor(x) * world.height + Math.floor(y)];
+              }}
               onChooseWorld={() => setWorldPickerOpen(true)}
               onClearHighlight={handleClearHighlight}
-              onGoToDungeon={handleGoToDungeon}
-              onGoToSpawn={handleGoToSpawn}
-              onGoToTile={handleGoToTile}
+              onGoToTile={goToTile}
               onHideTargetIndicator={hideTileIndicator}
               onHighlightAll={handleHighlightAll}
               onNextBlock={handleFindNext}
-              onNpcSelect={(x, y) => selectTile(x, y)}
               onOpenBlocks={() => setBlocksModalOpen(true)}
               onPrevBlock={handleFindPrev}
               onReloadWorld={handleReloadWorld}
@@ -251,8 +261,8 @@ export default function AppContent() {
               <div style={{ display: world || isWorldLoading ? 'block' : 'none', height: '100%' }}>
                 <CanvasContainer
                   ref={canvasRef}
-                  onTileHover={handleTileHover}
-                  onTileClick={handleTileClick}
+                  onTileHover={tileHover}
+                  onTileClick={tileClick}
                   handleTileDoubleClick={hideTileIndicator}
                 />
               </div>
@@ -326,7 +336,8 @@ export default function AppContent() {
           <WorldPickerModal
             open={worldPickerOpen}
             onClose={() => setWorldPickerOpen(false)}
-            onWorldSelected={handleDirectoryWorldSelected} />
+            onWorldSelected={handleDirectoryWorldSelected}
+            neutralinoReady={nativeReady} />
         )}
 
         <DirectoryPickerModal

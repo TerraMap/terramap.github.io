@@ -9,7 +9,7 @@ export interface CanvasContainerHandle {
   setWorldSize: (width: number, height: number) => void;
   renderTileBatch: (tiles: WorldTile[], startX: number, world: WorldData) => void;
   finishRender: (worldWidth: number) => void;
-  highlightTiles: (matchFn: ((tile: WorldTile) => boolean) | null, world: WorldData, onProgress?: (pct: number, matchCount: number) => void) => void;
+  highlightTiles: (matchFn: ((tile: WorldTile) => boolean) | null, world: WorldData, playerMap: PlayerMap | null, onProgress?: (pct: number, matchCount: number) => void) => void;
   renderWireOverlay: (world: WorldData) => void;
   clearWireOverlay: () => void;
   renderFogOverlay: (playerMap: PlayerMap) => void;
@@ -204,7 +204,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         pixelsRef.current = null;
       },
 
-      highlightTiles(matchFn: ((tile: WorldTile) => boolean) | null, world: WorldData, onProgress?: (pct: number, matchCount: number) => void) {
+      highlightTiles(matchFn: ((tile: WorldTile) => boolean) | null, world: WorldData, playerMap: PlayerMap | null, onProgress?: (pct: number, matchCount: number) => void) {
         const ctx = overlayCtxRef.current!;
         const overlay = overlayRef.current!;
         ctx.clearRect(0, 0, overlay.width, overlay.height);
@@ -236,7 +236,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
             const end = Math.min(idx + chunkSize, total);
             while (idx < end) {
               const tile = world.tiles[idx];
-              if (matchFn(tile)) {
+              if (matchFn(tile) && (!playerMap || playerMap.explored[idx])) {
                 const pxIdx = (y * w + x) * 4;
                 data[pxIdx] = 255;
                 data[pxIdx + 1] = 255;
@@ -362,7 +362,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
 
       clearSelection() {
         const selection = selectionRef.current!;
-        selectionCtxRef.current!.clearRect(0, 0, selection.width, selection.height);
+        selectionCtxRef.current?.clearRect(0, 0, selection.width, selection.height);
       },
 
       saveImage(filename: string) {

@@ -1,3 +1,4 @@
+import { LeftOutlined } from '@ant-design/icons';
 import { Button, Modal, Space, Table } from 'antd';
 import { useState } from 'react';
 import firstBy from 'thenby';
@@ -63,9 +64,15 @@ export function DirectoryPickerModal({ open, directoryFiles, onClose, onWorldSel
           <div style={{ textAlign: 'left' }}>
             Pick a player map to avoid spoilers. TerraMap will show only what that player has seen in the world.
           </div>
-          <Button danger onClick={handleSkipMap}>
-            Show all spoilers
-          </Button>
+          <Space>
+            <Button icon={<LeftOutlined />}
+              onClick={() => setStep('world')}>
+              Select a different world
+            </Button>
+            <Button danger onClick={handleSkipMap}>
+              Show all spoilers
+            </Button>
+          </Space>
         </Space>
       ) : null}
     >
