@@ -85,6 +85,14 @@ jobs:
           tag_name: ${{ steps.tag.outputs.name }}
           name: TerraMap Server ${{ steps.tag.outputs.name }}
           generate_release_notes: true
+          append_body: true
+          body: |
+            ## macOS note
+            macOS may block the downloaded binary. To fix this, run the following in Terminal:
+            ```
+            xattr -d com.apple.quarantine terramap-server
+            ```
+            Or right-click the file and select **Open** to bypass the warning.
           files: |
             *.tar.gz
             *.zip

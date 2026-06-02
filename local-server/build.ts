@@ -75,7 +75,7 @@ for (const { target, output } of selected) {
     '--allow-env',
     '--allow-net',
     '--allow-read',
-    '--allow-write',
+    '--allow-run=open,xdg-open,cmd',
     '--include',
     'build-info.json',
     '--target',
