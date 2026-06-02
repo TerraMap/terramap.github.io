@@ -1,19 +1,15 @@
 import { Button, Space, Tag, Tooltip } from "antd";
 import type { ReactNode } from "react";
-import { getLabelByHandler, getShortcutsByHandler, type ShortcutHandlers } from "../lib/keyboardShortcuts";
+import { getLabelByHandler, getShortcutByHandler, type ShortcutHandlers } from "../lib/keyboardShortcuts";
 
 function ShortcutTag({ handler }: { handler: keyof ShortcutHandlers }) {
-  const shortcuts = getShortcutsByHandler(handler);
-  if (shortcuts.length === 0) return null;
+  const shortcut = getShortcutByHandler(handler);
+  if (!shortcut) return null;
   return (
     <Tag>
-      <Space separator=" or ">
-        {shortcuts.map(s => (
-          <kbd key={s.key + (s.shift ? '-shift' : '')}>
-            {s.shift ? `Shift + ${s.key}` : s.key}
-          </kbd>
-        ))}
-      </Space>
+      <kbd key={shortcut.key + (shortcut.shift ? '-shift' : '')}>
+        {shortcut.shift ? `Shift + ${shortcut.key}` : shortcut.key}
+      </kbd>
     </Tag>
   );
 }
@@ -39,7 +35,7 @@ export default function ToolbarButton(
     }
 ) {
   const label = tooltip ?? (shortcutHandler && getLabelByHandler(shortcutHandler));
-  const resolvedIcon = icon ?? (shortcutHandler && (getShortcutsByHandler(shortcutHandler))?.[0]?.icon);
+  const resolvedIcon = icon ?? (shortcutHandler && (getShortcutByHandler(shortcutHandler))?.icon);
 
   return (<Tooltip title={
     <Space>

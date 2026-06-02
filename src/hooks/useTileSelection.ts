@@ -9,6 +9,7 @@ const CHUNK_SIZE = 50_000;
 export function useTileSelection(
   canvasRef: React.RefObject<CanvasContainerHandle | null>,
   worldRef: React.RefObject<WorldData | null>,
+  worldProperties: Record<string, unknown>,
   onNotFound?: () => void,
 ) {
   const [selectionPos, setSelectionPos] = useState({ x: 0, y: 0 });
@@ -39,12 +40,17 @@ export function useTileSelection(
     setSelectedTile(tile ? { ...tile, x, y } : null);
   }, [worldRef, canvasRef, selectionPos]);
 
-  const handleGoToTile = useCallback(() => {
-    const input = prompt('Enter coordinates (x, y):');
-    if (!input) return;
-    const parts = input.split(/[,\s]+/).map(Number);
-    const x = parts[0];
-    const y = parts[1];
+  const handleGoToTile = useCallback((point?: { x: number, y: number }) => {
+    let x = point?.x;
+    let y = point?.y;
+
+    if (!x || !y) {
+      const input = prompt('Enter coordinates (x, y):');
+      if (!input) return;
+      const parts = input.split(/[,\s]+/).map(Number);
+      x = parts[0];
+      y = parts[1];
+    }
     if (isNaN(x) || isNaN(y)) return;
     const w = worldRef.current;
     if (!w) return;
@@ -54,6 +60,22 @@ export function useTileSelection(
     const tile = getTileAt(w, x, y);
     setSelectedTile(tile ? { ...tile, x, y } : null);
   }, [worldRef, canvasRef]);
+
+  const handleGoToDungeon = useCallback(() => {
+    const x = worldProperties.dungeonX;
+    const y = worldProperties.dungeonY;
+    if (typeof x === 'number' && typeof y === 'number') {
+      handleGoToTile({ x, y });
+    }
+  }, [handleGoToTile, worldProperties]);
+
+  const handleGoToSpawn = useCallback(() => {
+    const x = worldProperties.spawnX;
+    const y = worldProperties.spawnY;
+    if (typeof x === 'number' && typeof y === 'number') {
+      handleGoToTile({ x, y });
+    }
+  }, [handleGoToTile, worldProperties]);
 
   const hideTileIndicator = useCallback(() => {
     canvasRef.current?.clearSelection();
@@ -124,16 +146,18 @@ export function useTileSelection(
   }, [worldRef, canvasRef, selectionPos]);
 
   return {
-    selectionPos,
-    selectedTile,
-    hoveredTile,
-    handleTileHover,
-    handleTileClick,
-    handleGoToTile,
-    hideTileIndicator,
-    selectTile,
     findBlock,
+    handleGoToDungeon,
+    handleGoToSpawn,
+    handleGoToTile,
+    handleTileClick,
+    handleTileHover,
+    hideTileIndicator,
+    hoveredTile,
     isSearching,
     searchStatus,
+    selectedTile,
+    selectionPos,
+    selectTile,
   };
 }

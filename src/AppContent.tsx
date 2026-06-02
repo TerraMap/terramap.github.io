@@ -9,9 +9,11 @@ import { HelpPanel } from './components/HelpPanel';
 import { DirectoryFiles, Navbar } from './components/Navbar';
 import { StatusBar } from './components/StatusBar';
 import TileDescriptions from './components/TileDescriptions';
+import { WorldPickerModal } from './components/WorldPickerModal';
 import { WorldPropertiesList } from './components/WorldPropertiesList';
 import { useBlockHighlight } from './hooks/useBlockHighlight';
 import { useBlockOptions } from './hooks/useBlockOptions';
+import useFetchLocalServer from './hooks/useFetchLocalServer';
 import { useFileDrop } from './hooks/useFileDrop';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import { useTileSelection } from './hooks/useTileSelection';
@@ -44,6 +46,7 @@ export default function AppContent() {
   const [worldFile, setWorldFile] = useState<File | null>(null);
   const [directoryFiles, setDirectoryFiles] = useState<DirectoryFiles>();
   const [directoryPickerOpen, setDirectoryPickerOpen] = useState(false);
+  const [worldPickerOpen, setWorldPickerOpen] = useState(false);
   const [mapFile, setMapFile] = useState<File | null>(null);
   const [playerMap, setPlayerMapState] = useState<PlayerMap | null>(null);
   const setPlayerMap = useCallback((map: PlayerMap | null) => {
@@ -55,18 +58,35 @@ export default function AppContent() {
   const screens = Grid.useBreakpoint();
   const isMobile = !screens.md;
 
+  const { loading: checkingLocalServer, localServerAvailable } = useFetchLocalServer();
+
+  const worldProperties = useMemo(() => {
+    if (!world) return {};
+    const props: Record<string, unknown> = {};
+    Object.keys(world).forEach((key) => {
+      const value = world[key];
+      const type = typeof value;
+      if (type === 'string' || type === 'number' || type === 'boolean' || type === 'bigint') {
+        props[key] = value;
+      }
+    });
+    return props;
+  }, [world]);
+
   const {
-    selectedTile,
-    hoveredTile,
-    handleTileHover,
-    handleTileClick,
-    handleGoToTile,
-    hideTileIndicator,
-    selectTile,
     findBlock,
+    handleGoToDungeon,
+    handleGoToSpawn,
+    handleGoToTile,
+    handleTileClick,
+    handleTileHover,
+    hideTileIndicator,
+    hoveredTile,
     isSearching,
     searchStatus,
-  } = useTileSelection(canvasRef, worldRef, () => {
+    selectedTile,
+    selectTile,
+  } = useTileSelection(canvasRef, worldRef, worldProperties, () => {
     notificationRef.current?.warning({ message: `No matches found`, placement: 'bottomRight' });
   });
 
@@ -118,19 +138,6 @@ export default function AppContent() {
     }
   }, [playerMap, world]);
 
-  const worldProperties = useMemo(() => {
-    if (!world) return {};
-    const props: Record<string, unknown> = {};
-    Object.keys(world).forEach((key) => {
-      const value = world[key];
-      const type = typeof value;
-      if (type === 'string' || type === 'number' || type === 'boolean' || type === 'bigint') {
-        props[key] = value;
-      }
-    });
-    return props;
-  }, [world]);
-
   const handleWorldFilesFromDirectory = useCallback((directoryFiles: DirectoryFiles) => {
     setDirectoryFiles(directoryFiles);
     setDirectoryPickerOpen(true);
@@ -166,6 +173,8 @@ export default function AppContent() {
     onClearHighlight: () => handleClearHighlight(),
     onFindNext: handleFindNext,
     onFindPrevious: handleFindPrev,
+    onGoToDungeon: () => handleGoToDungeon(),
+    onGoToSpawn: () => handleGoToSpawn(),
     onGoToTile: () => handleGoToTile(),
     onHideTileIndicator: () => hideTileIndicator(),
     onHighlight: () => handleHighlightAll(),
@@ -194,11 +203,17 @@ export default function AppContent() {
           <Layout.Header style={{ backgroundColor: colorBgBase, height: 'auto', lineHeight: 'normal', padding: '8px', display: 'flex', alignItems: 'center' }}>
             <Navbar
               directoryInputRef={directoryInputRef}
+              infoPaneOpen={!infoPaneCollapsed}
               isHighlighting={isHighlighting}
               isSearching={isSearching}
               isWorldLoading={isWorldLoading}
+              checkingLocalServer={checkingLocalServer}
+              localServerAvailable={localServerAvailable}
               npcs={world?.npcs ?? []}
+              onChooseWorld={() => setWorldPickerOpen(true)}
               onClearHighlight={handleClearHighlight}
+              onGoToDungeon={handleGoToDungeon}
+              onGoToSpawn={handleGoToSpawn}
               onGoToTile={handleGoToTile}
               onHideTargetIndicator={hideTileIndicator}
               onHighlightAll={handleHighlightAll}
@@ -214,11 +229,10 @@ export default function AppContent() {
               onWorldFilesFromDirectory={handleWorldFilesFromDirectory}
               onZoomIn={() => canvasRef.current?.zoomIn()}
               onZoomOut={() => canvasRef.current?.zoomOut()}
+              setInfoPaneOpen={(value) => setInfoPaneCollapsed(!value)}
               sets={sets}
               setShowWires={setShowWires}
-              setInfoPaneOpen={(value) => setInfoPaneCollapsed(!value)}
               showWires={showWires}
-              infoPaneOpen={!infoPaneCollapsed}
               worldFileInputRef={worldFileInputRef}
               worldLoaded={!!world}
               worldProperties={worldProperties}
@@ -308,12 +322,20 @@ export default function AppContent() {
           onSelectionChange={setSelectedBlocks}
         />
 
+        {worldPickerOpen && (
+          <WorldPickerModal
+            open={worldPickerOpen}
+            onClose={() => setWorldPickerOpen(false)}
+            onWorldSelected={handleDirectoryWorldSelected} />
+        )}
+
         <DirectoryPickerModal
           open={directoryPickerOpen}
           directoryFiles={directoryFiles}
           onClose={() => setDirectoryPickerOpen(false)}
           onWorldSelected={handleDirectoryWorldSelected}
         />
+
       </div>
     </AntApp>
   );

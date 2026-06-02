@@ -1,0 +1,90 @@
+name: Build & Release Server
+
+on:
+  push:
+    tags: ["server-v*"]
+    branches: [master]
+    paths: ["local-server/**"]
+  pull_request:
+    paths: ["local-server/**"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag (e.g. server-v0.1.0). Leave blank for a dry-run build with no release."
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: server-release
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: local-server
+    steps:
+      - uses: actions/checkout@v5
+      - uses: denoland/setup-deno@v2
+      - run: deno task test
+
+  build:
+    needs: test
+    if: startsWith(github.ref, 'refs/tags/server-v') || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: local-server
+    steps:
+      - uses: actions/checkout@v5
+      - uses: denoland/setup-deno@v2
+
+      - name: Build all targets
+        run: deno task build
+
+      - name: Package archives
+        run: |
+          cd dist
+          tar czf terramap-server-linux-aarch64.tar.gz -C linux/aarch64 terramap-server
+          tar czf terramap-server-linux-x86_64.tar.gz -C linux/x86_64 terramap-server
+          tar czf terramap-server-mac-aarch64.tar.gz -C mac/aarch64 terramap-server
+          tar czf terramap-server-mac-x86_64.tar.gz -C mac/x86_64 terramap-server
+          zip terramap-server-win-x86_64.zip -j win/x86_64/terramap-server.exe
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: server-binaries
+          path: |
+            local-server/dist/*.tar.gz
+            local-server/dist/*.zip
+
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/server-v') || github.event.inputs.tag != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: server-binaries
+
+      - name: Determine tag
+        id: tag
+        run: |
+          if [[ "${{ github.ref_type }}" == "tag" ]]; then
+            echo "name=${{ github.ref_name }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "name=${{ github.event.inputs.tag }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.name }}
+          name: TerraMap Server ${{ steps.tag.outputs.name }}
+          generate_release_notes: true
+          files: |
+            *.tar.gz
+            *.zip

@@ -25,7 +25,9 @@ export interface ShortcutHandlers {
   onClearHighlight: () => void;
   onFindNext: () => void;
   onFindPrevious: () => void;
+  onGoToDungeon: () => void;
   onGoToTile: () => void;
+  onGoToSpawn: () => void;
   onHideTileIndicator: () => void;
   onHighlight: () => void;
   onOpenBlocks: () => void;
@@ -39,8 +41,8 @@ export interface ShortcutHandlers {
   onZoomOut: () => void;
 }
 
-export function getShortcutsByHandler(handler: keyof ShortcutHandlers): KeyboardShortcut[] {
-  return keyboardShortcuts.filter(s => s.handler === handler);
+export function getShortcutByHandler(handler: keyof ShortcutHandlers): KeyboardShortcut | undefined {
+  return keyboardShortcuts.find(s => s.handler === handler);
 }
 
 export function getLabelByHandler(handler: keyof ShortcutHandlers): string | undefined {
@@ -59,7 +61,9 @@ export const keyboardShortcuts: KeyboardShortcut[] = [
   { key: 'e', label: 'Zoom In', handler: 'onZoomIn', icon: <ZoomInOutlined /> },
   { key: 'c', label: 'Zoom Out', handler: 'onZoomOut', icon: <ZoomOutOutlined /> },
   { key: 'z', label: 'Zoom To Fit', handler: 'onResetZoom', icon: <ExpandOutlined /> },
+  { key: 'd', label: 'Go To Dungeon', handler: 'onGoToDungeon' },
   { key: 'l', label: 'Go To Location', handler: 'onGoToTile' },
+  { key: 's', label: 'Go To Spawn', handler: 'onGoToSpawn' },
   { key: 'i', label: 'Info Pane (Show / Hide)', handler: 'onToggleInfoPane' },
   { key: 'w', label: 'Wires (Show / Hide)', handler: 'onToggleWires' },
   { key: 'escape', label: 'Hide Tile Indicator', handler: 'onHideTileIndicator' },

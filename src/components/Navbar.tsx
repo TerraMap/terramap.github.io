@@ -1,15 +1,16 @@
 import {
   CameraOutlined,
+  GlobalOutlined,
   MoonOutlined,
   QuestionCircleOutlined,
   SunOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Button, Dropdown, Space, Switch, Tag, Tooltip } from 'antd';
+import { Button, Dropdown, Space, Spin, Switch, Tag, Tooltip } from 'antd';
 import firstBy from 'thenby';
 import useThemeMenuItems from '../hooks/useThemeMenuItems';
 import { useThemeName } from '../hooks/useThemeName';
-import { getShortcutsByHandler } from '../lib/keyboardShortcuts';
+import { getShortcutByHandler } from '../lib/keyboardShortcuts';
 import { capitalizeFirstLetter, truncateString } from '../lib/string';
 import type { BlockSet, WorldNpc } from '../types/settings';
 import ToolbarButton from './ToolbarButton';
@@ -18,12 +19,18 @@ export interface DirectoryFiles { worldFiles: File[], mapFiles: File[] };
 
 interface NavbarProps {
   directoryInputRef: React.RefObject<HTMLInputElement | null>;
+  infoPaneOpen: boolean;
   isHighlighting: boolean;
   isSearching: boolean;
   isWorldLoading: boolean;
+  checkingLocalServer: boolean;
+  localServerAvailable?: boolean;
   npcs: WorldNpc[];
+  onChooseWorld: () => void;
   onClearHighlight: () => void;
-  onGoToTile: () => void;
+  onGoToDungeon: () => void;
+  onGoToSpawn: () => void;
+  onGoToTile: (point?: { x: number, y: number }) => void;
   onHideTargetIndicator: () => void;
   onHighlightAll: () => void;
   onNextBlock: () => void;
@@ -38,11 +45,10 @@ interface NavbarProps {
   onWorldFilesFromDirectory: (directoryFiles: DirectoryFiles) => void;
   onZoomIn: () => void;
   onZoomOut: () => void;
+  setInfoPaneOpen: (value: boolean) => void;
   sets: BlockSet[];
   setShowWires: (value: boolean) => void;
-  setInfoPaneOpen: (value: boolean) => void;
   showWires: boolean;
-  infoPaneOpen: boolean;
   worldFileInputRef: React.RefObject<HTMLInputElement | null>;
   worldLoaded: boolean;
   worldProperties: Record<string, unknown>;
@@ -50,11 +56,17 @@ interface NavbarProps {
 
 export function Navbar({
   directoryInputRef,
+  infoPaneOpen,
   isHighlighting,
   isSearching,
   isWorldLoading,
+  checkingLocalServer,
+  localServerAvailable,
   npcs,
+  onChooseWorld,
   onClearHighlight,
+  onGoToDungeon,
+  onGoToSpawn,
   onGoToTile,
   onHideTargetIndicator,
   onHighlightAll,
@@ -70,14 +82,13 @@ export function Navbar({
   onWorldFilesFromDirectory,
   onZoomIn,
   onZoomOut,
+  setInfoPaneOpen,
   sets,
   setShowWires,
-  setInfoPaneOpen,
   showWires,
-  infoPaneOpen,
   worldFileInputRef,
   worldLoaded,
-  worldProperties,
+  worldProperties
 }: NavbarProps) {
   const { isDarkMode, themeName } = useThemeName();
   const themeMenuItems = useThemeMenuItems();
@@ -90,7 +101,7 @@ export function Navbar({
   const handleDirectoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
-    const worldFiles = Array.from(files).filter(f => /\.wld(\.bak\d*)?$/.test(f.name));
+    const worldFiles = Array.from(files).filter(f => /\.wld$/.test(f.name));
     const mapFiles = Array.from(files).filter(f => f.name.endsWith('.map'));
     onWorldFilesFromDirectory({ worldFiles, mapFiles });
   };
@@ -113,12 +124,16 @@ export function Navbar({
         <span style={{ marginRight: 8, fontFamily: 'inherit' }}>TerraMap</span>
 
         <Space.Compact>
-          <ToolbarButton
-            loading={isWorldLoading}
-            shortcutHandler="onOpenFolder"
-            onClick={() => directoryInputRef.current?.click()}>
-            {!worldLoaded ? 'Folder' : undefined}
-          </ToolbarButton>
+          {checkingLocalServer ? <Spin /> : localServerAvailable ?
+            <Button icon={<GlobalOutlined />} onClick={onChooseWorld}>Choose World</Button>
+            :
+            <ToolbarButton
+              loading={isWorldLoading}
+              shortcutHandler="onOpenFolder"
+              onClick={() => directoryInputRef.current?.click()}>
+              {!worldLoaded ? 'Folder' : undefined}
+            </ToolbarButton>
+          }
           <ToolbarButton
             loading={isWorldLoading}
             shortcutHandler="onOpenWorld"
@@ -127,7 +142,7 @@ export function Navbar({
               ? <span title={worldProperties.name}>
                 {truncateString(worldProperties.name)}
               </span>
-              : 'World'}
+              : 'Open World File'}
           </ToolbarButton>
           {worldLoaded && (
             <ToolbarButton
@@ -195,9 +210,19 @@ export function Navbar({
               <Dropdown menu={{
                 items: [
                   {
+                    key: "Go To Dungeon",
+                    label: <>Go To Dungeon <Tag><kbd>d</kbd></Tag></>,
+                    onClick: () => onGoToDungeon()
+                  },
+                  {
                     key: "Go To Location",
                     label: <>Go To Location <Tag><kbd>l</kbd></Tag></>,
                     onClick: () => onGoToTile()
+                  },
+                  {
+                    key: "Go To Spawn",
+                    label: <>Go To Spawn <Tag><kbd>s</kbd></Tag></>,
+                    onClick: () => onGoToSpawn()
                   },
                   {
                     key: "Hide Tile Indicator",
@@ -235,9 +260,11 @@ export function Navbar({
 
             <Tooltip title={<Space>
               {infoPaneOpen ? 'Hide Info Pane' : 'Show Info Pane'}
-              {getShortcutsByHandler('onToggleInfoPane').map(s => (
-                <Tag key={s.key}><kbd>{s.key}</kbd></Tag>
-              ))}
+              {
+                <Tag key={getShortcutByHandler('onToggleInfoPane')?.key}>
+                  <kbd>{getShortcutByHandler('onToggleInfoPane')?.key}</kbd>
+                </Tag>
+              }
             </Space>}>
               <Switch
                 checkedChildren="Info"
@@ -247,7 +274,8 @@ export function Navbar({
               />
             </Tooltip>
           </>
-        )}
+        )
+        }
 
         {
           !worldLoaded && (
