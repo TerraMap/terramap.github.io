@@ -1,0 +1,11 @@
+{
+  "identifier": "local-dev",
+  "description": "Allow localhost dev server to access Tauri IPC",
+  "windows": ["main"],
+  "remote": {
+    "urls": ["http://localhost:*"]
+  },
+  "permissions": [
+    "core:default"
+  ]
+}

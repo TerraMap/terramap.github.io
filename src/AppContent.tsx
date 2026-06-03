@@ -337,7 +337,7 @@ export default function AppContent() {
             open={worldPickerOpen}
             onClose={() => setWorldPickerOpen(false)}
             onWorldSelected={handleDirectoryWorldSelected}
-            neutralinoReady={nativeReady} />
+            nativeReady={nativeReady} />
         )}
 
         <DirectoryPickerModal

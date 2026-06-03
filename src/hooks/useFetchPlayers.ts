@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { discoverPlayers, type FileEntry, type WorldEntry } from '../lib/neutralino';
+import { discoverPlayers, type FileEntry, type WorldEntry } from '../lib/native';
 
 export interface PlayerEntry extends FileEntry {
   playerName: string;

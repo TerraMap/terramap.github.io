@@ -4,7 +4,7 @@ import { useState } from 'react';
 import firstBy from 'thenby';
 import useFetchPlayers, { type PlayerEntry } from '../hooks/useFetchPlayers';
 import useFetchWorlds from '../hooks/useFetchWorlds';
-import { readFile as neutralinoReadFile, type WorldEntry } from '../lib/neutralino';
+import { readFile as nativeReadFile, type WorldEntry } from '../lib/native';
 import { readPlayerMap, type PlayerMap } from '../lib/readPlayerMap';
 import { formatBytes } from '../lib/string';
 
@@ -12,16 +12,16 @@ interface WorldPickerModalProps {
   open: boolean;
   onClose: () => void;
   onWorldSelected: (file: File, playerMap: PlayerMap | null) => void;
-  neutralinoReady?: boolean;
+  nativeReady?: boolean;
 }
 
-export function WorldPickerModal({ open, onClose, onWorldSelected, neutralinoReady }: WorldPickerModalProps) {
+export function WorldPickerModal({ open, onClose, onWorldSelected, nativeReady }: WorldPickerModalProps) {
   const { notification } = App.useApp();
   const [step, setStep] = useState<'world' | 'player'>('world');
   const [pendingWorld, setPendingWorld] = useState<WorldEntry | null>(null);
   const [downloading, setDownloading] = useState(false);
 
-  const { loading: loadingWorlds, data: worlds } = useFetchWorlds(!!neutralinoReady);
+  const { loading: loadingWorlds, data: worlds } = useFetchWorlds(!!nativeReady);
   const { loading: loadingPlayers, data: players, execute: loadPlayers } = useFetchPlayers();
 
   const handleClose = () => {
@@ -38,10 +38,10 @@ export function WorldPickerModal({ open, onClose, onWorldSelected, neutralinoRea
   const handleLoadWorld = async (world: WorldEntry, player: PlayerEntry | null) => {
     setDownloading(true);
     try {
-      const worldFile = await neutralinoReadFile(world.path);
+      const worldFile = await nativeReadFile(world.path);
       let playerMap: PlayerMap | null = null;
       if (player) {
-        const mapFile = await neutralinoReadFile(player.path);
+        const mapFile = await nativeReadFile(player.path);
         playerMap = await readPlayerMap(mapFile);
       }
       handleClose();

@@ -1,28 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
-import { initNeutralino } from '../lib/neutralino';
+import { isNative } from '../lib/native';
 
 export function useNative() {
-  const [ready, setReady] = useState(false);
-  const [available, setAvailable] = useState(
-    typeof window !== 'undefined' && 'NL_VERSION' in window
-  );
+  const [available] = useState(() => isNative());
+  const [ready, setReady] = useState(() => isNative());
 
   useEffect(() => {
-    if (available) return;
-    // injectClientLibrary may inject globals after initial render
-    const interval = setInterval(() => {
-      if ('NL_VERSION' in window) {
-        setAvailable(true);
-        clearInterval(interval);
-      }
-    }, 50);
-    const timeout = setTimeout(() => clearInterval(interval), 3000);
-    return () => { clearInterval(interval); clearTimeout(timeout); };
-  }, [available]);
-
-  useEffect(() => {
-    if (!available) return;
-    initNeutralino().then(() => setReady(true));
+    if (available) setReady(true);
   }, [available]);
 
   return { available, ready };

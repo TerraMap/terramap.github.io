@@ -14,14 +14,15 @@
     "vitest": "vitest run",
     "vitest:watch": "vitest",
     "perf": "vitest run -c vitest.perf.config.ts --reporter=verbose",
-    "desktop": "npm run build && cd desktop && [ -d bin ] || neu update && rm -rf resources/assets resources/index.html resources/about.html resources/ads.txt resources/windows.html resources/resources && cp -r ../dist/* resources/ && neu run",
-    "desktop:build": "desktop/build.sh"
+    "native": "npx tauri dev --config native/tauri.conf.json",
+    "native:build": "npx tauri build --config native/tauri.conf.json"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^9.39.4",
+    "@tauri-apps/cli": "^2",
     "@types/file-saver": "^2.0.7",
     "@types/node": "^25.9.1",
     "@types/react": "^19.2.15",
@@ -36,7 +37,7 @@
     "vitest": "^4.1.7"
   },
   "dependencies": {
-    "@neutralinojs/lib": "^6.7.0",
+    "@tauri-apps/api": "^2",
     "@panzoom/panzoom": "^4.6.2",
     "antd": "^6.4.3",
     "color-convert": "^3.1.3",

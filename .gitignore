@@ -2,7 +2,4 @@
 .DS_Store
 node_modules
 dist
-desktop/bin
-desktop/resources
-desktop/.tmp
-desktop/neutralinojs.log
+native/target

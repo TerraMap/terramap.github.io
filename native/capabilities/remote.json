@@ -1,0 +1,11 @@
+{
+  "identifier": "remote-access",
+  "description": "Allow terramap.github.io to access Tauri IPC",
+  "windows": ["main"],
+  "remote": {
+    "urls": ["https://terramap.github.io/*"]
+  },
+  "permissions": [
+    "core:default"
+  ]
+}
