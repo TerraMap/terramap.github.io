@@ -71,19 +71,42 @@ jobs:
       - name: Build Tauri app
         run: npx tauri build --config native/tauri.conf.json --target ${{ matrix.target }}
 
+      - name: Rename artifacts
+        shell: bash
+        run: |
+          VERSION=$(grep '"version"' native/tauri.conf.json | head -1 | sed 's/.*"version": *"\([^"]*\)".*/\1/')
+          LABEL="${{ matrix.label }}"
+          DEST="release-assets"
+          mkdir -p "$DEST"
+          BUNDLE="native/target/${{ matrix.target }}/release/bundle"
+          for f in "$BUNDLE"/dmg/*.dmg; do
+            [ -f "$f" ] && cp "$f" "$DEST/TerraMap-${VERSION}-${LABEL}.dmg"
+          done
+          for f in "$BUNDLE"/macos/*.app.tar.gz; do
+            [ -f "$f" ] && cp "$f" "$DEST/TerraMap-${VERSION}-${LABEL}.app.tar.gz"
+          done
+          for f in "$BUNDLE"/appimage/*.AppImage; do
+            [ -f "$f" ] && cp "$f" "$DEST/TerraMap-${VERSION}-${LABEL}.AppImage"
+          done
+          for f in "$BUNDLE"/deb/*.deb; do
+            [ -f "$f" ] && cp "$f" "$DEST/TerraMap-${VERSION}-${LABEL}.deb"
+          done
+          for f in "$BUNDLE"/rpm/*.rpm; do
+            [ -f "$f" ] && cp "$f" "$DEST/TerraMap-${VERSION}-${LABEL}.rpm"
+          done
+          for f in "$BUNDLE"/msi/*.msi; do
+            [ -f "$f" ] && cp "$f" "$DEST/TerraMap-${VERSION}-${LABEL}.msi"
+          done
+          for f in "$BUNDLE"/nsis/*setup*.exe; do
+            [ -f "$f" ] && cp "$f" "$DEST/TerraMap-${VERSION}-${LABEL}-setup.exe"
+          done
+          ls -la "$DEST/"
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: TerraMap-${{ matrix.label }}
-          path: |
-            native/target/${{ matrix.target }}/release/bundle/dmg/*.dmg
-            native/target/${{ matrix.target }}/release/bundle/macos/*.app
-            native/target/${{ matrix.target }}/release/bundle/macos/*.app.tar.gz
-            native/target/${{ matrix.target }}/release/bundle/deb/*.deb
-            native/target/${{ matrix.target }}/release/bundle/rpm/*.rpm
-            native/target/${{ matrix.target }}/release/bundle/appimage/*.AppImage
-            native/target/${{ matrix.target }}/release/bundle/nsis/*.exe
-            native/target/${{ matrix.target }}/release/bundle/msi/*.msi
+          path: release-assets/*
 
   release:
     needs: build
@@ -119,9 +142,14 @@ jobs:
             Only the parts of the world that have been seen by the player are shown in TerraMap.
 
             ## Installation
-            - **macOS**: Download the `.dmg`, open it, and drag TerraMap to Applications.
-            - **Linux**: Download the `.AppImage`, `.deb`, or `.rpm` for your distro.
-            - **Windows**: Download the `.msi` installer or `.exe` (NSIS) installer.
+            - **macOS**: Download the `.dmg` file for your processor, open it, and drag TerraMap to Applications.
+              - aarch64: Apple Silicon
+              - x64: Intel Silicon
+            - **Linux**: Download the `.AppImage`, `.deb`, or `.rpm` file for your distro.
+              - .AppImage: Universal, runs on any distro (self-contained, no install needed)
+              - .deb: Debian, Ubuntu, Mint, Pop!_OS, etc.
+              - .rpm: Fedora, RHEL, CentOS, openSUSE, etc.
+            - **Windows**: Download and run the `.msi` installer or `setup.exe` (NSIS) installer file.
 
             ## macOS note
             macOS may block the downloaded app. To fix this, run in Terminal:
