@@ -1,11 +1,19 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
-import type { TileEntity } from '../../src/types/settings';
+import type { TileEntity, WorldTile } from '../../src/types/settings';
 import { DataStream } from '../DataStream';
 
 
+type WorkerPostMessage = {
+  tiles?: WorldTile[];
+  chests?: unknown[];
+  npcs?: unknown[];
+  tileEntities?: Map<{ x: number; y: number }, TileEntity>;
+};
+
 const postMessageMock = vi.fn();
+const workerCalls = () => postMessageMock.mock.calls as Array<[WorkerPostMessage]>;
 (globalThis as unknown as Record<string, unknown>).self = {
   addEventListener: vi.fn(),
   postMessage: postMessageMock,
@@ -110,18 +118,18 @@ describe('WorldLoader integration', () => {
     });
 
     it('should post tile data via postMessage', () => {
-      const tileMessages = postMessageMock.mock.calls.filter(c => c[0].tiles);
+      const tileMessages = workerCalls().filter(c => c[0].tiles);
       expect(tileMessages.length).toBeGreaterThan(0);
-      expect(tileMessages[0][0].tiles.length).toBeGreaterThan(0);
+      expect(tileMessages[0][0].tiles!.length).toBeGreaterThan(0);
     });
 
     it('should post chests message', () => {
-      const chestsMsg = postMessageMock.mock.calls.find(c => c[0].chests);
+      const chestsMsg = workerCalls().find(c => c[0].chests);
       expect(chestsMsg).toBeDefined();
     });
 
     it('should post NPCs message', () => {
-      const npcsMsg = postMessageMock.mock.calls.find(c => c[0].npcs);
+      const npcsMsg = workerCalls().find(c => c[0].npcs);
       expect(npcsMsg).toBeDefined();
     });
 
@@ -173,7 +181,7 @@ describe('WorldLoader integration', () => {
     });
 
     it('should post tile data', () => {
-      const tileMessages = postMessageMock.mock.calls.filter(c => c[0].tiles);
+      const tileMessages = workerCalls().filter(c => c[0].tiles);
       expect(tileMessages.length).toBeGreaterThan(0);
     });
   });
@@ -199,12 +207,12 @@ describe('WorldLoader integration', () => {
     });
 
     it('should post tile data', () => {
-      const tileMessages = postMessageMock.mock.calls.filter(c => c[0].tiles);
+      const tileMessages = workerCalls().filter(c => c[0].tiles);
       expect(tileMessages.length).toBeGreaterThan(0);
     });
 
     it('should have a tile entity with dyes', () => {
-      const entitiesMsg = postMessageMock.mock.calls.find(c => c[0].tileEntities);
+      const entitiesMsg = workerCalls().find(c => c[0].tileEntities);
       expect(entitiesMsg).toBeDefined();
 
       const tileEntities = entitiesMsg![0].tileEntities as Map<{ x: number; y: number }, TileEntity>;
@@ -221,11 +229,11 @@ describe('WorldLoader integration', () => {
     });
 
     it('should have a painted tile', () => {
-      const tileMessages = postMessageMock.mock.calls.filter(c => c[0].tiles);
-      let paintedTile: { tileColor: number; x: number; y: number } | undefined;
+      const tileMessages = workerCalls().filter(c => c[0].tiles);
+      let paintedTile: WorldTile | undefined;
 
       for (const call of tileMessages) {
-        for (const tile of call[0].tiles) {
+        for (const tile of call[0].tiles!) {
           if (tile.tileColor) {
             paintedTile = tile;
             break;
@@ -240,7 +248,7 @@ describe('WorldLoader integration', () => {
     });
 
     it('should find hat racks with items', () => {
-      const entitiesMsg = postMessageMock.mock.calls.find(c => c[0].tileEntities);
+      const entitiesMsg = workerCalls().find(c => c[0].tileEntities);
       const tileEntities = entitiesMsg![0].tileEntities as Map<{ x: number; y: number }, TileEntity>;
       const hatRacks: TileEntity[] = [];
       for (const [, entity] of tileEntities) {

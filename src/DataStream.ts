@@ -102,7 +102,7 @@ export class DataStream {
     if (arrayBuffer instanceof ArrayBuffer) {
       this.buffer = arrayBuffer;
     } else if (typeof arrayBuffer == "object") {
-      this.dataView = arrayBuffer as DataView;
+      this.dataView = arrayBuffer;
       if (byteOffset) {
         this._byteOffset += byteOffset;
       }
@@ -587,7 +587,7 @@ export class DataStream {
           const tlen = (t as unknown[])[2];
           let length = 0;
           if (typeof tlen == 'function') {
-            length = tlen(struct, this, t);
+            length = (tlen as (...args: unknown[]) => number)(struct, this, t);
           } else if (typeof tlen == 'string' && struct && struct[tlen] != null) {
             length = parseInt(struct[tlen] as string);
           } else {

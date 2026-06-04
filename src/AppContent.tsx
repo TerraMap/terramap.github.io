@@ -2,11 +2,13 @@ import { CloseOutlined } from '@ant-design/icons';
 import { App as AntApp, App, Button, Drawer, Grid, Layout, Tabs, theme } from 'antd';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { BlockSelectorModal } from './components/BlockSelectorModal';
-import { CanvasContainer, CanvasContainerHandle } from './components/CanvasContainer';
+import type { CanvasContainerHandle } from './components/CanvasContainer';
+import { CanvasContainer } from './components/CanvasContainer';
 import { DirectoryPickerModal } from './components/DirectoryPickerModal';
 import { DropOverlay } from './components/DropOverlay';
 import { HelpPanel } from './components/HelpPanel';
-import { DirectoryFiles, Navbar } from './components/Navbar';
+import type { DirectoryFiles } from './components/Navbar';
+import { Navbar } from './components/Navbar';
 import { StatusBar } from './components/StatusBar';
 import TileDescriptions from './components/TileDescriptions';
 import { WorldPickerModal } from './components/WorldPickerModal';
@@ -85,7 +87,7 @@ export default function AppContent() {
     searchStatus,
     selectedTile,
   } = useTileSelection(canvasRef, worldRef, playerMapRef, () => {
-    notificationRef.current?.warning({ message: `No matches found`, placement: 'bottomRight' });
+    notificationRef.current?.warning({ key: 'match', title: `No matches found`, placement: 'bottomRight' });
   });
 
   const {
@@ -97,9 +99,9 @@ export default function AppContent() {
     handleSetSelect,
   } = useBlockHighlight(canvasRef, worldRef, selectedBlocks, setShowWires, playerMapRef, (count) => {
     if (count) {
-      notificationRef.current?.success({ message: `Highlighted ${count.toLocaleString()} matches`, placement: 'bottomRight' });
+      notificationRef.current?.success({ key: 'match', message: `Highlighted ${count.toLocaleString()} matches`, placement: 'bottomRight' });
     } else {
-      notificationRef.current?.warning({ message: `No matches found`, placement: 'bottomRight' });
+      notificationRef.current?.warning({ key: 'match', title: `No matches found`, placement: 'bottomRight' });
     }
   });
 
@@ -143,19 +145,21 @@ export default function AppContent() {
     setDirectoryPickerOpen(true);
   }, []);
 
-  const handleDirectoryWorldSelected = useCallback((file: File, parsedMap: PlayerMap | null) => {
+  const handleDirectoryWorldSelected = useCallback((file: File, mapFile: File | null, parsedMap: PlayerMap | null) => {
     handleWorldFileSelect(file);
-    setMapFile(parsedMap ? file : null);
+    setMapFile(mapFile);
     setPlayerMap(parsedMap);
+    notificationRef.current?.info({ key: 'explored', title: `Explored: ${parsedMap?.percent.toLocaleString(undefined, { style: 'percent' })}`, placement: 'bottomRight' });
   }, [handleWorldFileSelect, setPlayerMap]);
 
   const handleReloadWorld = useCallback(async () => {
+    if (worldFile) loadWorldFile(worldFile);
     if (mapFile) {
       const parsed = await readPlayerMap(mapFile);
       setPlayerMap(parsed);
+      notificationRef.current?.info({ key: 'explored', title: `Explored: ${parsed.percent.toLocaleString(undefined, { style: 'percent' })}`, placement: 'bottomRight' });
     }
-    if (worldFile) loadWorldFile(worldFile);
-  }, [worldFile, mapFile, loadWorldFile, setPlayerMap]);
+  }, [worldFile, mapFile, loadWorldFile, setPlayerMap, notificationRef]);
 
   const handleSaveImage = useCallback(() => {
     const w = worldRef.current;
@@ -195,7 +199,7 @@ export default function AppContent() {
     onToggleWires: () => setShowWires((showWires) => !showWires),
     onZoomIn: () => canvasRef.current?.zoomIn(),
     onZoomOut: () => canvasRef.current?.zoomOut(),
-  }), [handleFindNext, handleFindPrev, goToTile, hideTileIndicator, handleHighlightAll, handleClearHighlight, handleReloadWorld]);
+  }), [handleFindNext, handleFindPrev, goToTile, hideTileIndicator, handleHighlightAll, handleClearHighlight, handleReloadWorld, worldProperties]);
 
   useKeyboardShortcuts(shortcutHandlers);
 
@@ -307,7 +311,7 @@ export default function AppContent() {
                   {
                     key: "World",
                     label: 'World',
-                    children: <WorldPropertiesList worldProperties={worldProperties} maxHeight={isMobile ? 'calc(50vh - 100px)' : 'calc(100vh - 100px)'} />
+                    children: <WorldPropertiesList worldProperties={worldProperties} playerMap={playerMap} maxHeight={isMobile ? 'calc(50vh - 100px)' : 'calc(100vh - 100px)'} />
                   }
                 ]} />
             </Drawer>

@@ -1,5 +1,5 @@
-import { LeftOutlined } from '@ant-design/icons';
-import { Button, Modal, Space, Table } from 'antd';
+import { CloudOutlined, LeftOutlined } from '@ant-design/icons';
+import { Button, Modal, Space, Table, Tooltip } from 'antd';
 import { useState } from 'react';
 import firstBy from 'thenby';
 import { readPlayerMap, type PlayerMap } from '../lib/readPlayerMap';
@@ -11,7 +11,7 @@ interface DirectoryPickerModalProps {
   open: boolean;
   directoryFiles: DirectoryFiles | undefined;
   onClose: () => void;
-  onWorldSelected: (file: File, playerMap: PlayerMap | null) => void;
+  onWorldSelected: (file: File, mapFile: File | null, playerMap: PlayerMap | null) => void;
 }
 
 export function DirectoryPickerModal({ open, directoryFiles, onClose, onWorldSelected }: DirectoryPickerModalProps) {
@@ -45,12 +45,12 @@ export function DirectoryPickerModal({ open, directoryFiles, onClose, onWorldSel
   const handleMapClick = async (file: File) => {
     handleClose();
     const parsed = await readPlayerMap(file);
-    if (pendingWorldFile) onWorldSelected(pendingWorldFile, parsed);
+    if (pendingWorldFile) onWorldSelected(pendingWorldFile, file, parsed);
   };
 
   const handleSkipMap = () => {
     handleClose();
-    if (pendingWorldFile) onWorldSelected(pendingWorldFile, null);
+    if (pendingWorldFile) onWorldSelected(pendingWorldFile, null, null);
   };
 
   return (
@@ -80,17 +80,33 @@ export function DirectoryPickerModal({ open, directoryFiles, onClose, onWorldSel
         <Table
           dataSource={directoryFiles?.worldFiles}
           pagination={false}
-          rowKey="name"
+          rowKey="webkitRelativePath"
           size="small"
           onRow={(file) => ({
-            onClick: () => { handleWorldClick(file) }
+            onClick: () => { void handleWorldClick(file) }
           })}
           columns={[
             {
-              dataIndex: 'name',
+              dataIndex: 'webkitRelativePath',
               title: "File",
               sorter: firstBy('name'),
-              onCell: () => ({ style: { cursor: 'pointer' } })
+              onCell: () => ({ style: { cursor: 'pointer' } }),
+              render: (path: string, world) => {
+                const cloud = path?.includes('remote');
+                return (
+                  <Space>
+                    <Tooltip title={path}>
+                      {world.name}
+                    </Tooltip>
+
+                    {cloud && (
+                      <Tooltip title={cloud ? 'Steam Cloud' : 'Local'}>
+                        <CloudOutlined />
+                      </Tooltip>
+                    )}
+                  </Space>
+                );
+              }
             },
             {
               dataIndex: 'size',
@@ -115,10 +131,10 @@ export function DirectoryPickerModal({ open, directoryFiles, onClose, onWorldSel
         <Table
           dataSource={matchedMapFiles}
           pagination={false}
-          rowKey="name"
+          rowKey="webkitRelativePath"
           size="small"
           onRow={(file) => ({
-            onClick: () => { handleMapClick(file) }
+            onClick: () => { void handleMapClick(file) }
           })}
           columns={[
             {
@@ -127,15 +143,31 @@ export function DirectoryPickerModal({ open, directoryFiles, onClose, onWorldSel
               sorter: firstBy('name'),
               onCell: () => ({ style: { cursor: 'pointer' } }),
               render: (name: string, file) => {
-                const parts = file.webkitRelativePath?.split('/');
+                const parts = file.webkitRelativePath ? file.webkitRelativePath.split('/') : undefined;
                 return parts ? parts[parts.length - 2] : file.name;
               }
             },
             {
-              dataIndex: 'name',
+              dataIndex: 'webkitRelativePath',
               sorter: firstBy('name'),
               title: "File",
-              onCell: () => ({ style: { cursor: 'pointer' } })
+              onCell: () => ({ style: { cursor: 'pointer' } }),
+              render: (path: string, player) => {
+                const cloud = path.includes('remote');
+                return (
+                  <Space>
+                    <Tooltip title={path}>
+                      {player.name}
+                    </Tooltip>
+
+                    {cloud && (
+                      <Tooltip title={cloud ? 'Steam Cloud' : 'Local'}>
+                        <CloudOutlined />
+                      </Tooltip>
+                    )}
+                  </Space>
+                );
+              }
             },
             {
               dataIndex: 'size',

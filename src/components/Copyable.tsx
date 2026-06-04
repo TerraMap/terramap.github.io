@@ -13,12 +13,12 @@ export default function Copyable({ label, copyText }: {
   let textToCopy: string;
 
   if (copyText) textToCopy = copyText;
-  else if (typeof label === 'string') textToCopy = label as string;
+  else if (typeof label === 'string') textToCopy = label;
   else textToCopy = '';
 
   const handleClick = () => {
-    navigator.clipboard.writeText(textToCopy).then(() => {
-      notification.success({ message: `Copied: ${textToCopy}`, placement: 'bottomRight' });
+    void navigator.clipboard.writeText(textToCopy).then(() => {
+      notification.success({ key: 'copy', title: `Copied: ${textToCopy}`, placement: 'bottomRight' });
     });
   };
 

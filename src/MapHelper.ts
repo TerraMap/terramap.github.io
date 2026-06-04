@@ -23,7 +23,7 @@ export const liquidColors = new Array<Color>(4);
 export const wallColors = new Array<Color[]>(367);
 
 for (let i = 0; i < tileColors.length; i++) {
-  tileColors[i] = new Array(13);
+  tileColors[i] = new Array<Color>(13);
 }
 
 tileColors[656][0] = rgb(21, 124, 212);
@@ -1061,7 +1061,7 @@ liquidColors[2] = rgb(254, 194, 20);
 liquidColors[3] = rgb(161, 127, 255);
 
 for (let j = 0; j < wallColors.length; j++) {
-  wallColors[j] = new Array(2);
+  wallColors[j] = new Array<Color>(2);
 }
 
 wallColors[158][0] = rgb(107, 49, 154);
@@ -1441,7 +1441,7 @@ wallColors[364][0] = colorMult(tileColors[747][0], num7);
 wallColors[365][0] = colorMult(tileColors[748][0], num7);
 wallColors[366][0] = colorMult(tileColors[749][0], num7);
 
-const array5 = new Array(256);
+const array5 = new Array<Color>(256);
 const color5 = rgb(50, 40, 255);
 const color6 = rgb(145, 185, 255);
 for (let num8 = 0; num8 < array5.length; num8++) {
@@ -1449,7 +1449,7 @@ for (let num8 = 0; num8 < array5.length; num8++) {
   const num10 = 1.0 - num9;
   array5[num8] = rgb(Math.floor(color5.r * num10 + color6.r * num9), Math.floor(color5.g * num10 + color6.g * num9), Math.floor(color5.b * num10 + color6.b * num9));
 }
-const array6 = new Array(256);
+const array6 = new Array<Color>(256);
 const color7 = rgb(88, 61, 46);
 let color8 = rgb(37, 78, 123);
 for (let num11 = 0; num11 < array6.length; num11++) {
@@ -1457,7 +1457,7 @@ for (let num11 = 0; num11 < array6.length; num11++) {
   const num13 = 1.0 - num12;
   array6[num11] = rgb(Math.floor(color7.r * num13 + color8.r * num12), Math.floor(color7.g * num13 + color8.g * num12), Math.floor(color7.b * num13 + color8.b * num12));
 }
-const array7 = new Array(256);
+const array7 = new Array<Color>(256);
 const color9 = rgb(74, 67, 60);
 color8 = rgb(53, 70, 97);
 for (let num14 = 0; num14 < array7.length; num14++) {
@@ -1488,10 +1488,10 @@ for (let num20 = 0; num20 < wallColors.length; num20++) {
   num17 += num21;
 }
 num17 += 774;
-const colorLookup = new Array(num17);
+const colorLookup = new Array<Color>(num17);
 colorLookup[0] = rgb(0, 0, 0);
 let num22 = 1;
-const tileLookup = new Array(tileColors.length);
+const tileLookup = new Array<number>(tileColors.length);
 for (let num23 = 0; num23 < tileColors.length; num23++) {
   if (tileOptionCounts[num23] > 0) {
     tileLookup[num23] = num22;
@@ -1534,7 +1534,7 @@ for (let num30 = 0; num30 < 256; num30++) {
   num22 += 1;
 }
 colorLookup[num22] = color10;
-const snowTypes = new Array(6);
+const snowTypes = new Array<number>(6);
 snowTypes[0] = tileLookup[147];
 snowTypes[1] = tileLookup[161];
 snowTypes[2] = tileLookup[162];

@@ -106,7 +106,7 @@ export function BlockSelectorModal({
             onSearch: setSearchValue,
             filterOption: (input, option) => {
               const inputLower = input.toLowerCase();
-              if ((option?.label as string ?? '').toLowerCase().includes(inputLower)) return true;
+              if ((option?.label ?? '').toLowerCase().includes(inputLower)) return true;
               if (option?.id.toLowerCase().includes(inputLower)) return true;
               if (`${option?.type} ${option?.id}`.toLowerCase().includes(inputLower)) return true;
               return false;
@@ -128,7 +128,7 @@ export function BlockSelectorModal({
           optionRender={(option) => (
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span>{option.data.label}</span>
-              <Tag color={typeColors[option.data.type as BlockType]} style={{ marginRight: 0 }}>
+              <Tag color={typeColors[option.data.type]} style={{ marginRight: 0 }}>
                 {option.data.type} {option.data.id}
               </Tag>
             </div>

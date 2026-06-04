@@ -11,7 +11,7 @@ import { formatBytes } from '../lib/string';
 interface WorldPickerModalProps {
   open: boolean;
   onClose: () => void;
-  onWorldSelected: (file: File, playerMap: PlayerMap | null) => void;
+  onWorldSelected: (file: File, mapFile: File | null, playerMap: PlayerMap | null) => void;
   nativeReady?: boolean;
 }
 
@@ -39,16 +39,17 @@ export function WorldPickerModal({ open, onClose, onWorldSelected, nativeReady }
     setDownloading(true);
     try {
       const worldFile = await nativeReadFile(world.path);
+      let mapFile: File | null = null;
       let playerMap: PlayerMap | null = null;
       if (player) {
-        const mapFile = await nativeReadFile(player.path);
+        mapFile = await nativeReadFile(player.path);
         playerMap = await readPlayerMap(mapFile);
       }
       handleClose();
-      onWorldSelected(worldFile, playerMap);
+      onWorldSelected(worldFile, mapFile, playerMap);
     } catch (e) {
-      const message = !!e && typeof e === 'object' && 'message' in e ? e.message : 'unknown';
-      notification.error({ message: `Error loading world: ${message}`, placement: 'bottomRight', duration: 0 });
+      const message = !!e && typeof e === 'object' && 'message' in e && typeof e.message === 'string' ? e.message : 'unknown';
+      notification.error({ key: 'error', title: `Error loading world: ${message}`, placement: 'bottomRight', duration: 0 });
     } finally {
       setDownloading(false);
     }
@@ -95,7 +96,7 @@ export function WorldPickerModal({ open, onClose, onWorldSelected, nativeReady }
           rowKey="path"
           size="small"
           onRow={(world) => ({
-            onClick: () => { handleWorldClick(world) }
+            onClick: () => { void handleWorldClick(world); }
           })}
           columns={[
             {
@@ -166,7 +167,7 @@ export function WorldPickerModal({ open, onClose, onWorldSelected, nativeReady }
           rowKey="path"
           size="small"
           onRow={(file) => ({
-            onClick: () => { handleMapClick(file) }
+            onClick: () => { void handleMapClick(file) }
           })}
           columns={[
             {

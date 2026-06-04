@@ -1,10 +1,9 @@
 import { tiles } from '../tiles';
-import type { TileFrame, TileInfo, ItemInfo, WallInfo, WorldTile } from '../types/settings';
+import type { ItemInfo, TileFrame, TileInfo, WallInfo, WorldTile } from '../types/settings';
 
 export type SearchableInfo = TileFrame | TileInfo | ItemInfo | WallInfo;
 
 export function isTileMatch(tile: WorldTile, selectedInfos: SearchableInfo[]): boolean {
-  if (!tile) return false;
   for (let j = 0; j < selectedInfos.length; j++) {
     const info = selectedInfos[j];
 
@@ -64,9 +63,9 @@ export function isTileOrigin(tile: WorldTile | null): boolean {
 }
 
 export function getTileInfoFrom(id: string, u: string | undefined, v: string | undefined): TileFrame | TileInfo | undefined {
-  const tileInfo = tiles[Number(id)];
+  const tileInfo = tiles.at(Number(id));
 
-  if (tileInfo && tileInfo.frames) {
+  if (tileInfo?.frames) {
     for (let frameIndex = 0; frameIndex < tileInfo.frames.length; frameIndex++) {
       const frame = tileInfo.frames[frameIndex];
 

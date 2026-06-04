@@ -382,7 +382,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         newCtx.drawImage(selection, 0, 0);
         newCanvas.toBlob((blob) => {
           if (blob) {
-            import('file-saver').then(({ saveAs }) => saveAs(blob, filename));
+            void import('file-saver').then(({ saveAs }) => saveAs(blob, filename));
           }
         });
       },
@@ -404,11 +404,11 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
     return (
       <div ref={wrapperRef} style={{ overflow: 'hidden', width: '100%', height: '100%', position: 'relative' }}>
         <div ref={panzoomRef} style={{ position: 'relative' }}>
-          <canvas ref={canvasRef} style={{ position: 'absolute', left: 0, top: 0, imageRendering: 'pixelated' }} />
-          <canvas ref={overlayRef} style={{ position: 'absolute', left: 0, top: 0, imageRendering: 'pixelated' }} />
-          <canvas ref={wireRef} style={{ position: 'absolute', left: 0, top: 0, imageRendering: 'pixelated' }} />
-          <canvas ref={fogRef} style={{ position: 'absolute', left: 0, top: 0, imageRendering: 'pixelated' }} />
-          <canvas ref={selectionRef} style={{ position: 'absolute', left: 0, top: 0, imageRendering: 'pixelated' }} />
+          <canvas ref={canvasRef} style={{ position: 'absolute', left: 0, top: 0 }} />
+          <canvas ref={overlayRef} style={{ position: 'absolute', left: 0, top: 0 }} />
+          <canvas ref={wireRef} style={{ position: 'absolute', left: 0, top: 0 }} />
+          <canvas ref={fogRef} style={{ position: 'absolute', left: 0, top: 0 }} />
+          <canvas ref={selectionRef} style={{ position: 'absolute', left: 0, top: 0 }} />
         </div>
       </div>
     );

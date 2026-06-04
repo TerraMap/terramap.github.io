@@ -2,7 +2,8 @@ import { MoonOutlined, SunOutlined, SwapOutlined } from '@ant-design/icons';
 import { Tooltip, type MenuProps } from 'antd';
 import { use } from 'react';
 import { capitalizeFirstLetter } from '../lib/string';
-import { ThemeNameContext, ThemeNames } from './useThemeName';
+import { ThemeNameContext } from './useThemeName';
+import type { ThemeNames } from './useThemeName';
 
 type MenuItem = Required<MenuProps>['items'][number];
 

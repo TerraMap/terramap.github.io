@@ -1,8 +1,18 @@
 import { Input } from 'antd';
 import { useState } from 'react';
+import type { PlayerMap } from '../lib/readPlayerMap';
 
-export function WorldPropertiesList({ worldProperties, maxHeight }: { worldProperties: Record<string, unknown>; maxHeight?: string }) {
+export function WorldPropertiesList({ worldProperties, playerMap, maxHeight }: { worldProperties: Record<string, unknown>; playerMap: PlayerMap | null; maxHeight?: string }) {
   const [filter, setFilter] = useState('');
+
+  const properties: Record<string, unknown> = { ...worldProperties, explored: playerMap?.percent?.toLocaleString(undefined, { style: 'percent' }) };
+
+  const filteredKeys = Object.keys(properties).filter(k => !k.startsWith('_')).sort()
+    .filter((key) => {
+      if (!filter) return true;
+      const q = filter.toLowerCase();
+      return key.toLowerCase().includes(q) || String(worldProperties[key]).toLowerCase().includes(q);
+    });
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', maxHeight }}>
@@ -14,15 +24,10 @@ export function WorldPropertiesList({ worldProperties, maxHeight }: { worldPrope
         style={{ marginBottom: 12, flexShrink: 0 }}
       />
       <ul style={{ listStyle: 'none', padding: 0, margin: 0, overflow: 'auto', flex: 1 }}>
-        {Object.keys(worldProperties).filter(k => !k.startsWith('_')).sort()
-          .filter((key) => {
-            if (!filter) return true;
-            const q = filter.toLowerCase();
-            return key.toLowerCase().includes(q) || String(worldProperties[key]).toLowerCase().includes(q);
-          })
+        {filteredKeys
           .map((key) => (
             <li key={key} style={{ padding: '4px 0' }}>
-              <strong>{key}:</strong> {String(worldProperties[key])}
+              <strong>{key}:</strong> {String(properties[key])}
             </li>
           ))}
       </ul>

@@ -1,8 +1,8 @@
 import { useCallback, useRef, useState } from 'react';
 import type { CanvasContainerHandle } from '../components/CanvasContainer';
+import type { PlayerMap } from '../lib/readPlayerMap';
 import { getTileAt } from '../lib/tileInfo';
 import { isTileMatch, isTileOrigin, type SearchableInfo } from '../lib/tileSearch';
-import type { PlayerMap } from '../lib/readPlayerMap';
 import type { WorldData, WorldTile } from '../types/settings';
 
 const CHUNK_SIZE = 50_000;
@@ -29,7 +29,7 @@ export function useTileSelection(
     const w = worldRef.current;
     if (!w) return;
     const tile = isExplored(x, y) ? getTileAt(w, x, y) : null;
-    setHoveredTile(tile ? { ...tile, x, y } : { x, y } as WorldTile);
+    setHoveredTile(tile ? { ...tile, x, y } : { x, y });
   }, [worldRef, isExplored]);
 
   const tileClick = useCallback((x: number, y: number) => {
@@ -131,7 +131,7 @@ export function useTileSelection(
     };
 
     searchChunk();
-  }, [worldRef, canvasRef, selectionPos]);
+  }, [worldRef, canvasRef, selectionPos, onNotFound, playerMapRef]);
 
   return {
     findBlock,

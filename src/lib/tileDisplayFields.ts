@@ -40,7 +40,7 @@ export function getTileDisplayFields(tile: WorldTile): TileDisplayField[] {
   }
 
   if (parent) {
-    fields.push({ label: 'Parent', value: parent.name ?? '' });
+    fields.push({ label: 'Parent', value: parent.name });
   }
 
   if (tile.slope) {

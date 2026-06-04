@@ -1,4 +1,5 @@
-import Panzoom, { PanzoomObject } from '@panzoom/panzoom';
+import type { PanzoomObject } from '@panzoom/panzoom';
+import Panzoom from '@panzoom/panzoom';
 import { useCallback, useEffect, useRef } from 'react';
 
 export interface PanZoomControls {
@@ -13,6 +14,8 @@ export function usePanZoom(
   options?: { onPanZoomEnd?: (e: PointerEvent) => void },
 ) {
   const instanceRef = useRef<PanzoomObject | null>(null);
+
+  const onPanZoomEnd = options;
 
   useEffect(() => {
     const el = containerRef.current;
@@ -31,21 +34,21 @@ export function usePanZoom(
     };
     el.parentElement!.addEventListener('wheel', handleWheel, { passive: false });
 
-    if (options?.onPanZoomEnd) {
-      el.addEventListener('panzoomend', options.onPanZoomEnd as EventListener);
+    if (onPanZoomEnd) {
+      el.addEventListener('panzoomend', onPanZoomEnd as EventListener);
     }
 
     instanceRef.current = pz;
 
     return () => {
       el.parentElement!.removeEventListener('wheel', handleWheel);
-      if (options?.onPanZoomEnd) {
-        el.removeEventListener('panzoomend', options.onPanZoomEnd as EventListener);
+      if (onPanZoomEnd) {
+        el.removeEventListener('panzoomend', onPanZoomEnd as EventListener);
       }
       pz.destroy();
       instanceRef.current = null;
     };
-  }, []);
+  }, [containerRef, onPanZoomEnd]);
 
   const zoomIn = useCallback(() => instanceRef.current?.zoomIn(), []);
   const zoomOut = useCallback(() => instanceRef.current?.zoomOut(), []);

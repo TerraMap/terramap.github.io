@@ -46,7 +46,7 @@ export function useThemeName() {
   const userThemeName: ThemeNames = userThemeValue === 'dark' ? 'dark' : userThemeValue === 'light' ? 'light' : 'auto';
 
   // final theme name to use
-  const finalThemeName = userThemeName ?? systemThemeName;
+  const finalThemeName = userThemeName;
 
   const isDarkMode = finalThemeName === 'auto' ? systemThemeName === 'dark' : finalThemeName === 'dark';
 

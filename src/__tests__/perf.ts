@@ -6,7 +6,10 @@ import { clearCaches, getTileColor } from '../lib/mapRenderer';
 import { getTileInfo } from '../lib/tileInfo';
 import type { WorldData, WorldTile } from '../types/settings';
 
+type WorkerPostMessage = { tiles?: WorldTile[] };
+
 const postMessageMock = vi.fn();
+const workerCalls = () => postMessageMock.mock.calls as Array<[WorkerPostMessage]>;
 (globalThis as unknown as Record<string, unknown>).self = {
   addEventListener: vi.fn(),
   postMessage: postMessageMock,
@@ -64,10 +67,10 @@ function parseWorld(filename: string): { world: WorldRecord; positions: number[]
 }
 
 function collectTiles(): WorldTile[] {
-  const tileMessages = postMessageMock.mock.calls.filter(c => c[0].tiles);
+  const tileMessages = workerCalls().filter(c => c[0].tiles);
   const tiles: WorldTile[] = [];
   for (const call of tileMessages) {
-    for (const tile of call[0].tiles) {
+    for (const tile of call[0].tiles!) {
       tiles.push(tile);
     }
   }

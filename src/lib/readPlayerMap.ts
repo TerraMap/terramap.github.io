@@ -2,6 +2,9 @@ export interface PlayerMap {
   width: number;
   height: number;
   explored: Uint8Array;
+  count: number;
+  total: number;
+  percent: number;
 }
 
 export async function readPlayerMap(file: File): Promise<PlayerMap> {
@@ -48,7 +51,7 @@ export async function readPlayerMap(file: File): Promise<PlayerMap> {
   readInt16(); readInt16(); readInt16(); readInt16();
 
   // tile option bit array
-  const tileHasOptions: boolean[] = new Array(tileCount);
+  const tileHasOptions: boolean[] = new Array<boolean>(tileCount);
   let b = 0, b2 = 128;
   for (let i = 0; i < tileCount; i++) {
     if (b2 === 128) { b = readUint8(); b2 = 1; }
@@ -57,7 +60,7 @@ export async function readPlayerMap(file: File): Promise<PlayerMap> {
   }
 
   // wall option bit array
-  const wallHasOptions: boolean[] = new Array(wallCount);
+  const wallHasOptions: boolean[] = new Array<boolean>(wallCount);
   b = 0; b2 = 128;
   for (let i = 0; i < wallCount; i++) {
     if (b2 === 128) { b = readUint8(); b2 = 1; }
@@ -78,9 +81,12 @@ export async function readPlayerMap(file: File): Promise<PlayerMap> {
   const compressed = new Uint8Array(buffer, pos);
   const data = await decompressRawDeflate(compressed);
 
+  const total = width * height;
+
   // row-major explored grid: iterate y (rows) then x (columns)
   // RLE runs are horizontal (across x within a row)
-  const explored = new Uint8Array(width * height);
+  const explored = new Uint8Array(total);
+  let exploredCount = 0;
 
   let dpos = 0;
   for (let y = 0; y < height; y++) {
@@ -121,6 +127,7 @@ export async function readPlayerMap(file: File): Promise<PlayerMap> {
         // explored tiles
         for (let dx = 0; dx <= rle; dx++) {
           explored[(x + dx) * height + y] = 1;
+          exploredCount++;
           // when light != 255, each RLE tile has its own light byte (skip it)
           if (dx > 0 && light !== 255) dpos++;
         }
@@ -129,17 +136,19 @@ export async function readPlayerMap(file: File): Promise<PlayerMap> {
     }
   }
 
-  console.log('map v' + version, width + 'x' + height,
-    'explored:', explored.reduce((a, b) => a + b, 0), 'of', width * height);
+  const exploredPercent = exploredCount / total;
 
-  return { width, height, explored };
+  console.log(`map v${version}`, `${width}x${height}`,
+    'explored:', (exploredPercent).toLocaleString(undefined, { style: 'percent' }), exploredCount, 'of', total);
+
+  return { width, height, explored, count: exploredCount, total, percent: exploredPercent };
 }
 
 async function decompressRawDeflate(compressed: Uint8Array): Promise<Uint8Array> {
   const ds = new DecompressionStream('deflate-raw');
   const writer = ds.writable.getWriter();
-  writer.write(compressed as unknown as BufferSource);
-  writer.close();
+  void writer.write(compressed as unknown as BufferSource);
+  void writer.close();
 
   const reader = ds.readable.getReader();
   const chunks: Uint8Array[] = [];

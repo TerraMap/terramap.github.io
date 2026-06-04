@@ -135,7 +135,7 @@ export function Navbar({
             loading={isWorldLoading}
             shortcutHandler="onOpenWorld"
             onClick={() => worldFileInputRef.current?.click()}>
-            {typeof worldProperties?.name === 'string'
+            {typeof worldProperties.name === 'string'
               ? <span title={worldProperties.name}>
                 {truncateString(worldProperties.name)}
               </span>

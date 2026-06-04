@@ -20,7 +20,7 @@ interface WorldRecord {
   savedOreTiers: { copper: number; iron: number; silver: number; gold: number };
 }
 
-self.addEventListener('message', function (e: MessageEvent) {
+self.addEventListener('message', function (e: MessageEvent<File>) {
   start(e.data);
 }, false);
 
@@ -126,14 +126,14 @@ function readFileFormatHeader(reader: DataStream, world: WorldRecord): number[] 
   let i = 0;
 
   const positionsLength = reader.readInt16();
-  const positions = new Array(positionsLength);
+  const positions = new Array<number>(positionsLength);
   for (i = 0; i < positionsLength; i++) {
     positions[i] = reader.readInt32();
   }
 
   // read importance
   const importanceLength = reader.readInt16();
-  world.importance = new Array(importanceLength);
+  world.importance = new Array<boolean>(importanceLength);
   let b = 0;
   let b2 = 128;
   for (i = 0; i < importanceLength; i++) {

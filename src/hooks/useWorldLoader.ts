@@ -1,6 +1,19 @@
 import { useCallback, useRef, useState } from 'react';
 import type { CanvasContainerHandle } from '../components/CanvasContainer';
-import type { WorldData } from '../types/settings';
+import type { Chest, Sign, TileEntity, WorldData, WorldNpc, WorldTile } from '../types/settings';
+
+interface WorkerMessage {
+  status?: string;
+  version?: number;
+  world?: WorldData;
+  tiles?: WorldTile[];
+  x?: number;
+  done?: boolean;
+  chests?: Chest[];
+  signs?: Sign[];
+  npcs?: WorldNpc[];
+  tileEntities?: Map<{ x: number; y: number }, TileEntity>;
+}
 
 export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle | null>, onWorldSized?: () => void) {
   const [world, setWorld] = useState<WorldData | null>(null);
@@ -22,7 +35,7 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
     const worker = new Worker(new URL('../WorldLoader.ts', import.meta.url), { type: 'module' });
     workerRef.current = worker;
 
-    worker.addEventListener('message', (e: MessageEvent) => {
+    worker.addEventListener('message', (e: MessageEvent<WorkerMessage>) => {
       if (e.data.status) {
         statusRef.current = e.data.status;
         const now = performance.now();
@@ -47,7 +60,7 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
       if (e.data.tiles) {
         const w = worldRef.current!;
         const tiles = e.data.tiles;
-        canvasRef.current?.renderTileBatch(tiles, e.data.x, w);
+        canvasRef.current?.renderTileBatch(tiles, e.data.x!, w);
 
         const len = tiles.length;
         for (let i = 0; i < len; i++) {
@@ -130,7 +143,7 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
     });
 
     worker.postMessage(file);
-  }, [canvasRef]);
+  }, [canvasRef, onWorldSized]);
 
   return { world, worldRef, status, isWorldLoading: isLoading, loadWorldFile };
 }

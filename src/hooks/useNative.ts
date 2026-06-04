@@ -33,7 +33,7 @@ export function useNativeAsync<T>(fn: () => Promise<T>, ready: boolean) {
   }, [fn]);
 
   useEffect(() => {
-    if (ready) execute();
+    if (ready) void execute();
   }, [ready, execute]);
 
   return { data, loading, error, execute };
