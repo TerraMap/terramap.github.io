@@ -9,7 +9,7 @@
     "lint": "eslint",
     "dev": "vite",
     "build": "vite build",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json",
     "preview": "vite preview",
     "vitest": "vitest run",
     "vitest:watch": "vitest",
@@ -43,8 +43,10 @@
     "antd": "^6.4.3",
     "color-convert": "^3.1.3",
     "file-saver": "^2.0.5",
+    "i18next": "^26.3.1",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
+    "react-i18next": "^17.0.8",
     "thenby": "^1.4.1"
   }
 }

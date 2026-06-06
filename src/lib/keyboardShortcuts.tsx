@@ -15,7 +15,7 @@ import type { ReactNode } from "react";
 
 export interface KeyboardShortcut {
   key: string;
-  label: string;
+  labelKey: string;
   handler: keyof ShortcutHandlers;
   shift?: boolean;
   icon?: ReactNode;
@@ -45,26 +45,22 @@ export function getShortcutByHandler(handler: keyof ShortcutHandlers): KeyboardS
   return keyboardShortcuts.find(s => s.handler === handler);
 }
 
-export function getLabelByHandler(handler: keyof ShortcutHandlers): string | undefined {
-  return keyboardShortcuts.find(s => s.handler === handler)?.label;
-}
-
 export const keyboardShortcuts: KeyboardShortcut[] = [
-  { key: 'f', label: 'Open Folder', handler: 'onOpenFolder', icon: <FolderOpenOutlined /> },
-  { key: 'o', label: 'Open Terraria World File', handler: 'onOpenWorld', icon: <FileImageOutlined /> },
-  { key: 'r', label: 'Reload World', handler: 'onReloadWorld', icon: <ReloadOutlined /> },
-  { key: 'b', label: 'Choose Blocks', handler: 'onOpenBlocks', icon: <SearchOutlined /> },
-  { key: 'p', label: 'Find Previous Block', handler: 'onFindPrevious', shift: true, icon: <LeftOutlined /> },
-  { key: 'n', label: 'Find Next Block', handler: 'onFindNext', icon: <RightOutlined /> },
-  { key: 'h', label: 'Highlight All Matching Blocks', handler: 'onHighlight', icon: <HighlightOutlined /> },
-  { key: 'x', label: 'Clear Highlighted Blocks', handler: 'onClearHighlight', icon: <CloseOutlined /> },
-  { key: 'e', label: 'Zoom In', handler: 'onZoomIn', icon: <ZoomInOutlined /> },
-  { key: 'c', label: 'Zoom Out', handler: 'onZoomOut', icon: <ZoomOutOutlined /> },
-  { key: 'z', label: 'Zoom To Fit', handler: 'onResetZoom', icon: <ExpandOutlined /> },
-  { key: 'd', label: 'Go To Dungeon', handler: 'onGoToDungeon' },
-  { key: 'l', label: 'Go To Location', handler: 'onGoToTile' },
-  { key: 's', label: 'Go To Spawn', handler: 'onGoToSpawn' },
-  { key: 'i', label: 'Info Pane (Show / Hide)', handler: 'onToggleInfoPane' },
-  { key: 'w', label: 'Wires (Show / Hide)', handler: 'onToggleWires' },
-  { key: 'escape', label: 'Hide Tile Indicator', handler: 'onHideTileIndicator' },
+  { key: 'f', labelKey: 'shortcuts.open_folder', handler: 'onOpenFolder', icon: <FolderOpenOutlined /> },
+  { key: 'o', labelKey: 'shortcuts.open_world_file', handler: 'onOpenWorld', icon: <FileImageOutlined /> },
+  { key: 'r', labelKey: 'shortcuts.reload_world', handler: 'onReloadWorld', icon: <ReloadOutlined /> },
+  { key: 'b', labelKey: 'shortcuts.choose_blocks', handler: 'onOpenBlocks', icon: <SearchOutlined /> },
+  { key: 'p', labelKey: 'shortcuts.find_previous_block', handler: 'onFindPrevious', shift: true, icon: <LeftOutlined /> },
+  { key: 'n', labelKey: 'shortcuts.find_next_block', handler: 'onFindNext', icon: <RightOutlined /> },
+  { key: 'h', labelKey: 'shortcuts.highlight_all_matching_blocks', handler: 'onHighlight', icon: <HighlightOutlined /> },
+  { key: 'x', labelKey: 'shortcuts.clear_highlighted_blocks', handler: 'onClearHighlight', icon: <CloseOutlined /> },
+  { key: 'e', labelKey: 'shortcuts.zoom_in', handler: 'onZoomIn', icon: <ZoomInOutlined /> },
+  { key: 'c', labelKey: 'shortcuts.zoom_out', handler: 'onZoomOut', icon: <ZoomOutOutlined /> },
+  { key: 'z', labelKey: 'shortcuts.zoom_to_fit', handler: 'onResetZoom', icon: <ExpandOutlined /> },
+  { key: 'd', labelKey: 'shortcuts.go_to_dungeon', handler: 'onGoToDungeon' },
+  { key: 'l', labelKey: 'shortcuts.go_to_location', handler: 'onGoToTile' },
+  { key: 's', labelKey: 'shortcuts.go_to_spawn', handler: 'onGoToSpawn' },
+  { key: 'i', labelKey: 'shortcuts.toggle_info_pane', handler: 'onToggleInfoPane' },
+  { key: 'w', labelKey: 'shortcuts.toggle_wires', handler: 'onToggleWires' },
+  { key: 'escape', labelKey: 'shortcuts.hide_tile_indicator', handler: 'onHideTileIndicator' },
 ];

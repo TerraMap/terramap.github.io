@@ -25,7 +25,7 @@ export default defineConfig([
     extends: [...tseslint.configs.strictTypeChecked],
     languageOptions: {
       parserOptions: {
-        project: true,
+        project: ["./tsconfig.json", "./tsconfig.test.json", "./tsconfig.worker.json"],
         tsconfigRootDir: import.meta.dirname,
       },
     },

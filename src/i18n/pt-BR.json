@@ -1,0 +1,40 @@
+{
+  "folder": "Pasta",
+  "open_world_file": "Abrir arquivo de mundo",
+  "choose_world": "Escolher mundo",
+  "sets": "Conjuntos",
+  "blocks": "Blocos",
+  "save_image": "Salvar imagem",
+  "npcs": "NPCs",
+  "theme": "Tema",
+  "view": "Exibir",
+  "hide_info_pane": "Ocultar painel de informações",
+  "show_info_pane": "Mostrar painel de informações",
+  "info": "Info",
+  "about": "Sobre",
+  "themes": {
+    "auto": "Automático",
+    "dark": "Escuro",
+    "light": "Claro",
+    "auto_description": "Muda automaticamente o fundo e o conteúdo com base nas configurações e no tema do sistema."
+  },
+  "shortcuts": {
+    "open_folder": "Abrir pasta",
+    "open_world_file": "Abrir arquivo de mundo do Terraria",
+    "reload_world": "Recarregar mundo",
+    "choose_blocks": "Escolher blocos",
+    "find_previous_block": "Encontrar bloco anterior",
+    "find_next_block": "Encontrar próximo bloco",
+    "highlight_all_matching_blocks": "Destacar todos os blocos correspondentes",
+    "clear_highlighted_blocks": "Limpar blocos destacados",
+    "zoom_in": "Ampliar",
+    "zoom_out": "Reduzir",
+    "zoom_to_fit": "Ajustar à tela",
+    "go_to_dungeon": "Ir para a Masmorra",
+    "go_to_location": "Ir para a localização",
+    "go_to_spawn": "Ir para o ponto de surgimento",
+    "toggle_info_pane": "Painel de informações (Mostrar / Ocultar)",
+    "toggle_wires": "Fios (Mostrar / Ocultar)",
+    "hide_tile_indicator": "Ocultar indicador de bloco"
+  }
+}

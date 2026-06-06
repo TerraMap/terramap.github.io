@@ -1,0 +1,40 @@
+{
+  "folder": "Carpeta",
+  "open_world_file": "Abrir archivo de mundo",
+  "choose_world": "Elegir mundo",
+  "sets": "Conjuntos",
+  "blocks": "Bloques",
+  "save_image": "Guardar imagen",
+  "npcs": "NPCs",
+  "theme": "Tema",
+  "view": "Vista",
+  "hide_info_pane": "Ocultar panel de información",
+  "show_info_pane": "Mostrar panel de información",
+  "info": "Info",
+  "about": "Acerca de",
+  "themes": {
+    "auto": "Automático",
+    "dark": "Oscuro",
+    "light": "Claro",
+    "auto_description": "Cambia automáticamente el fondo y el contenido según la configuración y el tema de tu sistema."
+  },
+  "shortcuts": {
+    "open_folder": "Abrir carpeta",
+    "open_world_file": "Abrir archivo de mundo de Terraria",
+    "reload_world": "Recargar mundo",
+    "choose_blocks": "Elegir bloques",
+    "find_previous_block": "Buscar bloque anterior",
+    "find_next_block": "Buscar bloque siguiente",
+    "highlight_all_matching_blocks": "Resaltar todos los bloques coincidentes",
+    "clear_highlighted_blocks": "Limpiar bloques resaltados",
+    "zoom_in": "Acercar",
+    "zoom_out": "Alejar",
+    "zoom_to_fit": "Ajustar a la pantalla",
+    "go_to_dungeon": "Ir a la mazmorra",
+    "go_to_location": "Ir a la ubicación",
+    "go_to_spawn": "Ir al punto de reaparición",
+    "toggle_info_pane": "Panel de información (Mostrar / Ocultar)",
+    "toggle_wires": "Cables (Mostrar / Ocultar)",
+    "hide_tile_indicator": "Ocultar indicador de bloque"
+  }
+}

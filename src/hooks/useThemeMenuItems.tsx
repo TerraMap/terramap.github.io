@@ -1,13 +1,14 @@
 import { MoonOutlined, SunOutlined, SwapOutlined } from '@ant-design/icons';
 import { Tooltip, type MenuProps } from 'antd';
 import { use } from 'react';
-import { capitalizeFirstLetter } from '../lib/string';
-import { ThemeNameContext } from './useThemeName';
+import { useTranslation } from 'react-i18next';
 import type { ThemeNames } from './useThemeName';
+import { ThemeNameContext } from './useThemeName';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
 export default function useThemeMenuItems(): MenuItem[] {
+  const { t } = useTranslation();
   const themeNameContext = use(ThemeNameContext);
   const themeName = themeNameContext?.themeName;
   const setThemeName =
@@ -18,17 +19,17 @@ export default function useThemeMenuItems(): MenuItem[] {
 
   const themeNames: ThemeNames[] = ['light', 'dark', 'auto'];
 
-  const autoTitle = "Automatically change background and content based on your system settings and theme.";
+  const autoTitle = t('themes.auto_description');
 
   return [
     {
-      key: 'Theme',
-      label: 'Theme',
+      key: 'theme',
+      label: t('theme'),
       type: 'group',
     },
     ...themeNames.map((key) => ({
       key,
-      label: key === 'auto' ? <Tooltip title={autoTitle} placement="bottom">Auto</Tooltip> : capitalizeFirstLetter(key),
+      label: key === 'auto' ? <Tooltip title={autoTitle} placement="bottom">{t('themes.auto')}</Tooltip> : t(`themes.${key}`),
       // disabled: key === themeName,
       icon: key === 'light' ? <SunOutlined />
         : key === 'dark' ? <MoonOutlined />

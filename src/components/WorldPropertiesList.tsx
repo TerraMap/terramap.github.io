@@ -5,7 +5,11 @@ import type { PlayerMap } from '../lib/readPlayerMap';
 export function WorldPropertiesList({ worldProperties, playerMap, maxHeight }: { worldProperties: Record<string, unknown>; playerMap: PlayerMap | null; maxHeight?: string }) {
   const [filter, setFilter] = useState('');
 
-  const properties: Record<string, unknown> = { ...worldProperties, explored: playerMap?.percent?.toLocaleString(undefined, { style: 'percent' }) };
+  const properties: Record<string, unknown> = { ...worldProperties };
+
+  if (playerMap?.percent) {
+    properties.explored = playerMap?.percent?.toLocaleString(undefined, { style: 'percent' })
+  }
 
   const filteredKeys = Object.keys(properties).filter(k => !k.startsWith('_')).sort()
     .filter((key) => {

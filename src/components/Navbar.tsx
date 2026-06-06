@@ -7,13 +7,15 @@ import {
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Button, Dropdown, Space, Spin, Switch, Tag, Tooltip } from 'antd';
+import { useTranslation } from 'react-i18next';
 import firstBy from 'thenby';
 import useThemeMenuItems from '../hooks/useThemeMenuItems';
 import { useThemeName } from '../hooks/useThemeName';
 import { getShortcutByHandler } from '../lib/keyboardShortcuts';
-import { capitalizeFirstLetter, truncateString } from '../lib/string';
+import { truncateString } from '../lib/string';
 import type { BlockSet, WorldNpc } from '../types/settings';
-import ToolbarButton from './ToolbarButton';
+import LanguageSwitcher from './LanguageSwitcher';
+import ToolbarButton, { ShortcutLabel } from './ToolbarButton';
 
 export interface DirectoryFiles { worldFiles: File[], mapFiles: File[] };
 
@@ -88,6 +90,7 @@ export function Navbar({
 }: NavbarProps) {
   const { isDarkMode, themeName } = useThemeName();
   const themeMenuItems = useThemeMenuItems();
+  const { t } = useTranslation();
 
   const handleWorldFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -122,13 +125,13 @@ export function Navbar({
 
         <Space.Compact>
           {checkingNative ? <Spin /> : nativeAvailable ?
-            <Button icon={<GlobalOutlined />} onClick={onChooseWorld}>Choose World</Button>
+            <Button icon={<GlobalOutlined />} onClick={onChooseWorld}>{t('choose_world')}</Button>
             :
             <ToolbarButton
               loading={isWorldLoading}
               shortcutHandler="onOpenFolder"
               onClick={() => directoryInputRef.current?.click()}>
-              {!worldLoaded ? 'Folder' : undefined}
+              {!worldLoaded ? t('folder') : undefined}
             </ToolbarButton>
           }
           <ToolbarButton
@@ -139,7 +142,7 @@ export function Navbar({
               ? <span title={worldProperties.name}>
                 {truncateString(worldProperties.name)}
               </span>
-              : 'Open World File'}
+              : t('open_world_file')}
           </ToolbarButton>
           {worldLoaded && (
             <ToolbarButton
@@ -153,13 +156,13 @@ export function Navbar({
           <>
             <Space.Compact>
               <Dropdown menu={{ items: setMenuItems }}>
-                <Button>Sets</Button>
+                <Button>{t('sets')}</Button>
               </Dropdown>
 
               <ToolbarButton
                 shortcutHandler="onOpenBlocks"
                 onClick={onOpenBlocks}>
-                Blocks
+                {t('blocks')}
               </ToolbarButton>
               <ToolbarButton
                 shortcutHandler="onFindPrevious"
@@ -199,7 +202,7 @@ export function Navbar({
               <ToolbarButton
                 icon={<CameraOutlined />}
                 onClick={onSaveImage}
-                tooltip="Save Image"
+                tooltip={t('save_image')}
               />
             </Space.Compact>
 
@@ -207,8 +210,8 @@ export function Navbar({
               <Dropdown menu={{
                 items: [
                   {
-                    key: "Go To Dungeon",
-                    label: <>Go To Dungeon <Tag><kbd>d</kbd></Tag></>,
+                    key: "onGoToDungeon",
+                    label: <ShortcutLabel handler="onGoToDungeon" />,
                     disabled: typeof worldProperties.dungeonX === 'number' && typeof worldProperties.dungeonY === 'number'
                       && !isTileExplored(worldProperties.dungeonX, worldProperties.dungeonY),
                     onClick: () => {
@@ -218,13 +221,13 @@ export function Navbar({
                     }
                   },
                   {
-                    key: "Go To Location",
-                    label: <>Go To Location <Tag><kbd>l</kbd></Tag></>,
+                    key: "onGoToTile",
+                    label: <ShortcutLabel handler="onGoToTile" />,
                     onClick: () => onGoToTile()
                   },
                   {
-                    key: "Go To Spawn",
-                    label: <>Go To Spawn <Tag><kbd>s</kbd></Tag></>,
+                    key: "onGoToSpawn",
+                    label: <ShortcutLabel handler="onGoToSpawn" />,
                     disabled: typeof worldProperties.spawnX === 'number' && typeof worldProperties.spawnY === 'number'
                       && !isTileExplored(worldProperties.spawnX, worldProperties.spawnY),
                     onClick: () => {
@@ -234,50 +237,58 @@ export function Navbar({
                     }
                   },
                   {
-                    key: "Hide Tile Indicator",
-                    label: <>Hide Tile Indicator <Tag><kbd>escape</kbd></Tag></>,
+                    key: "onHideTileIndicator",
+                    label: <ShortcutLabel handler="onHideTileIndicator" />,
                     onClick: () => onHideTargetIndicator()
                   },
                   {
-                    key: "Info Pane",
-                    label: <>Info Pane <Switch checked={infoPaneOpen} /> <Tag><kbd>i</kbd></Tag></>,
+                    key: "onToggleInfoPane",
+                    label: <Space size="small">
+                      <ShortcutLabel handler="onToggleInfoPane" />
+                      <Switch checked={infoPaneOpen} size="small" />
+                    </Space>,
                     onClick: () => setInfoPaneOpen(!infoPaneOpen)
                   },
                   {
                     key: "NPCs",
-                    label: "NPCs",
+                    label: t('npcs'),
                     children: npcMenuItems
                   },
                   {
                     key: "Theme",
-                    label: "Theme",
+                    label: t('theme'),
                     children: themeMenuItems
                   },
                   {
-                    key: 'Wires',
-                    label: <>Wires <Switch checked={showWires} /> <Tag><kbd>w</kbd></Tag></>,
+                    key: 'onToggleWires',
+                    label:
+                      <Space size="small">
+                        <ShortcutLabel handler="onToggleWires" />
+                        <Switch checked={showWires} size="small" />
+                      </Space>,
                     onClick: () => setShowWires(!showWires)
                   }
                 ]
               }}>
-                <Button>View</Button>
+                <Button>{t('view')}</Button>
               </Dropdown>
-              <Dropdown menu={{ items: themeMenuItems }}>
+              <Dropdown menu={{ items: themeMenuItems, selectedKeys: [themeName] }}>
                 <Button icon={isDarkMode ? <MoonOutlined /> : <SunOutlined />} />
               </Dropdown>
+              <LanguageSwitcher />
             </Space.Compact>
 
             <Tooltip title={<Space>
-              {infoPaneOpen ? 'Hide Info Pane' : 'Show Info Pane'}
+              {infoPaneOpen ? t('hide_info_pane') : t('show_info_pane')}
               {
-                <Tag key={getShortcutByHandler('onToggleInfoPane')?.key}>
+                <Tag>
                   <kbd>{getShortcutByHandler('onToggleInfoPane')?.key}</kbd>
                 </Tag>
               }
             </Space>}>
               <Switch
-                checkedChildren="Info"
-                unCheckedChildren="Info"
+                checkedChildren={t('info')}
+                unCheckedChildren={t('info')}
                 checked={infoPaneOpen}
                 onChange={(checked) => setInfoPaneOpen(checked)}
               />
@@ -288,15 +299,17 @@ export function Navbar({
 
         {
           !worldLoaded && (
-            <Tooltip title={`Theme - ${capitalizeFirstLetter(themeName)} Mode`}>
-              <Dropdown menu={{ items: themeMenuItems }}>
+            <>
+              <Dropdown menu={{ items: themeMenuItems, selectedKeys: [themeName] }}>
                 <Button icon={isDarkMode ? <MoonOutlined /> : <SunOutlined />} />
               </Dropdown>
-            </Tooltip>
+              <LanguageSwitcher />
+            </>
           )
         }
 
-        <Tooltip title="About">
+
+        <Tooltip title={t('about')}>
           <Button
             type="link"
             icon={<QuestionCircleOutlined />}

@@ -12,8 +12,9 @@ export function useKeyboardShortcuts(handlers: ShortcutHandlers) {
 
       if (e.ctrlKey || e.altKey || e.metaKey) return;
 
+      const code = e.code.replace(/^Key/, '').toLowerCase();
       const match = keyboardShortcuts.find(
-        s => s.key.toLowerCase() === e.key.toLowerCase() && !!s.shift === e.shiftKey
+        s => s.key.toLowerCase() === code && !!s.shift === e.shiftKey
       );
       if (match) {
         e.preventDefault();

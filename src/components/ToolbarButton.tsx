@@ -1,8 +1,21 @@
 import { Button, Space, Tag, Tooltip } from "antd";
 import type { ReactNode } from "react";
-import { getLabelByHandler, getShortcutByHandler, type ShortcutHandlers } from "../lib/keyboardShortcuts";
+import { useTranslation } from "react-i18next";
+import { getShortcutByHandler, type ShortcutHandlers } from "../lib/keyboardShortcuts";
 
-function ShortcutTag({ handler }: { handler: keyof ShortcutHandlers }) {
+export function ShortcutLabel({ handler }: { handler: keyof ShortcutHandlers }) {
+  const { t } = useTranslation();
+  const shortcut = getShortcutByHandler(handler);
+  if (!shortcut) return null;
+  return (
+    <>
+      {t(shortcut.labelKey)}
+      <ShortcutTag handler={handler} />
+    </>
+  );
+}
+
+export function ShortcutTag({ handler }: { handler: keyof ShortcutHandlers }) {
   const shortcut = getShortcutByHandler(handler);
   if (!shortcut) return null;
   return (
@@ -34,7 +47,9 @@ export default function ToolbarButton(
       tooltip?: string;
     }
 ) {
-  const label = tooltip ?? (shortcutHandler && getLabelByHandler(shortcutHandler));
+  const { t } = useTranslation();
+  const shortcut = shortcutHandler ? getShortcutByHandler(shortcutHandler) : undefined;
+  const label = shortcut ? t(shortcut.labelKey) : tooltip;
   const resolvedIcon = icon ?? (shortcutHandler && (getShortcutByHandler(shortcutHandler))?.icon);
 
   return (<Tooltip title={

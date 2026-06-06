@@ -1,5 +1,6 @@
 import { FolderOutlined, GlobalOutlined } from '@ant-design/icons';
 import { Space, Table, Typography } from 'antd';
+import { useTranslation } from 'react-i18next';
 import firstBy from 'thenby';
 import { useDetectOS, type PathEntry } from '../hooks/useDetectOS';
 import { keyboardShortcuts } from '../lib/keyboardShortcuts';
@@ -25,6 +26,7 @@ export function HelpPanel(
     }
 ) {
   const userOS = useDetectOS();
+  const { t } = useTranslation();
 
   return (
     <div style={{ padding: '0px 32px 32px', maxWidth: 900, margin: '0 auto' }}>
@@ -34,7 +36,7 @@ export function HelpPanel(
           TerraMap is an interactive Terraria world map viewer.
         </Paragraph>
         <Paragraph>
-          To use TerraMap, please start by doing one of the following:
+          Get started by doing one of the following:
         </Paragraph>
 
         To avoid spoilers:
@@ -78,21 +80,29 @@ export function HelpPanel(
 
       <Table
         dataSource={keyboardShortcuts}
-        rowKey="label"
+        rowKey="labelKey"
         pagination={false}
         size="small"
         columns={[
           {
             dataIndex: 'key',
             title: "Shortcut",
-            render: (key: string, { shift }) => <kbd>{shift ? `Shift + ${key}` : key}</kbd>,
+            render: (key: string, { shift }) => (
+              <kbd>
+                {shift ? `Shift + ${key}` : key}
+              </kbd>
+            ),
             sorter: firstBy('key').thenBy('shift')
           },
           {
-            dataIndex: 'label',
+            dataIndex: 'labelKey',
             title: "Command",
-            render: (label: string, { icon }) => <Space>{icon ?? <span style={{ paddingLeft: 14 }} />}{label}</Space>,
-            sorter: firstBy('label')
+            render: (labelKey: string, { icon }) => (
+              <Space>
+                {icon ?? <span style={{ paddingLeft: 14 }} />}{t(labelKey)}
+              </Space>
+            ),
+            sorter: (a, b) => t(a.labelKey).localeCompare(t(b.labelKey))
           }
         ]}
       />

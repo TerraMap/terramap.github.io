@@ -145,19 +145,23 @@ export default function AppContent() {
     setDirectoryPickerOpen(true);
   }, []);
 
-  const handleDirectoryWorldSelected = useCallback((file: File, mapFile: File | null, parsedMap: PlayerMap | null) => {
+  const handleDirectoryWorldSelected = useCallback((file: File, mapFile: File | null, playerMap: PlayerMap | null) => {
     handleWorldFileSelect(file);
     setMapFile(mapFile);
-    setPlayerMap(parsedMap);
-    notificationRef.current?.info({ key: 'explored', title: `Explored: ${parsedMap?.percent.toLocaleString(undefined, { style: 'percent' })}`, placement: 'bottomRight' });
+    setPlayerMap(playerMap);
+    if (playerMap?.percent !== undefined) {
+      notificationRef.current?.info({ key: 'explored', title: `Explored: ${playerMap?.percent.toLocaleString(undefined, { style: 'percent' })}`, placement: 'bottomRight' });
+    }
   }, [handleWorldFileSelect, setPlayerMap]);
 
   const handleReloadWorld = useCallback(async () => {
     if (worldFile) loadWorldFile(worldFile);
     if (mapFile) {
-      const parsed = await readPlayerMap(mapFile);
-      setPlayerMap(parsed);
-      notificationRef.current?.info({ key: 'explored', title: `Explored: ${parsed.percent.toLocaleString(undefined, { style: 'percent' })}`, placement: 'bottomRight' });
+      const playerMap = await readPlayerMap(mapFile);
+      setPlayerMap(playerMap);
+      if (playerMap?.percent !== undefined) {
+        notificationRef.current?.info({ key: 'explored', title: `Explored: ${playerMap?.percent.toLocaleString(undefined, { style: 'percent' })}`, placement: 'bottomRight' });
+      }
     }
   }, [worldFile, mapFile, loadWorldFile, setPlayerMap, notificationRef]);
 

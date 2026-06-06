@@ -1,0 +1,40 @@
+{
+  "folder": "Folder",
+  "open_world_file": "Open World File",
+  "choose_world": "Choose World",
+  "sets": "Sets",
+  "blocks": "Blocks",
+  "save_image": "Save Image",
+  "npcs": "NPCs",
+  "theme": "Theme",
+  "view": "View",
+  "hide_info_pane": "Hide Info Pane",
+  "show_info_pane": "Show Info Pane",
+  "info": "Info",
+  "about": "About",
+  "themes": {
+    "auto": "Auto",
+    "dark": "Dark",
+    "light": "Light",
+    "auto_description": "Automatically change background and content based on your system settings and theme."
+  },
+  "shortcuts": {
+    "open_folder": "Open Folder",
+    "open_world_file": "Open Terraria World File",
+    "reload_world": "Reload World",
+    "choose_blocks": "Choose Blocks",
+    "find_previous_block": "Find Previous Block",
+    "find_next_block": "Find Next Block",
+    "highlight_all_matching_blocks": "Highlight All Matching Blocks",
+    "clear_highlighted_blocks": "Clear Highlighted Blocks",
+    "zoom_in": "Zoom In",
+    "zoom_out": "Zoom Out",
+    "zoom_to_fit": "Zoom To Fit",
+    "go_to_dungeon": "Go To Dungeon",
+    "go_to_location": "Go To Location",
+    "go_to_spawn": "Go To Spawn",
+    "toggle_info_pane": "Info Pane (Show / Hide)",
+    "toggle_wires": "Wires (Show / Hide)",
+    "hide_tile_indicator": "Hide Tile Indicator"
+  }
+}

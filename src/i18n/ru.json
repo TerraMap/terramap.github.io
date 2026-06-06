@@ -1,0 +1,40 @@
+{
+  "folder": "Папка",
+  "open_world_file": "Открыть файл мира",
+  "choose_world": "Выбрать мир",
+  "sets": "Наборы",
+  "blocks": "Блоки",
+  "save_image": "Сохранить изображение",
+  "npcs": "НПС",
+  "theme": "Тема",
+  "view": "Вид",
+  "hide_info_pane": "Скрыть панель информации",
+  "show_info_pane": "Показать панель информации",
+  "info": "Инфо",
+  "about": "О программе",
+  "themes": {
+    "auto": "Авто",
+    "dark": "Тёмная",
+    "light": "Светлая",
+    "auto_description": "Автоматически изменяет фон и содержимое в соответствии с настройками системы."
+  },
+  "shortcuts": {
+    "open_folder": "Открыть папку",
+    "open_world_file": "Открыть файл мира Terraria",
+    "reload_world": "Перезагрузить мир",
+    "choose_blocks": "Выбрать блоки",
+    "find_previous_block": "Найти предыдущий блок",
+    "find_next_block": "Найти следующий блок",
+    "highlight_all_matching_blocks": "Выделить все совпадающие блоки",
+    "clear_highlighted_blocks": "Снять выделение блоков",
+    "zoom_in": "Приблизить",
+    "zoom_out": "Отдалить",
+    "zoom_to_fit": "Вписать в экран",
+    "go_to_dungeon": "Перейти к Подземелью",
+    "go_to_location": "Перейти к месту",
+    "go_to_spawn": "Перейти к точке возрождения",
+    "toggle_info_pane": "Панель информации (Показать / Скрыть)",
+    "toggle_wires": "Провода (Показать / Скрыть)",
+    "hide_tile_indicator": "Скрыть индикатор тайла"
+  }
+}
