@@ -63,23 +63,18 @@ export function getTileInfo(tile: WorldTile): TileFrame | TileInfo | undefined {
 export function getTileAt(world: WorldData | null, x: number, y: number): WorldTile | null {
   if (!world) return null;
 
+  if (!world.rawFlags1) return null;
+
   const idx = x * world.height + y;
   if (idx < 0 || idx >= world.width * world.height) return null;
 
-  if (world.rawFlags1) {
-    const tile: WorldTile = {};
-    fillTileFromRaw(tile, world, idx, x, y);
-    tile.info = getTileInfo(tile);
-    tile.chest = world.chestByIdx?.get(idx);
-    tile.sign = world.signByIdx?.get(idx);
-    tile.tileEntity = world.entityByIdx?.get(idx);
-    return tile;
-  }
-
-  if (idx < world.tiles.length) {
-    return world.tiles[idx] ?? null;
-  }
-  return null;
+  const tile: WorldTile = {};
+  fillTileFromRaw(tile, world, idx, x, y);
+  tile.info = getTileInfo(tile);
+  tile.chest = world.chestByIdx?.get(idx);
+  tile.sign = world.signByIdx?.get(idx);
+  tile.tileEntity = world.entityByIdx?.get(idx);
+  return tile;
 }
 
 export function getItemText(item: WorldItem): string {

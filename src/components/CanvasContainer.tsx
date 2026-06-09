@@ -201,29 +201,6 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         const pixels = pixelsRef.current!;
         const height = world.height;
 
-        if (world.rawFlags1) {
-          // Fast path: read directly from TypedArrays — no WorldTile objects created.
-          for (let x = startCol; x < endCol; x++) {
-            const bufferStart = BUFFER_WIDTH * Math.floor(x / BUFFER_WIDTH);
-            if (x % BUFFER_WIDTH === 0 && x > 0) {
-              const imageData = new ImageData(pixels as unknown as Uint8ClampedArray<ArrayBuffer>, BUFFER_WIDTH);
-              ctx.putImageData(imageData, bufferStart - BUFFER_WIDTH, 0);
-            }
-            const colBase = x * height;
-            for (let y = 0; y < height; y++) {
-              const idx = colBase + y;
-              let c = getTileColorRaw(y, idx, world);
-              if (!c) c = { r: 0, g: 0, b: 0 };
-              const pxIdx = 4 * (y * BUFFER_WIDTH + x - bufferStart);
-              pixels[pxIdx]     = c.r;
-              pixels[pxIdx + 1] = c.g;
-              pixels[pxIdx + 2] = c.b;
-              pixels[pxIdx + 3] = 255;
-            }
-          }
-          return;
-        }
-
         for (let x = startCol; x < endCol; x++) {
           const bufferStart = BUFFER_WIDTH * Math.floor(x / BUFFER_WIDTH);
           if (x % BUFFER_WIDTH === 0 && x > 0) {
@@ -232,17 +209,14 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
           }
           const colBase = x * height;
           for (let y = 0; y < height; y++) {
-            const tile = world.tiles[colBase + y];
-            if (tile) {
-              tile.info = getTileInfo(tile);
-              let c = getTileColor(y, tile, world);
-              if (!c) c = { r: 0, g: 0, b: 0 };
-              const pxIdx = 4 * (y * BUFFER_WIDTH + x - bufferStart);
-              pixels[pxIdx]     = c.r;
-              pixels[pxIdx + 1] = c.g;
-              pixels[pxIdx + 2] = c.b;
-              pixels[pxIdx + 3] = 255;
-            }
+            const idx = colBase + y;
+            let c = getTileColorRaw(y, idx, world);
+            if (!c) c = { r: 0, g: 0, b: 0 };
+            const pxIdx = 4 * (y * BUFFER_WIDTH + x - bufferStart);
+            pixels[pxIdx]     = c.r;
+            pixels[pxIdx + 1] = c.g;
+            pixels[pxIdx + 2] = c.b;
+            pixels[pxIdx + 3] = 255;
           }
         }
       },
@@ -282,7 +256,6 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
           let matches = 0;
           let lastPutImageTime = 0;
 
-          const useRaw = !!world.rawFlags1;
           const tileView: WorldTile = {};
 
           const processChunk = () => {
@@ -290,17 +263,11 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
 
             const deadline = performance.now() + 200;
             while (idx < total && performance.now() < deadline) {
-              let tile: WorldTile | undefined;
-              if (useRaw) {
-                fillTileFromRaw(tileView, world, idx, x, y);
-                tileView.info = getTileInfo(tileView);
-                tileView.chest = world.chestByIdx?.get(idx);
-                tileView.tileEntity = world.entityByIdx?.get(idx);
-                tile = tileView;
-              } else {
-                tile = world.tiles[idx];
-              }
-              if (tile && matchFn(tile) && (!playerMap || playerMap.explored[idx])) {
+              fillTileFromRaw(tileView, world, idx, x, y);
+              tileView.info = getTileInfo(tileView);
+              tileView.chest = world.chestByIdx?.get(idx);
+              tileView.tileEntity = world.entityByIdx?.get(idx);
+              if (matchFn(tileView) && (!playerMap || playerMap.explored[idx])) {
                 const pxIdx = (y * ow + x) * 4;
                 data[pxIdx] = 255;
                 data[pxIdx + 1] = 255;
@@ -344,25 +311,18 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         const imageData = ctx.createImageData(w, world.height);
         const data = imageData.data;
 
-        const rawFlags2 = world.rawFlags2;
+        const rawFlags2 = world.rawFlags2!;
         let x = 0;
         let y = 0;
-        for (let i = 0; i < world.tiles.length; i++) {
+        const total = world.width * world.height;
+        for (let i = 0; i < total; i++) {
           const pxIdx = (y * w + x) * 4;
           let r = 0, g = 0, b = 0, count = 0;
-          if (rawFlags2) {
-            const f2 = rawFlags2[i];
-            if (f2 & 0x08) { r += 255; count++; }
-            if (f2 & 0x10) { g += 255; count++; }
-            if (f2 & 0x20) { b += 255; count++; }
-            if (f2 & 0x40) { r += 255; g += 255; count++; }
-          } else {
-            const tile = world.tiles[i];
-            if (tile?.IsRedWirePresent)    { r += 255; count++; }
-            if (tile?.IsGreenWirePresent)  { g += 255; count++; }
-            if (tile?.IsBlueWirePresent)   { b += 255; count++; }
-            if (tile?.IsYellowWirePresent) { r += 255; g += 255; count++; }
-          }
+          const f2 = rawFlags2[i];
+          if (f2 & 0x08) { r += 255; count++; }
+          if (f2 & 0x10) { g += 255; count++; }
+          if (f2 & 0x20) { b += 255; count++; }
+          if (f2 & 0x40) { r += 255; g += 255; count++; }
           if (count > 0) {
             data[pxIdx] = Math.min(r, 255);
             data[pxIdx + 1] = Math.min(g, 255);

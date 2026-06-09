@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 import type { CanvasContainerHandle } from '../components/CanvasContainer';
 import { getTileInfo } from '../lib/tileInfo';
-import type { Chest, Sign, TileEntity, WorldData, WorldNpc, WorldTile } from '../types/settings';
+import type { Chest, Sign, TileEntity, WorldData, WorldNpc } from '../types/settings';
 
 interface TileData {
   types: ArrayBuffer;
@@ -70,7 +70,6 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
 
       if (e.data.world) {
         const w = e.data.world;
-        w.tiles = new Array<WorldTile>(w.width * w.height);
         w.chests = [];
         w.signs = [];
         w.npcs = [];

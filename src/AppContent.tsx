@@ -99,7 +99,7 @@ export default function AppContent() {
     handleSetSelect,
   } = useBlockHighlight(canvasRef, worldRef, selectedBlocks, setShowWires, playerMapRef, (count) => {
     if (count) {
-      notificationRef.current?.success({ key: 'match', message: `Highlighted ${count.toLocaleString()} matches`, placement: 'bottomRight' });
+      notificationRef.current?.success({ key: 'match', title: `Highlighted ${count.toLocaleString()} matches`, placement: 'bottomRight' });
     } else {
       notificationRef.current?.warning({ key: 'match', title: `No matches found`, placement: 'bottomRight' });
     }

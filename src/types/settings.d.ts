@@ -131,13 +131,10 @@ export interface WorldData {
   name: string;
   version: number;
   remixWorld: number;
-  tiles: WorldTile[];
   chests: Chest[];
   signs: Sign[];
   npcs: WorldNpc[];
   tileEntities: Map<{ x: number; y: number }, TileEntity>;
-  // Raw TypedArrays from the worker — available immediately after transfer,
-  // used by renderColumnRange to render the canvas without creating WorldTile objects.
   rawTypes?: Uint16Array;
   rawWallTypes?: Uint16Array;
   rawTextureU?: Int16Array;

@@ -68,6 +68,20 @@ jobs:
 
       - run: npm ci
 
+      - name: Set version from tag
+        if: startsWith(github.ref, 'refs/tags/native-v') || github.event.inputs.tag != ''
+        id: ver
+        shell: bash
+        run: |
+          if [[ "${{ github.ref_type }}" == "tag" ]]; then
+            TAG="${{ github.ref_name }}"
+          else
+            TAG="${{ github.event.inputs.tag }}"
+          fi
+          VERSION="${TAG#native-v}"
+          echo "value=${VERSION}" >> "$GITHUB_OUTPUT"
+          node -e "const fs=require('fs'),c=JSON.parse(fs.readFileSync('native/tauri.conf.json','utf8'));c.version='${VERSION}';fs.writeFileSync('native/tauri.conf.json',JSON.stringify(c,null,2)+'\n')"
+
       - name: Import Apple certificate
         if: runner.os == 'macOS'
         env:
@@ -101,11 +115,14 @@ jobs:
 
       - name: Stage Flatpak sources
         if: matrix.label == 'linux-x64'
+        shell: bash
         run: |
           cp native/target/${{ matrix.target }}/release/terramap-native native/flatpak/terramap
           cp native/icons/32x32.png native/flatpak/32x32.png
           cp native/icons/128x128.png native/flatpak/128x128.png
           cp native/icons/128x128@2x.png native/flatpak/256x256.png
+          VERSION="${{ steps.ver.outputs.value }}"
+          [ -n "$VERSION" ] && sed -i "s|release version=\"[^\"]*\" date=\"[^\"]*\"|release version=\"${VERSION}\" date=\"$(date +%Y-%m-%d)\"|" native/flatpak/io.github.terramap.native.metainfo.xml
 
       - name: Build Flatpak bundle
         if: matrix.label == 'linux-x64'
