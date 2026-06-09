@@ -96,7 +96,8 @@ jobs:
         if: matrix.label == 'linux-x64'
         run: |
           sudo apt-get install -y flatpak flatpak-builder
-          flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+          sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+          sudo flatpak install -y flathub org.gnome.Platform//47 org.gnome.Sdk//47
 
       - name: Stage Flatpak sources
         if: matrix.label == 'linux-x64'
