@@ -1,16 +1,23 @@
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
 import { usePanZoom } from '../hooks/usePanZoom';
-import { getTileColor, getTileColorRaw } from '../lib/mapRenderer';
+import { getTileColorRaw } from '../lib/mapRenderer';
 import type { PlayerMap } from '../lib/readPlayerMap';
 import { fillTileFromRaw, getTileInfo } from '../lib/tileInfo';
+import type { IndexEntry } from '../lib/tileSearch';
 import type { WorldData, WorldTile } from '../types/settings';
+
+export interface HighlightHints {
+  needsInfo?: boolean;
+  needsWall?: boolean;
+  needsChest?: boolean;
+}
 
 export interface CanvasContainerHandle {
   setWorldSize: (width: number, height: number) => void;
-  renderTileBatch: (tiles: WorldTile[], startX: number, world: WorldData) => void;
   renderColumnRange: (world: WorldData, startCol: number, endCol: number) => void;
   finishRender: (worldWidth: number) => void;
-  highlightTiles: (matchFn: ((tile: WorldTile) => boolean) | null, world: WorldData, playerMap: PlayerMap | null, onProgress?: (pct: number, matchCount: number) => void) => void;
+  highlightTiles: (matchFn: ((tile: WorldTile) => boolean) | null, world: WorldData, playerMap: PlayerMap | null, hints?: HighlightHints, onProgress?: (pct: number, matchCount: number) => void) => void;
+  highlightByIndex: (entries: IndexEntry[], world: WorldData, playerMap: PlayerMap | null, onProgress?: (pct: number, matchCount: number) => void) => void;
   renderWireOverlay: (world: WorldData) => void;
   clearWireOverlay: () => void;
   renderFogOverlay: (playerMap: PlayerMap) => void;
@@ -165,37 +172,6 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         pixelsRef.current = new Uint8ClampedArray(4 * BUFFER_WIDTH * height);
       },
 
-      renderTileBatch(tiles: WorldTile[], startX: number, world: WorldData) {
-        const ctx = ctxRef.current!;
-        const pixels = pixelsRef.current!;
-        const height = world.height;
-        const xlimit = startX + tiles.length / height;
-
-        let i = 0;
-        for (let x = startX; x < xlimit; x++) {
-          const bufferStart = BUFFER_WIDTH * Math.floor(x / BUFFER_WIDTH);
-          if (x % BUFFER_WIDTH === 0 && x > 0) {
-            const imageData = new ImageData(pixels as unknown as Uint8ClampedArray<ArrayBuffer>, BUFFER_WIDTH);
-            ctx.putImageData(imageData, bufferStart - BUFFER_WIDTH, 0);
-          }
-          for (let y = 0; y < height; y++) {
-            const tile = tiles[i++];
-            if (tile) {
-              tile.info = getTileInfo(tile);
-
-              let c = getTileColor(y, tile, world);
-              if (!c) c = { r: 0, g: 0, b: 0 };
-
-              const pxIdx = 4 * (y * BUFFER_WIDTH + x - bufferStart);
-              pixels[pxIdx] = c.r;
-              pixels[pxIdx + 1] = c.g;
-              pixels[pxIdx + 2] = c.b;
-              pixels[pxIdx + 3] = 255;
-            }
-          }
-        }
-      },
-
       renderColumnRange(world: WorldData, startCol: number, endCol: number) {
         const ctx = ctxRef.current!;
         const pixels = pixelsRef.current!;
@@ -230,7 +206,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         pixelsRef.current = null;
       },
 
-      highlightTiles(matchFn: ((tile: WorldTile) => boolean) | null, world: WorldData, playerMap: PlayerMap | null, onProgress?: (pct: number, matchCount: number) => void) {
+      highlightTiles(matchFn: ((tile: WorldTile) => boolean) | null, world: WorldData, playerMap: PlayerMap | null, hints?: HighlightHints, onProgress?: (pct: number, matchCount: number) => void) {
         const ctx = overlayCtxRef.current!;
         const overlay = overlayRef.current!;
         ctx.clearRect(0, 0, overlay.width, overlay.height);
@@ -256,6 +232,14 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
           let matches = 0;
           let lastPutImageTime = 0;
 
+          // Hints let us skip work that the search type doesn't need.
+          const needsInfo   = hints ? (hints.needsInfo  ?? true) : true;
+          const needsChest  = hints ? (hints.needsChest ?? true) : true;
+          const needsEntity = needsChest;
+          // Inactive tiles (no block) can never match a tile/item search if walls aren't involved.
+          const canSkipInactive = hints ? !hints.needsWall && !hints.needsChest : false;
+
+          const rawFlags1 = world.rawFlags1;
           const tileView: WorldTile = {};
 
           const processChunk = () => {
@@ -263,11 +247,16 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
 
             const deadline = performance.now() + 200;
             while (idx < total && performance.now() < deadline) {
-              fillTileFromRaw(tileView, world, idx, x, y);
-              tileView.info = getTileInfo(tileView);
-              tileView.chest = world.chestByIdx?.get(idx);
-              tileView.tileEntity = world.entityByIdx?.get(idx);
-              if (matchFn(tileView) && (!playerMap || playerMap.explored[idx])) {
+              let tile: WorldTile | undefined;
+              const f1 = rawFlags1![idx];
+              if (!canSkipInactive || (f1 & 0x01)) {
+                fillTileFromRaw(tileView, world, idx, x, y);
+                if (needsInfo) tileView.info = getTileInfo(tileView); else tileView.info = undefined;
+                tileView.chest = needsChest ? world.chestByIdx?.get(idx) : undefined;
+                tileView.tileEntity = needsEntity ? world.entityByIdx?.get(idx) : undefined;
+                tile = tileView;
+              }
+              if (tile && matchFn(tile) && (!playerMap || playerMap.explored[idx])) {
                 const pxIdx = (y * ow + x) * 4;
                 data[pxIdx] = 255;
                 data[pxIdx + 1] = 255;
@@ -300,6 +289,69 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
           onProgress?.(0, 0);
           processChunk();
         }
+      },
+
+      highlightByIndex(entries: IndexEntry[], world: WorldData, playerMap: PlayerMap | null, onProgress?: (pct: number, matchCount: number) => void) {
+        const ctx = overlayCtxRef.current!;
+        const overlay = overlayRef.current!;
+        ctx.clearRect(0, 0, overlay.width, overlay.height);
+
+        const id = ++highlightIdRef.current;
+        const ow = overlay.width;
+        const imageData = ctx.createImageData(ow, overlay.height);
+        const data = imageData.data;
+        const height = world.height;
+
+        for (let p = 3; p < data.length; p += 4) data[p] = 192;
+        ctx.putImageData(imageData, 0, 0);
+
+        const totalIndices = entries.reduce((sum, e) => sum + e.indices.length, 0);
+        let processed = 0;
+        let matches = 0;
+        let lastPutImageTime = 0;
+        let entryI = 0;
+        let arrayPos = 0;
+
+        const processChunk = () => {
+          if (id !== highlightIdRef.current) return;
+
+          const deadline = performance.now() + 200;
+          while (entryI < entries.length && performance.now() < deadline) {
+            const entry = entries[entryI];
+            const arr = entry.indices;
+            const filter = entry.filter;
+
+            while (arrayPos < arr.length && performance.now() < deadline) {
+              const idx = arr[arrayPos++];
+              processed++;
+              if (filter && !filter(idx)) continue;
+              if (playerMap && !playerMap.explored[idx]) continue;
+              const x = Math.floor(idx / height);
+              const y = idx % height;
+              const pxIdx = (y * ow + x) * 4;
+              data[pxIdx] = 255; data[pxIdx + 1] = 255; data[pxIdx + 2] = 255; data[pxIdx + 3] = 255;
+              matches++;
+            }
+
+            if (arrayPos >= arr.length) { entryI++; arrayPos = 0; }
+          }
+
+          const now = performance.now();
+          if (entryI >= entries.length || now - lastPutImageTime > 1000) {
+            ctx.putImageData(imageData, 0, 0);
+            lastPutImageTime = now;
+          }
+
+          if (entryI < entries.length) {
+            onProgress?.(totalIndices > 0 ? Math.round((processed / totalIndices) * 100) : 100, matches);
+            setTimeout(processChunk, 0);
+          } else {
+            onProgress?.(100, matches);
+          }
+        };
+
+        onProgress?.(0, 0);
+        processChunk();
       },
 
       renderWireOverlay(world: WorldData) {

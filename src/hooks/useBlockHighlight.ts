@@ -1,11 +1,19 @@
 import { useCallback, useMemo, useState } from 'react';
-import type { CanvasContainerHandle } from '../components/CanvasContainer';
+import type { CanvasContainerHandle, HighlightHints } from '../components/CanvasContainer';
 import { items } from '../items';
-import { getTileInfoFrom, isTileMatch, type SearchableInfo } from '../lib/tileSearch';
+import { buildHighlightEntries, getTileInfoFrom, isTileMatch, type SearchableInfo } from '../lib/tileSearch';
 import { tiles } from '../tiles';
 import type { PlayerMap } from '../lib/readPlayerMap';
 import type { BlockSet, WorldData } from '../types/settings';
 import { walls } from '../walls';
+
+function hintsFor(infos: SearchableInfo[]): HighlightHints {
+  return {
+    needsInfo:  infos.some(i => 'isTile'  in i && i.isTile),
+    needsWall:  infos.some(i => 'isWall'  in i && i.isWall),
+    needsChest: infos.some(i => 'isItem'  in i && i.isItem),
+  };
+}
 
 export function useBlockHighlight(
   canvasRef: React.RefObject<CanvasContainerHandle | null>,
@@ -36,23 +44,33 @@ export function useBlockHighlight(
   const [highlightStatus, setHighlightStatus] = useState('');
   const [isHighlighting, setIsHighlighting] = useState(false);
 
+  const doHighlight = useCallback((infos: SearchableInfo[], w: WorldData) => {
+    const onProgress = (pct: number, matchCount: number) => {
+      if (pct >= 100) {
+        setHighlightStatus('');
+        setIsHighlighting(false);
+        onFinished?.(matchCount);
+      } else {
+        setHighlightStatus(`Highlighting... ${pct}%`);
+      }
+    };
+    const entries = buildHighlightEntries(infos, w);
+    if (entries) {
+      canvasRef.current?.highlightByIndex(entries, w, playerMapRef.current, onProgress);
+    } else {
+      canvasRef.current?.highlightTiles((tile) => isTileMatch(tile, infos), w, playerMapRef.current, hintsFor(infos), onProgress);
+    }
+  }, [canvasRef, playerMapRef, onFinished]);
+
   const handleHighlightAll = useCallback(() => {
     const w = worldRef.current;
     if (!w) return;
     const infos = selectedInfos;
     if (infos.length > 0) {
       setIsHighlighting(true);
-      canvasRef.current?.highlightTiles((tile) => isTileMatch(tile, infos), w, playerMapRef.current, (pct, matchCount) => {
-        if (pct >= 100) {
-          setHighlightStatus('');
-          setIsHighlighting(false);
-          onFinished?.(matchCount);
-        } else {
-          setHighlightStatus(`Highlighting... ${pct}%`);
-        }
-      });
+      doHighlight(infos, w);
     }
-  }, [worldRef, canvasRef, selectedInfos, playerMapRef, onFinished]);
+  }, [worldRef, selectedInfos, doHighlight]);
 
   const handleClearHighlight = useCallback(() => {
     canvasRef.current?.clearOverlay();
@@ -90,18 +108,10 @@ export function useBlockHighlight(
     const w = worldRef.current;
     if (w && infos.length > 0) {
       setIsHighlighting(true);
-      canvasRef.current?.highlightTiles((tile) => isTileMatch(tile, infos), w, playerMapRef.current, (pct, matchCount) => {
-        if (pct >= 100) {
-          setHighlightStatus('');
-          setIsHighlighting(false);
-          onFinished?.(matchCount);
-        } else {
-          setHighlightStatus(`Highlighting... ${pct}%`);
-        }
-      });
+      doHighlight(infos, w);
     }
     return values;
-  }, [worldRef, canvasRef, playerMapRef, onFinished]);
+  }, [worldRef, doHighlight]);
 
   return {
     selectedInfos,

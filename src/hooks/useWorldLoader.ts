@@ -3,6 +3,109 @@ import type { CanvasContainerHandle } from '../components/CanvasContainer';
 import { getTileInfo } from '../lib/tileInfo';
 import type { Chest, Sign, TileEntity, WorldData, WorldNpc } from '../types/settings';
 
+function buildItemIndex(w: WorldData): void {
+  const height = w.height;
+  const searchSets = new Map<number, Set<number>>();   // deduplicated: one origin per chest per item
+  const highlightBuckets = new Map<number, number[]>(); // all chest tiles (4) + entity origin
+
+  function addSearch(id: number, originIdx: number) {
+    let s = searchSets.get(id);
+    if (!s) { s = new Set(); searchSets.set(id, s); }
+    s.add(originIdx);
+  }
+  function addHighlight(id: number, idx: number) {
+    let b = highlightBuckets.get(id);
+    if (!b) { b = []; highlightBuckets.set(id, b); }
+    b.push(idx);
+  }
+
+  for (const chest of w.chests) {
+    const x0 = chest.x, y0 = chest.y;
+    const originIdx = x0 * height + y0;
+    for (const item of chest.items) {
+      if (item.id > 0) {
+        addSearch(item.id, originIdx);
+        addHighlight(item.id, originIdx);
+        addHighlight(item.id, x0 * height + y0 + 1);
+        addHighlight(item.id, (x0 + 1) * height + y0);
+        addHighlight(item.id, (x0 + 1) * height + y0 + 1);
+      }
+    }
+  }
+
+  const seen = new Set<TileEntity>();
+  if (w.entityByIdx) {
+    for (const entity of w.entityByIdx.values()) {
+      if (seen.has(entity)) continue;
+      seen.add(entity);
+      const originIdx = entity.position.x * height + entity.position.y;
+      const add = (item: { id: number } | undefined) => {
+        if (!item || item.id === 0) return;
+        addSearch(item.id, originIdx);
+        addHighlight(item.id, originIdx);
+      };
+      switch (entity.type) {
+        case 1: case 4: case 6: add(entity.item); break;
+        case 3: case 5:
+          entity.items?.forEach(add);
+          entity.dyes?.forEach(add);
+          break;
+      }
+    }
+  }
+
+  w.itemIdx = new Map();
+  for (const [id, s] of searchSets) {
+    const arr = Array.from(s).sort((a, b) => a - b);
+    w.itemIdx.set(id, new Uint32Array(arr));
+  }
+  w.itemHighlightIdx = new Map();
+  for (const [id, arr] of highlightBuckets) {
+    arr.sort((a, b) => a - b);
+    w.itemHighlightIdx.set(id, new Uint32Array(arr));
+  }
+}
+
+function buildTileIndex(w: WorldData): void {
+  const total = w.width * w.height;
+  const rawFlags1 = w.rawFlags1!;
+  const rawTypes = w.rawTypes!;
+  const rawWallTypes = w.rawWallTypes!;
+  const tileBuckets = new Map<number, number[]>();
+  const wallBuckets = new Map<number, number[]>();
+  let i = 0;
+  const chunk = () => {
+    const deadline = performance.now() + 50;
+    while (i < total && performance.now() < deadline) {
+      const f1 = rawFlags1[i];
+      if (f1 & 0x01) {
+        const t = rawTypes[i];
+        let b = tileBuckets.get(t);
+        if (!b) { b = []; tileBuckets.set(t, b); }
+        b.push(i);
+      }
+      if (f1 & 0x02) {
+        const wt = rawWallTypes[i];
+        if (wt > 0) {
+          let b = wallBuckets.get(wt);
+          if (!b) { b = []; wallBuckets.set(wt, b); }
+          b.push(i);
+        }
+      }
+      i++;
+    }
+    if (i < total) {
+      setTimeout(chunk, 0);
+    } else {
+      w.tileTypeIdx = new Map();
+      for (const [t, arr] of tileBuckets) w.tileTypeIdx.set(t, new Uint32Array(arr));
+      w.wallTypeIdx = new Map();
+      for (const [wt, arr] of wallBuckets) w.wallTypeIdx.set(wt, new Uint32Array(arr));
+    }
+  };
+  setTimeout(chunk, 0);
+}
+
 interface TileData {
   types: ArrayBuffer;
   wallTypes: ArrayBuffer;
@@ -120,6 +223,7 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
             canvasRef.current?.finishRender(w.width);
             renderDone = true;
             tryFinishLoad();
+            buildTileIndex(w);
           }
         };
         renderChunk();
@@ -183,6 +287,7 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
       }
 
       if (e.data.done) {
+        buildItemIndex(worldRef.current!);
         setWorld(worldRef.current);
         workerDone = true;
         tryFinishLoad();

@@ -2,7 +2,7 @@ import { useCallback, useRef, useState } from 'react';
 import type { CanvasContainerHandle } from '../components/CanvasContainer';
 import type { PlayerMap } from '../lib/readPlayerMap';
 import { fillTileFromRaw, getTileAt, getTileInfo } from '../lib/tileInfo';
-import { isTileMatch, isTileOrigin, type SearchableInfo } from '../lib/tileSearch';
+import { buildSearchEntries, findNextByIndex, isTileMatch, isTileOrigin, type SearchableInfo } from '../lib/tileSearch';
 import type { WorldData, WorldTile } from '../types/settings';
 
 export function useTileSelection(
@@ -85,12 +85,37 @@ export function useTileSelection(
 
     const total = w.width * w.height;
     const startIdx = selectionPos.x * w.height + selectionPos.y;
+
+    // Fast path: O(log n) binary search on pre-built type indices.
+    const entries = buildSearchEntries(infos, w);
+    if (entries) {
+      const pm = playerMapRef.current;
+      const resultIdx = findNextByIndex(entries, startIdx, direction, total, pm?.explored);
+      setIsSearching(false);
+      setSearchStatus('');
+      if (resultIdx === null) { onNotFound?.(); return; }
+      const x = Math.floor(resultIdx / w.height);
+      const y = resultIdx % w.height;
+      setSelectionPos({ x, y });
+      canvasRef.current?.drawSelection(x, y);
+      canvasRef.current?.panToTile(x, y);
+      setSelectedTile(getTileAt(w, x, y));
+      return;
+    }
+
     let i = startIdx + direction;
     if (i < 0) i = total - 1;
     else if (i >= total) i = 0;
 
     let checked = 0;
     let lastStatusTime = 0;
+
+    const rawFlags1 = w.rawFlags1;
+    const needsInfo   = infos.some(ii => 'isTile' in ii && ii.isTile);
+    const needsWall   = infos.some(ii => 'isWall' in ii && ii.isWall);
+    const needsChest  = infos.some(ii => 'isItem' in ii && ii.isItem);
+    const needsEntity = needsChest;
+    const canSkipInactive = !!rawFlags1 && !needsWall && !needsChest;
 
     const tileView: WorldTile = {};
 
@@ -105,21 +130,23 @@ export function useTileSelection(
 
       const deadline = now + 100;
       while (checked < total && performance.now() < deadline) {
-        const x = Math.floor(i / w.height);
-        const y = i % w.height;
-        fillTileFromRaw(tileView, w, i, x, y);
-        tileView.info = getTileInfo(tileView);
-        tileView.chest = w.chestByIdx?.get(i);
-        tileView.tileEntity = w.entityByIdx?.get(i);
-        const pm = playerMapRef.current;
-        if (isTileMatch(tileView, infos) && isTileOrigin(tileView) && (!pm || pm.explored[i])) {
-          setSelectionPos({ x, y });
-          canvasRef.current?.drawSelection(x, y);
-          canvasRef.current?.panToTile(x, y);
-          setSelectedTile({ ...tileView });
-          setIsSearching(false);
-          setSearchStatus('');
-          return;
+        if (!canSkipInactive || (rawFlags1[i] & 0x01)) {
+          const x = Math.floor(i / w.height);
+          const y = i % w.height;
+          fillTileFromRaw(tileView, w, i, x, y);
+          if (needsInfo) tileView.info = getTileInfo(tileView); else tileView.info = undefined;
+          tileView.chest = needsChest ? w.chestByIdx?.get(i) : undefined;
+          tileView.tileEntity = needsEntity ? w.entityByIdx?.get(i) : undefined;
+          const pm = playerMapRef.current;
+          if (isTileMatch(tileView, infos) && isTileOrigin(tileView) && (!pm || pm.explored[i])) {
+            setSelectionPos({ x, y });
+            canvasRef.current?.drawSelection(x, y);
+            canvasRef.current?.panToTile(x, y);
+            setSelectedTile({ ...tileView });
+            setIsSearching(false);
+            setSearchStatus('');
+            return;
+          }
         }
         i += direction;
         if (i < 0) i = total - 1;

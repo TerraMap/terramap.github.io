@@ -123,7 +123,6 @@ describe('Performance', () => {
         rawTypes, rawWallTypes, rawTextureU, rawTextureV,
         rawTileColors, rawWallColors, rawLiquidAmounts,
         rawFlags1, rawFlags2, rawFlags3,
-        tiles: [],
         chests: [],
         signs: [],
         npcs: [],

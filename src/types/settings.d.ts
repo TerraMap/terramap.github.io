@@ -148,6 +148,10 @@ export interface WorldData {
   chestByIdx?: Map<number, Chest>;
   signByIdx?: Map<number, Sign>;
   entityByIdx?: Map<number, TileEntity>;
+  tileTypeIdx?: Map<number, Uint32Array>;
+  wallTypeIdx?: Map<number, Uint32Array>;
+  itemIdx?: Map<number, Uint32Array>;
+  itemHighlightIdx?: Map<number, Uint32Array>;
   [key: string]: unknown;
 }
 

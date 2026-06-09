@@ -1,7 +1,7 @@
 import convert from 'color-convert';
 import { liquidColors, tileColors, wallColors, type Color } from '../MapHelper';
 import { walls } from '../walls';
-import type { WorldData, WorldTile } from '../types/settings';
+import type { WorldData } from '../types/settings';
 import { paintColors } from './paintColors';
 
 /**
@@ -82,57 +82,7 @@ function getLayerColor(y: number, world: WorldData): Color {
   }
 }
 
-function getWallColor(tile: WorldTile): Color | undefined {
-  if (tile.WallType == null) {
-    return undefined;
-  }
-  let color = wallColors[tile.WallType][0];
-  if (!color || (color.r === 0 && color.g === 0 && color.b === 0)) {
-    const wall = walls.find((w) => w.id === tile.WallType);
-    if (wall != null && wall.color != null && typeof wall.color != 'string') {
-      color = wall.color;
-    }
-  }
-  if (!color || tile.WallColor == null) {
-    return color;
-  }
-  const paint = paintColors[tile.WallColor];
-  return paint == null ? color : blendHue(color, paint);
-}
-
-function getBlockColor(tile: WorldTile): Color | undefined {
-  if (tile.Type == null || tile.Type >= tileColors.length) {
-    return undefined;
-  }
-  let color = tileColors[tile.Type][0];
-  if (!color) {
-    return color;
-  }
-  if (!tile.IsActive) {
-    // Darken actuated blocks.
-    color = blendColor(color, { r: 0, g: 0, b: 0 }, 0.3);
-  }
-  if (tile.tileColor == null) {
-    return color;
-  }
-  const paint = paintColors[tile.tileColor];
-  return paint == null ? color : blendHue(color, paint);
-}
-
-function getLiquidColor(tile: WorldTile): Color {
-  if (tile.IsLiquidLava) {
-    return liquidColors[1];
-  } else if (tile.IsLiquidHoney) {
-    return liquidColors[2];
-  } else if (tile.Shimmer) {
-    return liquidColors[3];
-  } else {
-    return liquidColors[0];
-  }
-}
-
 // Render a tile directly from raw TypedArrays on WorldData, without creating a WorldTile object.
-// Mirrors getTileColor exactly — used by renderColumnRange during the initial canvas render pass.
 export function getTileColorRaw(y: number, idx: number, world: WorldData): Color {
   const f1 = world.rawFlags1![idx];
   const f2 = world.rawFlags2![idx];
@@ -203,65 +153,3 @@ export function getTileColorRaw(y: number, idx: number, world: WorldData): Color
   return color;
 }
 
-export function getTileColor(y: number, tile: WorldTile, world: WorldData): Color {
-  const bColor = getBlockColor(tile);
-  if (bColor != null && !tile.echoBlock) {
-    return bColor;
-  }
-
-  let color: Color;
-  if (tile.IsLiquidPresent) {
-    color = getLiquidColor(tile);
-  } else {
-    const wColor = getWallColor(tile);
-    if (wColor != null) {
-      color = tile.echoWall ? blendColor(getLayerColor(y, world), wColor, 0.1) : wColor;
-    } else {
-      color = getLayerColor(y, world);
-    }
-  }
-
-  if (bColor != null) {
-    color = blendColor(color, bColor, 0.15); // Echo coat block.
-  }
-
-  return color;
-}
-
-export function drawSelectionIndicator(
-  ctx: CanvasRenderingContext2D,
-  canvasWidth: number,
-  canvasHeight: number,
-  x: number,
-  y: number,
-): void {
-  const cx = x + 0.5;
-  const cy = y + 0.5;
-
-  const lineWidth = 12;
-  const targetWidth = 39;
-  const halfTargetWidth = targetWidth / 2;
-
-  ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-  ctx.lineWidth = lineWidth;
-  ctx.strokeStyle = "rgb(255, 0, 0)";
-  ctx.strokeRect(cx - halfTargetWidth, cy - halfTargetWidth, targetWidth, targetWidth);
-
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(cx - halfTargetWidth, cy);
-  ctx.lineTo(cx - 1, cy);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.moveTo(cx + halfTargetWidth, cy);
-  ctx.lineTo(cx + 1, cy);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.moveTo(cx, cy - halfTargetWidth);
-  ctx.lineTo(cx, cy - 1);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.moveTo(cx, cy + halfTargetWidth);
-  ctx.lineTo(cx, cy + 1);
-  ctx.stroke();
-}
