@@ -1,0 +1,39 @@
+app-id: io.github.terramap.native
+runtime: org.gnome.Platform
+runtime-version: "47"
+sdk: org.gnome.Sdk
+command: terramap
+
+finish-args:
+  - --share=network
+  - --share=ipc
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --filesystem=~/.local/share/Terraria:ro
+  - --filesystem=~/.local/share/Steam/userdata:ro
+  - --device=dri
+  - --env=WEBKIT_DISABLE_COMPOSITING_MODE=1
+
+modules:
+  - name: terramap
+    buildsystem: simple
+    build-commands:
+      - install -Dm755 terramap /app/bin/terramap
+      - install -Dm644 io.github.terramap.native.desktop /app/share/applications/io.github.terramap.native.desktop
+      - install -Dm644 io.github.terramap.native.metainfo.xml /app/share/metainfo/io.github.terramap.native.metainfo.xml
+      - install -Dm644 32x32.png /app/share/icons/hicolor/32x32/apps/io.github.terramap.native.png
+      - install -Dm644 128x128.png /app/share/icons/hicolor/128x128/apps/io.github.terramap.native.png
+      - install -Dm644 256x256.png /app/share/icons/hicolor/256x256/apps/io.github.terramap.native.png
+    sources:
+      - type: file
+        path: terramap
+      - type: file
+        path: io.github.terramap.native.desktop
+      - type: file
+        path: io.github.terramap.native.metainfo.xml
+      - type: file
+        path: 32x32.png
+      - type: file
+        path: 128x128.png
+      - type: file
+        path: 256x256.png

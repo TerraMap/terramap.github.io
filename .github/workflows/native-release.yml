@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
       - run: npm ci
       - run: npm test
@@ -53,7 +53,7 @@ jobs:
 
       - uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       - uses: dtolnay/rust-toolchain@stable
@@ -92,6 +92,25 @@ jobs:
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         run: npx tauri build --config native/tauri.conf.json --target ${{ matrix.target }}
 
+      - name: Stage Flatpak sources
+        if: matrix.label == 'linux-x64'
+        run: |
+          cp native/target/${{ matrix.target }}/release/terramap-native native/flatpak/terramap
+          cp native/icons/32x32.png native/flatpak/32x32.png
+          cp native/icons/128x128.png native/flatpak/128x128.png
+          cp native/icons/128x128@2x.png native/flatpak/256x256.png
+
+      - name: Build Flatpak bundle
+        if: matrix.label == 'linux-x64'
+        uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v6
+        with:
+          bundle: TerraMap.flatpak
+          manifest-path: native/flatpak/io.github.terramap.native.yml
+          run-tests: false
+          upload-artifact: false
+          cache: true
+          cache-key: flatpak-${{ hashFiles('native/flatpak/io.github.terramap.native.yml') }}
+
       - name: Rename artifacts
         shell: bash
         run: |
@@ -121,6 +140,7 @@ jobs:
           for f in "$BUNDLE"/nsis/*setup*.exe; do
             [ -f "$f" ] && cp "$f" "$DEST/TerraMap-${VERSION}-${LABEL}-setup.exe"
           done
+          [ -f "TerraMap.flatpak" ] && cp "TerraMap.flatpak" "$DEST/TerraMap-${VERSION}-${LABEL}.flatpak"
           ls -la "$DEST/"
 
       - name: Upload artifacts
@@ -165,7 +185,8 @@ jobs:
             - **macOS**: Download the `.dmg` file for your processor, open it, and drag TerraMap to Applications.
               - aarch64: Apple Silicon
               - x64: Intel Silicon
-            - **Linux**: Download the `.AppImage`, `.deb`, or `.rpm` file for your distro.
+            - **Linux**: Download the package format for your distro.
+              - .flatpak: Universal, recommended for Steam Deck and any Flatpak-enabled distro. Install with `flatpak install TerraMap-*.flatpak`
               - .AppImage: Universal, runs on any distro (self-contained, no install needed)
               - .deb: Debian, Ubuntu, Mint, Pop!_OS, etc.
               - .rpm: Fedora, RHEL, CentOS, openSUSE, etc.
@@ -174,6 +195,7 @@ jobs:
           files: |
             **/*.dmg
             **/*.app.tar.gz
+            **/*.flatpak
             **/*.AppImage
             **/*.deb
             **/*.rpm

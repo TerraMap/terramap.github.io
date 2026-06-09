@@ -1,13 +1,27 @@
 import { useCallback, useRef, useState } from 'react';
 import type { CanvasContainerHandle } from '../components/CanvasContainer';
+import { getTileInfo } from '../lib/tileInfo';
 import type { Chest, Sign, TileEntity, WorldData, WorldNpc, WorldTile } from '../types/settings';
+
+interface TileData {
+  types: ArrayBuffer;
+  wallTypes: ArrayBuffer;
+  textureU: ArrayBuffer;
+  textureV: ArrayBuffer;
+  tileColors: ArrayBuffer;
+  wallColors: ArrayBuffer;
+  liquidAmounts: ArrayBuffer;
+  flags1: ArrayBuffer;
+  flags2: ArrayBuffer;
+  flags3: ArrayBuffer;
+  count: number;
+}
 
 interface WorkerMessage {
   status?: string;
   version?: number;
   world?: WorldData;
-  tiles?: WorldTile[];
-  x?: number;
+  tileData?: TileData;
   done?: boolean;
   chests?: Chest[];
   signs?: Sign[];
@@ -35,6 +49,15 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
     const worker = new Worker(new URL('../WorldLoader.ts', import.meta.url), { type: 'module' });
     workerRef.current = worker;
 
+    let renderDone = false;
+    let workerDone = false;
+    const tryFinishLoad = () => {
+      if (renderDone && workerDone) {
+        setIsLoading(false);
+        setStatus(undefined);
+      }
+    };
+
     worker.addEventListener('message', (e: MessageEvent<WorkerMessage>) => {
       if (e.data.status) {
         statusRef.current = e.data.status;
@@ -47,87 +70,114 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
 
       if (e.data.world) {
         const w = e.data.world;
-        w.tiles = [];
+        w.tiles = new Array<WorldTile>(w.width * w.height);
         w.chests = [];
         w.signs = [];
         w.npcs = [];
+        w.chestByIdx = new Map();
+        w.signByIdx = new Map();
+        w.entityByIdx = new Map();
         worldRef.current = w;
         canvasRef.current?.setWorldSize(w.width, w.height);
         onWorldSized?.();
         setStatus(statusRef.current);
       }
 
-      if (e.data.tiles) {
+      if (e.data.tileData) {
+        const td = e.data.tileData;
         const w = worldRef.current!;
-        const tiles = e.data.tiles;
-        canvasRef.current?.renderTileBatch(tiles, e.data.x!, w);
 
-        const len = tiles.length;
-        for (let i = 0; i < len; i++) {
-          w.tiles.push(tiles[i]);
-        }
-      }
+        // Attach raw TypedArrays to world — renderColumnRange reads these directly,
+        // eliminating ~5M WorldTile object allocations from the render hot path.
+        w.rawTypes         = new Uint16Array(td.types);
+        w.rawWallTypes     = new Uint16Array(td.wallTypes);
+        w.rawTextureU      = new Int16Array(td.textureU);
+        w.rawTextureV      = new Int16Array(td.textureV);
+        w.rawTileColors    = new Uint8Array(td.tileColors);
+        w.rawWallColors    = new Uint8Array(td.wallColors);
+        w.rawLiquidAmounts = new Uint8Array(td.liquidAmounts);
+        w.rawFlags1        = new Uint8Array(td.flags1);
+        w.rawFlags2        = new Uint8Array(td.flags2);
+        w.rawFlags3        = new Uint8Array(td.flags3);
 
-      if (e.data.done) {
-        const w = worldRef.current!;
-        canvasRef.current?.finishRender(w.width);
+        // Phase 1: render canvas columns directly from TypedArrays.
+        let col = 0;
+        const renderChunk = () => {
+          const msg = `Rendering world... ${Math.round(col / w.width * 100)}%`;
+          statusRef.current = msg;
+          const now = performance.now();
+          if (now - lastStatusFlush.current > 200) {
+            lastStatusFlush.current = now;
+            setStatus(msg);
+          }
+          const deadline = performance.now() + 100;
+          while (col < w.width && performance.now() < deadline) {
+            canvasRef.current?.renderColumnRange(w, col, col + 1);
+            col++;
+          }
+          if (col < w.width) {
+            setTimeout(renderChunk, 0);
+          } else {
+            canvasRef.current?.finishRender(w.width);
+            renderDone = true;
+            tryFinishLoad();
+          }
+        };
+        renderChunk();
       }
 
       if (e.data.chests) {
         const w = worldRef.current!;
-        w.chests = e.data.chests;
-
-        for (let i = 0; i < e.data.chests.length; i++) {
-          const chest = e.data.chests[i];
-          let idx = chest.x * w.height + chest.y;
-          w.tiles[idx].chest = chest;
-          w.tiles[idx + 1].chest = chest;
-          idx = (chest.x + 1) * w.height + chest.y;
-          w.tiles[idx].chest = chest;
-          w.tiles[idx + 1].chest = chest;
+        const chests = e.data.chests;
+        w.chests = chests;
+        for (let i = 0; i < chests.length; i++) {
+          const chest = chests[i];
+          const idx0 = chest.x * w.height + chest.y;
+          w.chestByIdx!.set(idx0, chest);
+          w.chestByIdx!.set(idx0 + 1, chest);
+          const idx1 = (chest.x + 1) * w.height + chest.y;
+          w.chestByIdx!.set(idx1, chest);
+          w.chestByIdx!.set(idx1 + 1, chest);
         }
       }
 
       if (e.data.signs) {
         const w = worldRef.current!;
-        w.signs = e.data.signs;
-
-        for (let i = 0; i < e.data.signs.length; i++) {
-          const sign = e.data.signs[i];
-          let idx = sign.x * w.height + sign.y;
-          w.tiles[idx].sign = sign;
-          w.tiles[idx + 1].sign = sign;
-          idx = (sign.x + 1) * w.height + sign.y;
-          w.tiles[idx].sign = sign;
-          w.tiles[idx + 1].sign = sign;
+        const signs = e.data.signs;
+        w.signs = signs;
+        for (let i = 0; i < signs.length; i++) {
+          const sign = signs[i];
+          const idx0 = sign.x * w.height + sign.y;
+          w.signByIdx!.set(idx0, sign);
+          w.signByIdx!.set(idx0 + 1, sign);
+          const idx1 = (sign.x + 1) * w.height + sign.y;
+          w.signByIdx!.set(idx1, sign);
+          w.signByIdx!.set(idx1 + 1, sign);
         }
       }
 
       if (e.data.npcs) {
-        const w = worldRef.current!;
-        w.npcs = e.data.npcs;
+        worldRef.current!.npcs = e.data.npcs;
       }
 
       if (e.data.tileEntities) {
+        const entities = e.data.tileEntities;
         const w = worldRef.current!;
-        for (const [pos, entity] of e.data.tileEntities.entries()) {
+        for (const [pos, entity] of entities.entries()) {
           const idx = pos.x * w.height + pos.y;
-          const tile = w.tiles[idx];
-          if (tile) {
-            const size = tile.info && 'size' in tile.info ? tile.info.size : undefined;
-            let sizeX = 1;
-            let sizeY = 1;
-            if (size) {
-              sizeX = parseInt(size[0]);
-              sizeY = parseInt(size[2]);
-            }
-            for (let x = 0; x < sizeX; x++) {
-              for (let y = 0; y < sizeY; y++) {
-                const tileIdx = (pos.x + x) * w.height + pos.y + y;
-                if (w.tiles[tileIdx]) {
-                  w.tiles[tileIdx].tileEntity = entity;
-                }
-              }
+          let sizeX = 1, sizeY = 1;
+          if (w.rawFlags1 && (w.rawFlags1[idx] & 0x01)) {
+            const info = getTileInfo({
+              Type: w.rawTypes![idx],
+              TextureU: w.rawTextureU![idx],
+              TextureV: w.rawTextureV![idx],
+            });
+            const size = info && 'size' in info ? info.size : undefined;
+            if (size) { sizeX = parseInt(size[0]); sizeY = parseInt(size[2]); }
+          }
+          for (let x = 0; x < sizeX; x++) {
+            for (let y = 0; y < sizeY; y++) {
+              w.entityByIdx!.set((pos.x + x) * w.height + pos.y + y, entity);
             }
           }
         }
@@ -135,8 +185,8 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
 
       if (e.data.done) {
         setWorld(worldRef.current);
-        setIsLoading(false);
-        setStatus(undefined);
+        workerDone = true;
+        tryFinishLoad();
         worker.terminate();
         workerRef.current = null;
       }

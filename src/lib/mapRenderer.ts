@@ -131,6 +131,78 @@ function getLiquidColor(tile: WorldTile): Color {
   }
 }
 
+// Render a tile directly from raw TypedArrays on WorldData, without creating a WorldTile object.
+// Mirrors getTileColor exactly — used by renderColumnRange during the initial canvas render pass.
+export function getTileColorRaw(y: number, idx: number, world: WorldData): Color {
+  const f1 = world.rawFlags1![idx];
+  const f2 = world.rawFlags2![idx];
+  const f3 = world.rawFlags3![idx];
+
+  // getBlockColor equivalent
+  let bColor: Color | undefined;
+  if (f1 & 0x01) {
+    const type = world.rawTypes![idx];
+    if (type < tileColors.length) {
+      const color = tileColors[type][0];
+      if (color) {
+        const tilePaint = world.rawTileColors![idx];
+        if (tilePaint) {
+          const paint = paintColors[tilePaint];
+          bColor = paint == null ? color : blendHue(color, paint);
+        } else {
+          bColor = color;
+        }
+      }
+    }
+  }
+
+  const echoBlock = (f2 & 0x80) !== 0;
+  if (bColor != null && !echoBlock) {
+    return bColor;
+  }
+
+  let color: Color;
+  if (f1 & 0x08) {
+    // getLiquidColor equivalent
+    if (f1 & 0x10)      color = liquidColors[1];
+    else if (f1 & 0x20) color = liquidColors[2];
+    else if (f1 & 0x40) color = liquidColors[3];
+    else                color = liquidColors[0];
+  } else {
+    // getWallColor equivalent (wallType 0 = no wall, mirrors `WallType: wallTypes[i] || undefined`)
+    const wallType = world.rawWallTypes![idx];
+    let wColor: Color | undefined;
+    if (wallType !== 0) {
+      wColor = wallColors[wallType][0];
+      if (!wColor || (wColor.r === 0 && wColor.g === 0 && wColor.b === 0)) {
+        const wall = walls.find((w) => w.id === wallType);
+        if (wall != null && wall.color != null && typeof wall.color !== 'string') {
+          wColor = wall.color;
+        }
+      }
+      if (wColor) {
+        const wallPaint = world.rawWallColors![idx];
+        if (wallPaint) {
+          const paint = paintColors[wallPaint];
+          if (paint != null) wColor = blendHue(wColor, paint);
+        }
+      }
+    }
+    if (wColor) {
+      const echoWall = (f3 & 0x01) !== 0;
+      color = echoWall ? blendColor(getLayerColor(y, world), wColor, 0.1) : wColor;
+    } else {
+      color = getLayerColor(y, world);
+    }
+  }
+
+  if (bColor != null) {
+    color = blendColor(color, bColor, 0.15);
+  }
+
+  return color;
+}
+
 export function getTileColor(y: number, tile: WorldTile, world: WorldData): Color {
   const bColor = getBlockColor(tile);
   if (bColor != null && !tile.echoBlock) {

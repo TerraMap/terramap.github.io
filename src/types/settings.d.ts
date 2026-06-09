@@ -136,6 +136,21 @@ export interface WorldData {
   signs: Sign[];
   npcs: WorldNpc[];
   tileEntities: Map<{ x: number; y: number }, TileEntity>;
+  // Raw TypedArrays from the worker — available immediately after transfer,
+  // used by renderColumnRange to render the canvas without creating WorldTile objects.
+  rawTypes?: Uint16Array;
+  rawWallTypes?: Uint16Array;
+  rawTextureU?: Int16Array;
+  rawTextureV?: Int16Array;
+  rawTileColors?: Uint8Array;
+  rawWallColors?: Uint8Array;
+  rawLiquidAmounts?: Uint8Array;
+  rawFlags1?: Uint8Array;
+  rawFlags2?: Uint8Array;
+  rawFlags3?: Uint8Array;
+  chestByIdx?: Map<number, Chest>;
+  signByIdx?: Map<number, Sign>;
+  entityByIdx?: Map<number, TileEntity>;
   [key: string]: unknown;
 }
 

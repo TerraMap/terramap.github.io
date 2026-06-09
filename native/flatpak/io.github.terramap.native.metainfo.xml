@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.terramap.native</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+  <name>TerraMap</name>
+  <summary>Interactive Terraria world map viewer</summary>
+  <description>
+    <p>
+      TerraMap is a cross-platform, interactive Terraria v1.4.5 world map viewer.
+      Load a world file and pan, zoom, find blocks, ores, items in chests, dungeons,
+      NPCs, and more. Supports player maps to show only explored areas.
+    </p>
+  </description>
+  <url type="homepage">https://terramap.github.io</url>
+  <url type="bugtracker">https://github.com/terramap/terramap.github.io/issues</url>
+  <provides>
+    <binary>terramap</binary>
+  </provides>
+  <releases>
+    <release version="0.1.1" date="2026-06-06"/>
+  </releases>
+  <content_rating type="oars-1.1"/>
+</component>

@@ -2,7 +2,7 @@
 
 import { DataStream } from './DataStream';
 import { npcs } from './npcs';
-import type { Chest, TileEntity, WorldItem, WorldNpc, WorldTile } from './types/settings';
+import type { Chest, TileEntity, WorldItem, WorldNpc } from './types/settings';
 import { walls } from './walls';
 
 interface WorldRecord {
@@ -515,172 +515,157 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
     world: world,
   });
 
-  // 	world.tiles = [world.width, world.height];
   world.totalTileCount = world.width * world.height;
+  const n = world.totalTileCount;
 
-  let tilesProcessed = 0;
+  const types         = new Uint16Array(n);
+  const wallTypes     = new Uint16Array(n);
+  const textureU      = new Int16Array(n);
+  const textureV      = new Int16Array(n);
+  const tileColors    = new Uint8Array(n);
+  const wallColors    = new Uint8Array(n);
+  const liquidAmounts = new Uint8Array(n);
+  const flags1        = new Uint8Array(n);
+  const flags2        = new Uint8Array(n);
+  const flags3        = new Uint8Array(n);
 
-  // world.tiles = new Array(world.width);
-
-  let tiles: WorldTile[] = [];
+  let idx = 0;
+  const progressInterval = Math.max(1, Math.ceil(world.width / 20));
 
   for (let x = 0; x < world.width; x++) {
-    // world.tiles[x] = new Array(world.height);
-
-    for (let y = 0; y < world.height; y++) {
-      let num2 = -1;
-      let b2 = 0;
-      let b = 0;
-      const tile: WorldTile = { x, y };
-      const b4 = reader.readUint8();
-      let flag = false;
-      if ((b4 & 1) == 1) {
-        flag = true;
-        b2 = reader.readUint8();
-      }
-      let flag2 = false;
-      if (flag && (b2 & 1) == 1) {
-        flag2 = true;
-        b = reader.readUint8();
-      }
-      let b3 = 0;
-      if (flag2 && (b & 1) == 1) {
-        b3 = reader.readUint8();
-      }
-      let b5 = 0;
-      if ((b4 & 2) == 2) {
-        tile.IsActive = true;
-        if ((b4 & 32) == 32) {
-          b5 = reader.readUint8();
-          num2 = reader.readUint8();
-          num2 = (num2 << 8 | b5);
-        } else {
-          num2 = reader.readUint8();
-        }
-
-        tile.Type = num2;
-
-        if (world.importance[num2]) {
-          tile.TextureU = reader.readInt16();
-          tile.TextureV = reader.readInt16();
-          if (tile.Type == 144) {
-            tile.TextureV = 0;
-          }
-        } else {
-          tile.TextureU = -1;
-          tile.TextureV = -1;
-        }
-        if ((b & 8) == 8) {
-          tile.tileColor = reader.readUint8();
-        }
-      }
-      if ((b4 & 4) == 4) {
-        tile.WallType = reader.readUint8();
-        if (tile.WallType >= walls.length) {
-          tile.WallType = 0;
-        }
-        tile.IsWallPresent = true;
-        if ((b & 16) == 16) {
-          tile.WallColor = reader.readUint8();
-          tile.IsWallColorPresent = true;
-        }
-      }
-      b5 = (b4 & 24) >> 3;
-      if (b5 !== 0) {
-        tile.IsLiquidPresent = true;
-        tile.LiquidAmount = reader.readUint8();
-        if ((b & 128) == 128) {
-          tile.Shimmer = true;
-        }
-        if (b5 > 1) {
-          if (b5 == 2) {
-            tile.IsLiquidLava = true;
-          } else {
-            tile.IsLiquidHoney = true;
-          }
-        }
-      }
-      if (b2 > 1) {
-        if ((b2 & 2) == 2) {
-          tile.IsRedWirePresent = true;
-        }
-        if ((b2 & 4) == 4) {
-          tile.IsBlueWirePresent = true;
-        }
-        if ((b2 & 8) == 8) {
-          tile.IsGreenWirePresent = true;
-        }
-        b5 = (b2 & 112) >> 4;
-        if (b5 !== 0) {
-          tile.slope = b5;
-        }
-      }
-      if (b > 1) {
-        if ((b & 2) == 2) {
-          tile.IsActuatorPresent = true;
-        }
-        if ((b & 4) == 4) {
-          tile.IsActive = false;
-        }
-        if ((b & 32) == 32) {
-          tile.IsYellowWirePresent = true;
-        }
-        if ((b & 64) == 64) {
-          b5 = reader.readUint8();
-          tile.WallType = (b5 << 8 | (tile.WallType ?? 0));
-          if (tile.WallType >= walls.length) {
-            tile.WallType = 0;
-          }
-        }
-      }
-      if (b3 > 0) {
-        if ((b3 & 2) == 2) {
-          tile.echoBlock = true;
-        }
-        if ((b3 & 4) == 4) {
-          tile.echoWall = true;
-        }
-        if ((b3 & 8) == 8) {
-          tile.illuminantBlock = true;
-        }
-        if ((b3 & 16) == 16) {
-          tile.illuminantWall = true;
-        }
-      }
-      b5 = (b4 & 192) >> 6;
-      let k = 0;
-      if (b5 == 0) {
-        k = 0;
-      }
-      else if (b5 == 1) {
-        k = reader.readUint8();
-      }
-      else {
-        k = reader.readInt16();
-      }
-
-      tiles.push(tile);
-
-      while (k > 0) {
-        y++;
-        tiles.push(tile);
-        k--;
-      }
+    if (x > 0 && x % progressInterval === 0) {
+      self.postMessage({ status: `Reading tiles... ${Math.round(x / world.width * 100)}%` });
     }
+    let y = 0;
+    while (y < world.height) {
+      const b4 = reader.readUint8();
+      let b2 = 0;
+      if ((b4 & 1) === 1) b2 = reader.readUint8();
+      let b = 0;
+      if ((b2 & 1) === 1) b = reader.readUint8();
+      let b3 = 0;
+      if ((b & 1) === 1) b3 = reader.readUint8();
 
-    tilesProcessed += world.height;
+      let tType = 0, tTexU = -1, tTexV = -1, tTileColor = 0;
+      let tWallType = 0, tWallColor = 0, tLiquidAmount = 0;
+      let tf1 = 0, tf2 = 0, tf3 = 0;
 
-    if (x % 2 == 1) {
-      self.postMessage({
-        status: `Reading tile ${tilesProcessed.toLocaleString()} of ${world.totalTileCount.toLocaleString()}`,
-        // 'tilesProcessed': tilesProcessed,
-        // 'totalTileCount': world.totalTileCount,
-        x: x - 1,
-        tiles: tiles,
-      });
-      tiles = [];
+      if ((b4 & 2) === 2) {
+        tf1 |= 0x01; // IsActive
+        if ((b4 & 32) === 32) {
+          const lo = reader.readUint8();
+          tType = (reader.readUint8() << 8) | lo;
+        } else {
+          tType = reader.readUint8();
+        }
+        if (world.importance[tType]) {
+          tTexU = reader.readInt16();
+          tTexV = reader.readInt16();
+          if (tType === 144) tTexV = 0;
+        }
+        if ((b & 8) === 8) tTileColor = reader.readUint8();
+      }
+
+      if ((b4 & 4) === 4) {
+        tWallType = reader.readUint8();
+        if (tWallType >= walls.length) tWallType = 0;
+        tf1 |= 0x02; // IsWallPresent
+        if ((b & 16) === 16) {
+          tWallColor = reader.readUint8();
+          tf1 |= 0x04; // IsWallColorPresent
+        }
+      }
+
+      const liq = (b4 & 24) >> 3;
+      if (liq !== 0) {
+        tf1 |= 0x08; // IsLiquidPresent
+        tLiquidAmount = reader.readUint8();
+        if ((b & 128) === 128) tf1 |= 0x40; // Shimmer
+        if (liq === 2) tf1 |= 0x10;        // IsLiquidLava
+        else if (liq === 3) tf1 |= 0x20;   // IsLiquidHoney
+      }
+
+      if (b2 > 1) {
+        if ((b2 & 2) === 2) tf2 |= 0x08;  // IsRedWirePresent
+        if ((b2 & 4) === 4) tf2 |= 0x20;  // IsBlueWirePresent
+        if ((b2 & 8) === 8) tf2 |= 0x10;  // IsGreenWirePresent
+        const slope = (b2 & 0x70) >> 4;
+        if (slope) tf2 |= slope;           // slope in bits 0-2
+      }
+
+      if (b > 1) {
+        if ((b & 2) === 2) tf1 |= 0x80;   // IsActuatorPresent
+        if ((b & 4) === 4) tf1 &= ~0x01;  // IsActive = false (actuated)
+        if ((b & 32) === 32) tf2 |= 0x40; // IsYellowWirePresent
+        if ((b & 64) === 64) {
+          const hi = reader.readUint8();
+          tWallType = (hi << 8) | tWallType;
+          if (tWallType >= walls.length) tWallType = 0;
+        }
+      }
+
+      if (b3 > 0) {
+        if ((b3 & 2) === 2) tf2 |= 0x80;   // echoBlock
+        if ((b3 & 4) === 4) tf3 |= 0x01;   // echoWall
+        if ((b3 & 8) === 8) tf3 |= 0x02;   // illuminantBlock
+        if ((b3 & 16) === 16) tf3 |= 0x04; // illuminantWall
+      }
+
+      const rle = (b4 & 0xC0) >> 6;
+      let k = 0;
+      if (rle === 1) k = reader.readUint8();
+      else if (rle >= 2) k = reader.readInt16();
+
+      types[idx]         = tType;
+      wallTypes[idx]     = tWallType;
+      textureU[idx]      = tTexU;
+      textureV[idx]      = tTexV;
+      tileColors[idx]    = tTileColor;
+      wallColors[idx]    = tWallColor;
+      liquidAmounts[idx] = tLiquidAmount;
+      flags1[idx]        = tf1;
+      flags2[idx]        = tf2;
+      flags3[idx]        = tf3;
+      idx++;
+      y++;
+
+      if (k > 0) {
+        types.fill(tType, idx, idx + k);
+        wallTypes.fill(tWallType, idx, idx + k);
+        textureU.fill(tTexU, idx, idx + k);
+        textureV.fill(tTexV, idx, idx + k);
+        tileColors.fill(tTileColor, idx, idx + k);
+        wallColors.fill(tWallColor, idx, idx + k);
+        liquidAmounts.fill(tLiquidAmount, idx, idx + k);
+        flags1.fill(tf1, idx, idx + k);
+        flags2.fill(tf2, idx, idx + k);
+        flags3.fill(tf3, idx, idx + k);
+        idx += k;
+        y += k;
+      }
     }
   }
+
+  self.postMessage({
+    status: `Loaded ${world.totalTileCount.toLocaleString()} tiles`,
+    tileData: {
+      types: types.buffer,
+      wallTypes: wallTypes.buffer,
+      textureU: textureU.buffer,
+      textureV: textureV.buffer,
+      tileColors: tileColors.buffer,
+      wallColors: wallColors.buffer,
+      liquidAmounts: liquidAmounts.buffer,
+      flags1: flags1.buffer,
+      flags2: flags2.buffer,
+      flags3: flags3.buffer,
+      count: n,
+    },
+  }, [
+    types.buffer, wallTypes.buffer, textureU.buffer, textureV.buffer,
+    tileColors.buffer, wallColors.buffer, liquidAmounts.buffer,
+    flags1.buffer, flags2.buffer, flags3.buffer,
+  ]);
 }
 
 function readChests(reader: DataStream, world: WorldRecord): void {

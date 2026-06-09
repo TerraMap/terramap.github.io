@@ -1,11 +1,9 @@
 import { useCallback, useRef, useState } from 'react';
 import type { CanvasContainerHandle } from '../components/CanvasContainer';
 import type { PlayerMap } from '../lib/readPlayerMap';
-import { getTileAt } from '../lib/tileInfo';
+import { fillTileFromRaw, getTileAt, getTileInfo } from '../lib/tileInfo';
 import { isTileMatch, isTileOrigin, type SearchableInfo } from '../lib/tileSearch';
 import type { WorldData, WorldTile } from '../types/settings';
-
-const CHUNK_SIZE = 50_000;
 
 export function useTileSelection(
   canvasRef: React.RefObject<CanvasContainerHandle | null>,
@@ -80,29 +78,46 @@ export function useTileSelection(
 
   const findBlock = useCallback((direction: number, infos: SearchableInfo[]) => {
     const w = worldRef.current;
-    if (!w) return;
-    if (infos.length === 0) return;
+    if (!w || infos.length === 0) return;
 
     const id = ++searchIdRef.current;
     setIsSearching(true);
 
-    const total = w.tiles.length;
+    const total = w.width * w.height;
     const startIdx = selectionPos.x * w.height + selectionPos.y;
     let i = startIdx + direction;
     if (i < 0) i = total - 1;
     else if (i >= total) i = 0;
 
     let checked = 0;
+    let lastStatusTime = 0;
+
+    const useRaw = !!w.rawFlags1;
+    const tileView: WorldTile = {};
 
     const searchChunk = () => {
       if (id !== searchIdRef.current) return;
 
-      const pct = Math.round((checked / total) * 100);
-      setSearchStatus(`Searching for matches... ${pct}%`);
+      const now = performance.now();
+      if (now - lastStatusTime > 200) {
+        lastStatusTime = now;
+        setSearchStatus(`Searching for matches... ${Math.round((checked / total) * 100)}%`);
+      }
 
-      const end = Math.min(checked + CHUNK_SIZE, total);
-      while (checked < end) {
-        const tile = w.tiles[i];
+      const deadline = now + 100;
+      while (checked < total && performance.now() < deadline) {
+        let tile: WorldTile | undefined;
+        if (useRaw) {
+          const x = Math.floor(i / w.height);
+          const y = i % w.height;
+          fillTileFromRaw(tileView, w, i, x, y);
+          tileView.info = getTileInfo(tileView);
+          tileView.chest = w.chestByIdx?.get(i);
+          tileView.tileEntity = w.entityByIdx?.get(i);
+          tile = tileView;
+        } else {
+          tile = w.tiles[i];
+        }
         const pm = playerMapRef.current;
         if (isTileMatch(tile, infos) && isTileOrigin(tile) && (!pm || pm.explored[i])) {
           const x = Math.floor(i / w.height);
@@ -110,7 +125,7 @@ export function useTileSelection(
           setSelectionPos({ x, y });
           canvasRef.current?.drawSelection(x, y);
           canvasRef.current?.panToTile(x, y);
-          setSelectedTile(tile);
+          setSelectedTile(useRaw ? { ...tileView } : tile);
           setIsSearching(false);
           setSearchStatus('');
           return;

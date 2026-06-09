@@ -13,7 +13,7 @@
     "preview": "vite preview",
     "vitest": "vitest run",
     "vitest:watch": "vitest",
-    "perf": "vitest run -c vitest.perf.config.ts --reporter=verbose",
+    "perf": "NODE_OPTIONS=--max-old-space-size=8192 vitest run -c vitest.perf.config.ts --reporter=verbose",
     "native": "npx tauri dev --config native/tauri.conf.json",
     "native:build": "npx tauri build --config native/tauri.conf.json"
   },
@@ -48,5 +48,9 @@
     "react-dom": "^19.2.6",
     "react-i18next": "^17.0.8",
     "thenby": "^1.4.1"
+  },
+  "engines": {
+    "node": ">=24.16",
+    "npm": ">=11.13"
   }
 }

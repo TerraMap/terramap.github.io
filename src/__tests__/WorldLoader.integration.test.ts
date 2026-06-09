@@ -1,12 +1,21 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
-import type { TileEntity, WorldTile } from '../../src/types/settings';
+import type { TileEntity } from '../../src/types/settings';
 import { DataStream } from '../DataStream';
 
 
+type TileData = {
+  types: ArrayBuffer; wallTypes: ArrayBuffer;
+  textureU: ArrayBuffer; textureV: ArrayBuffer;
+  tileColors: ArrayBuffer; wallColors: ArrayBuffer;
+  liquidAmounts: ArrayBuffer;
+  flags1: ArrayBuffer; flags2: ArrayBuffer; flags3: ArrayBuffer;
+  count: number;
+};
+
 type WorkerPostMessage = {
-  tiles?: WorldTile[];
+  tileData?: TileData;
   chests?: unknown[];
   npcs?: unknown[];
   tileEntities?: Map<{ x: number; y: number }, TileEntity>;
@@ -118,9 +127,9 @@ describe('WorldLoader integration', () => {
     });
 
     it('should post tile data via postMessage', () => {
-      const tileMessages = workerCalls().filter(c => c[0].tiles);
-      expect(tileMessages.length).toBeGreaterThan(0);
-      expect(tileMessages[0][0].tiles!.length).toBeGreaterThan(0);
+      const tileMsg = workerCalls().find(c => c[0].tileData);
+      expect(tileMsg).toBeDefined();
+      expect(tileMsg![0].tileData!.count).toBeGreaterThan(0);
     });
 
     it('should post chests message', () => {
@@ -181,8 +190,9 @@ describe('WorldLoader integration', () => {
     });
 
     it('should post tile data', () => {
-      const tileMessages = workerCalls().filter(c => c[0].tiles);
-      expect(tileMessages.length).toBeGreaterThan(0);
+      const tileMsg = workerCalls().find(c => c[0].tileData);
+      expect(tileMsg).toBeDefined();
+      expect(tileMsg![0].tileData!.count).toBeGreaterThan(0);
     });
   });
 
@@ -207,8 +217,9 @@ describe('WorldLoader integration', () => {
     });
 
     it('should post tile data', () => {
-      const tileMessages = workerCalls().filter(c => c[0].tiles);
-      expect(tileMessages.length).toBeGreaterThan(0);
+      const tileMsg = workerCalls().find(c => c[0].tileData);
+      expect(tileMsg).toBeDefined();
+      expect(tileMsg![0].tileData!.count).toBeGreaterThan(0);
     });
 
     it('should have a tile entity with dyes', () => {
@@ -229,22 +240,17 @@ describe('WorldLoader integration', () => {
     });
 
     it('should have a painted tile', () => {
-      const tileMessages = workerCalls().filter(c => c[0].tiles);
-      let paintedTile: WorldTile | undefined;
-
-      for (const call of tileMessages) {
-        for (const tile of call[0].tiles!) {
-          if (tile.tileColor) {
-            paintedTile = tile;
-            break;
-          }
-        }
-        if (paintedTile) break;
+      const td = workerCalls().find(c => c[0].tileData)![0].tileData!;
+      const tileColors = new Uint8Array(td.tileColors);
+      let paintedIdx = -1;
+      for (let i = 0; i < td.count; i++) {
+        if (tileColors[i] > 0) { paintedIdx = i; break; }
       }
-
-      expect(paintedTile).toBeDefined();
-      expect(paintedTile!.tileColor).toBeGreaterThan(0);
-      console.log('Tile with paint:', JSON.stringify(paintedTile));
+      expect(paintedIdx).toBeGreaterThan(-1);
+      const x = Math.floor(paintedIdx / world.height);
+      const y = paintedIdx % world.height;
+      console.log('Tile with paint:', JSON.stringify({ x, y, tileColor: tileColors[paintedIdx] }));
+      expect(tileColors[paintedIdx]).toBeGreaterThan(0);
     });
 
     it('should find hat racks with items', () => {

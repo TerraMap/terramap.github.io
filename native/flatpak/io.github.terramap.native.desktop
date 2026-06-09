@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=TerraMap
+Exec=terramap
+Icon=io.github.terramap.native
+Type=Application
+Categories=Game;
+Comment=Interactive Terraria world map viewer

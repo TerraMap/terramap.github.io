@@ -3,3 +3,10 @@
 node_modules
 dist
 native/target
+
+# Flatpak build artifacts
+TerraMap.flatpak
+flatpak-repo/
+flatpak-build/
+native/flatpak/terramap
+native/flatpak/*.png

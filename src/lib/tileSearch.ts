@@ -3,7 +3,8 @@ import type { ItemInfo, TileFrame, TileInfo, WallInfo, WorldTile } from '../type
 
 export type SearchableInfo = TileFrame | TileInfo | ItemInfo | WallInfo;
 
-export function isTileMatch(tile: WorldTile, selectedInfos: SearchableInfo[]): boolean {
+export function isTileMatch(tile: WorldTile | undefined, selectedInfos: SearchableInfo[]): boolean {
+  if (!tile) return false;
   for (let j = 0; j < selectedInfos.length; j++) {
     const info = selectedInfos[j];
 
