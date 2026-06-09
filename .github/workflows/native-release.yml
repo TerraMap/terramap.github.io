@@ -92,6 +92,12 @@ jobs:
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         run: npx tauri build --config native/tauri.conf.json --target ${{ matrix.target }}
 
+      - name: Install Flatpak tools
+        if: matrix.label == 'linux-x64'
+        run: |
+          sudo apt-get install -y flatpak flatpak-builder
+          flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
       - name: Stage Flatpak sources
         if: matrix.label == 'linux-x64'
         run: |

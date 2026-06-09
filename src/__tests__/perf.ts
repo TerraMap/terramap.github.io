@@ -203,7 +203,10 @@ function packTiles(tiles: WorldTile[]): TileArrays {
   return { types, wallTypes, textureU, textureV, tileColors, wallColors, liquidAmounts, flags1, flags2, flags3 };
 }
 
-function time(fn: () => void, { runs = 3, beforeEach }: { runs?: number; beforeEach?: () => void } = {}): number {
+const CI_RUNS = 1;
+const DEFAULT_RUNS = 3;
+
+function time(fn: () => void, { runs = process.env.CI ? CI_RUNS : DEFAULT_RUNS, beforeEach }: { runs?: number; beforeEach?: () => void } = {}): number {
   fn(); // warmup — JIT compiles without affecting measurement
   let total = 0;
   for (let i = 0; i < runs; i++) {
