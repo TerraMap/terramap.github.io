@@ -14,7 +14,7 @@ import { useThemeName } from '../hooks/useThemeName';
 import { getShortcutByHandler } from '../lib/keyboardShortcuts';
 import { truncateString } from '../lib/string';
 import type { BlockSet, WorldNpc } from '../types/settings';
-import LanguageSwitcher from './LanguageSwitcher';
+import LanguageDropdown from './LanguageDropdown';
 import ToolbarButton, { ShortcutLabel } from './ToolbarButton';
 
 export interface DirectoryFiles { worldFiles: File[], mapFiles: File[] };
@@ -275,7 +275,7 @@ export function Navbar({
               <Dropdown menu={{ items: themeMenuItems, selectedKeys: [themeName] }}>
                 <Button icon={isDarkMode ? <MoonOutlined /> : <SunOutlined />} />
               </Dropdown>
-              <LanguageSwitcher />
+              <LanguageDropdown />
             </Space.Compact>
 
             <Tooltip title={<Space>
@@ -299,12 +299,9 @@ export function Navbar({
 
         {
           !worldLoaded && (
-            <>
-              <Dropdown menu={{ items: themeMenuItems, selectedKeys: [themeName] }}>
-                <Button icon={isDarkMode ? <MoonOutlined /> : <SunOutlined />} />
-              </Dropdown>
-              <LanguageSwitcher />
-            </>
+            <Dropdown menu={{ items: themeMenuItems, selectedKeys: [themeName] }}>
+              <Button icon={isDarkMode ? <MoonOutlined /> : <SunOutlined />} />
+            </Dropdown>
           )
         }
 

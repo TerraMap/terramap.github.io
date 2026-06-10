@@ -1,6 +1,7 @@
 import { CloudOutlined, LeftOutlined } from '@ant-design/icons';
 import { Button, Modal, Space, Table, Tooltip } from 'antd';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import firstBy from 'thenby';
 import { readPlayerMap, type PlayerMap } from '../lib/readPlayerMap';
 import { readWorldHeader } from '../lib/readWorldHeader';
@@ -15,6 +16,7 @@ interface DirectoryPickerModalProps {
 }
 
 export function DirectoryPickerModal({ open, directoryFiles, onClose, onWorldSelected }: DirectoryPickerModalProps) {
+  const { t } = useTranslation();
   const [step, setStep] = useState<'world' | 'map'>('world');
   const [matchedMapFiles, setMatchedMapFiles] = useState<File[]>([]);
   const [pendingWorldFile, setPendingWorldFile] = useState<File | null>(null);
@@ -55,22 +57,22 @@ export function DirectoryPickerModal({ open, directoryFiles, onClose, onWorldSel
 
   return (
     <Modal
-      title={step === 'world' ? 'Select a World File' : 'Select a Player Map (Optional)'}
+      title={step === 'world' ? t('select_world_file') : t('select_player_map_optional')}
       open={open}
       onCancel={handleClose}
       width={800}
       footer={step === 'map' ? (
         <Space orientation="vertical">
           <div style={{ textAlign: 'left' }}>
-            Pick a player map to avoid spoilers. TerraMap will show only what that player has seen in the world.
+            {t('player_map_description')}
           </div>
           <Space>
             <Button icon={<LeftOutlined />}
               onClick={() => setStep('world')}>
-              Select a different world
+              {t('select_different_world')}
             </Button>
             <Button danger onClick={handleSkipMap}>
-              Show all spoilers
+              {t('show_all_spoilers')}
             </Button>
           </Space>
         </Space>
@@ -88,7 +90,7 @@ export function DirectoryPickerModal({ open, directoryFiles, onClose, onWorldSel
           columns={[
             {
               dataIndex: 'webkitRelativePath',
-              title: "File",
+              title: t('file'),
               sorter: firstBy('name'),
               onCell: () => ({ style: { cursor: 'pointer' } }),
               render: (path: string, world) => {
@@ -100,7 +102,7 @@ export function DirectoryPickerModal({ open, directoryFiles, onClose, onWorldSel
                     </Tooltip>
 
                     {cloud && (
-                      <Tooltip title={cloud ? 'Steam Cloud' : 'Local'}>
+                      <Tooltip title={cloud ? t('steam_cloud') : t('local')}>
                         <CloudOutlined />
                       </Tooltip>
                     )}
@@ -111,7 +113,7 @@ export function DirectoryPickerModal({ open, directoryFiles, onClose, onWorldSel
             {
               dataIndex: 'size',
               sorter: firstBy('size'),
-              title: "Size",
+              title: t('size'),
               onCell: () => ({ style: { cursor: 'pointer' } }),
               render: (size?: number) => formatBytes(size),
             },
@@ -119,7 +121,7 @@ export function DirectoryPickerModal({ open, directoryFiles, onClose, onWorldSel
               dataIndex: 'lastModified',
               defaultSortOrder: 'descend',
               sorter: firstBy('lastModified'),
-              title: 'Modified',
+              title: t('modified'),
               onCell: () => ({ style: { cursor: 'pointer' } }),
               render: (lastModified: number) => new Date(lastModified).toLocaleString(),
             }
@@ -139,7 +141,7 @@ export function DirectoryPickerModal({ open, directoryFiles, onClose, onWorldSel
           columns={[
             {
               dataIndex: 'name',
-              title: "Name",
+              title: t('name'),
               sorter: firstBy('name'),
               onCell: () => ({ style: { cursor: 'pointer' } }),
               render: (name: string, file) => {
@@ -150,7 +152,7 @@ export function DirectoryPickerModal({ open, directoryFiles, onClose, onWorldSel
             {
               dataIndex: 'webkitRelativePath',
               sorter: firstBy('name'),
-              title: "File",
+              title: t('file'),
               onCell: () => ({ style: { cursor: 'pointer' } }),
               render: (path: string, player) => {
                 const cloud = path.includes('remote');
@@ -161,7 +163,7 @@ export function DirectoryPickerModal({ open, directoryFiles, onClose, onWorldSel
                     </Tooltip>
 
                     {cloud && (
-                      <Tooltip title={cloud ? 'Steam Cloud' : 'Local'}>
+                      <Tooltip title={cloud ? t('steam_cloud') : t('local')}>
                         <CloudOutlined />
                       </Tooltip>
                     )}
@@ -172,7 +174,7 @@ export function DirectoryPickerModal({ open, directoryFiles, onClose, onWorldSel
             {
               dataIndex: 'size',
               sorter: firstBy('size'),
-              title: "Size",
+              title: t('size'),
               onCell: () => ({ style: { cursor: 'pointer' } }),
               render: (size?: number) => formatBytes(size),
             },
@@ -180,7 +182,7 @@ export function DirectoryPickerModal({ open, directoryFiles, onClose, onWorldSel
               dataIndex: 'lastModified',
               defaultSortOrder: 'descend',
               sorter: firstBy('lastModified'),
-              title: 'Modified',
+              title: t('modified'),
               onCell: () => ({ style: { cursor: 'pointer' } }),
               render: (lastModified: number) => new Date(lastModified).toLocaleString(),
             }

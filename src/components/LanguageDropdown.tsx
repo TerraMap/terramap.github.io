@@ -3,7 +3,7 @@ import type { MenuProps } from 'antd';
 import { Button, Dropdown } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-const languages = [
+export const languages = [
   { key: 'en', label: 'English' },
   { key: 'es', label: 'Español' },
   { key: 'ru', label: 'Русский' },
@@ -11,8 +11,8 @@ const languages = [
   { key: 'pt-BR', label: 'Português (Brasil)' },
 ];
 
-export default function LanguageSwitcher() {
-  const { i18n } = useTranslation();
+export default function LanguageDropdown() {
+  const { i18n, t } = useTranslation();
 
   const items: MenuProps['items'] = languages.map(({ key, label }) => ({
     key,
@@ -28,7 +28,7 @@ export default function LanguageSwitcher() {
       items: [
         {
           key: 'language',
-          label: 'Language',
+          label: t('language'),
           type: 'group'
         },
         ...items

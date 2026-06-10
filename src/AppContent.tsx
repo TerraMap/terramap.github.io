@@ -265,7 +265,11 @@ export default function AppContent() {
                 overflow: 'auto',
               }}>
               {!world && !isWorldLoading && <HelpPanel
-                worldFileInputRef={worldFileInputRef} directoryInputRef={directoryInputRef} />}
+                worldFileInputRef={worldFileInputRef}
+                directoryInputRef={directoryInputRef}
+                checkingNative={checkingNativeAccess}
+                nativeAvailable={nativeAvailable}
+                onChooseWorld={() => setWorldPickerOpen(true)} />}
               <div style={{ display: world || isWorldLoading ? 'block' : 'none', height: '100%' }}>
                 <CanvasContainer
                   ref={canvasRef}

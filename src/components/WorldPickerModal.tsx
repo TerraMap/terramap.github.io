@@ -1,6 +1,7 @@
 import { CloudOutlined, LeftOutlined } from '@ant-design/icons';
 import { App, Button, Modal, Space, Table, Tooltip } from 'antd';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import firstBy from 'thenby';
 import useFetchPlayers, { type PlayerEntry } from '../hooks/useFetchPlayers';
 import useFetchWorlds from '../hooks/useFetchWorlds';
@@ -17,6 +18,7 @@ interface WorldPickerModalProps {
 
 export function WorldPickerModal({ open, onClose, onWorldSelected, nativeReady }: WorldPickerModalProps) {
   const { notification } = App.useApp();
+  const { t } = useTranslation();
   const [step, setStep] = useState<'world' | 'player'>('world');
   const [pendingWorld, setPendingWorld] = useState<WorldEntry | null>(null);
   const [downloading, setDownloading] = useState(false);
@@ -49,7 +51,7 @@ export function WorldPickerModal({ open, onClose, onWorldSelected, nativeReady }
       onWorldSelected(worldFile, mapFile, playerMap);
     } catch (e) {
       const message = !!e && typeof e === 'object' && 'message' in e && typeof e.message === 'string' ? e.message : 'unknown';
-      notification.error({ key: 'error', title: `Error loading world: ${message}`, placement: 'bottomRight', duration: 0 });
+      notification.error({ key: 'error', title: t('error_loading_world', { message }), placement: 'bottomRight', duration: 0 });
     } finally {
       setDownloading(false);
     }
@@ -65,7 +67,7 @@ export function WorldPickerModal({ open, onClose, onWorldSelected, nativeReady }
 
   return (
     <Modal
-      title={step === 'world' ? 'Select a World File' : 'Select a Player Map (Optional)'}
+      title={step === 'world' ? t('select_world_file') : t('select_player_map_optional')}
       open={open}
       onCancel={handleClose}
       width={800}
@@ -73,16 +75,16 @@ export function WorldPickerModal({ open, onClose, onWorldSelected, nativeReady }
       footer={step === 'player' ? (
         <Space orientation="vertical">
           <div style={{ textAlign: 'left' }}>
-            Pick a player map to avoid spoilers. TerraMap will show only what that player has seen in the world.
+            {t('player_map_description')}
           </div>
           <Space>
             <Button icon={<LeftOutlined />}
               disabled={downloading}
               onClick={() => setStep('world')}>
-              Select a different world
+              {t('select_different_world')}
             </Button>
             <Button danger disabled={downloading} loading={downloading} onClick={handleSkipMap}>
-              Show all spoilers
+              {t('show_all_spoilers')}
             </Button>
           </Space>
         </Space>
@@ -101,7 +103,7 @@ export function WorldPickerModal({ open, onClose, onWorldSelected, nativeReady }
           columns={[
             {
               dataIndex: 'path',
-              title: "File",
+              title: t('file'),
               sorter: firstBy('name'),
               onCell: () => ({ style: { cursor: 'pointer' } }),
               render: (path: string, world) => {
@@ -113,7 +115,7 @@ export function WorldPickerModal({ open, onClose, onWorldSelected, nativeReady }
                     </Tooltip>
 
                     {cloud && (
-                      <Tooltip title={cloud ? 'Steam Cloud' : 'Local'}>
+                      <Tooltip title={cloud ? t('steam_cloud') : t('local')}>
                         <CloudOutlined />
                       </Tooltip>
                     )}
@@ -124,7 +126,7 @@ export function WorldPickerModal({ open, onClose, onWorldSelected, nativeReady }
             {
               dataIndex: 'size',
               sorter: firstBy('size'),
-              title: "Size",
+              title: t('size'),
               onCell: () => ({ style: { cursor: 'pointer' } }),
               render: (size?: number) => formatBytes(size),
             },
@@ -132,27 +134,27 @@ export function WorldPickerModal({ open, onClose, onWorldSelected, nativeReady }
               dataIndex: 'lastModified',
               defaultSortOrder: 'descend',
               sorter: firstBy('lastModified'),
-              title: 'Modified',
+              title: t('modified'),
               onCell: () => ({ style: { cursor: 'pointer' } }),
               render: (lastModified: number) => new Date(lastModified).toLocaleString(),
             },
             {
               dataIndex: 'seed',
               sorter: firstBy('seed'),
-              title: "Seed",
+              title: t('seed'),
               onCell: () => ({ style: { cursor: 'pointer' } }),
             },
             {
               dataIndex: 'width',
               sorter: firstBy('width'),
-              title: "Size",
+              title: t('size'),
               onCell: () => ({ style: { cursor: 'pointer' } }),
-              render: (width: number, world) => <Tooltip title={`${width.toLocaleString()} x ${world.height.toLocaleString()}`}>{width <= 4_200 ? 'Small' : width <= 6_400 ? 'Medium' : 'Large'}</Tooltip>
+              render: (width: number, world) => <Tooltip title={`${width.toLocaleString()} x ${world.height.toLocaleString()}`}>{width <= 4_200 ? t('small') : width <= 6_400 ? t('medium') : t('large')}</Tooltip>
             },
             {
               dataIndex: 'version',
               sorter: firstBy('version'),
-              title: "Version",
+              title: t('version'),
               onCell: () => ({ style: { cursor: 'pointer' } }),
             },
           ]}
@@ -172,7 +174,7 @@ export function WorldPickerModal({ open, onClose, onWorldSelected, nativeReady }
           columns={[
             {
               dataIndex: 'playerName',
-              title: "File",
+              title: t('file'),
               sorter: firstBy('name'),
               onCell: () => ({ style: { cursor: 'pointer' } }),
               render: (playerName: string, player) => {
@@ -184,7 +186,7 @@ export function WorldPickerModal({ open, onClose, onWorldSelected, nativeReady }
                     </Tooltip>
 
                     {cloud && (
-                      <Tooltip title={cloud ? 'Steam Cloud' : 'Local'}>
+                      <Tooltip title={cloud ? t('steam_cloud') : t('local')}>
                         <CloudOutlined />
                       </Tooltip>
                     )}
@@ -195,7 +197,7 @@ export function WorldPickerModal({ open, onClose, onWorldSelected, nativeReady }
             {
               dataIndex: 'size',
               sorter: firstBy('size'),
-              title: "Size",
+              title: t('size'),
               onCell: () => ({ style: { cursor: 'pointer' } }),
               render: (size?: number) => formatBytes(size),
             },
@@ -203,7 +205,7 @@ export function WorldPickerModal({ open, onClose, onWorldSelected, nativeReady }
               dataIndex: 'lastModified',
               defaultSortOrder: 'descend',
               sorter: firstBy('lastModified'),
-              title: 'Modified',
+              title: t('modified'),
               onCell: () => ({ style: { cursor: 'pointer' } }),
               render: (lastModified: number) => new Date(lastModified).toLocaleString(),
             }

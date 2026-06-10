@@ -1,6 +1,7 @@
 import { Button, Col, Modal, Row, Segmented, Select, Space, Tag, theme } from 'antd';
 import type { RefSelectProps } from 'antd/es/select';
 import { useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { BlockOption, BlockType } from '../hooks/useBlockOptions';
 
 const typeColors: Record<BlockType, string> = {
@@ -29,6 +30,7 @@ export function BlockSelectorModal({
   const [filter, setFilter] = useState<FilterType>('All');
   const [searchValue, setSearchValue] = useState('');
   const selectRef = useRef<RefSelectProps>(null);
+  const { t } = useTranslation();
 
   const { token: { colorWarning, colorPrimary, colorSuccess } } = theme.useToken();
 
@@ -53,7 +55,7 @@ export function BlockSelectorModal({
 
   return (
     <Modal
-      title="Choose Blocks"
+      title={t('choose_blocks')}
       footer={false}
       open={open}
       onCancel={() => onClose(false)}
@@ -73,18 +75,18 @@ export function BlockSelectorModal({
                 selectRef.current?.focus();
               }}
               options={[
-                { value: 'All', label: <span>All</span> },
-                { value: 'Tile', label: <span style={{ color: colorPrimary }}>Tiles</span> },
-                { value: 'Item', label: <span style={{ color: colorSuccess }}>Items</span> },
-                { value: 'Wall', label: <span style={{ color: colorWarning }}>Walls</span> },
+                { value: 'All', label: <span>{t('all')}</span> },
+                { value: 'Tile', label: <span style={{ color: colorPrimary }}>{t('tiles')}</span> },
+                { value: 'Item', label: <span style={{ color: colorSuccess }}>{t('items')}</span> },
+                { value: 'Wall', label: <span style={{ color: colorWarning }}>{t('walls')}</span> },
               ]}
             />
           </Col>
           <Col flex="none">
-            <Button onClick={() => onClose(false)}>Cancel</Button>
+            <Button onClick={() => onClose(false)}>{t('cancel')}</Button>
           </Col>
           <Col flex="none">
-            <Button type="primary" onClick={() => onClose(true)}>OK</Button>
+            <Button type="primary" onClick={() => onClose(true)}>{t('ok')}</Button>
           </Col>
         </Row>
 
@@ -99,7 +101,7 @@ export function BlockSelectorModal({
           style={{ width: '100%' }}
           value={selectedValues}
           virtual
-          placeholder={filter === 'All' ? "Search tiles, items, and walls..." : filter === 'Item' ? 'Search items...' : filter === 'Tile' ? 'Search tiles...' : 'Search walls...'}
+          placeholder={filter === 'All' ? t('search_all_blocks') : filter === 'Item' ? t('search_items') : filter === 'Tile' ? t('search_tiles') : t('search_walls')}
           showSearch={{
             autoClearSearchValue: false,
             searchValue,
