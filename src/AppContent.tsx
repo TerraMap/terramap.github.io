@@ -1,6 +1,7 @@
 import { CloseOutlined } from '@ant-design/icons';
 import { App as AntApp, App, Button, Drawer, Grid, Layout, Tabs, theme } from 'antd';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BlockSelectorModal } from './components/BlockSelectorModal';
 import type { CanvasContainerHandle } from './components/CanvasContainer';
 import { CanvasContainer } from './components/CanvasContainer';
@@ -56,6 +57,7 @@ export default function AppContent() {
     setPlayerMapState(map);
   }, []);
 
+  const { t } = useTranslation();
   const { token: { colorBgContainer, colorBgBase } } = theme.useToken();
   const screens = Grid.useBreakpoint();
   const isMobile = !screens.md;
@@ -87,7 +89,7 @@ export default function AppContent() {
     searchStatus,
     selectedTile,
   } = useTileSelection(canvasRef, worldRef, playerMapRef, () => {
-    notificationRef.current?.warning({ key: 'match', title: `No matches found`, placement: 'bottomRight' });
+    notificationRef.current?.warning({ key: 'match', title: t('no_matches_found'), placement: 'bottomRight' });
   });
 
   const {
@@ -99,9 +101,9 @@ export default function AppContent() {
     handleSetSelect,
   } = useBlockHighlight(canvasRef, worldRef, selectedBlocks, setShowWires, playerMapRef, (count) => {
     if (count) {
-      notificationRef.current?.success({ key: 'match', title: `Highlighted ${count.toLocaleString()} matches`, placement: 'bottomRight' });
+      notificationRef.current?.success({ key: 'match', title: t('highlighted_matches', { n: count.toLocaleString() }), placement: 'bottomRight' });
     } else {
-      notificationRef.current?.warning({ key: 'match', title: `No matches found`, placement: 'bottomRight' });
+      notificationRef.current?.warning({ key: 'match', title: t('no_matches_found'), placement: 'bottomRight' });
     }
   });
 
@@ -150,7 +152,7 @@ export default function AppContent() {
     setMapFile(mapFile);
     setPlayerMap(playerMap);
     if (playerMap?.percent !== undefined) {
-      notificationRef.current?.info({ key: 'explored', title: `Explored: ${playerMap?.percent.toLocaleString(undefined, { style: 'percent' })}`, placement: 'bottomRight' });
+      notificationRef.current?.info({ key: 'explored', title: t('explored_percent', { percent: playerMap?.percent.toLocaleString(undefined, { style: 'percent' }) }), placement: 'bottomRight' });
     }
   }, [handleWorldFileSelect, setPlayerMap]);
 
@@ -160,7 +162,7 @@ export default function AppContent() {
       const playerMap = await readPlayerMap(mapFile);
       setPlayerMap(playerMap);
       if (playerMap?.percent !== undefined) {
-        notificationRef.current?.info({ key: 'explored', title: `Explored: ${playerMap?.percent.toLocaleString(undefined, { style: 'percent' })}`, placement: 'bottomRight' });
+        notificationRef.current?.info({ key: 'explored', title: t('explored_percent', { percent: playerMap?.percent.toLocaleString(undefined, { style: 'percent' }) }), placement: 'bottomRight' });
       }
     }
   }, [worldFile, mapFile, loadWorldFile, setPlayerMap, notificationRef]);
@@ -311,14 +313,14 @@ export default function AppContent() {
                 items={[
                   {
                     key: 'Tile',
-                    label: 'Tile',
+                    label: t('tab_tile'),
                     children: <div style={{ overflow: 'auto', maxHeight: isMobile ? 'calc(50vh - 100px)' : 'calc(100vh - 100px)' }}>
                       {selectedTile && <TileDescriptions selectedTile={selectedTile} />}
                     </div>
                   },
                   {
                     key: "World",
-                    label: 'World',
+                    label: t('tab_world'),
                     children: <WorldPropertiesList worldProperties={worldProperties} playerMap={playerMap} maxHeight={isMobile ? 'calc(50vh - 100px)' : 'calc(100vh - 100px)'} />
                   }
                 ]} />

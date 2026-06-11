@@ -1,9 +1,13 @@
+import { useTranslation } from 'react-i18next';
+
 interface DropOverlayProps {
   isDragging: boolean;
   invalidDrop: boolean;
 }
 
 export function DropOverlay({ isDragging, invalidDrop }: DropOverlayProps) {
+  const { t } = useTranslation();
+
   if (!isDragging && !invalidDrop) return null;
 
   return (
@@ -26,7 +30,7 @@ export function DropOverlay({ isDragging, invalidDrop }: DropOverlayProps) {
         fontSize: 24,
         fontWeight: 500,
       }}>
-        {invalidDrop ? 'Only Terraria world files are supported' : 'Drop Terraria world file to open:'}
+        {invalidDrop ? t('drop_invalid') : t('drop_valid')}
         <ul style={{ fontSize: 16 }}>
           <li>.wld</li>
           <li>.wld.bak</li>

@@ -1,12 +1,14 @@
 import { Radio, Space } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { languages } from './LanguageDropdown';
+import { GlobalOutlined } from '@ant-design/icons';
 
 export default function LanguageSelect() {
   const { i18n, t } = useTranslation();
 
   return (
     <Space orientation='horizontal'>
+      <GlobalOutlined />
       <div>{t('language')}</div>
       <Radio.Group
         onChange={async (e) => {

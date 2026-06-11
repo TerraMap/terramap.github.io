@@ -1,20 +1,21 @@
 import { Descriptions } from "antd";
+import { useTranslation } from "react-i18next";
 import { getTileDisplayFields } from "../lib/tileDisplayFields";
 import { getItemText } from "../lib/tileInfo";
 import type { WorldItem, WorldTile } from "../types/settings";
 
-const entityTypeNames: Record<number, string> = {
-  0: 'Target Dummy',
-  1: 'Item Frame',
-  2: 'Logic Sensor',
-  3: 'Mannequin',
-  4: 'Weapon Rack',
-  5: 'Hat Rack',
-  6: 'Food Plate',
-  7: 'Pylon',
-  8: 'Display Jar',
-  9: 'Kite Anchor',
-  10: 'Critter Anchor',
+const entityTypeKeys: Record<number, string> = {
+  0: 'entity_types.target_dummy',
+  1: 'entity_types.item_frame',
+  2: 'entity_types.logic_sensor',
+  3: 'entity_types.mannequin',
+  4: 'entity_types.weapon_rack',
+  5: 'entity_types.hat_rack',
+  6: 'entity_types.food_plate',
+  7: 'entity_types.pylon',
+  8: 'entity_types.display_jar',
+  9: 'entity_types.kite_anchor',
+  10: 'entity_types.critter_anchor',
 };
 
 function ItemList({ label, items }: { label?: string; items: WorldItem[] }) {
@@ -56,7 +57,8 @@ function PairedItemList({ label, items, dyes }: { label?: string; items: WorldIt
 }
 
 export default function TileDescriptions({ selectedTile }: { selectedTile: WorldTile }) {
-  const fields = getTileDisplayFields(selectedTile);
+  const { t } = useTranslation();
+  const fields = getTileDisplayFields(selectedTile, t);
   const { chest, tileEntity } = selectedTile;
 
   return (
@@ -73,9 +75,9 @@ export default function TileDescriptions({ selectedTile }: { selectedTile: World
 
       {tileEntity && (
         <>
-          {entityTypeNames[tileEntity.type] && (
+          {entityTypeKeys[tileEntity.type] && (
             <div style={{ marginTop: 8 }}>
-              <strong>{entityTypeNames[tileEntity.type]}</strong>
+              <strong>{t(entityTypeKeys[tileEntity.type])}</strong>
             </div>
           )}
           {tileEntity.item && tileEntity.item.id > 0 && (

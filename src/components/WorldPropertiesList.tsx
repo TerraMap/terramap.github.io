@@ -1,8 +1,10 @@
 import { Input } from 'antd';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { PlayerMap } from '../lib/readPlayerMap';
 
 export function WorldPropertiesList({ worldProperties, playerMap, maxHeight }: { worldProperties: Record<string, unknown>; playerMap: PlayerMap | null; maxHeight?: string }) {
+  const { t } = useTranslation();
   const [filter, setFilter] = useState('');
 
   const properties: Record<string, unknown> = { ...worldProperties };
@@ -21,7 +23,7 @@ export function WorldPropertiesList({ worldProperties, playerMap, maxHeight }: {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', maxHeight }}>
       <Input
-        placeholder="Filter world properties..."
+        placeholder={t('filter_world_properties')}
         allowClear
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
