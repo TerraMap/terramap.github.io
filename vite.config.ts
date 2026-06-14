@@ -8,11 +8,24 @@ export default defineConfig({
     outDir: 'dist',
     rollupOptions: {
       output: {
-        manualChunks: {
-          antd: ['antd', '@ant-design/icons'],
-          tiles: ['./src/tiles.ts'],
-          items: ['./src/items.ts'],
-          gamedata: ['./src/walls.ts', './src/npcs.ts', './src/itemPrefixes.ts', './src/MapHelper.ts'],
+        manualChunks(id) {
+          if (id.includes('node_modules/antd') || id.includes('node_modules/@ant-design/icons')) {
+            return 'antd';
+          }
+          if (id.includes('/src/tiles.ts')) {
+            return 'tiles';
+          }
+          if (id.includes('/src/items.ts')) {
+            return 'items';
+          }
+          if (
+            id.includes('/src/walls.ts') ||
+            id.includes('/src/npcs.ts') ||
+            id.includes('/src/itemPrefixes.ts') ||
+            id.includes('/src/MapHelper.ts')
+          ) {
+            return 'gamedata';
+          }
         },
       },
     },
