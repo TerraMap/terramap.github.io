@@ -25,17 +25,17 @@
     "@tauri-apps/cli": "^2",
     "@types/file-saver": "^2.0.7",
     "@types/node": "^25.9.1",
-    "@types/react": "^19.2.15",
+    "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^4.7.0",
+    "@vitejs/plugin-react": "^6.0.2",
     "eslint": "^9.39.4",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
     "globals": "^17.6.0",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.59.4",
-    "vite": "^6.4.2",
-    "vitest": "^4.1.7"
+    "typescript-eslint": "^8.61.0",
+    "vite": "^8.0.16",
+    "vitest": "^4.1.8"
   },
   "dependencies": {
     "@panzoom/panzoom": "^4.6.2",
@@ -44,8 +44,8 @@
     "color-convert": "^3.1.3",
     "file-saver": "^2.0.5",
     "i18next": "^26.3.1",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "react-i18next": "^17.0.8",
     "thenby": "^1.4.1"
   },

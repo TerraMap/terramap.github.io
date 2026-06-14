@@ -189,7 +189,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
             let c = getTileColorRaw(y, idx, world);
             if (!c) c = { r: 0, g: 0, b: 0 };
             const pxIdx = 4 * (y * BUFFER_WIDTH + x - bufferStart);
-            pixels[pxIdx]     = c.r;
+            pixels[pxIdx] = c.r;
             pixels[pxIdx + 1] = c.g;
             pixels[pxIdx + 2] = c.b;
             pixels[pxIdx + 3] = 255;
@@ -233,8 +233,8 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
           let lastPutImageTime = 0;
 
           // Hints let us skip work that the search type doesn't need.
-          const needsInfo   = hints ? (hints.needsInfo  ?? true) : true;
-          const needsChest  = hints ? (hints.needsChest ?? true) : true;
+          const needsInfo = hints ? (hints.needsInfo ?? true) : true;
+          const needsChest = hints ? (hints.needsChest ?? true) : true;
           const needsEntity = needsChest;
           // Inactive tiles (no block) can never match a tile/item search if walls aren't involved.
           const canSkipInactive = hints ? !hints.needsWall && !hints.needsChest : false;
@@ -433,10 +433,10 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
 
         ctx.clearRect(0, 0, selection.width, selection.height);
         ctx.lineWidth = 12;
-        ctx.strokeStyle = "rgb(255, 0, 0)";
+        ctx.strokeStyle = "#FF00FF";
         ctx.strokeRect(cx - half, cy - half, targetWidth, targetWidth);
 
-        ctx.strokeStyle = "rgba(255, 0, 0, 0.65)";
+        ctx.strokeStyle = "#FF00FF";
         ctx.lineWidth = 1;
         ctx.beginPath(); ctx.moveTo(cx - half, cy); ctx.lineTo(cx - 1, cy); ctx.stroke();
         ctx.beginPath(); ctx.moveTo(cx + half, cy); ctx.lineTo(cx + 1, cy); ctx.stroke();

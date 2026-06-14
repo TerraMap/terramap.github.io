@@ -2,8 +2,28 @@
 
 import { DataStream } from './DataStream';
 import { npcs } from './npcs';
+import { sets } from './sets';
 import type { Chest, TileEntity, WorldItem, WorldNpc } from './types/settings';
 import { walls } from './walls';
+
+const BIOME_CORRUPT = 1;
+const BIOME_CRIMSON = 2;
+const BIOME_HALLOW = 3;
+
+const biomeByTileType = (() => {
+  const map = new Uint8Array(1024);
+  const tag = (setName: string, biome: number) => {
+    const set = sets.find(s => s.name === setName);
+    if (!set) return;
+    for (const e of set.entries) {
+      if (e.isTile && e.id < map.length) map[e.id] = biome;
+    }
+  };
+  tag('Corruption Blocks', BIOME_CORRUPT);
+  tag('Crimson Blocks', BIOME_CRIMSON);
+  tag('Hallow Blocks', BIOME_HALLOW);
+  return map;
+})();
 
 interface WorldRecord {
   [key: string]: unknown;
@@ -530,6 +550,10 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
   const flags3        = new Uint8Array(n);
 
   let idx = 0;
+  let solidCount = 0;
+  let corruptCount = 0;
+  let crimsonCount = 0;
+  let hallowCount = 0;
   const progressInterval = Math.max(1, Math.ceil(world.width / 20));
 
   for (let x = 0; x < world.width; x++) {
@@ -629,6 +653,15 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
       idx++;
       y++;
 
+      if ((tf1 & 0x01) !== 0) {
+        const runLen = k + 1;
+        solidCount += runLen;
+        const biome = tType < biomeByTileType.length ? biomeByTileType[tType] : 0;
+        if (biome === BIOME_CORRUPT) corruptCount += runLen;
+        else if (biome === BIOME_CRIMSON) crimsonCount += runLen;
+        else if (biome === BIOME_HALLOW) hallowCount += runLen;
+      }
+
       if (k > 0) {
         types.fill(tType, idx, idx + k);
         wallTypes.fill(tWallType, idx, idx + k);
@@ -659,6 +692,10 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
       flags1: flags1.buffer,
       flags2: flags2.buffer,
       flags3: flags3.buffer,
+      solidCount,
+      corruptCount,
+      crimsonCount,
+      hallowCount,
       count: n,
     },
   }, [

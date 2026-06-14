@@ -50,7 +50,7 @@ export const keyboardShortcuts: KeyboardShortcut[] = [
   { key: 'o', labelKey: 'shortcuts.open_world_file', handler: 'onOpenWorld', icon: <FileImageOutlined /> },
   { key: 'r', labelKey: 'shortcuts.reload_world', handler: 'onReloadWorld', icon: <ReloadOutlined /> },
   { key: 'b', labelKey: 'shortcuts.choose_blocks', handler: 'onOpenBlocks', icon: <SearchOutlined /> },
-  { key: 'p', labelKey: 'shortcuts.find_previous_block', handler: 'onFindPrevious', shift: true, icon: <LeftOutlined /> },
+  { key: 'p', labelKey: 'shortcuts.find_previous_block', handler: 'onFindPrevious', icon: <LeftOutlined /> },
   { key: 'n', labelKey: 'shortcuts.find_next_block', handler: 'onFindNext', icon: <RightOutlined /> },
   { key: 'h', labelKey: 'shortcuts.highlight_all_matching_blocks', handler: 'onHighlight', icon: <HighlightOutlined /> },
   { key: 'x', labelKey: 'shortcuts.clear_highlighted_blocks', handler: 'onClearHighlight', icon: <CloseOutlined /> },

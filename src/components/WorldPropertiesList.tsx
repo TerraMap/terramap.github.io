@@ -10,7 +10,8 @@ export function WorldPropertiesList({ worldProperties, playerMap, maxHeight }: {
   const properties: Record<string, unknown> = { ...worldProperties };
 
   if (playerMap?.percent) {
-    properties.explored = playerMap?.percent?.toLocaleString(undefined, { style: 'percent' })
+    const pct = playerMap.percent.toLocaleString(undefined, { style: 'percent', maximumFractionDigits: 2 });
+    properties.explored = `${playerMap.count.toLocaleString()} (${pct})`;
   }
 
   const filteredKeys = Object.keys(properties).filter(k => !k.startsWith('_')).sort()

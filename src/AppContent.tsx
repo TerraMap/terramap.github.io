@@ -14,6 +14,7 @@ import { StatusBar } from './components/StatusBar';
 import TileDescriptions from './components/TileDescriptions';
 import { WorldPickerModal } from './components/WorldPickerModal';
 import { WorldPropertiesList } from './components/WorldPropertiesList';
+import { WorldSpread } from './components/WorldSpread';
 import { useBlockHighlight } from './hooks/useBlockHighlight';
 import { useBlockOptions } from './hooks/useBlockOptions';
 import { useFileDrop } from './hooks/useFileDrop';
@@ -75,6 +76,20 @@ export default function AppContent() {
         props[key] = value;
       }
     });
+    const solid = world._solidBlockCount as number | undefined;
+    if (solid && solid > 0) {
+      const fmt = (count: number) => {
+        const pct = (count / solid).toLocaleString(undefined, { style: 'percent', maximumFractionDigits: 2 });
+        return `${count.toLocaleString()} (${pct})`;
+      };
+      const corrupt = world._corruptBlockCount as number | undefined;
+      const crimson = world._crimsonBlockCount as number | undefined;
+      const hallow = world._hallowBlockCount as number | undefined;
+      if (corrupt !== undefined) props.corruptBlocks = fmt(corrupt);
+      if (crimson !== undefined) props.crimsonBlocks = fmt(crimson);
+      if (hallow !== undefined) props.hallowBlocks = fmt(hallow);
+      if (solid !== undefined) props.solidBlocks = solid.toLocaleString();
+    }
     return props;
   }, [world]);
 
@@ -154,7 +169,7 @@ export default function AppContent() {
     if (playerMap?.percent !== undefined) {
       notificationRef.current?.info({ key: 'explored', title: t('explored_percent', { percent: playerMap?.percent.toLocaleString(undefined, { style: 'percent' }) }), placement: 'bottomRight' });
     }
-  }, [handleWorldFileSelect, setPlayerMap]);
+  }, [handleWorldFileSelect, setPlayerMap, t]);
 
   const handleReloadWorld = useCallback(async () => {
     if (worldFile) loadWorldFile(worldFile);
@@ -165,7 +180,7 @@ export default function AppContent() {
         notificationRef.current?.info({ key: 'explored', title: t('explored_percent', { percent: playerMap?.percent.toLocaleString(undefined, { style: 'percent' }) }), placement: 'bottomRight' });
       }
     }
-  }, [worldFile, mapFile, loadWorldFile, setPlayerMap, notificationRef]);
+  }, [worldFile, mapFile, loadWorldFile, setPlayerMap, notificationRef, t]);
 
   const handleSaveImage = useCallback(() => {
     const w = worldRef.current;
@@ -295,7 +310,7 @@ export default function AppContent() {
                 body: {
                   display: 'flex',
                   flexDirection: 'column',
-                  maxWidth: !isMobile ? 225 : undefined,
+                  maxWidth: !isMobile ? 250 : undefined,
                   overflow: 'hidden',
                   padding: '.5rem',
                   paddingTop: 0
@@ -322,6 +337,11 @@ export default function AppContent() {
                     key: "World",
                     label: t('tab_world'),
                     children: <WorldPropertiesList worldProperties={worldProperties} playerMap={playerMap} maxHeight={isMobile ? 'calc(50vh - 100px)' : 'calc(100vh - 100px)'} />
+                  },
+                  {
+                    key: "Spread",
+                    label: t('tab_spread'),
+                    children: <WorldSpread worldProperties={worldProperties} playerMap={playerMap} maxHeight={isMobile ? 'calc(50vh - 100px)' : 'calc(100vh - 100px)'} />
                   }
                 ]} />
             </Drawer>

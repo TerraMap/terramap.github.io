@@ -118,6 +118,10 @@ interface TileData {
   flags2: ArrayBuffer;
   flags3: ArrayBuffer;
   count: number;
+  solidCount: number;
+  corruptCount: number;
+  crimsonCount: number;
+  hallowCount: number;
 }
 
 interface WorkerMessage {
@@ -201,6 +205,11 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
         w.rawFlags1        = new Uint8Array(td.flags1);
         w.rawFlags2        = new Uint8Array(td.flags2);
         w.rawFlags3        = new Uint8Array(td.flags3);
+
+        w._solidBlockCount   = td.solidCount;
+        w._corruptBlockCount = td.corruptCount;
+        w._crimsonBlockCount = td.crimsonCount;
+        w._hallowBlockCount  = td.hallowCount;
 
         // Phase 1: render canvas columns directly from TypedArrays.
         let col = 0;
