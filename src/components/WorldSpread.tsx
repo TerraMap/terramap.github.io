@@ -1,10 +1,7 @@
-import { useTranslation } from 'react-i18next';
 import type { PlayerMap } from '../lib/readPlayerMap';
 import { capitalizeFirstLetter } from '../lib/string';
 
 export function WorldSpread({ worldProperties, playerMap, maxHeight }: { worldProperties: Record<string, unknown>; playerMap: PlayerMap | null; maxHeight?: string }) {
-  const { t } = useTranslation();
-
   const properties: Record<string, unknown> = { ...worldProperties };
 
   if (playerMap?.percent) {
@@ -20,8 +17,6 @@ export function WorldSpread({ worldProperties, playerMap, maxHeight }: { worldPr
       'crimsonBlocks',
       'hallowBlocks'].includes(k)
   ).sort();
-
-  console.log({ filteredKeys, properties });
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', maxHeight }}>
