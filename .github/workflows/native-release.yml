@@ -122,7 +122,9 @@ jobs:
           cp native/icons/128x128.png native/flatpak/128x128.png
           cp native/icons/128x128@2x.png native/flatpak/256x256.png
           VERSION="${{ steps.ver.outputs.value }}"
-          [ -n "$VERSION" ] && sed -i "s|release version=\"[^\"]*\" date=\"[^\"]*\"|release version=\"${VERSION}\" date=\"$(date +%Y-%m-%d)\"|" native/flatpak/io.github.terramap.native.metainfo.xml
+          if [ -n "$VERSION" ]; then
+            sed -i "s|release version=\"[^\"]*\" date=\"[^\"]*\"|release version=\"${VERSION}\" date=\"$(date +%Y-%m-%d)\"|" native/flatpak/io.github.terramap.native.metainfo.xml
+          fi
 
       - name: Build Flatpak bundle
         if: matrix.label == 'linux-x64'
@@ -183,6 +185,7 @@ jobs:
 
   sign-windows:
     needs: build
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
