@@ -168,18 +168,65 @@ jobs:
           ls -la "$DEST/"
 
       - name: Upload artifacts
+        if: matrix.label != 'win-x64'
         uses: actions/upload-artifact@v6
         with:
           name: TerraMap-${{ matrix.label }}
           path: release-assets/*
 
-  release:
+      - name: Upload unsigned Windows artifacts
+        if: matrix.label == 'win-x64'
+        uses: actions/upload-artifact@v6
+        with:
+          name: unsigned-TerraMap-win-x64
+          path: release-assets/*
+
+  sign-windows:
     needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - name: Find unsigned Windows artifact ID
+        id: artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ID=$(gh api "repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts" \
+            --jq '.artifacts[] | select(.name=="unsigned-TerraMap-win-x64") | .id')
+          if [ -z "$ID" ]; then
+            echo "Could not find unsigned-TerraMap-win-x64 artifact" >&2
+            exit 1
+          fi
+          echo "id=$ID" >> "$GITHUB_OUTPUT"
+
+      - name: Submit signing request to SignPath
+        uses: signpath/github-action-submit-signing-request@v1
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ vars.SIGNPATH_PROJECT_SLUG }}
+          signing-policy-slug: ${{ vars.SIGNPATH_POLICY_SLUG }}
+          artifact-configuration-slug: ${{ vars.SIGNPATH_ARTIFACT_CONFIG_SLUG }}
+          github-artifact-id: ${{ steps.artifact.outputs.id }}
+          wait-for-completion: true
+          output-artifact-directory: signed-windows
+
+      - name: Upload signed Windows artifacts
+        uses: actions/upload-artifact@v6
+        with:
+          name: TerraMap-win-x64
+          path: signed-windows/*
+
+  release:
+    needs: [build, sign-windows]
     if: startsWith(github.ref, 'refs/tags/native-v') || github.event.inputs.tag != ''
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v7
         with:
+          pattern: TerraMap-*
           merge-multiple: true
 
       - name: Determine tag
