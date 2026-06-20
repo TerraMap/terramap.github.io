@@ -679,6 +679,34 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
     }
   }
 
+  // Build the tile/wall type search indices here, in the worker, while their
+  // source arrays are still intact (the buffers below get transferred away).
+  // This runs concurrently with main-thread rendering instead of after it,
+  // so the fast search path is ready by the time the user can act.
+  const tileBuckets = new Map<number, number[]>();
+  const wallBuckets = new Map<number, number[]>();
+  for (let i = 0; i < n; i++) {
+    const f1 = flags1[i];
+    if (f1 & 0x01) {
+      const t = types[i];
+      let b = tileBuckets.get(t);
+      if (!b) { b = []; tileBuckets.set(t, b); }
+      b.push(i);
+    }
+    if (f1 & 0x02) {
+      const wt = wallTypes[i];
+      if (wt > 0) {
+        let b = wallBuckets.get(wt);
+        if (!b) { b = []; wallBuckets.set(wt, b); }
+        b.push(i);
+      }
+    }
+  }
+  const tileTypeIdx = new Map<number, Uint32Array>();
+  for (const [t, arr] of tileBuckets) tileTypeIdx.set(t, new Uint32Array(arr));
+  const wallTypeIdx = new Map<number, Uint32Array>();
+  for (const [wt, arr] of wallBuckets) wallTypeIdx.set(wt, new Uint32Array(arr));
+
   self.postMessage({
     status: `Loaded ${world.totalTileCount.toLocaleString()} tiles`,
     tileData: {
@@ -698,10 +726,14 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
       hallowCount,
       count: n,
     },
+    tileTypeIdx,
+    wallTypeIdx,
   }, [
     types.buffer, wallTypes.buffer, textureU.buffer, textureV.buffer,
     tileColors.buffer, wallColors.buffer, liquidAmounts.buffer,
     flags1.buffer, flags2.buffer, flags3.buffer,
+    ...Array.from(tileTypeIdx.values(), a => a.buffer),
+    ...Array.from(wallTypeIdx.values(), a => a.buffer),
   ]);
 }
 

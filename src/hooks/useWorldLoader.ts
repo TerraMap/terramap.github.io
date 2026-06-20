@@ -45,7 +45,7 @@ function buildItemIndex(w: WorldData): void {
         addHighlight(item.id, originIdx);
       };
       switch (entity.type) {
-        case 1: case 4: case 6: add(entity.item); break;
+        case 1: case 4: case 6: case 8: case 9: case 10: add(entity.item); break;
         case 3: case 5:
           entity.items?.forEach(add);
           entity.dyes?.forEach(add);
@@ -64,46 +64,6 @@ function buildItemIndex(w: WorldData): void {
     arr.sort((a, b) => a - b);
     w.itemHighlightIdx.set(id, new Uint32Array(arr));
   }
-}
-
-function buildTileIndex(w: WorldData): void {
-  const total = w.width * w.height;
-  const rawFlags1 = w.rawFlags1!;
-  const rawTypes = w.rawTypes!;
-  const rawWallTypes = w.rawWallTypes!;
-  const tileBuckets = new Map<number, number[]>();
-  const wallBuckets = new Map<number, number[]>();
-  let i = 0;
-  const chunk = () => {
-    const deadline = performance.now() + 50;
-    while (i < total && performance.now() < deadline) {
-      const f1 = rawFlags1[i];
-      if (f1 & 0x01) {
-        const t = rawTypes[i];
-        let b = tileBuckets.get(t);
-        if (!b) { b = []; tileBuckets.set(t, b); }
-        b.push(i);
-      }
-      if (f1 & 0x02) {
-        const wt = rawWallTypes[i];
-        if (wt > 0) {
-          let b = wallBuckets.get(wt);
-          if (!b) { b = []; wallBuckets.set(wt, b); }
-          b.push(i);
-        }
-      }
-      i++;
-    }
-    if (i < total) {
-      setTimeout(chunk, 0);
-    } else {
-      w.tileTypeIdx = new Map();
-      for (const [t, arr] of tileBuckets) w.tileTypeIdx.set(t, new Uint32Array(arr));
-      w.wallTypeIdx = new Map();
-      for (const [wt, arr] of wallBuckets) w.wallTypeIdx.set(wt, new Uint32Array(arr));
-    }
-  };
-  setTimeout(chunk, 0);
 }
 
 interface TileData {
@@ -129,6 +89,8 @@ interface WorkerMessage {
   version?: number;
   world?: WorldData;
   tileData?: TileData;
+  tileTypeIdx?: Map<number, Uint32Array>;
+  wallTypeIdx?: Map<number, Uint32Array>;
   done?: boolean;
   chests?: Chest[];
   signs?: Sign[];
@@ -211,6 +173,11 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
         w._crimsonBlockCount = td.crimsonCount;
         w._hallowBlockCount  = td.hallowCount;
 
+        // Built in the worker alongside parsing, so the fast search path is
+        // ready as soon as tile data arrives — before rendering even starts.
+        w.tileTypeIdx = e.data.tileTypeIdx;
+        w.wallTypeIdx = e.data.wallTypeIdx;
+
         // Phase 1: render canvas columns directly from TypedArrays.
         let col = 0;
         const renderChunk = () => {
@@ -232,7 +199,6 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
             canvasRef.current?.finishRender(w.width);
             renderDone = true;
             tryFinishLoad();
-            buildTileIndex(w);
           }
         };
         renderChunk();
