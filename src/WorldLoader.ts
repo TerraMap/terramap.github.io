@@ -619,7 +619,13 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
 
       if (b > 1) {
         if ((b & 2) === 2) tf1 |= 0x80;   // IsActuatorPresent
-        if ((b & 4) === 4) tf1 &= ~0x01;  // IsActive = false (actuated)
+        if ((b & 4) === 4) {
+          // IsActive = false (actuated), but remember a real tile is still
+          // here so its type isn't lost — IsActive alone can't distinguish
+          // "actuated off" from "no tile placed" once the bit is cleared.
+          if (tf1 & 0x01) tf3 |= 0x08; // IsActuated
+          tf1 &= ~0x01;
+        }
         if ((b & 32) === 32) tf2 |= 0x40; // IsYellowWirePresent
         if ((b & 64) === 64) {
           const hi = reader.readUint8();
@@ -679,6 +685,34 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
     }
   }
 
+  // Build the tile/wall type search indices here, in the worker, while their
+  // source arrays are still intact (the buffers below get transferred away).
+  // This runs concurrently with main-thread rendering instead of after it,
+  // so the fast search path is ready by the time the user can act.
+  const tileBuckets = new Map<number, number[]>();
+  const wallBuckets = new Map<number, number[]>();
+  for (let i = 0; i < n; i++) {
+    const f1 = flags1[i];
+    if ((f1 & 0x01) || (flags3[i] & 0x08)) {
+      const t = types[i];
+      let b = tileBuckets.get(t);
+      if (!b) { b = []; tileBuckets.set(t, b); }
+      b.push(i);
+    }
+    if (f1 & 0x02) {
+      const wt = wallTypes[i];
+      if (wt > 0) {
+        let b = wallBuckets.get(wt);
+        if (!b) { b = []; wallBuckets.set(wt, b); }
+        b.push(i);
+      }
+    }
+  }
+  const tileTypeIdx = new Map<number, Uint32Array>();
+  for (const [t, arr] of tileBuckets) tileTypeIdx.set(t, new Uint32Array(arr));
+  const wallTypeIdx = new Map<number, Uint32Array>();
+  for (const [wt, arr] of wallBuckets) wallTypeIdx.set(wt, new Uint32Array(arr));
+
   self.postMessage({
     status: `Loaded ${world.totalTileCount.toLocaleString()} tiles`,
     tileData: {
@@ -698,10 +732,14 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
       hallowCount,
       count: n,
     },
+    tileTypeIdx,
+    wallTypeIdx,
   }, [
     types.buffer, wallTypes.buffer, textureU.buffer, textureV.buffer,
     tileColors.buffer, wallColors.buffer, liquidAmounts.buffer,
     flags1.buffer, flags2.buffer, flags3.buffer,
+    ...Array.from(tileTypeIdx.values(), a => a.buffer),
+    ...Array.from(wallTypeIdx.values(), a => a.buffer),
   ]);
 }
 

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { buildHighlightEntries, buildSearchEntries, findNextByIndex, isTileOrigin } from '../lib/tileSearch';
-import type { WorldData, WorldTile } from '../types/settings';
+import { buildHighlightEntries, buildSearchEntries, findNextByIndex } from '../lib/tileSearch';
+import type { WorldData } from '../types/settings';
 
 function makeWorld(overrides: Partial<WorldData> = {}): WorldData {
   const width = 10;
@@ -136,31 +136,6 @@ describe('findNextByIndex', () => {
       [{ indices: shared, filter: onlyAtCurrent }, { indices: shared, filter: otherVariant }],
       30, -1, total
     )).toBe(20);
-  });
-});
-
-// ── isTileOrigin ─────────────────────────────────────────────────────────────
-
-describe('isTileOrigin', () => {
-  it('returns true for null tile', () => {
-    expect(isTileOrigin(null)).toBe(true);
-  });
-
-  it('returns true for tile with no info/chest/entity', () => {
-    const tile: WorldTile = { x: 3, y: 3 };
-    expect(isTileOrigin(tile)).toBe(true);
-  });
-
-  it('returns true for chest at its own origin', () => {
-    const chest = { x: 2, y: 3, name: '', maxItems: 40, items: [] };
-    const tile: WorldTile = { x: 2, y: 3, chest };
-    expect(isTileOrigin(tile)).toBe(true);
-  });
-
-  it('returns false for chest tile that is not the origin', () => {
-    const chest = { x: 2, y: 3, name: '', maxItems: 40, items: [] };
-    const tile: WorldTile = { x: 3, y: 3, chest };
-    expect(isTileOrigin(tile)).toBe(false);
   });
 });
 

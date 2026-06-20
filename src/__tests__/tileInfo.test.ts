@@ -62,6 +62,20 @@ describe('fillTileFromRaw', () => {
     expect(tile.Type).toBeUndefined();
   });
 
+  it('keeps Type and sets IsActive=false for actuated tiles (flags3 bit 0x08)', () => {
+    const world = makeWorld();
+    const idx = 0;
+    world.rawFlags1![idx] = 0x00; // cleared by actuation
+    world.rawFlags3![idx] = 0x08; // IsActuated: a real tile is still here
+    world.rawTypes![idx] = 42;
+
+    const tile: WorldTile = {};
+    fillTileFromRaw(tile, world, idx, 0, 0);
+
+    expect(tile.IsActive).toBe(false);
+    expect(tile.Type).toBe(42);
+  });
+
   it('sets wall fields when flags1 bit 1 is set', () => {
     const world = makeWorld();
     const idx = 1;

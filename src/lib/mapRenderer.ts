@@ -90,7 +90,7 @@ export function getTileColorRaw(y: number, idx: number, world: WorldData): Color
 
   // getBlockColor equivalent
   let bColor: Color | undefined;
-  if (f1 & 0x01) {
+  if ((f1 & 0x01) || (f3 & 0x08)) {
     const type = world.rawTypes![idx];
     if (type < tileColors.length) {
       const color = tileColors[type][0];
