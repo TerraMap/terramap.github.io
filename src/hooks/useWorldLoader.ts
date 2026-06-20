@@ -244,7 +244,7 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
         for (const [pos, entity] of entities.entries()) {
           const idx = pos.x * w.height + pos.y;
           let sizeX = 1, sizeY = 1;
-          if (w.rawFlags1 && (w.rawFlags1[idx] & 0x01)) {
+          if (w.rawFlags1 && ((w.rawFlags1[idx] & 0x01) || (w.rawFlags3![idx] & 0x08))) {
             const info = getTileInfo({
               Type: w.rawTypes![idx],
               TextureU: w.rawTextureU![idx],

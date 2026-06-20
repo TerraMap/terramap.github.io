@@ -619,7 +619,13 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
 
       if (b > 1) {
         if ((b & 2) === 2) tf1 |= 0x80;   // IsActuatorPresent
-        if ((b & 4) === 4) tf1 &= ~0x01;  // IsActive = false (actuated)
+        if ((b & 4) === 4) {
+          // IsActive = false (actuated), but remember a real tile is still
+          // here so its type isn't lost — IsActive alone can't distinguish
+          // "actuated off" from "no tile placed" once the bit is cleared.
+          if (tf1 & 0x01) tf3 |= 0x08; // IsActuated
+          tf1 &= ~0x01;
+        }
         if ((b & 32) === 32) tf2 |= 0x40; // IsYellowWirePresent
         if ((b & 64) === 64) {
           const hi = reader.readUint8();
@@ -687,7 +693,7 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
   const wallBuckets = new Map<number, number[]>();
   for (let i = 0; i < n; i++) {
     const f1 = flags1[i];
-    if (f1 & 0x01) {
+    if ((f1 & 0x01) || (flags3[i] & 0x08)) {
       const t = types[i];
       let b = tileBuckets.get(t);
       if (!b) { b = []; tileBuckets.set(t, b); }
