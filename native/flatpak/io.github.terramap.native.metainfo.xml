@@ -18,7 +18,7 @@
     <binary>terramap</binary>
   </provides>
   <releases>
-    <release version="0.1.5" date="2026-06-20"/>
+    <release version="0.1.6" date="2026-07-07"/>
   </releases>
   <content_rating type="oars-1.1"/>
 </component>

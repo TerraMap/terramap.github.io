@@ -1,7 +1,7 @@
+import { GlobalOutlined } from '@ant-design/icons';
 import { Radio, Space } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { languages } from './LanguageDropdown';
-import { GlobalOutlined } from '@ant-design/icons';
 
 export default function LanguageSelect() {
   const { i18n, t } = useTranslation();
@@ -21,7 +21,7 @@ export default function LanguageSelect() {
           value: key,
           label
         }))}
-        defaultValue="en"
+        value={i18n.resolvedLanguage ?? i18n.language}
         optionType="button"
         buttonStyle="solid"
       />
