@@ -37852,13 +37852,13 @@ export const tiles: TileInfo[] = [
         u: 1350,
         v: 108,
         name: "Painting",
-        variety: "Bould and Bash"
+        variety: "Dark Forebodings"
       },
       {
         u: 1404,
         v: 108,
         name: "Painting",
-        variety: "Dark Forebodings"
+        variety: "Bould and Bash"
       },
       {
         u: 1458,
