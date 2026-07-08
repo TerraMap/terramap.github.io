@@ -100,8 +100,6 @@ export default function AppContent() {
     tileHover,
     hideTileIndicator,
     hoveredTile,
-    isSearching,
-    searchStatus,
     selectedTile,
   } = useTileSelection(canvasRef, worldRef, playerMapRef, () => {
     notificationRef.current?.warning({ key: 'match', title: t('no_matches_found'), placement: 'bottomRight' });
@@ -126,6 +124,7 @@ export default function AppContent() {
     setWorldFile(f);
     setMapFile(null);
     setPlayerMap(null);
+    setSelectedBlocks([]);
     loadWorldFile(f);
   }, [loadWorldFile, setPlayerMap]);
 
@@ -172,7 +171,10 @@ export default function AppContent() {
   }, [handleWorldFileSelect, setPlayerMap, t]);
 
   const handleReloadWorld = useCallback(async () => {
-    if (worldFile) loadWorldFile(worldFile);
+    if (worldFile) {
+      setSelectedBlocks([]);
+      loadWorldFile(worldFile);
+    }
     if (mapFile) {
       const playerMap = await readPlayerMap(mapFile);
       setPlayerMap(playerMap);
@@ -196,31 +198,33 @@ export default function AppContent() {
 
   const shortcutHandlers = useMemo(() => ({
     onClearHighlight: () => handleClearHighlight(),
-    onFindNext: handleFindNext,
-    onFindPrevious: handleFindPrev,
+    onFindNext: () => { if (!isWorldLoading) handleFindNext(); },
+    onFindPrevious: () => { if (!isWorldLoading) handleFindPrev(); },
     onGoToDungeon: () => {
+      if (isWorldLoading) return;
       const x = worldProperties.dungeonX;
       const y = worldProperties.dungeonY;
       if (typeof x === 'number' && typeof y === 'number') goToTile({ x, y });
     },
     onGoToSpawn: () => {
+      if (isWorldLoading) return;
       const x = worldProperties.spawnX;
       const y = worldProperties.spawnY;
       if (typeof x === 'number' && typeof y === 'number') goToTile({ x, y });
     },
-    onGoToTile: () => goToTile(),
+    onGoToTile: () => { if (!isWorldLoading) goToTile(); },
     onHideTileIndicator: () => hideTileIndicator(),
-    onHighlight: () => handleHighlightAll(),
-    onOpenBlocks: () => setBlocksModalOpen(true),
+    onHighlight: () => { if (!isWorldLoading) handleHighlightAll(); },
+    onOpenBlocks: () => { if (!isWorldLoading) setBlocksModalOpen(true); },
     onOpenFolder: () => directoryInputRef.current?.click(),
     onOpenWorld: () => worldFileInputRef.current?.click(),
-    onReloadWorld: () => handleReloadWorld(),
+    onReloadWorld: () => { if (!isWorldLoading) void handleReloadWorld(); },
     onResetZoom: () => canvasRef.current?.resetZoom(),
     onToggleInfoPane: () => setInfoPaneCollapsed((siderCollapsed) => !siderCollapsed),
-    onToggleWires: () => setShowWires((showWires) => !showWires),
+    onToggleWires: () => { if (!isWorldLoading) setShowWires((showWires) => !showWires); },
     onZoomIn: () => canvasRef.current?.zoomIn(),
     onZoomOut: () => canvasRef.current?.zoomOut(),
-  }), [handleFindNext, handleFindPrev, goToTile, hideTileIndicator, handleHighlightAll, handleClearHighlight, handleReloadWorld, worldProperties]);
+  }), [isWorldLoading, handleFindNext, handleFindPrev, goToTile, hideTileIndicator, handleHighlightAll, handleClearHighlight, handleReloadWorld, worldProperties]);
 
   useKeyboardShortcuts(shortcutHandlers);
 
@@ -238,7 +242,6 @@ export default function AppContent() {
               directoryInputRef={directoryInputRef}
               infoPaneOpen={!infoPaneCollapsed}
               isHighlighting={isHighlighting}
-              isSearching={isSearching}
               isWorldLoading={isWorldLoading}
               checkingNative={checkingNativeAccess}
               nativeAvailable={nativeAvailable}
@@ -347,7 +350,7 @@ export default function AppContent() {
             </Drawer>
           </div>
           <Layout.Footer style={{ padding: 0 }}>
-            <StatusBar selectedTile={hoveredTile} status={highlightStatus || searchStatus || status} isLoading={isWorldLoading || isSearching || !!highlightStatus} />
+            <StatusBar selectedTile={hoveredTile} status={highlightStatus || status} isLoading={isWorldLoading || !!highlightStatus} />
           </Layout.Footer>
         </Layout>
 

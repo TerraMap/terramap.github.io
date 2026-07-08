@@ -2,21 +2,13 @@ import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 
 import { usePanZoom } from '../hooks/usePanZoom';
 import { getTileColorRaw } from '../lib/mapRenderer';
 import type { PlayerMap } from '../lib/readPlayerMap';
-import { fillTileFromRaw, getTileInfo } from '../lib/tileInfo';
 import type { IndexEntry } from '../lib/tileSearch';
-import type { WorldData, WorldTile } from '../types/settings';
-
-export interface HighlightHints {
-  needsInfo?: boolean;
-  needsWall?: boolean;
-  needsChest?: boolean;
-}
+import type { WorldData } from '../types/settings';
 
 export interface CanvasContainerHandle {
   setWorldSize: (width: number, height: number) => void;
   renderColumnRange: (world: WorldData, startCol: number, endCol: number) => void;
   finishRender: (worldWidth: number) => void;
-  highlightTiles: (matchFn: ((tile: WorldTile) => boolean) | null, world: WorldData, playerMap: PlayerMap | null, hints?: HighlightHints, onProgress?: (pct: number, matchCount: number) => void) => void;
   highlightByIndex: (entries: IndexEntry[], world: WorldData, playerMap: PlayerMap | null, onProgress?: (pct: number, matchCount: number) => void) => void;
   renderWireOverlay: (world: WorldData) => void;
   clearWireOverlay: () => void;
@@ -204,91 +196,6 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         const imageData = new ImageData(pixels as unknown as Uint8ClampedArray<ArrayBuffer>, BUFFER_WIDTH);
         ctx.putImageData(imageData, bufferStart, 0);
         pixelsRef.current = null;
-      },
-
-      highlightTiles(matchFn: ((tile: WorldTile) => boolean) | null, world: WorldData, playerMap: PlayerMap | null, hints?: HighlightHints, onProgress?: (pct: number, matchCount: number) => void) {
-        const ctx = overlayCtxRef.current!;
-        const overlay = overlayRef.current!;
-        ctx.clearRect(0, 0, overlay.width, overlay.height);
-
-        const id = ++highlightIdRef.current;
-
-        if (matchFn && world) {
-          const ow = overlay.width;
-          const oh = overlay.height;
-          const imageData = ctx.createImageData(ow, oh);
-          const data = imageData.data;
-          const total = world.width * world.height;
-
-          // Pre-fill with dim overlay so unprocessed areas appear dimmed immediately
-          for (let p = 3; p < data.length; p += 4) {
-            data[p] = 192;
-          }
-          ctx.putImageData(imageData, 0, 0);
-
-          let idx = 0;
-          let x = 0;
-          let y = 0;
-          let matches = 0;
-          let lastPutImageTime = 0;
-
-          // Hints let us skip work that the search type doesn't need.
-          const needsInfo = hints ? (hints.needsInfo ?? true) : true;
-          const needsChest = hints ? (hints.needsChest ?? true) : true;
-          const needsEntity = needsChest;
-          // Inactive tiles (no block) can never match a tile/item search if walls aren't involved.
-          const canSkipInactive = hints ? !hints.needsWall && !hints.needsChest : false;
-
-          const rawFlags1 = world.rawFlags1;
-          const tileView: WorldTile = {};
-
-          const processChunk = () => {
-            if (id !== highlightIdRef.current) return;
-
-            const deadline = performance.now() + 200;
-            while (idx < total && performance.now() < deadline) {
-              let tile: WorldTile | undefined;
-              const f1 = rawFlags1![idx];
-              if (!canSkipInactive || (f1 & 0x01)) {
-                fillTileFromRaw(tileView, world, idx, x, y);
-                if (needsInfo) tileView.info = getTileInfo(tileView); else tileView.info = undefined;
-                tileView.chest = needsChest ? world.chestByIdx?.get(idx) : undefined;
-                tileView.tileEntity = needsEntity ? world.entityByIdx?.get(idx) : undefined;
-                tile = tileView;
-              }
-              if (tile && matchFn(tile) && (!playerMap || playerMap.explored[idx])) {
-                const pxIdx = (y * ow + x) * 4;
-                data[pxIdx] = 255;
-                data[pxIdx + 1] = 255;
-                data[pxIdx + 2] = 255;
-                data[pxIdx + 3] = 255;
-                matches++;
-              }
-              y++;
-              if (y >= world.height) {
-                y = 0;
-                x++;
-              }
-              idx++;
-            }
-
-            const now = performance.now();
-            if (idx >= total || now - lastPutImageTime > 1000) {
-              ctx.putImageData(imageData, 0, 0);
-              lastPutImageTime = now;
-            }
-
-            if (idx < total) {
-              onProgress?.(Math.round((idx / total) * 100), matches);
-              setTimeout(processChunk, 0);
-            } else {
-              onProgress?.(100, matches);
-            }
-          };
-
-          onProgress?.(0, 0);
-          processChunk();
-        }
       },
 
       highlightByIndex(entries: IndexEntry[], world: WorldData, playerMap: PlayerMap | null, onProgress?: (pct: number, matchCount: number) => void) {

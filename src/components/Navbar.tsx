@@ -23,7 +23,6 @@ interface NavbarProps {
   directoryInputRef: React.RefObject<HTMLInputElement | null>;
   infoPaneOpen: boolean;
   isHighlighting: boolean;
-  isSearching: boolean;
   isWorldLoading: boolean;
   checkingNative: boolean;
   nativeAvailable?: boolean;
@@ -58,7 +57,6 @@ export function Navbar({
   directoryInputRef,
   infoPaneOpen,
   isHighlighting,
-  isSearching,
   isWorldLoading,
   checkingNative,
   nativeAvailable,
@@ -167,12 +165,10 @@ export function Navbar({
               <ToolbarButton
                 shortcutHandler="onFindPrevious"
                 onClick={onPrevBlock}
-                loading={isSearching}
               />
               <ToolbarButton
                 shortcutHandler="onFindNext"
                 onClick={onNextBlock}
-                loading={isSearching}
               />
               <ToolbarButton
                 shortcutHandler="onHighlight"

@@ -5,10 +5,13 @@ import type { TileFrame, TileInfo, WorldData, WorldItem, WorldTile } from '../ty
 
 export function fillTileFromRaw(tile: WorldTile, world: WorldData, idx: number, x: number, y: number): void {
   const f1 = world.rawFlags1![idx], f2 = world.rawFlags2![idx], f3 = world.rawFlags3![idx];
+  // A tile can be present but actuated off (IsActive cleared) — flags3 0x08
+  // records that case so the tile's type isn't lost just because it's intangible.
+  const hasTile = (f1 & 0x01) !== 0 || (f3 & 0x08) !== 0;
   tile.x = x;
   tile.y = y;
-  tile.IsActive =           (f1 & 0x01) ? true : undefined;
-  tile.Type =               (f1 & 0x01) ? world.rawTypes![idx] : undefined;
+  tile.IsActive =           hasTile ? (f1 & 0x01) !== 0 : undefined;
+  tile.Type =               hasTile ? world.rawTypes![idx] : undefined;
   tile.TextureU =           world.rawTextureU![idx];
   tile.TextureV =           world.rawTextureV![idx];
   tile.tileColor =          world.rawTileColors![idx] || undefined;

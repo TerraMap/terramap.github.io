@@ -1,19 +1,11 @@
 import { useCallback, useMemo, useState } from 'react';
-import type { CanvasContainerHandle, HighlightHints } from '../components/CanvasContainer';
+import type { CanvasContainerHandle } from '../components/CanvasContainer';
 import { items } from '../items';
-import { buildHighlightEntries, getTileInfoFrom, isTileMatch, type SearchableInfo } from '../lib/tileSearch';
+import { buildHighlightEntries, getTileInfoFrom, type SearchableInfo } from '../lib/tileSearch';
 import { tiles } from '../tiles';
 import type { PlayerMap } from '../lib/readPlayerMap';
 import type { BlockSet, WorldData } from '../types/settings';
 import { walls } from '../walls';
-
-function hintsFor(infos: SearchableInfo[]): HighlightHints {
-  return {
-    needsInfo:  infos.some(i => 'isTile'  in i && i.isTile),
-    needsWall:  infos.some(i => 'isWall'  in i && i.isWall),
-    needsChest: infos.some(i => 'isItem'  in i && i.isItem),
-  };
-}
 
 export function useBlockHighlight(
   canvasRef: React.RefObject<CanvasContainerHandle | null>,
@@ -44,6 +36,9 @@ export function useBlockHighlight(
   const [highlightStatus, setHighlightStatus] = useState('');
   const [isHighlighting, setIsHighlighting] = useState(false);
 
+  // Tile/wall/item indices are built before the world finishes loading
+  // (see useWorldLoader), so by the time the UI allows highlighting, the
+  // O(log n) index lookup below is always available.
   const doHighlight = useCallback((infos: SearchableInfo[], w: WorldData) => {
     const onProgress = (pct: number, matchCount: number) => {
       if (pct >= 100) {
@@ -54,17 +49,13 @@ export function useBlockHighlight(
         setHighlightStatus(`Highlighting... ${pct}%`);
       }
     };
-    const entries = buildHighlightEntries(infos, w);
-    if (entries) {
-      canvasRef.current?.highlightByIndex(entries, w, playerMapRef.current, onProgress);
-    } else {
-      canvasRef.current?.highlightTiles((tile) => isTileMatch(tile, infos), w, playerMapRef.current, hintsFor(infos), onProgress);
-    }
+    const entries = buildHighlightEntries(infos, w) ?? [];
+    canvasRef.current?.highlightByIndex(entries, w, playerMapRef.current, onProgress);
   }, [canvasRef, playerMapRef, onFinished]);
 
   const handleHighlightAll = useCallback(() => {
     const w = worldRef.current;
-    if (!w) return;
+    if (!w || !w.rawFlags1) return;
     const infos = selectedInfos;
     if (infos.length > 0) {
       setIsHighlighting(true);
@@ -106,7 +97,7 @@ export function useBlockHighlight(
       return getTileInfoFrom(value, u || undefined, v || undefined);
     }).filter((info): info is SearchableInfo => Boolean(info));
     const w = worldRef.current;
-    if (w && infos.length > 0) {
+    if (w && w.rawFlags1 && infos.length > 0) {
       setIsHighlighting(true);
       doHighlight(infos, w);
     }

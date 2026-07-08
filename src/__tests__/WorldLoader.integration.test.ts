@@ -146,6 +146,22 @@ describe('WorldLoader integration', () => {
       expect(world.version).toBeDefined();
       expect(world.name).toBeDefined();
     });
+
+    it('preserves the tile type of actuated blocks via flags3 bit 0x08', () => {
+      const td = workerCalls().find(c => c[0].tileData)![0].tileData!;
+      const flags1 = new Uint8Array(td.flags1);
+      const flags3 = new Uint8Array(td.flags3);
+      const types = new Uint16Array(td.types);
+
+      let actuatedIdx = -1;
+      for (let i = 0; i < td.count; i++) {
+        if (flags3[i] & 0x08) { actuatedIdx = i; break; }
+      }
+
+      expect(actuatedIdx).toBeGreaterThan(-1);
+      expect(flags1[actuatedIdx] & 0x01).toBe(0); // IsActive cleared by actuation
+      expect(types[actuatedIdx]).toBeGreaterThan(0); // but the real tile type survives
+    });
   });
 
   describe('jagged_rocks.wld', () => {
