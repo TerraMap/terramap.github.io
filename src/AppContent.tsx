@@ -20,6 +20,8 @@ import { useBlockOptions } from './hooks/useBlockOptions';
 import { useFileDrop } from './hooks/useFileDrop';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import { useNative } from './hooks/useNative';
+import { useUpdateCheck } from './hooks/useUpdateCheck';
+import { NATIVE_DOWNLOAD_URL, openNativeDownload } from './lib/native';
 import { useTileSelection } from './hooks/useTileSelection';
 import { useWorldLoader } from './hooks/useWorldLoader';
 import { readPlayerMap, type PlayerMap } from './lib/readPlayerMap';
@@ -28,6 +30,53 @@ import { sets } from './sets';
 function NotificationBridge({ notificationRef }: { notificationRef: React.RefObject<ReturnType<typeof App.useApp>['notification'] | null> }) {
   const { notification } = App.useApp();
   notificationRef.current = notification;
+  return null;
+}
+
+function UpdateNotifier() {
+  const { notification } = App.useApp();
+  const { t } = useTranslation();
+  const updateType = useUpdateCheck();
+  const shownRef = useRef(false);
+
+  useEffect(() => {
+    if (!updateType || shownRef.current) return;
+    shownRef.current = true;
+
+    if (updateType === 'web') {
+      notification.info({
+        key: 'update',
+        title: t('update_available'),
+        description: t('update_available_web_description'),
+        placement: 'bottomRight',
+        duration: 0,
+        actions: (
+          <Button type="primary" size="small" onClick={() => window.location.reload()}>
+            {t('update_now')}
+          </Button>
+        ),
+      });
+    } else {
+      notification.info({
+        key: 'update',
+        title: t('update_available'),
+        description: (
+          <>
+            {t('update_available_native_description')}{' '}
+            <a
+              href={NATIVE_DOWNLOAD_URL}
+              onClick={(e) => { e.preventDefault(); openNativeDownload(); }}
+            >
+              {NATIVE_DOWNLOAD_URL.replace(/^https?:\/\//, '')}
+            </a>
+          </>
+        ),
+        placement: 'bottomRight',
+        duration: 0,
+      });
+    }
+  }, [updateType, notification, t]);
+
   return null;
 }
 
@@ -231,6 +280,7 @@ export default function AppContent() {
   return (
     <AntApp style={{ height: '100%' }}>
       <NotificationBridge notificationRef={notificationRef} />
+      <UpdateNotifier />
       <div
         {...dragProps}
         style={{ height: '100%', position: 'relative', backgroundColor: colorBgContainer }}

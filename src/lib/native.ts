@@ -38,3 +38,21 @@ export async function readFile(path: string): Promise<File> {
   const name = path.split(/[\\/]/).pop() ?? path;
   return new File([new Uint8Array(bytes)], name);
 }
+
+/** The version of the running native (Tauri) app, from tauri.conf.json. */
+export async function getNativeVersion(): Promise<string> {
+  const { getVersion } = await import('@tauri-apps/api/app');
+  return getVersion();
+}
+
+/** URL of the native app download page. */
+export const NATIVE_DOWNLOAD_URL = 'https://terramap.github.io/native.html';
+
+/**
+ * Opens the native app download page. Tries to open in the system browser (via
+ * window.open); if the webview blocks that, falls back to navigating the window.
+ */
+export function openNativeDownload(): void {
+  const opened = window.open(NATIVE_DOWNLOAD_URL, '_blank', 'noopener');
+  if (!opened) window.location.href = NATIVE_DOWNLOAD_URL;
+}
