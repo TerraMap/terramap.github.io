@@ -95,11 +95,21 @@ export function Navbar({
     if (file) onWorldFileSelect(file);
   };
 
+  const dedupeByPath = (files: File[]) => {
+    const seen = new Set<string>();
+    return files.filter(f => {
+      const key = f.webkitRelativePath || f.name;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  };
+
   const handleDirectoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
-    const worldFiles = Array.from(files).filter(f => /\.wld$/.test(f.name));
-    const mapFiles = Array.from(files).filter(f => f.name.endsWith('.map'));
+    const worldFiles = dedupeByPath(Array.from(files).filter(f => /\.wld$/.test(f.name)));
+    const mapFiles = dedupeByPath(Array.from(files).filter(f => f.name.endsWith('.map')));
     onWorldFilesFromDirectory({ worldFiles, mapFiles });
   };
 
@@ -302,16 +312,29 @@ export function Navbar({
         }
 
 
-        <Tooltip title={t('about')}>
+        <Dropdown menu={{
+          items: [
+            {
+              key: 'version',
+              label: `TerraMap v${__APP_VERSION__} (${__GIT_HASH__})`,
+              disabled: true,
+            },
+            {
+              key: 'about',
+              label: (
+                <a href="about.html" target="_blank" rel="noopener noreferrer">
+                  {t('about')}
+                </a>
+              ),
+            },
+          ]
+        }}>
           <Button
             type="link"
             icon={<QuestionCircleOutlined />}
-            href="about.html"
-            target="_blank"
-            rel="noopener noreferrer"
             style={{ marginLeft: 'auto' }}
           />
-        </Tooltip>
+        </Dropdown>
 
       </Space >
 

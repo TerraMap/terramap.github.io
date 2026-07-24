@@ -152,6 +152,7 @@ export interface WorldData {
   wallTypeIdx?: Map<number, Uint32Array>;
   itemIdx?: Map<number, Uint32Array>;
   itemHighlightIdx?: Map<number, Uint32Array>;
+  tileCounts?: Record<number, number>;
   [key: string]: unknown;
 }
 

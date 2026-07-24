@@ -708,6 +708,12 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
       }
     }
   }
+  // tileBuckets is already grouped by parent tile type (frame/variant data
+  // isn't part of the key), so its bucket sizes are the per-type tile counts
+  // for free — no extra pass over the tile data needed.
+  const tileCounts: Record<number, number> = {};
+  for (const [t, arr] of tileBuckets) tileCounts[t] = arr.length;
+
   const tileTypeIdx = new Map<number, Uint32Array>();
   for (const [t, arr] of tileBuckets) tileTypeIdx.set(t, new Uint32Array(arr));
   const wallTypeIdx = new Map<number, Uint32Array>();
@@ -730,6 +736,7 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
       corruptCount,
       crimsonCount,
       hallowCount,
+      tileCounts,
       count: n,
     },
     tileTypeIdx,

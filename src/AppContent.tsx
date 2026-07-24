@@ -309,11 +309,11 @@ export default function AppContent() {
               placement={isMobile ? "bottom" : "right"}
               rootStyle={{ position: 'absolute' }}
               styles={{
-                wrapper: isMobile ? { height: 'auto', maxHeight: '50vh' } : { width: 'auto' },
+                wrapper: isMobile ? { height: 'auto', maxHeight: '50vh' } : {},
                 body: {
                   display: 'flex',
                   flexDirection: 'column',
-                  maxWidth: !isMobile ? 250 : undefined,
+                  maxWidth: !isMobile ? 375 : undefined,
                   overflow: 'hidden',
                   padding: '.5rem',
                   paddingTop: 0
@@ -344,7 +344,13 @@ export default function AppContent() {
                   {
                     key: "Spread",
                     label: t('tab_spread'),
-                    children: <WorldSpread worldProperties={worldProperties} playerMap={playerMap} maxHeight={isMobile ? 'calc(50vh - 100px)' : 'calc(100vh - 100px)'} />
+                    children: <WorldSpread
+                      worldProperties={worldProperties}
+                      playerMap={playerMap}
+                      tileCounts={world?.tileCounts}
+                      solidBlockCount={world?._solidBlockCount as number | undefined}
+                      maxHeight={isMobile ? 'calc(50vh - 100px)' : 'calc(100vh - 100px)'}
+                    />
                   }
                 ]} />
             </Drawer>

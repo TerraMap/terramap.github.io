@@ -82,6 +82,7 @@ interface TileData {
   corruptCount: number;
   crimsonCount: number;
   hallowCount: number;
+  tileCounts: Record<number, number>;
 }
 
 interface WorkerMessage {
@@ -172,6 +173,7 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
         w._corruptBlockCount = td.corruptCount;
         w._crimsonBlockCount = td.crimsonCount;
         w._hallowBlockCount  = td.hallowCount;
+        w.tileCounts         = td.tileCounts;
 
         // Built in the worker alongside parsing, so the fast search path is
         // ready as soon as tile data arrives — before rendering even starts.

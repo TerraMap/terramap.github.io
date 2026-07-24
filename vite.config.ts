@@ -1,8 +1,22 @@
+import { execSync } from 'node:child_process';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vitest/config';
+import { version } from './package.json';
+
+function getGitHash() {
+  try {
+    return execSync('git rev-parse --short HEAD').toString().trim();
+  } catch {
+    return 'unknown';
+  }
+}
 
 export default defineConfig({
   base: process.env.BASE_PATH || '/',
+  define: {
+    __APP_VERSION__: JSON.stringify(version),
+    __GIT_HASH__: JSON.stringify(getGitHash()),
+  },
   plugins: [react()],
   build: {
     outDir: 'dist',
