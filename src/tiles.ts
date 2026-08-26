@@ -1185,7 +1185,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 0,
         name: "Forest Tree",
-        variety: "Branch Plain A1"
+        variety: "Branch Left Bare A"
       },
       {
         u: 88,
@@ -1233,7 +1233,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 22,
         name: "Forest Tree",
-        variety: "Branch Plain B1"
+        variety: "Branch Left Bare B"
       },
       {
         u: 88,
@@ -1281,7 +1281,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 44,
         name: "Forest Tree",
-        variety: "Branch Plain C1"
+        variety: "Branch Left Bare C"
       },
       {
         u: 88,
@@ -1335,7 +1335,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 66,
         name: "Forest Tree",
-        variety: "Branch Plain A2"
+        variety: "Branch Right Bare A"
       },
       {
         u: 110,
@@ -1383,7 +1383,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 88,
         name: "Forest Tree",
-        variety: "Branch Plain B2"
+        variety: "Branch Right Bare B"
       },
       {
         u: 110,
@@ -1431,7 +1431,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 110,
         name: "Forest Tree",
-        variety: "Branch Plain C2"
+        variety: "Branch Right Bare C"
       },
       {
         u: 110,
@@ -35225,74 +35225,74 @@ export const tiles: TileInfo[] = [
         variety: "Granite F2"
       },
       {
-        u: 0,
-        v: 36,
+        u: 1908,
+        v: 18,
         name: "Small Decos",
         variety: "Marble A2"
       },
       {
-        u: 36,
-        v: 36,
+        u: 1944,
+        v: 18,
         name: "Small Decos",
         variety: "Marble B2"
       },
       {
-        u: 72,
-        v: 36,
+        u: 1980,
+        v: 18,
         name: "Small Decos",
         variety: "Marble C2"
       },
       {
-        u: 108,
-        v: 36,
+        u: 2016,
+        v: 18,
         name: "Small Decos",
         variety: "Marble D2"
       },
       {
-        u: 144,
-        v: 36,
+        u: 2052,
+        v: 18,
         name: "Small Decos",
         variety: "Marble E2"
       },
       {
-        u: 180,
-        v: 36,
+        u: 2088,
+        v: 18,
         name: "Small Decos",
         variety: "Marble F2"
       },
       {
-        u: 216,
-        v: 36,
+        u: 2124,
+        v: 18,
         name: "Small Decos",
         variety: "Living Wood A"
       },
       {
-        u: 252,
-        v: 36,
+        u: 2160,
+        v: 18,
         name: "Small Decos",
         variety: "Living Wood B"
       },
       {
-        u: 288,
-        v: 36,
+        u: 2196,
+        v: 18,
         name: "Small Decos",
         variety: "Living Wood C"
       },
       {
-        u: 324,
-        v: 36,
+        u: 2232,
+        v: 18,
         name: "Small Decos",
         variety: "Sand A2"
       },
       {
-        u: 360,
-        v: 36,
+        u: 2268,
+        v: 18,
         name: "Small Decos",
         variety: "Sand B2"
       },
       {
-        u: 396,
-        v: 36,
+        u: 2304,
+        v: 18,
         name: "Small Decos",
         variety: "Sand C2"
       }
@@ -37852,13 +37852,13 @@ export const tiles: TileInfo[] = [
         u: 1350,
         v: 108,
         name: "Painting",
-        variety: "Dark Forebodings"
+        variety: "Bould and Bash"
       },
       {
         u: 1404,
         v: 108,
         name: "Painting",
-        variety: "Bould and Bash"
+        variety: "Dark Forebodings"
       },
       {
         u: 1458,
@@ -44121,12 +44121,6 @@ export const tiles: TileInfo[] = [
         v: 0,
         name: "Pixel Box",
         variety: "On"
-      },
-      {
-        u: 18,
-        v: 18,
-        name: "Pixel Box",
-        variety: "C"
       }
     ]
   },
@@ -49181,7 +49175,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 0,
         name: "Topaz Tree",
-        variety: "Branch Plain A1"
+        variety: "Branch Left Bare A"
       },
       {
         u: 88,
@@ -49229,7 +49223,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 22,
         name: "Topaz Tree",
-        variety: "Branch Plain B1"
+        variety: "Branch Left Bare B"
       },
       {
         u: 88,
@@ -49277,7 +49271,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 44,
         name: "Topaz Tree",
-        variety: "Branch Plain C1"
+        variety: "Branch Left Bare C"
       },
       {
         u: 88,
@@ -49331,7 +49325,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 66,
         name: "Topaz Tree",
-        variety: "Branch Plain A2"
+        variety: "Branch Right Bare A"
       },
       {
         u: 110,
@@ -49379,7 +49373,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 88,
         name: "Topaz Tree",
-        variety: "Branch Plain B2"
+        variety: "Branch Right Bare B"
       },
       {
         u: 110,
@@ -49427,7 +49421,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 110,
         name: "Topaz Tree",
-        variety: "Branch Plain C2"
+        variety: "Branch Right Bare C"
       },
       {
         u: 110,
@@ -49673,7 +49667,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 0,
         name: "Amethyst Tree",
-        variety: "Branch Plain A1"
+        variety: "Branch Left Bare A"
       },
       {
         u: 88,
@@ -49721,7 +49715,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 22,
         name: "Amethyst Tree",
-        variety: "Branch Plain B1"
+        variety: "Branch Left Bare B"
       },
       {
         u: 88,
@@ -49769,7 +49763,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 44,
         name: "Amethyst Tree",
-        variety: "Branch Plain C1"
+        variety: "Branch Left Bare C"
       },
       {
         u: 88,
@@ -49823,7 +49817,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 66,
         name: "Amethyst Tree",
-        variety: "Branch Plain A2"
+        variety: "Branch Right Bare A"
       },
       {
         u: 110,
@@ -49871,7 +49865,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 88,
         name: "Amethyst Tree",
-        variety: "Branch Plain B2"
+        variety: "Branch Right Bare B"
       },
       {
         u: 110,
@@ -49919,7 +49913,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 110,
         name: "Amethyst Tree",
-        variety: "Branch Plain C2"
+        variety: "Branch Right Bare C"
       },
       {
         u: 110,
@@ -50165,7 +50159,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 0,
         name: "Sapphire Tree",
-        variety: "Branch Plain A"
+        variety: "Branch Left Bare A"
       },
       {
         u: 88,
@@ -50213,7 +50207,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 22,
         name: "Sapphire Tree",
-        variety: "Branch Plain B"
+        variety: "Branch Left Bare B"
       },
       {
         u: 88,
@@ -50261,7 +50255,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 44,
         name: "Sapphire Tree",
-        variety: "Branch Plain C1"
+        variety: "Branch Left Bare C"
       },
       {
         u: 88,
@@ -50315,7 +50309,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 66,
         name: "Sapphire Tree",
-        variety: "Branch Plain A2"
+        variety: "Branch Right Bare A"
       },
       {
         u: 110,
@@ -50363,7 +50357,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 88,
         name: "Sapphire Tree",
-        variety: "Branch Plain B2"
+        variety: "Branch Right Bare B"
       },
       {
         u: 110,
@@ -50411,7 +50405,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 110,
         name: "Sapphire Tree",
-        variety: "Branch Plain C2"
+        variety: "Branch Right Bare C"
       },
       {
         u: 110,
@@ -50657,7 +50651,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 0,
         name: "Emerald Tree",
-        variety: "Branch Plain A1"
+        variety: "Branch Left Bare A"
       },
       {
         u: 88,
@@ -50705,7 +50699,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 22,
         name: "Emerald Tree",
-        variety: "Branch Plain B1"
+        variety: "Branch Left Bare B"
       },
       {
         u: 88,
@@ -50753,7 +50747,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 44,
         name: "Emerald Tree",
-        variety: "Branch Plain C1"
+        variety: "Branch Left Bare C"
       },
       {
         u: 88,
@@ -50807,7 +50801,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 66,
         name: "Emerald Tree",
-        variety: "Branch Plain A2"
+        variety: "Branch Right Bare A"
       },
       {
         u: 110,
@@ -50855,7 +50849,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 88,
         name: "Emerald Tree",
-        variety: "Branch Plain B2"
+        variety: "Branch Right Bare B"
       },
       {
         u: 110,
@@ -50903,7 +50897,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 110,
         name: "Emerald Tree",
-        variety: "Branch Plain C2"
+        variety: "Branch Right Bare C"
       },
       {
         u: 110,
@@ -51149,7 +51143,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 0,
         name: "Ruby Tree",
-        variety: "Branch Plain A1"
+        variety: "Branch Left Bare A"
       },
       {
         u: 88,
@@ -51197,7 +51191,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 22,
         name: "Ruby Tree",
-        variety: "Branch Plain B1"
+        variety: "Branch Left Bare B"
       },
       {
         u: 88,
@@ -51245,7 +51239,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 44,
         name: "Ruby Tree",
-        variety: "Branch Plain C1"
+        variety: "Branch Left Bare C"
       },
       {
         u: 88,
@@ -51299,7 +51293,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 66,
         name: "Ruby Tree",
-        variety: "Branch Plain A2"
+        variety: "Branch Right Bare A"
       },
       {
         u: 110,
@@ -51347,7 +51341,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 88,
         name: "Ruby Tree",
-        variety: "Branch Plain B2"
+        variety: "Branch Right Bare B"
       },
       {
         u: 110,
@@ -51395,7 +51389,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 110,
         name: "Ruby Tree",
-        variety: "Branch Plain C2"
+        variety: "Branch Right Bare C"
       },
       {
         u: 110,
@@ -51641,7 +51635,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 0,
         name: "Diamond Tree",
-        variety: "Branch Plain A1"
+        variety: "Branch Left Bare A"
       },
       {
         u: 88,
@@ -51689,7 +51683,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 22,
         name: "Diamond Tree",
-        variety: "Branch Plain B1"
+        variety: "Branch Left Bare B"
       },
       {
         u: 88,
@@ -51737,7 +51731,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 44,
         name: "Diamond Tree",
-        variety: "Branch Plain C1"
+        variety: "Branch Left Bare C"
       },
       {
         u: 88,
@@ -51791,7 +51785,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 66,
         name: "Diamond Tree",
-        variety: "Branch Plain A2"
+        variety: "Branch Right Bare A"
       },
       {
         u: 110,
@@ -51839,7 +51833,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 88,
         name: "Diamond Tree",
-        variety: "Branch Plain B2"
+        variety: "Branch Right Bare B"
       },
       {
         u: 110,
@@ -51887,7 +51881,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 110,
         name: "Diamond Tree",
-        variety: "Branch Plain C2"
+        variety: "Branch Right Bare C"
       },
       {
         u: 110,
@@ -52133,7 +52127,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 0,
         name: "Amber Tree",
-        variety: "Branch Plain A1"
+        variety: "Branch Left Bare A"
       },
       {
         u: 88,
@@ -52181,7 +52175,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 22,
         name: "Amber Tree",
-        variety: "Branch Plain B1"
+        variety: "Branch Left Bare B"
       },
       {
         u: 88,
@@ -52229,7 +52223,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 44,
         name: "Amber Tree",
-        variety: "Branch Plain C1"
+        variety: "Branch Left Bare C"
       },
       {
         u: 88,
@@ -52283,7 +52277,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 66,
         name: "Amber Tree",
-        variety: "Branch Plain A2"
+        variety: "Branch Right Bare A"
       },
       {
         u: 110,
@@ -52331,7 +52325,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 88,
         name: "Amber Tree",
-        variety: "Branch Plain B2"
+        variety: "Branch Right Bare B"
       },
       {
         u: 110,
@@ -52379,7 +52373,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 110,
         name: "Amber Tree",
-        variety: "Branch Plain C2"
+        variety: "Branch Right Bare C"
       },
       {
         u: 110,
@@ -52896,7 +52890,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 0,
         name: "Vanity Tree Sakura",
-        variety: "Branch Plain A1"
+        variety: "Branch Left Bare A"
       },
       {
         u: 88,
@@ -52944,7 +52938,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 22,
         name: "Vanity Tree Sakura",
-        variety: "Branch Plain B1"
+        variety: "Branch Left Bare B"
       },
       {
         u: 88,
@@ -52992,7 +52986,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 44,
         name: "Vanity Tree Sakura",
-        variety: "Branch Plain C1"
+        variety: "Branch Left Bare C"
       },
       {
         u: 88,
@@ -53046,7 +53040,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 66,
         name: "Vanity Tree Sakura",
-        variety: "Branch Plain A2"
+        variety: "Branch Right Bare A"
       },
       {
         u: 110,
@@ -53094,7 +53088,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 88,
         name: "Vanity Tree Sakura",
-        variety: "Branch Plain B2"
+        variety: "Branch Right Bare B"
       },
       {
         u: 110,
@@ -53142,7 +53136,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 110,
         name: "Vanity Tree Sakura",
-        variety: "Branch Plain C2"
+        variety: "Branch Right Bare C"
       },
       {
         u: 110,
@@ -53652,7 +53646,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 0,
         name: "Vanity Tree Yellow Willow",
-        variety: "Branch Plain A1"
+        variety: "Branch Left Bare A"
       },
       {
         u: 88,
@@ -53700,7 +53694,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 22,
         name: "Vanity Tree Yellow Willow",
-        variety: "Branch Plain B1"
+        variety: "Branch Left Bare B"
       },
       {
         u: 88,
@@ -53748,7 +53742,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 44,
         name: "Vanity Tree Yellow Willow",
-        variety: "Branch Plain C1"
+        variety: "Branch Left Bare C"
       },
       {
         u: 88,
@@ -53802,7 +53796,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 66,
         name: "Vanity Tree Yellow Willow",
-        variety: "Branch Plain A2"
+        variety: "Branch Right Bare A"
       },
       {
         u: 110,
@@ -53850,7 +53844,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 88,
         name: "Vanity Tree Yellow Willow",
-        variety: "Branch Plain B2"
+        variety: "Branch Right Bare B"
       },
       {
         u: 110,
@@ -53898,7 +53892,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 110,
         name: "Vanity Tree Yellow Willow",
-        variety: "Branch Plain C2"
+        variety: "Branch Right Bare C"
       },
       {
         u: 110,
@@ -54669,7 +54663,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 0,
         name: "Ash Tree",
-        variety: "Branch Plain A1"
+        variety: "Branch Left Bare A"
       },
       {
         u: 88,
@@ -54717,7 +54711,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 22,
         name: "Ash Tree",
-        variety: "Branch Plain B1"
+        variety: "Branch Left Bare B"
       },
       {
         u: 88,
@@ -54765,7 +54759,7 @@ export const tiles: TileInfo[] = [
         u: 66,
         v: 44,
         name: "Ash Tree",
-        variety: "Branch Plain C1"
+        variety: "Branch Left Bare C"
       },
       {
         u: 88,
@@ -54819,7 +54813,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 66,
         name: "Ash Tree",
-        variety: "Branch Plain A2"
+        variety: "Branch Right Bare A"
       },
       {
         u: 110,
@@ -54867,7 +54861,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 88,
         name: "Ash Tree",
-        variety: "Branch Plain B2"
+        variety: "Branch Right Bare B"
       },
       {
         u: 110,
@@ -54915,7 +54909,7 @@ export const tiles: TileInfo[] = [
         u: 88,
         v: 110,
         name: "Ash Tree",
-        variety: "Branch Plain C2"
+        variety: "Branch Right Bare C"
       },
       {
         u: 110,
@@ -59584,6 +59578,31 @@ export const tiles: TileInfo[] = [
         u: 0,
         v: 0,
         name: "Chillet Egg"
+      }
+    ]
+  },
+  {
+    id: 753,
+    name: "Giant Tiki",
+    size: "3,3",
+    frames: [
+      {
+        u: 0,
+        v: 0,
+        name: "Giant Tiki",
+        variety: "A"
+      },
+      {
+        u: 0,
+        v: 54,
+        name: "Giant Tiki",
+        variety: "B"
+      },
+      {
+        u: 0,
+        v: 108,
+        name: "Giant Tiki",
+        variety: "C"
       }
     ]
   }

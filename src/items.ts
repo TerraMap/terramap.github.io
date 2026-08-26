@@ -24484,5 +24484,201 @@ export const items: ItemInfo[] = [
   {
     name: "Music Box (Silence)",
     id: 6146
+  },
+  {
+    name: "Giant Tiki",
+    id: 6147
+  },
+  {
+    name: "Trusty Cattiva",
+    id: 6148
+  },
+  {
+    name: "Trusty Foxparks",
+    id: 6149
+  },
+  {
+    name: "Trusty Chillet",
+    id: 6150
+  },
+  {
+    name: "Trusty Chillet Ignis",
+    id: 6151
+  },
+  {
+    name: "Daybloom Staff",
+    id: 6152
+  },
+  {
+    name: "Glacier Fang",
+    id: 6153
+  },
+  {
+    name: "Mystic Bloom",
+    id: 6154
+  },
+  {
+    name: "Lightning Strike",
+    id: 6155
+  },
+  {
+    name: "Silver Bracer",
+    id: 6156
+  },
+  {
+    name: "Snake Band",
+    id: 6157
+  },
+  {
+    name: "Mobius Strip",
+    id: 6158
+  },
+  {
+    name: "Wicked Armlet",
+    id: 6159
+  },
+  {
+    name: "Razortip",
+    id: 6160
+  },
+  {
+    name: "Clay Bud Staff",
+    id: 6161
+  },
+  {
+    name: "Ouroboros Ring",
+    id: 6162
+  },
+  {
+    name: "Twilight Grasp",
+    id: 6163
+  },
+  {
+    name: "Ruinous Staff",
+    id: 6164
+  },
+  {
+    name: "Poison Barb",
+    id: 6165
+  },
+  {
+    name: "Harpy Charm",
+    id: 6166
+  },
+  {
+    name: "Snapping Stone",
+    id: 6167
+  },
+  {
+    name: "Chaos Cylinder",
+    id: 6168
+  },
+  {
+    name: "Chaos Cylinder (Full)",
+    id: 6169
+  },
+  {
+    name: "Enchanted Timer",
+    id: 6170
+  },
+  {
+    name: "Bejeweled Staff",
+    id: 6171
+  },
+  {
+    name: "Heavy Sling",
+    id: 6172
+  },
+  {
+    name: "Arc Surge",
+    id: 6173
+  },
+  {
+    name: "Trusty Digtoise",
+    id: 6174
+  },
+  {
+    name: "Scout's Sling",
+    id: 6175
+  },
+  {
+    name: "Templar's Sling",
+    id: 6176
+  },
+  {
+    name: "Royal Guard's Harness",
+    id: 6177
+  },
+  {
+    name: "Pyroclastic Stone",
+    id: 6178
+  },
+  {
+    name: "Armlet Of Ruin",
+    id: 6179
+  },
+  {
+    name: "Seraph Necklace",
+    id: 6180
+  },
+  {
+    name: "Phoenix Quiver",
+    id: 6181
+  },
+  {
+    name: "Wicked Claws",
+    id: 6182
+  },
+  {
+    name: "Silver Shield",
+    id: 6183
+  },
+  {
+    name: "Sweet Barb",
+    id: 6184
+  },
+  {
+    name: "Catalyst Band",
+    id: 6185
+  },
+  {
+    name: "Druidic Serpent Cloak",
+    id: 6186
+  },
+  {
+    name: "Crossed Heart Necklace",
+    id: 6187
+  },
+  {
+    name: "Restoration Shield",
+    id: 6188
+  },
+  {
+    name: "Mystic Arts Sash",
+    id: 6189
+  },
+  {
+    name: "Guide to Old World Parkour",
+    id: 6190
+  },
+  {
+    name: "Little Kinship Peach",
+    id: 6191
+  },
+  {
+    name: "Kinship Peach",
+    id: 6192
+  },
+  {
+    name: "Chaos Cylinder (Random)",
+    id: 6193
+  },
+  {
+    name: "Chaos Cylinder (Simple)",
+    id: 6194
+  },
+  {
+    name: "Guide to Old World Parkour (Inactive)",
+    id: 6195
   }
 ];

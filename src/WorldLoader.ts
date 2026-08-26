@@ -518,6 +518,10 @@ function readHeader(reader: DataStream, world: WorldRecord): void {
     }
   }
   world.dualDungeonsSeed = (world.version >= 304 && reader.readUint8());
+  if (world.version >= 323) {
+    world.moreLightningSeed = reader.readUint8();
+    world.noLightningSeed = reader.readUint8();
+  }
   if (world.version >= 299 && world.version < 313) {
     reader.readUint32();
   }
@@ -538,16 +542,16 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
   world.totalTileCount = world.width * world.height;
   const n = world.totalTileCount;
 
-  const types         = new Uint16Array(n);
-  const wallTypes     = new Uint16Array(n);
-  const textureU      = new Int16Array(n);
-  const textureV      = new Int16Array(n);
-  const tileColors    = new Uint8Array(n);
-  const wallColors    = new Uint8Array(n);
+  const types = new Uint16Array(n);
+  const wallTypes = new Uint16Array(n);
+  const textureU = new Int16Array(n);
+  const textureV = new Int16Array(n);
+  const tileColors = new Uint8Array(n);
+  const wallColors = new Uint8Array(n);
   const liquidAmounts = new Uint8Array(n);
-  const flags1        = new Uint8Array(n);
-  const flags2        = new Uint8Array(n);
-  const flags3        = new Uint8Array(n);
+  const flags1 = new Uint8Array(n);
+  const flags2 = new Uint8Array(n);
+  const flags3 = new Uint8Array(n);
 
   let idx = 0;
   let solidCount = 0;
@@ -646,16 +650,16 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
       if (rle === 1) k = reader.readUint8();
       else if (rle >= 2) k = reader.readInt16();
 
-      types[idx]         = tType;
-      wallTypes[idx]     = tWallType;
-      textureU[idx]      = tTexU;
-      textureV[idx]      = tTexV;
-      tileColors[idx]    = tTileColor;
-      wallColors[idx]    = tWallColor;
+      types[idx] = tType;
+      wallTypes[idx] = tWallType;
+      textureU[idx] = tTexU;
+      textureV[idx] = tTexV;
+      tileColors[idx] = tTileColor;
+      wallColors[idx] = tWallColor;
       liquidAmounts[idx] = tLiquidAmount;
-      flags1[idx]        = tf1;
-      flags2[idx]        = tf2;
-      flags3[idx]        = tf3;
+      flags1[idx] = tf1;
+      flags2[idx] = tf2;
+      flags3[idx] = tf3;
       idx++;
       y++;
 

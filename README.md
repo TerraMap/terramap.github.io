@@ -5,7 +5,7 @@ This is the source code repository.  If you're looking for the web app, you can 
 
 If you're looking for the cross-platform native  app, you can find it here: https://terramap.github.io/native.html
 
-If you're looking for the Windows-only app, you can find it here: https://terramap.github.io/windows.html
+If you're looking for the deprecated, no longer supported Windows-only app, you can find it here: https://terramap.github.io/windows.html
 
 ## Native App Release Process
 

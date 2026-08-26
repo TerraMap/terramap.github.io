@@ -18,7 +18,7 @@ function colorMult(color: Color, scalar: number): Color {
 
 // Decompiled from the Terraria source code
 
-export const tileColors = new Array<Color[]>(753);
+export const tileColors = new Array<Color[]>(754);
 export const liquidColors = new Array<Color>(4);
 export const wallColors = new Array<Color[]>(367);
 
@@ -1054,6 +1054,7 @@ tileColors[747][0] = rgb(231, 178, 28);
 tileColors[748][0] = rgb(2, 114, 206);
 tileColors[749][0] = colorMult(tileColors[138][0], 0.95);
 tileColors[750][0] = colorMult(tileColors[48][0], 0.95);
+tileColors[753][0] = colorMult(tileColors[158][0], 0.95);
 
 liquidColors[0] = rgb(9, 61, 191);
 liquidColors[1] = rgb(253, 32, 3);
