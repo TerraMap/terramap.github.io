@@ -44,7 +44,7 @@ function getPositionText(tile: WorldTile, world: WorldPosition, t: TFunction): s
     const layer = y < world.worldSurfaceY * SPACE_SURFACE_RATIO
       ? t('tile_fields.values.layer_space')
       : t('tile_fields.values.layer_surface');
-    depth = `${depthFeet} ft. ${layer}`;
+    depth = `${depthFeet} ft ${layer}`;
   } else {
     const layer = y < world.rockLayerY ? t('tile_fields.values.layer_underground')
       : y < world.hellLayerY ? t('tile_fields.values.layer_cavern')
