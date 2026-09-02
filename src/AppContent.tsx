@@ -20,12 +20,12 @@ import { useBlockOptions } from './hooks/useBlockOptions';
 import { useFileDrop } from './hooks/useFileDrop';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import { useNative } from './hooks/useNative';
-import { useUpdateCheck } from './hooks/useUpdateCheck';
-import { NATIVE_DOWNLOAD_URL, openNativeDownload } from './lib/native';
-import { toWorldPosition } from './lib/tileDisplayFields';
 import { useTileSelection } from './hooks/useTileSelection';
+import { useUpdateCheck } from './hooks/useUpdateCheck';
 import { useWorldLoader } from './hooks/useWorldLoader';
+import { NATIVE_DOWNLOAD_URL, openNativeDownload } from './lib/native';
 import { readPlayerMap, type PlayerMap } from './lib/readPlayerMap';
+import { toWorldPosition } from './lib/tileDisplayFields';
 import { sets } from './sets';
 
 function NotificationBridge({ notificationRef }: { notificationRef: React.RefObject<ReturnType<typeof App.useApp>['notification'] | null> }) {
@@ -348,7 +348,6 @@ export default function AppContent() {
               <div style={{ display: world || isWorldLoading ? 'block' : 'none', height: '100%' }}>
                 <CanvasContainer
                   ref={canvasRef}
-                  active={!!world || isWorldLoading}
                   onTileHover={tileHover}
                   onTileClick={tileClick}
                   handleTileDoubleClick={hideTileIndicator}

@@ -11,16 +11,15 @@ export interface PanZoomControls {
 
 export function usePanZoom(
   containerRef: React.RefObject<HTMLDivElement | null>,
-  options?: { onPanZoomEnd?: (e: PointerEvent) => void; enabled?: boolean },
+  options?: { onPanZoomEnd?: (e: PointerEvent) => void },
 ) {
   const instanceRef = useRef<PanzoomObject | null>(null);
 
   const onPanZoomEnd = options;
-  const enabled = options?.enabled ?? true;
 
   useEffect(() => {
     const el = containerRef.current;
-    if (!el || !enabled) return;
+    if (!el) return;
 
     const pz = Panzoom(el, {
       maxScale: 80,
@@ -49,7 +48,7 @@ export function usePanZoom(
       pz.destroy();
       instanceRef.current = null;
     };
-  }, [containerRef, onPanZoomEnd, enabled]);
+  }, [containerRef, onPanZoomEnd]);
 
   const zoomIn = useCallback(() => instanceRef.current?.zoomIn(), []);
   const zoomOut = useCallback(() => instanceRef.current?.zoomOut(), []);
