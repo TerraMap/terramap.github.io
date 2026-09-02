@@ -1,6 +1,7 @@
 import { Space, Spin, theme } from 'antd';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { isNative } from '../lib/native';
+import type { WorldPosition } from '../lib/tileDisplayFields';
 import type { WorldTile } from '../types/settings';
 import TileTags from './TileTags';
 
@@ -8,6 +9,7 @@ interface StatusBarProps {
   isLoading: boolean;
   selectedTile: WorldTile | null;
   status?: ReactNode;
+  world?: WorldPosition;
 }
 
 const AD_CLIENT = 'ca-pub-4263195580051724';
@@ -43,7 +45,7 @@ const MAX_AD_HEIGHT = 90;
  * rather than from index.html for the same reason: index.html is shared by
  * both builds.
  */
-export function StatusBar({ isLoading, selectedTile, status }: StatusBarProps) {
+export function StatusBar({ isLoading, selectedTile, status, world }: StatusBarProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const adRef = useRef<HTMLModElement>(null);
   const adPushed = useRef(false);
@@ -104,7 +106,7 @@ export function StatusBar({ isLoading, selectedTile, status }: StatusBarProps) {
           {isLoading && <Spin />}
           {status}
           {selectedTile && (
-            <TileTags selectedTile={selectedTile} />
+            <TileTags selectedTile={selectedTile} world={world} />
           )}
         </Space>
       </span>

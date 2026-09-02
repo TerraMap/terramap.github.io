@@ -22,6 +22,7 @@ import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import { useNative } from './hooks/useNative';
 import { useUpdateCheck } from './hooks/useUpdateCheck';
 import { NATIVE_DOWNLOAD_URL, openNativeDownload } from './lib/native';
+import { toWorldPosition } from './lib/tileDisplayFields';
 import { useTileSelection } from './hooks/useTileSelection';
 import { useWorldLoader } from './hooks/useWorldLoader';
 import { readPlayerMap, type PlayerMap } from './lib/readPlayerMap';
@@ -141,6 +142,10 @@ export default function AppContent() {
     }
     return props;
   }, [world]);
+
+  // Only the scalar fields tile position display needs -- not the full WorldData,
+  // which also carries several multi-megabyte raw TypedArrays.
+  const worldPosition = useMemo(() => world ? toWorldPosition(world) : undefined, [world]);
 
   const {
     findBlock,
@@ -383,7 +388,7 @@ export default function AppContent() {
                     key: 'Tile',
                     label: t('tab_tile'),
                     children: <div style={{ overflow: 'auto', maxHeight: isMobile ? 'calc(50vh - 100px)' : 'calc(100vh - 100px)' }}>
-                      {selectedTile && <TileDescriptions selectedTile={selectedTile} />}
+                      {selectedTile && <TileDescriptions selectedTile={selectedTile} world={worldPosition} />}
                     </div>
                   },
                   {
@@ -406,7 +411,7 @@ export default function AppContent() {
             </Drawer>
           </div>
           <Layout.Footer style={{ padding: 0 }}>
-            <StatusBar selectedTile={hoveredTile} status={highlightStatus || status} isLoading={isWorldLoading || !!highlightStatus} />
+            <StatusBar selectedTile={hoveredTile} status={highlightStatus || status} isLoading={isWorldLoading || !!highlightStatus} world={worldPosition} />
           </Layout.Footer>
         </Layout>
 

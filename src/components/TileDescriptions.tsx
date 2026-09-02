@@ -1,6 +1,6 @@
 import { Descriptions } from "antd";
 import { useTranslation } from "react-i18next";
-import { getTileDisplayFields } from "../lib/tileDisplayFields";
+import { getTileDisplayFields, type WorldPosition } from "../lib/tileDisplayFields";
 import { getItemText } from "../lib/tileInfo";
 import type { WorldItem, WorldTile } from "../types/settings";
 
@@ -56,9 +56,9 @@ function PairedItemList({ label, items, dyes }: { label?: string; items: WorldIt
   );
 }
 
-export default function TileDescriptions({ selectedTile }: { selectedTile: WorldTile }) {
+export default function TileDescriptions({ selectedTile, world }: { selectedTile: WorldTile; world?: WorldPosition }) {
   const { t } = useTranslation();
-  const fields = getTileDisplayFields(selectedTile, t);
+  const fields = getTileDisplayFields(selectedTile, t, world);
   const { chest, tileEntity } = selectedTile;
 
   return (

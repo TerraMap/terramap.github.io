@@ -1,6 +1,6 @@
 import type { TFunction } from 'i18next';
+import type { TileFrame, WorldData, WorldTile } from '../types/settings';
 import { walls } from '../walls';
-import type { TileFrame, WorldTile } from '../types/settings';
 import { paintNames } from './paintColors';
 import { slopeLabels } from './slopeLabels';
 
@@ -10,11 +10,57 @@ export interface TileDisplayField {
   value: string;
 }
 
-export function getTileDisplayFields(tile: WorldTile, t: TFunction): TileDisplayField[] {
+// Only the handful of scalar fields getPositionText needs -- deliberately not
+// WorldData itself, which also carries several multi-megabyte raw TypedArrays
+// that shouldn't be handed to UI components that don't render tiles directly.
+export type WorldPosition = Pick<WorldData, 'width' | 'worldSurfaceY' | 'rockLayerY' | 'hellLayerY'>;
+
+export function toWorldPosition(world: WorldData): WorldPosition {
+  return { width: world.width, worldSurfaceY: world.worldSurfaceY, rockLayerY: world.rockLayerY, hellLayerY: world.hellLayerY };
+}
+
+// 1 tile = 2 ft, matching Terraria's Compass/Depth Meter/GPS accessories.
+const FEET_PER_TILE = 2;
+
+// Terraria has no stored boundary between the Space and Surface layers; this
+// mirrors the ~0.35 * worldSurfaceY split the game itself uses for that transition.
+const SPACE_SURFACE_RATIO = 0.35;
+
+function getPositionText(tile: WorldTile, world: WorldPosition, t: TFunction): string {
+  const x = tile.x ?? 0;
+  const y = tile.y ?? 0;
+
+  const centerX = world.width / 2;
+  const horizontalFeet = Math.round(Math.abs(x - centerX) * FEET_PER_TILE);
+  const direction = x >= centerX ? t('tile_fields.values.east') : t('tile_fields.values.west');
+  const horizontal = `${horizontalFeet} ${direction}`;
+
+  const depthTiles = y - world.worldSurfaceY;
+  const depthFeet = Math.round(Math.abs(depthTiles) * FEET_PER_TILE);
+  let depth: string;
+  if (depthFeet === 0) {
+    depth = t('tile_fields.values.level');
+  } else if (depthTiles < 0) {
+    const layer = y < world.worldSurfaceY * SPACE_SURFACE_RATIO
+      ? t('tile_fields.values.layer_space')
+      : t('tile_fields.values.layer_surface');
+    depth = `${depthFeet} ft. ${layer}`;
+  } else {
+    const layer = y < world.rockLayerY ? t('tile_fields.values.layer_underground')
+      : y < world.hellLayerY ? t('tile_fields.values.layer_cavern')
+        : t('tile_fields.values.layer_underworld');
+    depth = `${depthFeet} ft ${layer}`;
+  }
+
+  return `${horizontal}, ${depth}`;
+}
+
+export function getTileDisplayFields(tile: WorldTile, t: TFunction, world?: WorldPosition): TileDisplayField[] {
   const parent = tile.info && 'parent' in tile.info ? (tile.info as TileFrame).parent : undefined;
   const fields: TileDisplayField[] = [];
 
-  fields.push({ id: 'location', label: t('tile_fields.location'), value: `${tile.x}, ${tile.y}` });
+  const location = world ? getPositionText(tile, world, t) : `${tile.x}, ${tile.y}`;
+  fields.push({ id: 'location', label: t('tile_fields.location'), value: location });
 
   if (tile.info?.name) {
     fields.push({ id: 'tile', label: t('tile_fields.tile'), value: tile.info.name });
