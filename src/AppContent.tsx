@@ -348,6 +348,7 @@ export default function AppContent() {
               <div style={{ display: world || isWorldLoading ? 'block' : 'none', height: '100%' }}>
                 <CanvasContainer
                   ref={canvasRef}
+                  active={!!world || isWorldLoading}
                   onTileHover={tileHover}
                   onTileClick={tileClick}
                   handleTileDoubleClick={hideTileIndicator}

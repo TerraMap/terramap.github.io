@@ -28,12 +28,13 @@ interface CanvasContainerProps {
   onTileHover?: (x: number, y: number) => void;
   onTileClick?: (x: number, y: number) => void;
   handleTileDoubleClick?: () => void;
+  active?: boolean;
 }
 
 const BUFFER_WIDTH = 200;
 
 export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainerProps>(
-  function CanvasContainer({ onTileHover, onTileClick, handleTileDoubleClick }, ref) {
+  function CanvasContainer({ onTileHover, onTileClick, handleTileDoubleClick, active = true }, ref) {
     const wrapperRef = useRef<HTMLDivElement>(null);
     const panzoomRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -51,7 +52,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
     const isDraggingRef = useRef(false);
     const dragStartRef = useRef<{ x: number; y: number } | null>(null);
 
-    const { zoomIn, zoomOut, reset, panToPoint } = usePanZoom(panzoomRef);
+    const { zoomIn, zoomOut, reset, panToPoint } = usePanZoom(panzoomRef, { enabled: active });
 
     const getMousePos = useCallback((evt: MouseEvent | PointerEvent) => {
       const canvas = canvasRef.current;
