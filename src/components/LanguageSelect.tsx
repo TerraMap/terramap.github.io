@@ -1,5 +1,5 @@
 import { GlobalOutlined } from '@ant-design/icons';
-import { Radio, Space } from 'antd';
+import { Radio, Space, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { languages } from './LanguageDropdown';
 
@@ -8,8 +8,9 @@ export default function LanguageSelect() {
 
   return (
     <Space orientation='horizontal'>
+      <Tooltip title={t('language')}>
       <GlobalOutlined />
-      <div>{t('language')}</div>
+      </Tooltip>
       <Radio.Group
         onChange={async (e) => {
           if (typeof e.target.value !== 'string') return;
