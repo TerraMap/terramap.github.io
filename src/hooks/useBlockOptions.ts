@@ -1,6 +1,8 @@
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import firstBy from 'thenby';
 import { items } from '../items';
+import { localizeGameName } from '../lib/gameNames';
 import { tiles } from '../tiles';
 import { walls } from '../walls';
 
@@ -9,6 +11,8 @@ export type BlockType = 'Tile' | 'Item' | 'Wall';
 export interface BlockOption {
   value: string;
   label: string;
+  /** Original English name, so searches in either language match. */
+  englishLabel: string;
   type: BlockType;
   id: string;
   dataU?: number;
@@ -17,8 +21,12 @@ export interface BlockOption {
 }
 
 export function useBlockOptions() {
+  const { i18n } = useTranslation();
+  const language = i18n.resolvedLanguage;
+
   return useMemo(() => {
     const options: BlockOption[] = [];
+    const localized = (englishLabel: string) => ({ label: localizeGameName(englishLabel, language), englishLabel });
 
     for (let i = 0; i < tiles.length; i++) {
       const tile = tiles[i];
@@ -26,7 +34,7 @@ export function useBlockOptions() {
 
       options.push({
         value: String(i),
-        label: tile.name,
+        ...localized(tile.name),
         type: 'Tile',
         id: String(i),
       });
@@ -50,7 +58,7 @@ export function useBlockOptions() {
 
           options.push({
             value: `${i}`,
-            label: text,
+            ...localized(text),
             type: 'Tile',
             id: String(i),
             dataU: frame.u,
@@ -66,7 +74,7 @@ export function useBlockOptions() {
       item.isItem = true;
       options.push({
         value: `item${item.id}`,
-        label: item.name,
+        ...localized(item.name),
         type: 'Item',
         id: String(item.id),
       });
@@ -77,7 +85,7 @@ export function useBlockOptions() {
       wall.isWall = true;
       options.push({
         value: `wall${wall.id}`,
-        label: wall.name,
+        ...localized(wall.name),
         type: 'Wall',
         id: String(wall.id),
       });
@@ -85,5 +93,5 @@ export function useBlockOptions() {
 
     options.sort(firstBy('label'));
     return options;
-  }, []);
+  }, [language]);
 }

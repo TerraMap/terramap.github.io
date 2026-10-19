@@ -19,6 +19,7 @@ const entityTypeKeys: Record<number, string> = {
 };
 
 function ItemList({ label, items }: { label?: string; items: WorldItem[] }) {
+  const { i18n } = useTranslation();
   const nonEmpty = items.filter(i => i.id > 0);
   if (!nonEmpty.length) return null;
   return (
@@ -26,7 +27,7 @@ function ItemList({ label, items }: { label?: string; items: WorldItem[] }) {
       {label && (<strong>{label}</strong>)}
       <ul style={{ padding: 0, margin: 0, marginLeft: 16 }}>
         {nonEmpty.map((item, i) => (
-          <li key={i} style={{ padding: '4px 0' }}>{getItemText(item)}</li>
+          <li key={i} style={{ padding: '4px 0' }}>{getItemText(item, i18n.resolvedLanguage)}</li>
         ))}
       </ul>
     </div>
@@ -34,6 +35,7 @@ function ItemList({ label, items }: { label?: string; items: WorldItem[] }) {
 }
 
 function PairedItemList({ label, items, dyes }: { label?: string; items: WorldItem[]; dyes: WorldItem[] }) {
+  const { i18n } = useTranslation();
   const pairs: { item: WorldItem; dye: WorldItem | undefined }[] = [];
   for (let i = 0; i < items.length; i++) {
     if (items[i].id > 0) {
@@ -47,8 +49,8 @@ function PairedItemList({ label, items, dyes }: { label?: string; items: WorldIt
       <ul style={{ padding: 0, margin: 0, marginLeft: 16 }}>
         {pairs.map(({ item, dye }, i) => (
           <li key={i} style={{ padding: '4px 0' }}>
-            {getItemText(item)}
-            {dye && <span style={{ opacity: 0.7 }}> — {getItemText(dye)}</span>}
+            {getItemText(item, i18n.resolvedLanguage)}
+            {dye && <span style={{ opacity: 0.7 }}> — {getItemText(dye, i18n.resolvedLanguage)}</span>}
           </li>
         ))}
       </ul>
@@ -57,8 +59,8 @@ function PairedItemList({ label, items, dyes }: { label?: string; items: WorldIt
 }
 
 export default function TileDescriptions({ selectedTile, world }: { selectedTile: WorldTile; world?: WorldPosition }) {
-  const { t } = useTranslation();
-  const fields = getTileDisplayFields(selectedTile, t, world);
+  const { t, i18n } = useTranslation();
+  const fields = getTileDisplayFields(selectedTile, t, world, i18n.resolvedLanguage);
   const { chest, tileEntity } = selectedTile;
 
   return (

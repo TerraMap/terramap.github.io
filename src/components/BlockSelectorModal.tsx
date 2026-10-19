@@ -12,6 +12,20 @@ const typeColors: Record<BlockType, string> = {
 
 type FilterType = 'All' | BlockType;
 
+const typeLabelKeys: Record<BlockType, string> = {
+  Tile: 'block_type.Tile',
+  Item: 'block_type.Item',
+  Wall: 'block_type.Wall',
+};
+
+// Exact matches first, then names that start with the search text, then shorter names.
+function searchRank(label: string, input: string): number {
+  const lower = label.toLowerCase();
+  if (lower === input) return 0;
+  if (lower.startsWith(input)) return 1;
+  return 2;
+}
+
 interface BlockSelectorModalProps {
   open: boolean;
   onClose: (ok: boolean) => void;
@@ -39,6 +53,7 @@ export function BlockSelectorModal({
     return filtered.filter(o => o.label !== '[empty]').map(o => ({
       value: `${o.value}|${o.dataU ?? ''}|${o.dataV ?? ''}|${o.frameIndex ?? ''}`,
       label: o.label,
+      englishLabel: o.englishLabel,
       type: o.type,
       id: o.id,
     }));
@@ -106,9 +121,14 @@ export function BlockSelectorModal({
             autoClearSearchValue: false,
             searchValue,
             onSearch: setSearchValue,
+            filterSort: (a, b, { searchValue: input }) => {
+              const q = input.toLowerCase();
+              return searchRank(a.label, q) - searchRank(b.label, q) || a.label.length - b.label.length;
+            },
             filterOption: (input, option) => {
               const inputLower = input.toLowerCase();
               if ((option?.label ?? '').toLowerCase().includes(inputLower)) return true;
+              if ((option?.englishLabel ?? '').toLowerCase().includes(inputLower)) return true;
               if (option?.id.toLowerCase().includes(inputLower)) return true;
               if (`${option?.type} ${option?.id}`.toLowerCase().includes(inputLower)) return true;
               return false;
@@ -123,7 +143,7 @@ export function BlockSelectorModal({
                 color={info ? typeColors[info.type] : undefined}
                 style={{ marginInlineEnd: 4 }}
               >
-                {label} ({info?.type})
+                {label} ({info ? t(typeLabelKeys[info.type]) : ''})
               </Tag>
             );
           }}
@@ -131,7 +151,7 @@ export function BlockSelectorModal({
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span>{option.data.label}</span>
               <Tag color={typeColors[option.data.type]} style={{ marginRight: 0 }}>
-                {option.data.type} {option.data.id}
+                {t(typeLabelKeys[option.data.type])} {option.data.id}
               </Tag>
             </div>
           )}

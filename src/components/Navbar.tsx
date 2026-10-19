@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import firstBy from 'thenby';
 import useThemeMenuItems from '../hooks/useThemeMenuItems';
 import { useThemeName } from '../hooks/useThemeName';
+import { localizeGameName } from '../lib/gameNames';
 import { getShortcutByHandler } from '../lib/keyboardShortcuts';
 import { truncateString } from '../lib/string';
 import type { BlockSet, WorldNpc } from '../types/settings';
@@ -88,7 +89,7 @@ export function Navbar({
 }: NavbarProps) {
   const { isDarkMode, themeName } = useThemeName();
   const themeMenuItems = useThemeMenuItems();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const handleWorldFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -113,16 +114,20 @@ export function Navbar({
     onWorldFilesFromDirectory({ worldFiles, mapFiles });
   };
 
-  const npcMenuItems: MenuProps['items'] = npcs.map((npc, i) => ({
-    key: i,
-    label: !npc.name ? npc.type : npc.name !== npc.type ? `${npc.type} - ${npc.name}` : npc.name,
-    disabled: !isTileExplored(npc.x, npc.y),
-    onClick: () => onGoToTile({ x: npc.x, y: npc.y }),
-  })).sort(firstBy('label'));
+  const language = i18n.resolvedLanguage;
+  const npcMenuItems: MenuProps['items'] = npcs.map((npc, i) => {
+    const type = localizeGameName(npc.type, language);
+    return {
+      key: i,
+      label: !npc.name ? type : npc.name !== npc.type ? `${type} - ${npc.name}` : type,
+      disabled: !isTileExplored(npc.x, npc.y),
+      onClick: () => onGoToTile({ x: npc.x, y: npc.y }),
+    };
+  }).sort(firstBy('label'));
 
   const setMenuItems: MenuProps['items'] = sets.map((set, i) => ({
     key: i,
-    label: set.name,
+    label: localizeGameName(set.name, language),
     onClick: () => onSetSelect(i),
   }));
 

@@ -1,5 +1,6 @@
 import { itemPrefixes } from '../itemPrefixes';
 import { items } from '../items';
+import { localizeGameName } from './gameNames';
 import { tiles } from '../tiles';
 import type { TileFrame, TileInfo, WorldData, WorldItem, WorldTile } from '../types/settings';
 
@@ -80,17 +81,17 @@ export function getTileAt(world: WorldData | null, x: number, y: number): WorldT
   return tile;
 }
 
-export function getItemText(item: WorldItem): string {
+export function getItemText(item: WorldItem, language?: string): string {
   let prefix = "";
 
   if (item.prefixId > 0 && item.prefixId < itemPrefixes.length)
-    prefix = itemPrefixes[item.prefixId].name;
+    prefix = localizeGameName(itemPrefixes[item.prefixId].name, language);
 
   let itemName: string | number = item.id;
   for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
     const itemSettings = items[itemIndex];
     if (itemSettings.id === item.id) {
-      itemName = itemSettings.name;
+      itemName = localizeGameName(itemSettings.name, language);
       break;
     }
   }

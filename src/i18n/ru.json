@@ -1,6 +1,11 @@
 {
   "about": "О программе",
   "all": "Все",
+  "block_type": {
+    "Item": "Предмет",
+    "Tile": "Блок",
+    "Wall": "Стена"
+  },
   "blocks": "Блоки",
   "cancel": "Отмена",
   "choose_blocks": "Выбрать блоки",
@@ -87,7 +92,6 @@
   "show_all_spoilers": "Показать все спойлеры",
   "show_info_pane": "Показать панель информации",
   "size": "Размер",
-  "small": "Маленький",
   "slopes": {
     "half_tile": "Полублок",
     "slope_down_left": "Скос вниз-влево",
@@ -95,6 +99,7 @@
     "slope_up_left": "Скос вверх-влево",
     "slope_up_right": "Скос вверх-вправо"
   },
+  "small": "Маленький",
   "steam_cloud": "(Steam Cloud)",
   "tab_spread": "Распространение",
   "tab_tile": "Блок",

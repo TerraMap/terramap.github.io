@@ -1,6 +1,7 @@
 import type { TFunction } from 'i18next';
 import type { TileFrame, WorldData, WorldTile } from '../types/settings';
 import { walls } from '../walls';
+import { localizeGameName } from './gameNames';
 import { paintNames } from './paintColors';
 import { slopeLabels } from './slopeLabels';
 
@@ -33,7 +34,7 @@ function getPositionText(tile: WorldTile, world: WorldPosition, t: TFunction): s
   const centerX = world.width / 2;
   const horizontalFeet = Math.round(Math.abs(x - centerX) * FEET_PER_TILE);
   const direction = x >= centerX ? t('tile_fields.values.east') : t('tile_fields.values.west');
-  const horizontal = `${horizontalFeet} ${direction}`;
+  const horizontal = t('tile_fields.values.horizontal', { feet: horizontalFeet, direction });
 
   const depthTiles = y - world.worldSurfaceY;
   const depthFeet = Math.round(Math.abs(depthTiles) * FEET_PER_TILE);
@@ -44,18 +45,19 @@ function getPositionText(tile: WorldTile, world: WorldPosition, t: TFunction): s
     const layer = y < world.worldSurfaceY * SPACE_SURFACE_RATIO
       ? t('tile_fields.values.layer_space')
       : t('tile_fields.values.layer_surface');
-    depth = `${depthFeet} ft ${layer}`;
+    depth = t('tile_fields.values.depth', { feet: depthFeet, layer });
   } else {
     const layer = y < world.rockLayerY ? t('tile_fields.values.layer_underground')
       : y < world.hellLayerY ? t('tile_fields.values.layer_cavern')
         : t('tile_fields.values.layer_underworld');
-    depth = `${depthFeet} ft ${layer}`;
+    depth = t('tile_fields.values.depth', { feet: depthFeet, layer });
   }
 
   return `${horizontal}, ${depth}`;
 }
 
-export function getTileDisplayFields(tile: WorldTile, t: TFunction, world?: WorldPosition): TileDisplayField[] {
+export function getTileDisplayFields(tile: WorldTile, t: TFunction, world?: WorldPosition, language?: string): TileDisplayField[] {
+  const name = (english: string) => localizeGameName(english, language);
   const parent = tile.info && 'parent' in tile.info ? (tile.info as TileFrame).parent : undefined;
   const fields: TileDisplayField[] = [];
 
@@ -63,11 +65,11 @@ export function getTileDisplayFields(tile: WorldTile, t: TFunction, world?: Worl
   fields.push({ id: 'location', label: t('tile_fields.location'), value: location });
 
   if (tile.info?.name) {
-    fields.push({ id: 'tile', label: t('tile_fields.tile'), value: tile.info.name });
+    fields.push({ id: 'tile', label: t('tile_fields.tile'), value: name(tile.info.name) });
   }
 
   if (typeof tile.info?.variety === 'string') {
-    fields.push({ id: 'variety', label: t('tile_fields.variety'), value: tile.info.variety });
+    fields.push({ id: 'variety', label: t('tile_fields.variety'), value: name(tile.info.variety) });
   }
 
   if (parent?.size) {
@@ -80,7 +82,7 @@ export function getTileDisplayFields(tile: WorldTile, t: TFunction, world?: Worl
 
   if (tile.WallType) {
     const wallName = walls[tile.WallType]?.name;
-    fields.push({ id: 'wall', label: t('tile_fields.wall'), value: wallName ? `${wallName} (${tile.WallType})` : String(tile.WallType) });
+    fields.push({ id: 'wall', label: t('tile_fields.wall'), value: wallName ? `${name(wallName)} (${tile.WallType})` : String(tile.WallType) });
   }
 
   if ((tile.TextureU ?? -1) > -1 || (tile.TextureV ?? -1) > -1) {
@@ -88,7 +90,7 @@ export function getTileDisplayFields(tile: WorldTile, t: TFunction, world?: Worl
   }
 
   if (parent) {
-    fields.push({ id: 'parent', label: t('tile_fields.parent'), value: parent.name });
+    fields.push({ id: 'parent', label: t('tile_fields.parent'), value: name(parent.name) });
   }
 
   if (tile.slope) {

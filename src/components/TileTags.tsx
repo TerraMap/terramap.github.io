@@ -12,8 +12,8 @@ export default function TileTags(
     selectedTile: WorldTile;
     world?: WorldPosition;
   }) {
-  const { t } = useTranslation();
-  const fields = getTileDisplayFields(selectedTile, t, world);
+  const { t, i18n } = useTranslation();
+  const fields = getTileDisplayFields(selectedTile, t, world, i18n.resolvedLanguage);
 
   return (
     <Space>
