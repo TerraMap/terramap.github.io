@@ -54,6 +54,18 @@ describe('WorldLoader', () => {
       const reader = createReader(bytes);
       expect(readString(reader)).toBe(longStr);
     });
+
+    it('should decode non-ASCII strings as UTF-8', () => {
+      const reader = createReader(encodeLEB128String('连续不断的饥荒庄园'));
+      expect(readString(reader)).toBe('连续不断的饥荒庄园');
+    });
+
+    it('should decode mixed ASCII and 4-byte UTF-8 and advance by byte length', () => {
+      const str = 'Chest 🗝️ Ü';
+      const reader = createReader([...encodeLEB128String(str), ...encodeLEB128String('next')]);
+      expect(readString(reader)).toBe(str);
+      expect(readString(reader)).toBe('next');
+    });
   });
 
   describe('readFileFormatHeader', () => {
