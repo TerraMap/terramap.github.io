@@ -6,6 +6,9 @@ import { sets } from './sets';
 import type { Chest, TileEntity, WorldItem, WorldNpc } from './types/settings';
 import { walls } from './walls';
 
+// Terraria writes strings with .NET's BinaryWriter, which encodes them as UTF-8
+const utf8Decoder = new TextDecoder('utf-8');
+
 const BIOME_CORRUPT = 1;
 const BIOME_CRIMSON = 2;
 const BIOME_HALLOW = 3;
@@ -1028,8 +1031,8 @@ function readString(reader: DataStream): string {
     step++;
   }
 
-  // .NET BinaryWriter writes strings as UTF-8, so non-ASCII names (e.g. Chinese) must be decoded as such
-  return reader.readString(stringLength, "utf-8");
+  // Terraria writes strings with .NET's BinaryWriter, which encodes them as UTF-8, so non-ASCII names (e.g. Chinese) must be decoded as such
+  return utf8Decoder.decode(reader.mapUint8Array(stringLength));
 }
 
 export { readChests, readFileFormatHeader, readHeader, readNpcs, readSigns, readString, readTileEntities, readTiles, readWorldFile };
