@@ -31,6 +31,9 @@
   "filter_tile_composition": "Фильтр блоков...",
   "filter_world_properties": "Фильтр свойств мира...",
   "folder": "Папка",
+  "game_names": {
+    "natural_wall": "{{name}} (природная)"
+  },
   "get_started_intro": "Для начала выполните одно из следующих действий:",
   "getting_started": "Начало работы",
   "hide_info_pane": "Скрыть панель информации",

@@ -1,5 +1,6 @@
 import { Descriptions } from "antd";
 import { useTranslation } from "react-i18next";
+import { useBlockNames } from "../hooks/useBlockNames";
 import { getTileDisplayFields, type WorldPosition } from "../lib/tileDisplayFields";
 import { getItemText } from "../lib/tileInfo";
 import type { WorldItem, WorldTile } from "../types/settings";
@@ -19,6 +20,7 @@ const entityTypeKeys: Record<number, string> = {
 };
 
 function ItemList({ label, items }: { label?: string; items: WorldItem[] }) {
+  const names = useBlockNames();
   const nonEmpty = items.filter(i => i.id > 0);
   if (!nonEmpty.length) return null;
   return (
@@ -26,7 +28,7 @@ function ItemList({ label, items }: { label?: string; items: WorldItem[] }) {
       {label && (<strong>{label}</strong>)}
       <ul style={{ padding: 0, margin: 0, marginLeft: 16 }}>
         {nonEmpty.map((item, i) => (
-          <li key={i} style={{ padding: '4px 0' }}>{getItemText(item)}</li>
+          <li key={i} style={{ padding: '4px 0' }}>{getItemText(item, names)}</li>
         ))}
       </ul>
     </div>
@@ -34,6 +36,7 @@ function ItemList({ label, items }: { label?: string; items: WorldItem[] }) {
 }
 
 function PairedItemList({ label, items, dyes }: { label?: string; items: WorldItem[]; dyes: WorldItem[] }) {
+  const names = useBlockNames();
   const pairs: { item: WorldItem; dye: WorldItem | undefined }[] = [];
   for (let i = 0; i < items.length; i++) {
     if (items[i].id > 0) {
@@ -47,8 +50,8 @@ function PairedItemList({ label, items, dyes }: { label?: string; items: WorldIt
       <ul style={{ padding: 0, margin: 0, marginLeft: 16 }}>
         {pairs.map(({ item, dye }, i) => (
           <li key={i} style={{ padding: '4px 0' }}>
-            {getItemText(item)}
-            {dye && <span style={{ opacity: 0.7 }}> — {getItemText(dye)}</span>}
+            {getItemText(item, names)}
+            {dye && <span style={{ opacity: 0.7 }}> — {getItemText(dye, names)}</span>}
           </li>
         ))}
       </ul>
@@ -58,7 +61,8 @@ function PairedItemList({ label, items, dyes }: { label?: string; items: WorldIt
 
 export default function TileDescriptions({ selectedTile, world }: { selectedTile: WorldTile; world?: WorldPosition }) {
   const { t } = useTranslation();
-  const fields = getTileDisplayFields(selectedTile, t, world);
+  const names = useBlockNames();
+  const fields = getTileDisplayFields(selectedTile, t, world, names);
   const { chest, tileEntity } = selectedTile;
 
   return (

@@ -1,6 +1,7 @@
 import type { TFunction } from 'i18next';
 import type { TileFrame, WorldData, WorldTile } from '../types/settings';
 import { walls } from '../walls';
+import { englishBlockNames, type BlockNames } from './blockNames';
 import { paintNames } from './paintColors';
 import { slopeLabels } from './slopeLabels';
 
@@ -55,7 +56,7 @@ function getPositionText(tile: WorldTile, world: WorldPosition, t: TFunction): s
   return `${horizontal}, ${depth}`;
 }
 
-export function getTileDisplayFields(tile: WorldTile, t: TFunction, world?: WorldPosition): TileDisplayField[] {
+export function getTileDisplayFields(tile: WorldTile, t: TFunction, world?: WorldPosition, names: BlockNames = englishBlockNames): TileDisplayField[] {
   const parent = tile.info && 'parent' in tile.info ? (tile.info as TileFrame).parent : undefined;
   const fields: TileDisplayField[] = [];
 
@@ -63,11 +64,11 @@ export function getTileDisplayFields(tile: WorldTile, t: TFunction, world?: Worl
   fields.push({ id: 'location', label: t('tile_fields.location'), value: location });
 
   if (tile.info?.name) {
-    fields.push({ id: 'tile', label: t('tile_fields.tile'), value: tile.info.name });
+    fields.push({ id: 'tile', label: t('tile_fields.tile'), value: names.tile(tile.info.name) });
   }
 
   if (typeof tile.info?.variety === 'string') {
-    fields.push({ id: 'variety', label: t('tile_fields.variety'), value: tile.info.variety });
+    fields.push({ id: 'variety', label: t('tile_fields.variety'), value: names.tile(tile.info.variety) });
   }
 
   if (parent?.size) {
@@ -80,7 +81,7 @@ export function getTileDisplayFields(tile: WorldTile, t: TFunction, world?: Worl
 
   if (tile.WallType) {
     const wallName = walls[tile.WallType]?.name;
-    fields.push({ id: 'wall', label: t('tile_fields.wall'), value: wallName ? `${wallName} (${tile.WallType})` : String(tile.WallType) });
+    fields.push({ id: 'wall', label: t('tile_fields.wall'), value: wallName ? `${names.wall(tile.WallType, wallName)} (${tile.WallType})` : String(tile.WallType) });
   }
 
   if ((tile.TextureU ?? -1) > -1 || (tile.TextureV ?? -1) > -1) {
@@ -88,7 +89,7 @@ export function getTileDisplayFields(tile: WorldTile, t: TFunction, world?: Worl
   }
 
   if (parent) {
-    fields.push({ id: 'parent', label: t('tile_fields.parent'), value: parent.name });
+    fields.push({ id: 'parent', label: t('tile_fields.parent'), value: names.tile(parent.name) });
   }
 
   if (tile.slope) {

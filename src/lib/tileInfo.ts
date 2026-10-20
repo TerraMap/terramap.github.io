@@ -2,6 +2,7 @@ import { itemPrefixes } from '../itemPrefixes';
 import { items } from '../items';
 import { tiles } from '../tiles';
 import type { TileFrame, TileInfo, WorldData, WorldItem, WorldTile } from '../types/settings';
+import { englishBlockNames, type BlockNames } from './blockNames';
 
 export function fillTileFromRaw(tile: WorldTile, world: WorldData, idx: number, x: number, y: number): void {
   const f1 = world.rawFlags1![idx], f2 = world.rawFlags2![idx], f3 = world.rawFlags3![idx];
@@ -80,17 +81,17 @@ export function getTileAt(world: WorldData | null, x: number, y: number): WorldT
   return tile;
 }
 
-export function getItemText(item: WorldItem): string {
+export function getItemText(item: WorldItem, names: BlockNames = englishBlockNames): string {
   let prefix = "";
 
   if (item.prefixId > 0 && item.prefixId < itemPrefixes.length)
-    prefix = itemPrefixes[item.prefixId].name;
+    prefix = names.prefix(item.prefixId, itemPrefixes[item.prefixId].name);
 
   let itemName: string | number = item.id;
   for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
     const itemSettings = items[itemIndex];
     if (itemSettings.id === item.id) {
-      itemName = itemSettings.name;
+      itemName = names.item(item.id, itemSettings.name);
       break;
     }
   }

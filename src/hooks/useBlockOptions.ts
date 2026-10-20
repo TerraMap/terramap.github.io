@@ -1,14 +1,18 @@
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import firstBy from 'thenby';
 import { items } from '../items';
 import { tiles } from '../tiles';
 import { walls } from '../walls';
+import { useBlockNames } from './useBlockNames';
 
 export type BlockType = 'Tile' | 'Item' | 'Wall';
 
 export interface BlockOption {
   value: string;
   label: string;
+  /** The English name, so searches match it in every language. */
+  englishLabel: string;
   type: BlockType;
   id: string;
   dataU?: number;
@@ -17,6 +21,10 @@ export interface BlockOption {
 }
 
 export function useBlockOptions() {
+  const { i18n } = useTranslation();
+  const language = i18n.resolvedLanguage;
+  const names = useBlockNames();
+
   return useMemo(() => {
     const options: BlockOption[] = [];
 
@@ -26,7 +34,8 @@ export function useBlockOptions() {
 
       options.push({
         value: String(i),
-        label: tile.name,
+        label: names.tile(tile.name),
+        englishLabel: tile.name,
         type: 'Tile',
         id: String(i),
       });
@@ -38,19 +47,21 @@ export function useBlockOptions() {
 
           if (frame.name === 'Default' && frame.variety === 'Default') continue;
 
-          let text = tile.name;
+          // Localize each part before joining, so untranslated parts stay English on their own.
+          const parts = [tile.name];
           if (frame.name && frame.name !== tile.name) {
-            text += ` - ${frame.name}`;
+            parts.push(frame.name);
           }
           if (frame.variety && frame.variety !== 'Default') {
-            text += ` - ${frame.variety}`;
+            parts.push(frame.variety);
           }
 
-          if (text === tile.name && (frame.u ?? 0) === 0 && (frame.v ?? 0) === 0) continue;
+          if (parts.length === 1 && (frame.u ?? 0) === 0 && (frame.v ?? 0) === 0) continue;
 
           options.push({
             value: `${i}`,
-            label: text,
+            label: parts.map(part => names.tile(part)).join(' - '),
+            englishLabel: parts.join(' - '),
             type: 'Tile',
             id: String(i),
             dataU: frame.u,
@@ -66,7 +77,8 @@ export function useBlockOptions() {
       item.isItem = true;
       options.push({
         value: `item${item.id}`,
-        label: item.name,
+        label: names.item(item.id, item.name),
+        englishLabel: item.name,
         type: 'Item',
         id: String(item.id),
       });
@@ -77,13 +89,16 @@ export function useBlockOptions() {
       wall.isWall = true;
       options.push({
         value: `wall${wall.id}`,
-        label: wall.name,
+        label: names.wall(wall.id, wall.name),
+        englishLabel: wall.name,
         type: 'Wall',
         id: String(wall.id),
       });
     }
 
-    options.sort(firstBy('label'));
+    // English keeps its original order; other languages sort by their own collation.
+    const collator = new Intl.Collator(language);
+    options.sort(language === 'en' ? firstBy('label') : firstBy('label', { cmp: (a: string, b: string) => collator.compare(a, b) }));
     return options;
-  }, []);
+  }, [language, names]);
 }

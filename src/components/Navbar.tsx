@@ -1,14 +1,15 @@
 import {
-  CameraOutlined,
-  GlobalOutlined,
-  MoonOutlined,
-  QuestionCircleOutlined,
-  SunOutlined
+    CameraOutlined,
+    GlobalOutlined,
+    MoonOutlined,
+    QuestionCircleOutlined,
+    SunOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Button, Dropdown, Space, Spin, Switch, Tag, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
 import firstBy from 'thenby';
+import { useBlockNames } from '../hooks/useBlockNames';
 import useThemeMenuItems from '../hooks/useThemeMenuItems';
 import { useThemeName } from '../hooks/useThemeName';
 import { getShortcutByHandler } from '../lib/keyboardShortcuts';
@@ -89,6 +90,7 @@ export function Navbar({
   const { isDarkMode, themeName } = useThemeName();
   const themeMenuItems = useThemeMenuItems();
   const { t } = useTranslation();
+  const names = useBlockNames();
 
   const handleWorldFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -113,12 +115,15 @@ export function Navbar({
     onWorldFilesFromDirectory({ worldFiles, mapFiles });
   };
 
-  const npcMenuItems: MenuProps['items'] = npcs.map((npc, i) => ({
-    key: i,
-    label: !npc.name ? npc.type : npc.name !== npc.type ? `${npc.type} - ${npc.name}` : npc.name,
-    disabled: !isTileExplored(npc.x, npc.y),
-    onClick: () => onGoToTile({ x: npc.x, y: npc.y }),
-  })).sort(firstBy('label'));
+  const npcMenuItems: MenuProps['items'] = npcs.map((npc, i) => {
+    const type = names.npc(npc.spriteId, npc.type);
+    return {
+      key: i,
+      label: !npc.name || npc.name === npc.type ? type : `${type} - ${npc.name}`,
+      disabled: !isTileExplored(npc.x, npc.y),
+      onClick: () => onGoToTile({ x: npc.x, y: npc.y }),
+    };
+  }).sort(firstBy('label'));
 
   const setMenuItems: MenuProps['items'] = sets.map((set, i) => ({
     key: i,

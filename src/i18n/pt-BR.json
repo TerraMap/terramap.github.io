@@ -31,6 +31,9 @@
   "filter_tile_composition": "Filtrar blocos...",
   "filter_world_properties": "Filtrar propriedades do mundo...",
   "folder": "Pasta",
+  "game_names": {
+    "natural_wall": "{{name}} (natural)"
+  },
   "get_started_intro": "Para começar, faça uma das seguintes ações:",
   "getting_started": "Primeiros passos",
   "hide_info_pane": "Ocultar painel de informações",
