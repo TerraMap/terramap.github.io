@@ -1028,7 +1028,8 @@ function readString(reader: DataStream): string {
     step++;
   }
 
-  return reader.readString(stringLength);
+  // .NET BinaryWriter writes strings as UTF-8, so non-ASCII names (e.g. Chinese) must be decoded as such
+  return reader.readString(stringLength, "utf-8");
 }
 
 export { readChests, readFileFormatHeader, readHeader, readNpcs, readSigns, readString, readTileEntities, readTiles, readWorldFile };
