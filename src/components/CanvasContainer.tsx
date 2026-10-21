@@ -1,5 +1,6 @@
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
 import { usePanZoom } from '../hooks/usePanZoom';
+import { deviceAlignedSize } from '../lib/deviceAlignedSize';
 import { getTileColorRaw } from '../lib/mapRenderer';
 import type { PlayerMap } from '../lib/readPlayerMap';
 import type { IndexEntry } from '../lib/tileSearch';
@@ -122,14 +123,29 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
       const canvas = canvasRef.current;
       const wrapper = wrapperRef.current;
       if (!el || !canvas || !wrapper) return;
-      const displayWidth = wrapper.clientWidth;
-      const ratio = canvas.height / canvas.width;
-      const displayHeight = displayWidth * ratio;
+      const { width: displayWidth, height: displayHeight } =
+        deviceAlignedSize(wrapper.clientWidth, canvas.height / canvas.width, window.devicePixelRatio);
       for (const c of [el, canvas, overlayRef.current!, wireRef.current!, fogRef.current!, selectionRef.current!]) {
         c.style.width = `${displayWidth}px`;
         c.style.height = `${displayHeight}px`;
       }
     }, []);
+
+    // Browser zoom changes devicePixelRatio, which can make the size fractional again.
+    useEffect(() => {
+      let query: MediaQueryList | null = null;
+      const onChange = () => {
+        fitToContainer();
+        watch();
+      };
+      const watch = () => {
+        query?.removeEventListener('change', onChange);
+        query = window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
+        query.addEventListener('change', onChange);
+      };
+      watch();
+      return () => query?.removeEventListener('change', onChange);
+    }, [fitToContainer]);
 
     useImperativeHandle(ref, () => ({
       setWorldSize(width: number, height: number) {
