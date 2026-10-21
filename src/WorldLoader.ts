@@ -1031,6 +1031,7 @@ function readString(reader: DataStream): string {
     step++;
   }
 
+  // Terraria writes strings with .NET's BinaryWriter, which encodes them as UTF-8, so non-ASCII names (e.g. Chinese) must be decoded as such
   return utf8Decoder.decode(reader.mapUint8Array(stringLength));
 }
 
