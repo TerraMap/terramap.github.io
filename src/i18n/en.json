@@ -31,6 +31,9 @@
   "filter_tile_composition": "Filter tiles...",
   "filter_world_properties": "Filter world properties...",
   "folder": "Folder",
+  "game_names": {
+    "natural_wall": "{{name}} (natural)"
+  },
   "get_started_intro": "Get started by doing one of the following:",
   "getting_started": "Getting Started",
   "hide_info_pane": "Hide Info Pane",

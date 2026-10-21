@@ -31,6 +31,9 @@
   "filter_tile_composition": "筛选方块...",
   "filter_world_properties": "筛选世界属性...",
   "folder": "文件夹",
+  "game_names": {
+    "natural_wall": "{{name}}（天然）"
+  },
   "get_started_intro": "请先执行以下操作之一：",
   "getting_started": "快速入门",
   "hide_info_pane": "隐藏信息面板",

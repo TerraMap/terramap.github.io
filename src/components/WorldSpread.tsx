@@ -1,6 +1,7 @@
 import { Input, Table, type TableColumnsType } from 'antd';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useBlockNames } from '../hooks/useBlockNames';
 import type { PlayerMap } from '../lib/readPlayerMap';
 import { capitalizeFirstLetter } from '../lib/string';
 import { tiles } from '../tiles';
@@ -14,6 +15,7 @@ const TABLE_HEADER_HEIGHT = 39;
 interface TileCountRow {
   id: number;
   name: string;
+  englishName: string;
   count: number;
 }
 
@@ -25,6 +27,7 @@ export function WorldSpread({ worldProperties, playerMap, tileCounts, solidBlock
   maxHeight?: string;
 }) {
   const { t } = useTranslation();
+  const names = useBlockNames();
   const [filter, setFilter] = useState('');
   const tableWrapperRef = useRef<HTMLDivElement>(null);
   const [tableHeight, setTableHeight] = useState(0);
@@ -60,14 +63,15 @@ export function WorldSpread({ worldProperties, playerMap, tileCounts, solidBlock
     if (!tileCounts) return [];
     return Object.entries(tileCounts).map(([id, count]) => {
       const tileId = Number(id);
-      return { id: tileId, name: tiles[tileId]?.name ?? `Tile ${tileId}`, count };
+      const englishName = tiles[tileId]?.name ?? `Tile ${tileId}`;
+      return { id: tileId, name: names.tile(englishName), englishName, count };
     });
-  }, [tileCounts]);
+  }, [tileCounts, names]);
 
   const filteredTileRows = useMemo(() => {
     if (!filter) return tileRows;
     const q = filter.toLowerCase();
-    return tileRows.filter(row => row.name.toLowerCase().includes(q));
+    return tileRows.filter(row => row.name.toLowerCase().includes(q) || row.englishName.toLowerCase().includes(q));
   }, [tileRows, filter]);
 
   const columns: TableColumnsType<TileCountRow> = useMemo(() => [
