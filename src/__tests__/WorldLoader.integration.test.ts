@@ -21,11 +21,14 @@ type WorkerPostMessage = {
   tileEntities?: Map<{ x: number; y: number }, TileEntity>;
 };
 
-const postMessageMock = vi.fn();
-const workerCalls = () => postMessageMock.mock.calls as Array<[WorkerPostMessage]>;
+// Record messages in a plain array rather than reading vi.fn().mock.calls:
+// Vitest clears mock calls before each test (clearMocks), which would discard
+// the messages posted while parsing in beforeAll.
+let postedMessages: Array<[WorkerPostMessage]> = [];
+const workerCalls = () => postedMessages;
 (globalThis as unknown as Record<string, unknown>).self = {
   addEventListener: vi.fn(),
-  postMessage: postMessageMock,
+  postMessage: (message: WorkerPostMessage) => { postedMessages.push([message]); },
 };
 
 const { readFileFormatHeader, readHeader, readTiles, readChests, readSigns, readNpcs, readTileEntities } = await import('../WorldLoader');
@@ -46,7 +49,7 @@ function loadWorld(filename: string): DataStream {
 function parseWorld(filename: string): { world: WorldRecord; positions: number[] } {
   const reader = loadWorld(filename);
   const world = {} as WorldRecord;
-  postMessageMock.mockClear();
+  postedMessages = [];
 
   const positions = readFileFormatHeader(reader, world);
   readHeader(reader, world);
