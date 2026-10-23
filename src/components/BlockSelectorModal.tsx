@@ -18,6 +18,16 @@ const typeLabelKeys: Record<BlockType, string> = {
   Wall: 'block_type.Wall',
 };
 
+// Exact matches first, then names that start with the search text; the English name counts too.
+function searchRank(option: { label: string; englishLabel: string }, input: string): number {
+  let best = 2;
+  for (const name of [option.label.toLowerCase(), option.englishLabel.toLowerCase()]) {
+    if (name === input) return 0;
+    if (name.startsWith(input)) best = 1;
+  }
+  return best;
+}
+
 interface BlockSelectorModalProps {
   open: boolean;
   onClose: (ok: boolean) => void;
@@ -113,6 +123,11 @@ export function BlockSelectorModal({
             autoClearSearchValue: false,
             searchValue,
             onSearch: setSearchValue,
+            // Best match first, then shorter names.
+            filterSort: (a, b, { searchValue: input }) => {
+              const q = input.toLowerCase();
+              return searchRank(a, q) - searchRank(b, q) || a.label.length - b.label.length;
+            },
             filterOption: (input, option) => {
               const inputLower = input.toLowerCase();
               if ((option?.label ?? '').toLowerCase().includes(inputLower)) return true;
