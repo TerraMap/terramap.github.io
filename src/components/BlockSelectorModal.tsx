@@ -12,6 +12,22 @@ const typeColors: Record<BlockType, string> = {
 
 type FilterType = 'All' | BlockType;
 
+const typeLabelKeys: Record<BlockType, string> = {
+  Tile: 'block_type.Tile',
+  Item: 'block_type.Item',
+  Wall: 'block_type.Wall',
+};
+
+// Exact matches first, then names that start with the search text; the English name counts too.
+function searchRank(option: { label: string; englishLabel: string }, input: string): number {
+  let best = 2;
+  for (const name of [option.label.toLowerCase(), option.englishLabel.toLowerCase()]) {
+    if (name === input) return 0;
+    if (name.startsWith(input)) best = 1;
+  }
+  return best;
+}
+
 interface BlockSelectorModalProps {
   open: boolean;
   onClose: (ok: boolean) => void;
@@ -107,6 +123,11 @@ export function BlockSelectorModal({
             autoClearSearchValue: false,
             searchValue,
             onSearch: setSearchValue,
+            // Best match first, then shorter names.
+            filterSort: (a, b, { searchValue: input }) => {
+              const q = input.toLowerCase();
+              return searchRank(a, q) - searchRank(b, q) || a.label.length - b.label.length;
+            },
             filterOption: (input, option) => {
               const inputLower = input.toLowerCase();
               if ((option?.label ?? '').toLowerCase().includes(inputLower)) return true;
@@ -125,7 +146,7 @@ export function BlockSelectorModal({
                 color={info ? typeColors[info.type] : undefined}
                 style={{ marginInlineEnd: 4 }}
               >
-                {label} ({info?.type})
+                {label} ({info ? t(typeLabelKeys[info.type]) : ''})
               </Tag>
             );
           }}
@@ -133,7 +154,7 @@ export function BlockSelectorModal({
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span>{option.data.label}</span>
               <Tag color={typeColors[option.data.type]} style={{ marginRight: 0 }}>
-                {option.data.type} {option.data.id}
+                {t(typeLabelKeys[option.data.type])} {option.data.id}
               </Tag>
             </div>
           )}

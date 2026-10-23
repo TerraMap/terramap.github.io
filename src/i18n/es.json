@@ -1,6 +1,11 @@
 {
   "about": "Acerca de",
   "all": "Todo",
+  "block_type": {
+    "Item": "Objeto",
+    "Tile": "Bloque",
+    "Wall": "Pared"
+  },
   "blocks": "Bloques",
   "cancel": "Cancelar",
   "choose_blocks": "Elegir bloques",
@@ -90,7 +95,6 @@
   "show_all_spoilers": "Mostrar todos los spoilers",
   "show_info_pane": "Mostrar panel de información",
   "size": "Tamaño",
-  "small": "Pequeño",
   "slopes": {
     "half_tile": "Medio bloque",
     "slope_down_left": "Pendiente abajo-izquierda",
@@ -98,6 +102,7 @@
     "slope_up_left": "Pendiente arriba-izquierda",
     "slope_up_right": "Pendiente arriba-derecha"
   },
+  "small": "Pequeño",
   "steam_cloud": "(Steam Cloud)",
   "tab_spread": "Propagación",
   "tab_tile": "Bloque",
