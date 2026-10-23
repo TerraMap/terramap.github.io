@@ -103,7 +103,7 @@ export function WorldSpread({ worldProperties, playerMap, tileCounts, solidBlock
         {filteredKeys
           .map((key) => (
             <li key={key} style={{ padding: '4px 0' }}>
-              <strong>{capitalizeFirstLetter(key.replace('Blocks', ''))}:</strong> {String(properties[key])}
+              <strong>{t(`spread_labels.${key}`, { defaultValue: capitalizeFirstLetter(key.replace('Blocks', '')) })}:</strong> {String(properties[key])}
             </li>
           ))}
       </ul>

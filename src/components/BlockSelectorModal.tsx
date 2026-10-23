@@ -12,6 +12,12 @@ const typeColors: Record<BlockType, string> = {
 
 type FilterType = 'All' | BlockType;
 
+const typeLabelKeys: Record<BlockType, string> = {
+  Tile: 'block_type.Tile',
+  Item: 'block_type.Item',
+  Wall: 'block_type.Wall',
+};
+
 interface BlockSelectorModalProps {
   open: boolean;
   onClose: (ok: boolean) => void;
@@ -125,7 +131,7 @@ export function BlockSelectorModal({
                 color={info ? typeColors[info.type] : undefined}
                 style={{ marginInlineEnd: 4 }}
               >
-                {label} ({info?.type})
+                {label} ({info ? t(typeLabelKeys[info.type]) : ''})
               </Tag>
             );
           }}
@@ -133,7 +139,7 @@ export function BlockSelectorModal({
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span>{option.data.label}</span>
               <Tag color={typeColors[option.data.type]} style={{ marginRight: 0 }}>
-                {option.data.type} {option.data.id}
+                {t(typeLabelKeys[option.data.type])} {option.data.id}
               </Tag>
             </div>
           )}
