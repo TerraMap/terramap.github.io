@@ -52,7 +52,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
     const isDraggingRef = useRef(false);
     const dragStartRef = useRef<{ x: number; y: number } | null>(null);
 
-    const { zoomIn, zoomOut, reset, panToPoint } = usePanZoom(panzoomRef);
+    const { zoomIn, zoomOut, reset, getLayoutSize, panToPoint, scalePan } = usePanZoom(panzoomRef);
 
     const getMousePos = useCallback((evt: MouseEvent | PointerEvent) => {
       const canvas = canvasRef.current;
@@ -123,29 +123,37 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
       const canvas = canvasRef.current;
       const wrapper = wrapperRef.current;
       if (!el || !canvas || !wrapper) return;
+      // Not clientWidth: it rounds to whole CSS px, so the result could exceed the container
+      const availableWidth = wrapper.getBoundingClientRect().width;
+      if (!availableWidth) return; // hidden (display: none)
       const { width: displayWidth, height: displayHeight } =
-        deviceAlignedSize(wrapper.clientWidth, canvas.height / canvas.width, window.devicePixelRatio);
+        deviceAlignedSize(availableWidth, canvas.height / canvas.width, window.devicePixelRatio);
       for (const c of [el, canvas, overlayRef.current!, wireRef.current!, fogRef.current!, selectionRef.current!]) {
         c.style.width = `${displayWidth}px`;
         c.style.height = `${displayHeight}px`;
       }
     }, []);
 
-    // Browser zoom changes devicePixelRatio, which can make the size fractional again.
+    // Refit when the container resizes or devicePixelRatio changes (e.g. browser zoom),
+    // either of which can leave the canvases a fractional number of device pixels again.
     useEffect(() => {
-      let query: MediaQueryList | null = null;
-      const onChange = () => {
+      const wrapper = wrapperRef.current;
+      if (!wrapper) return;
+      const observer = new ResizeObserver(() => {
+        if (!ctxRef.current) return; // no world loaded yet
+        const before = getLayoutSize().width;
         fitToContainer();
-        watch();
-      };
-      const watch = () => {
-        query?.removeEventListener('change', onChange);
-        query = window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
-        query.addEventListener('change', onChange);
-      };
-      watch();
-      return () => query?.removeEventListener('change', onChange);
-    }, [fitToContainer]);
+        const after = getLayoutSize().width;
+        if (before > 0 && after !== before) scalePan(after / before);
+      });
+      try {
+        // Unlike the default content box, this also fires when only devicePixelRatio changes
+        observer.observe(wrapper, { box: 'device-pixel-content-box' });
+      } catch {
+        observer.observe(wrapper); // Safari doesn't support device-pixel-content-box
+      }
+      return () => observer.disconnect();
+    }, [fitToContainer, getLayoutSize, scalePan]);
 
     useImperativeHandle(ref, () => ({
       setWorldSize(width: number, height: number) {
@@ -401,10 +409,10 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
 
       panToTile(x: number, y: number) {
         const canvas = canvasRef.current;
-        const el = panzoomRef.current;
-        if (!canvas || !el) return;
-        const elX = x * (el.offsetWidth / canvas.width);
-        const elY = y * (el.offsetHeight / canvas.height);
+        if (!canvas) return;
+        const { width, height } = getLayoutSize();
+        const elX = x * (width / canvas.width);
+        const elY = y * (height / canvas.height);
         panToPoint(elX, elY);
       },
 
