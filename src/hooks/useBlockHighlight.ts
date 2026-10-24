@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import type { CanvasContainerHandle } from '../components/CanvasContainer';
 import { items } from '../items';
+import type { Status } from '../lib/status';
 import { buildHighlightEntries, getTileInfoFrom, type SearchableInfo } from '../lib/tileSearch';
 import { tiles } from '../tiles';
 import type { PlayerMap } from '../lib/readPlayerMap';
@@ -33,7 +34,7 @@ export function useBlockHighlight(
     return infos;
   }, [selectedBlocks]);
 
-  const [highlightStatus, setHighlightStatus] = useState('');
+  const [highlightStatus, setHighlightStatus] = useState<Status>();
   const [isHighlighting, setIsHighlighting] = useState(false);
 
   // Tile/wall/item indices are built before the world finishes loading
@@ -42,11 +43,11 @@ export function useBlockHighlight(
   const doHighlight = useCallback((infos: SearchableInfo[], w: WorldData) => {
     const onProgress = (pct: number, matchCount: number) => {
       if (pct >= 100) {
-        setHighlightStatus('');
+        setHighlightStatus(undefined);
         setIsHighlighting(false);
         onFinished?.(matchCount);
       } else {
-        setHighlightStatus(`Highlighting... ${pct}%`);
+        setHighlightStatus({ key: 'highlighting_progress', value: pct });
       }
     };
     const entries = buildHighlightEntries(infos, w) ?? [];

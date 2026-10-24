@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 import type { CanvasContainerHandle } from '../components/CanvasContainer';
+import type { Status } from '../lib/status';
 import { getTileInfo } from '../lib/tileInfo';
 import type { Chest, Sign, TileEntity, WorldData, WorldNpc } from '../types/settings';
 
@@ -86,7 +87,7 @@ interface TileData {
 }
 
 interface WorkerMessage {
-  status?: string;
+  status?: Status;
   version?: number;
   world?: WorldData;
   tileData?: TileData;
@@ -101,7 +102,7 @@ interface WorkerMessage {
 
 export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle | null>, onWorldSized?: () => void) {
   const [world, setWorld] = useState<WorldData | null>(null);
-  const [status, setStatus] = useState<string | undefined>('Please choose a Terraria .wld file');
+  const [status, setStatus] = useState<Status | undefined>({ key: 'choose_file' });
   const [isLoading, setIsLoading] = useState(false);
   const worldRef = useRef<WorldData | null>(null);
   const workerRef = useRef<Worker | null>(null);
@@ -114,7 +115,7 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
     }
 
     setIsLoading(true);
-    setStatus('Loading...');
+    setStatus({ key: 'loading' });
 
     const worker = new Worker(new URL('../WorldLoader.ts', import.meta.url), { type: 'module' });
     workerRef.current = worker;
@@ -183,7 +184,7 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
         // Phase 1: render canvas columns directly from TypedArrays.
         let col = 0;
         const renderChunk = () => {
-          const msg = `Rendering world... ${Math.round(col / w.width * 100)}%`;
+          const msg: Status = { key: 'rendering_progress', value: Math.round(col / w.width * 100) };
           statusRef.current = msg;
           const now = performance.now();
           if (now - lastStatusFlush.current > 200) {

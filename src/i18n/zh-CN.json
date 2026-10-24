@@ -112,16 +112,16 @@
   },
   "status": {
     "choose_file": "请选择一个 Terraria .wld 世界文件",
-    "highlighting_progress": "正在高亮... {{value}}",
-    "loaded_tiles": "已加载 {{value}} 个方块",
+    "highlighting_progress": "正在高亮... {{value}}%",
+    "loaded_tiles": "已加载 {{value, number}} 个方块",
     "loading": "加载中...",
     "loading_file": "正在加载世界文件...",
     "reading_file": "正在读取世界文件...",
     "reading_header": "正在读取世界信息...",
     "reading_tiles": "正在读取方块...",
-    "reading_tiles_progress": "正在读取方块... {{value}}",
+    "reading_tiles_progress": "正在读取方块... {{value}}%",
     "reading_version": "正在读取世界版本...",
-    "rendering_progress": "正在绘制地图... {{value}}"
+    "rendering_progress": "正在绘制地图... {{value}}%"
   },
   "steam_cloud": "（Steam 云）",
   "tab_spread": "蔓延",
