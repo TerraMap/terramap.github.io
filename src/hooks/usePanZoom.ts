@@ -55,18 +55,37 @@ export function usePanZoom(
   const reset = useCallback(() => instanceRef.current?.reset(), []);
   const getScale = useCallback(() => instanceRef.current?.getScale() ?? 1, []);
 
+  // Untransformed size of the element. offsetWidth/offsetHeight round to whole CSS px,
+  // which the zoom magnifies into an offset when the element's size is fractional.
+  const getLayoutSize = useCallback(() => {
+    const el = containerRef.current;
+    if (!el) return { width: 0, height: 0 };
+    const scale = instanceRef.current?.getScale() ?? 1;
+    const rect = el.getBoundingClientRect();
+    return { width: rect.width / scale, height: rect.height / scale };
+  }, [containerRef]);
+
   const panToPoint = useCallback((elX: number, elY: number) => {
     const pz = instanceRef.current;
     const el = containerRef.current;
     if (!pz || !el) return;
     const scale = pz.getScale();
-    const parent = el.parentElement!;
-    const cx = el.offsetWidth / 2;
-    const cy = el.offsetHeight / 2;
-    const panX = (parent.clientWidth / 2 - cx) / scale - elX + cx;
-    const panY = (parent.clientHeight / 2 - cy) / scale - elY + cy;
+    const parent = el.parentElement!.getBoundingClientRect();
+    const { width, height } = getLayoutSize();
+    const cx = width / 2;
+    const cy = height / 2;
+    const panX = (parent.width / 2 - cx) / scale - elX + cx;
+    const panY = (parent.height / 2 - cy) / scale - elY + cy;
     pz.pan(panX, panY, { force: true });
-  }, [containerRef]);
+  }, [containerRef, getLayoutSize]);
 
-  return { zoomIn, zoomOut, reset, getScale, panToPoint, instanceRef };
+  // After the element is resized by `factor`, keeps the same part of it at the parent's top-left.
+  const scalePan = useCallback((factor: number) => {
+    const pz = instanceRef.current;
+    if (!pz) return;
+    const { x, y } = pz.getPan();
+    pz.pan(x * factor, y * factor, { force: true });
+  }, []);
+
+  return { zoomIn, zoomOut, reset, getScale, getLayoutSize, panToPoint, scalePan, instanceRef };
 }
