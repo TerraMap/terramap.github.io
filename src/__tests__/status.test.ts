@@ -31,7 +31,7 @@ describe('status messages', () => {
     expect(t('status.loaded_tiles', { value: 11520000 })).toBe('已加载 11,520,000 个方块');
   });
 
-  it("format numbers in the app's language, even when the text falls back to English", () => {
-    expect(i18n.getFixedT('es')('status.loaded_tiles', { value: 11520000 })).toBe('Loaded 11.520.000 tiles');
+  it("format numbers in the app's language", () => {
+    expect(i18n.getFixedT('es')('status.loaded_tiles', { value: 11520000 })).toBe('11.520.000 bloques cargados');
   });
 });
