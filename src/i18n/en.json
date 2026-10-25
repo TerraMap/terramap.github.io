@@ -1,6 +1,11 @@
 {
   "about": "About",
   "all": "All",
+  "block_type": {
+    "Item": "Item",
+    "Tile": "Tile",
+    "Wall": "Wall"
+  },
   "blocks": "Blocks",
   "cancel": "Cancel",
   "choose_blocks": "Choose Blocks",
@@ -90,13 +95,33 @@
   "show_all_spoilers": "Show all spoilers",
   "show_info_pane": "Show Info Pane",
   "size": "Size",
-  "small": "Small",
   "slopes": {
     "half_tile": "Half Tile",
     "slope_down_left": "Slope Down-Left",
     "slope_down_right": "Slope Down-Right",
     "slope_up_left": "Slope Up-Left",
     "slope_up_right": "Slope Up-Right"
+  },
+  "small": "Small",
+  "spread_labels": {
+    "corruptBlocks": "Corrupt",
+    "crimsonBlocks": "Crimson",
+    "explored": "Explored",
+    "hallowBlocks": "Hallow",
+    "solidBlocks": "Solid"
+  },
+  "status": {
+    "choose_file": "Please choose a Terraria .wld file",
+    "highlighting_progress": "Highlighting... {{value}}%",
+    "loaded_tiles": "Loaded {{value, number}} tiles",
+    "loading": "Loading...",
+    "loading_file": "Loading world file...",
+    "reading_file": "Reading world file...",
+    "reading_header": "Reading world header...",
+    "reading_tiles": "Reading world tiles...",
+    "reading_tiles_progress": "Reading tiles... {{value}}%",
+    "reading_version": "Reading world version...",
+    "rendering_progress": "Rendering world... {{value}}%"
   },
   "steam_cloud": "(Steam Cloud)",
   "tab_spread": "Spread",
@@ -131,9 +156,11 @@
       "actuated": "Actuated",
       "block": "Block",
       "blue": "Blue",
+      "depth": "{{feet}} ft {{layer}}",
       "east": "East",
       "green": "Green",
       "honey": "Honey",
+      "horizontal": "{{feet}} {{direction}}",
       "lava": "Lava",
       "layer_cavern": "Cavern",
       "layer_space": "Space",

@@ -411,7 +411,7 @@ export default function AppContent() {
             </Drawer>
           </div>
           <Layout.Footer style={{ padding: 0 }}>
-            <StatusBar selectedTile={hoveredTile} status={highlightStatus || status} isLoading={isWorldLoading || !!highlightStatus} world={worldPosition} />
+            <StatusBar selectedTile={hoveredTile} status={highlightStatus ?? status} isLoading={isWorldLoading || !!highlightStatus} world={worldPosition} />
           </Layout.Footer>
         </Layout>
 
