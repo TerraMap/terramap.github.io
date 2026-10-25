@@ -34,7 +34,7 @@ function getPositionText(tile: WorldTile, world: WorldPosition, t: TFunction): s
   const centerX = world.width / 2;
   const horizontalFeet = Math.round(Math.abs(x - centerX) * FEET_PER_TILE);
   const direction = x >= centerX ? t('tile_fields.values.east') : t('tile_fields.values.west');
-  const horizontal = `${horizontalFeet} ${direction}`;
+  const horizontal = t('tile_fields.values.horizontal', { feet: horizontalFeet, direction });
 
   const depthTiles = y - world.worldSurfaceY;
   const depthFeet = Math.round(Math.abs(depthTiles) * FEET_PER_TILE);
@@ -45,12 +45,12 @@ function getPositionText(tile: WorldTile, world: WorldPosition, t: TFunction): s
     const layer = y < world.worldSurfaceY * SPACE_SURFACE_RATIO
       ? t('tile_fields.values.layer_space')
       : t('tile_fields.values.layer_surface');
-    depth = `${depthFeet} ft ${layer}`;
+    depth = t('tile_fields.values.depth', { feet: depthFeet, layer });
   } else {
     const layer = y < world.rockLayerY ? t('tile_fields.values.layer_underground')
       : y < world.hellLayerY ? t('tile_fields.values.layer_cavern')
         : t('tile_fields.values.layer_underworld');
-    depth = `${depthFeet} ft ${layer}`;
+    depth = t('tile_fields.values.depth', { feet: depthFeet, layer });
   }
 
   return `${horizontal}, ${depth}`;

@@ -4,7 +4,10 @@ import { getTileDisplayFields } from '../lib/tileDisplayFields';
 import type { WorldData, WorldTile } from '../types/settings';
 
 // Real English strings, so these tests double as a check that the keys exist.
-const t = ((key: string) => key.split('.').reduce<unknown>((o, k) => (o as Record<string, unknown>)?.[k], en) as string) as unknown as Parameters<typeof getTileDisplayFields>[1];
+const t = ((key: string, options?: Record<string, unknown>) => {
+  const text = key.split('.').reduce<unknown>((o, k) => (o as Record<string, unknown>)?.[k], en) as string;
+  return options ? text.replace(/\{\{(\w+)\}\}/g, (_, name: string) => String(options[name])) : text;
+}) as unknown as Parameters<typeof getTileDisplayFields>[1];
 
 function makeWorld(overrides: Partial<WorldData> = {}): WorldData {
   const width = 4;

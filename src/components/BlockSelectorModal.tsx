@@ -12,6 +12,37 @@ const typeColors: Record<BlockType, string> = {
 
 type FilterType = 'All' | BlockType;
 
+interface SearchOption {
+  value: string;
+  label: string;
+  englishLabel: string;
+  type: BlockType;
+  id: string;
+  /** Lowercased localized and English names, for searching. */
+  names: string[];
+  /** Lowercased type tags as shown ("方块 4") and in English ("tile 4"), for searching. */
+  tags: string[];
+}
+
+function matchesSearch(input: string, option?: SearchOption): boolean {
+  const query = input.toLowerCase();
+  return !!option && (option.names.some(name => name.includes(query)) || option.tags.some(tag => tag.includes(query)));
+}
+
+// Exact name or id matches first, then names that start with the search text.
+function searchRank(option: SearchOption, query: string): number {
+  if (option.id === query || option.names.includes(query)) return 0;
+  return option.names.some(name => name.startsWith(query)) ? 1 : 2;
+}
+
+// Best match first, then shorter names. With no search text this keeps the
+// alphabetical order from useBlockOptions, since rc-select sorts then too.
+function sortBySearch(a: SearchOption, b: SearchOption, { searchValue }: { searchValue: string }): number {
+  const query = searchValue.toLowerCase();
+  if (!query) return 0;
+  return searchRank(a, query) - searchRank(b, query) || a.label.length - b.label.length;
+}
+
 interface BlockSelectorModalProps {
   open: boolean;
   onClose: (ok: boolean) => void;
@@ -36,14 +67,16 @@ export function BlockSelectorModal({
 
   const filteredOptions = useMemo(() => {
     const filtered = filter === 'All' ? options : options.filter(o => o.type === filter);
-    return filtered.filter(o => o.englishLabel !== '[empty]').map(o => ({
+    return filtered.filter(o => o.englishLabel !== '[empty]').map((o): SearchOption => ({
       value: `${o.value}|${o.dataU ?? ''}|${o.dataV ?? ''}|${o.frameIndex ?? ''}`,
       label: o.label,
       englishLabel: o.englishLabel,
       type: o.type,
       id: o.id,
+      names: [o.label.toLowerCase(), o.englishLabel.toLowerCase()],
+      tags: [`${t(`block_type.${o.type}`)} ${o.id}`.toLowerCase(), `${o.type} ${o.id}`.toLowerCase()],
     }));
-  }, [options, filter]);
+  }, [options, filter, t]);
 
   const selectedOptionsByValue = useMemo(() => {
     const map = new Map<string, { type: BlockType; id: string }>();
@@ -107,14 +140,8 @@ export function BlockSelectorModal({
             autoClearSearchValue: false,
             searchValue,
             onSearch: setSearchValue,
-            filterOption: (input, option) => {
-              const inputLower = input.toLowerCase();
-              if ((option?.label ?? '').toLowerCase().includes(inputLower)) return true;
-              if ((option?.englishLabel ?? '').toLowerCase().includes(inputLower)) return true;
-              if (option?.id.toLowerCase().includes(inputLower)) return true;
-              if (`${option?.type} ${option?.id}`.toLowerCase().includes(inputLower)) return true;
-              return false;
-            },
+            filterSort: sortBySearch,
+            filterOption: matchesSearch,
           }}
           tagRender={({ value, closable, onClose, label }) => {
             const info = selectedOptionsByValue.get(value as string);
@@ -125,7 +152,7 @@ export function BlockSelectorModal({
                 color={info ? typeColors[info.type] : undefined}
                 style={{ marginInlineEnd: 4 }}
               >
-                {label} ({info?.type})
+                {label} ({info ? t(`block_type.${info.type}`) : ''})
               </Tag>
             );
           }}
@@ -133,7 +160,7 @@ export function BlockSelectorModal({
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span>{option.data.label}</span>
               <Tag color={typeColors[option.data.type]} style={{ marginRight: 0 }}>
-                {option.data.type} {option.data.id}
+                {t(`block_type.${option.data.type}`)} {option.data.id}
               </Tag>
             </div>
           )}

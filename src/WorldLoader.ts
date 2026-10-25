@@ -51,7 +51,7 @@ const start = function (file: File): void {
   const fileReader = new FileReaderSync();
 
   self.postMessage({
-    status: "Reading world file..."
+    status: { key: 'reading_file' }
   });
 
   const buffer = fileReader.readAsArrayBuffer(file);
@@ -63,7 +63,7 @@ const start = function (file: File): void {
   const world = {} as WorldRecord;
 
   self.postMessage({
-    status: "Loading world file..."
+    status: { key: 'loading_file' }
   });
 
   readWorldFile(ds, world);
@@ -124,13 +124,13 @@ function readWorldFile(reader: DataStream, world: WorldRecord): void {
 
 function readFileFormatHeader(reader: DataStream, world: WorldRecord): number[] {
   self.postMessage({
-    status: "Reading world version..."
+    status: { key: 'reading_version' }
   });
 
   world.version = reader.readInt32();
 
   self.postMessage({
-    status: "Reading world header...",
+    status: { key: 'reading_header' },
     version: world.version,
   });
 
@@ -538,7 +538,7 @@ function readHeader(reader: DataStream, world: WorldRecord): void {
 
 function readTiles(reader: DataStream, world: WorldRecord): void {
   self.postMessage({
-    status: "Reading world tiles...",
+    status: { key: 'reading_tiles' },
     world: world,
   });
 
@@ -565,7 +565,7 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
 
   for (let x = 0; x < world.width; x++) {
     if (x > 0 && x % progressInterval === 0) {
-      self.postMessage({ status: `Reading tiles... ${Math.round(x / world.width * 100)}%` });
+      self.postMessage({ status: { key: 'reading_tiles_progress', value: Math.round(x / world.width * 100) } });
     }
     let y = 0;
     while (y < world.height) {
@@ -727,7 +727,7 @@ function readTiles(reader: DataStream, world: WorldRecord): void {
   for (const [wt, arr] of wallBuckets) wallTypeIdx.set(wt, new Uint32Array(arr));
 
   self.postMessage({
-    status: `Loaded ${world.totalTileCount.toLocaleString()} tiles`,
+    status: { key: 'loaded_tiles', value: world.totalTileCount },
     tileData: {
       types: types.buffer,
       wallTypes: wallTypes.buffer,
