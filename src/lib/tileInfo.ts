@@ -81,19 +81,18 @@ export function getTileAt(world: WorldData | null, x: number, y: number): WorldT
   return tile;
 }
 
+/** The item's name without prefix or count, or undefined for an unknown item ID. */
+export function getItemName(id: number, names: BlockNames = englishBlockNames): string | undefined {
+  const itemSettings = items.find(it => it.id === id);
+  return itemSettings && names.item(id, itemSettings.name);
+}
+
 export function getItemText(item: WorldItem, names: BlockNames = englishBlockNames): string {
   let prefix = "";
 
   if (item.prefixId > 0 && item.prefixId < itemPrefixes.length)
     prefix = names.prefix(item.prefixId, itemPrefixes[item.prefixId].name);
 
-  let itemName: string | number = item.id;
-  for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
-    const itemSettings = items[itemIndex];
-    if (itemSettings.id === item.id) {
-      itemName = names.item(item.id, itemSettings.name);
-      break;
-    }
-  }
+  const itemName = getItemName(item.id, names) ?? item.id;
   return `${prefix} ${itemName} ${item.count !== 1 ? `(${item.count})` : ''}`;
 }

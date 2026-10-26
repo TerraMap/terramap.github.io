@@ -1,8 +1,10 @@
-import { Descriptions } from "antd";
+import { ExportOutlined } from "@ant-design/icons";
+import { Descriptions, Typography } from "antd";
 import { useTranslation } from "react-i18next";
 import { useBlockNames } from "../hooks/useBlockNames";
 import { getTileDisplayFields, type WorldPosition } from "../lib/tileDisplayFields";
-import { getItemText } from "../lib/tileInfo";
+import { getItemName, getItemText } from "../lib/tileInfo";
+import { wikiUrl } from "../lib/wikiLink";
 import type { WorldItem, WorldTile } from "../types/settings";
 
 const entityTypeKeys: Record<number, string> = {
@@ -19,6 +21,26 @@ const entityTypeKeys: Record<number, string> = {
   10: 'entity_types.critter_anchor',
 };
 
+/** Opens the item's page on the Terraria wiki, in the current language where the wiki has one. */
+function WikiLink({ item }: { item: WorldItem }) {
+  const { t, i18n } = useTranslation();
+  const names = useBlockNames();
+  const name = getItemName(item.id, names);
+  if (!name) return null;
+  return (
+    <Typography.Link
+      href={wikiUrl(name, i18n.language)}
+      target="_blank"
+      rel="noopener noreferrer"
+      title={t('wiki_link')}
+      aria-label={t('wiki_link')}
+      style={{ marginLeft: 6 }}
+    >
+      <ExportOutlined />
+    </Typography.Link>
+  );
+}
+
 function ItemList({ label, items }: { label?: string; items: WorldItem[] }) {
   const names = useBlockNames();
   const nonEmpty = items.filter(i => i.id > 0);
@@ -28,7 +50,7 @@ function ItemList({ label, items }: { label?: string; items: WorldItem[] }) {
       {label && (<strong>{label}</strong>)}
       <ul style={{ padding: 0, margin: 0, marginLeft: 16 }}>
         {nonEmpty.map((item, i) => (
-          <li key={i} style={{ padding: '4px 0' }}>{getItemText(item, names)}</li>
+          <li key={i} style={{ padding: '4px 0' }}>{getItemText(item, names)}<WikiLink item={item} /></li>
         ))}
       </ul>
     </div>
@@ -50,8 +72,8 @@ function PairedItemList({ label, items, dyes }: { label?: string; items: WorldIt
       <ul style={{ padding: 0, margin: 0, marginLeft: 16 }}>
         {pairs.map(({ item, dye }, i) => (
           <li key={i} style={{ padding: '4px 0' }}>
-            {getItemText(item, names)}
-            {dye && <span style={{ opacity: 0.7 }}> — {getItemText(dye, names)}</span>}
+            {getItemText(item, names)}<WikiLink item={item} />
+            {dye && <span style={{ opacity: 0.7 }}> — {getItemText(dye, names)}<WikiLink item={dye} /></span>}
           </li>
         ))}
       </ul>

@@ -191,6 +191,7 @@
   "version": "Version",
   "view": "View",
   "walls": "Walls",
+  "wiki_link": "Open on the Terraria Wiki",
   "world": "World",
   "world_files_location": "Terraria world and player map files are usually located at (click to copy path):",
   "world_loaded_description": "Once a world file is loaded, you can pan and zoom the map, search for blocks & items, view chest contents, and more."
