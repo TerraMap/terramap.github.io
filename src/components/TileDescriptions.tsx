@@ -1,8 +1,10 @@
-import { Descriptions, Typography } from "antd";
+import { CopyOutlined } from "@ant-design/icons";
+import { App, Button, Descriptions, Typography } from "antd";
 import { useTranslation } from "react-i18next";
 import { useBlockNames } from "../hooks/useBlockNames";
 import { getTileDisplayFields, type WorldPosition } from "../lib/tileDisplayFields";
 import { getItemText } from "../lib/tileInfo";
+import { buildTileSummary, itemLabels } from "../lib/tileSummary";
 import type { WorldItem, WorldTile } from "../types/settings";
 
 const POTS_TILE = 28;
@@ -66,9 +68,25 @@ export default function TileDescriptions({ selectedTile, world }: { selectedTile
   const names = useBlockNames();
   const fields = getTileDisplayFields(selectedTile, t, world, names);
   const { chest, tileEntity } = selectedTile;
+  const { notification } = App.useApp();
+
+  const copySummary = () => {
+    const items = [
+      ...(chest ? chest.items : []),
+      ...(tileEntity?.item ? [tileEntity.item] : []),
+      ...(tileEntity?.items ?? []),
+    ];
+    const text = buildTileSummary(fields, itemLabels(items, names), t('tile_contents'));
+    void navigator.clipboard.writeText(text).then(() => {
+      notification.success({ key: 'copy', title: t('tile_info_copied'), placement: 'bottomRight' });
+    });
+  };
 
   return (
     <>
+      <Button size="small" icon={<CopyOutlined />} onClick={copySummary} style={{ marginBottom: 8 }}>
+        {t('copy_tile_info')}
+      </Button>
       <Descriptions column={1} colon={false}>
         {fields.map(({ label, value }, i) => (
           <Descriptions.Item key={i} label={label || undefined}>{value}</Descriptions.Item>

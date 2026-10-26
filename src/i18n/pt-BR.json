@@ -14,6 +14,7 @@
   "click_to_copy": "Clique para copiar: {{text}}",
   "command": "Comando",
   "copied": "Copiado: {{text}}",
+  "copy_tile_info": "Copiar informações",
   "count": "Contagem",
   "drag_drop_description": "Arraste e solte um arquivo Terraria .wld do seu computador nesta página.",
   "drop_invalid": "Apenas arquivos de mundo do Terraria são suportados",
@@ -138,6 +139,7 @@
     "dark": "Escuro",
     "light": "Claro"
   },
+  "tile_contents": "Contém",
   "tile_fields": {
     "actuated": "Ativado",
     "actuator": "Atuador",
@@ -184,6 +186,7 @@
     "wall": "Parede",
     "wires": "Fios"
   },
+  "tile_info_copied": "Informações do bloco copiadas",
   "tiles": "Blocos",
   "to_avoid_spoilers": "Para evitar spoilers:",
   "update_available": "Atualização disponível",

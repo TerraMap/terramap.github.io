@@ -14,6 +14,7 @@
   "click_to_copy": "Нажмите для копирования: {{text}}",
   "command": "Команда",
   "copied": "Скопировано: {{text}}",
+  "copy_tile_info": "Копировать сведения",
   "count": "Количество",
   "drag_drop_description": "Перетащите файл Terraria .wld на эту страницу.",
   "drop_invalid": "Поддерживаются только файлы мира Terraria",
@@ -138,6 +139,7 @@
     "dark": "Тёмная",
     "light": "Светлая"
   },
+  "tile_contents": "Содержимое",
   "tile_fields": {
     "actuated": "Задействован",
     "actuator": "Привод",
@@ -184,6 +186,7 @@
     "wall": "Стена",
     "wires": "Провода"
   },
+  "tile_info_copied": "Сведения о блоке скопированы",
   "tiles": "Блоки",
   "to_avoid_spoilers": "Чтобы избежать спойлеров:",
   "update_available": "Доступно обновление",

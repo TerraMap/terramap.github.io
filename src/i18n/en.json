@@ -14,6 +14,7 @@
   "click_to_copy": "Click to copy: {{text}}",
   "command": "Command",
   "copied": "Copied: {{text}}",
+  "copy_tile_info": "Copy info",
   "count": "Count",
   "drag_drop_description": "Drag and drop a Terraria .wld file from your computer into this page.",
   "drop_invalid": "Only Terraria world files are supported",
@@ -138,6 +139,7 @@
     "dark": "Dark",
     "light": "Light"
   },
+  "tile_contents": "Contains",
   "tile_fields": {
     "actuated": "Actuated",
     "actuator": "Actuator",
@@ -184,6 +186,7 @@
     "wall": "Wall",
     "wires": "Wires"
   },
+  "tile_info_copied": "Block info copied",
   "tiles": "Tiles",
   "to_avoid_spoilers": "To avoid spoilers:",
   "update_available": "Update available",

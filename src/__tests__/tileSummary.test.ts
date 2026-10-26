@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { englishBlockNames } from '../lib/blockNames';
-import { itemLabels } from '../lib/tileSummary';
+import { buildTileSummary, itemLabels } from '../lib/tileSummary';
 
 describe('itemLabels', () => {
   it('skips empty slots and tidies item text', () => {
@@ -11,5 +11,20 @@ describe('itemLabels', () => {
   it('joins a Chinese prefix to the item name', () => {
     const zh = { ...englishBlockNames, prefix: () => '恶魔', item: () => '链锤' };
     expect(itemLabels([{ id: 162, count: 1, prefixId: 1 }], zh)).toEqual(['恶魔链锤']);
+  });
+});
+
+describe('buildTileSummary', () => {
+  it('lists fields one per line, then the items', () => {
+    const text = buildTileSummary(
+      [{ id: 'location', label: 'Location', value: '116 East, 352 ft Underground' }, { id: 'tile', label: 'Tile', value: "Dead Man's Chest" }],
+      ['Band of Regeneration', 'Torch (20)'],
+      'Items',
+    );
+    expect(text).toBe("Location: 116 East, 352 ft Underground\nTile: Dead Man's Chest\nItems:\n- Band of Regeneration\n- Torch (20)");
+  });
+
+  it('omits the items section when there are none', () => {
+    expect(buildTileSummary([{ label: '', value: 'Stone Block' }], [], 'Items')).toBe('Stone Block');
   });
 });
