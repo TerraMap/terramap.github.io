@@ -64,6 +64,7 @@
   "open_world_instruction": "Haz clic en el botón <0/> para seleccionar un archivo Terraria .wld de tu computadora.",
   "percent": "Porcentaje",
   "player_map_description": "Elige un mapa de jugador para evitar spoilers. TerraMap mostrará solo lo que ese jugador ha visto en el mundo.",
+  "pot_note": "Las vasijas no guardan su botín: lo que sueltan se decide al azar al romperlas, así que no se puede ver de antemano.",
   "save_image": "Guardar imagen",
   "search_all_blocks": "Buscar bloques, objetos y paredes...",
   "search_items": "Buscar objetos...",

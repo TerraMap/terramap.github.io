@@ -64,6 +64,7 @@
   "open_world_instruction": "Click the <0/> button to select a Terraria .wld file from your computer.",
   "percent": "Percent",
   "player_map_description": "Pick a player map to avoid spoilers. TerraMap will show only what that player has seen in the world.",
+  "pot_note": "Pots don't store their loot: what drops is decided at random when the pot breaks, so it can't be seen in advance.",
   "save_image": "Save Image",
   "search_all_blocks": "Search tiles, items, and walls...",
   "search_items": "Search items...",

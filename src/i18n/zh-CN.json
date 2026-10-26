@@ -64,6 +64,7 @@
   "open_world_instruction": "点击 <0/> 按钮，选择您计算机上的 Terraria .wld 文件。",
   "percent": "百分比",
   "player_map_description": "选择一个玩家地图以避免剧透。TerraMap 将只显示该玩家在世界中看到的内容。",
+  "pot_note": "罐子里不存东西：掉什么是在敲碎那一刻随机决定的，所以没法提前看到。",
   "save_image": "保存图片",
   "search_all_blocks": "搜索方块、物品和墙壁...",
   "search_items": "搜索物品...",

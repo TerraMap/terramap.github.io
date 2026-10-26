@@ -64,6 +64,7 @@
   "open_world_instruction": "Clique no botão <0/> para selecionar um arquivo Terraria .wld do seu computador.",
   "percent": "Porcentagem",
   "player_map_description": "Escolha um mapa de jogador para evitar spoilers. O TerraMap mostrará apenas o que esse jogador viu no mundo.",
+  "pot_note": "Os potes não guardam o que vão soltar: o conteúdo é sorteado quando o pote quebra, então não dá para ver antes.",
   "save_image": "Salvar imagem",
   "search_all_blocks": "Buscar blocos, itens e paredes...",
   "search_items": "Buscar itens...",

@@ -1,9 +1,11 @@
-import { Descriptions } from "antd";
+import { Descriptions, Typography } from "antd";
 import { useTranslation } from "react-i18next";
 import { useBlockNames } from "../hooks/useBlockNames";
 import { getTileDisplayFields, type WorldPosition } from "../lib/tileDisplayFields";
 import { getItemText } from "../lib/tileInfo";
 import type { WorldItem, WorldTile } from "../types/settings";
+
+const POTS_TILE = 28;
 
 const entityTypeKeys: Record<number, string> = {
   0: 'entity_types.target_dummy',
@@ -75,6 +77,11 @@ export default function TileDescriptions({ selectedTile, world }: { selectedTile
 
       {chest && chest.items.length > 0 && (
         <ItemList items={chest.items} />
+      )}
+
+      {/* Pot loot is rolled when the pot breaks, so the save has nothing to show. */}
+      {selectedTile.Type === POTS_TILE && (
+        <Typography.Paragraph type="secondary" style={{ marginTop: 8 }}>{t('pot_note')}</Typography.Paragraph>
       )}
 
       {tileEntity && (
