@@ -6,6 +6,10 @@
     "urls": ["http://localhost:*"]
   },
   "permissions": [
-    "core:default"
+    "core:default",
+    {
+      "identifier": "opener:allow-open-url",
+      "allow": [{ "url": "https://terraria.wiki.gg/*" }]
+    }
   ]
 }

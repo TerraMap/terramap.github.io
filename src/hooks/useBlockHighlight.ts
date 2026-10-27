@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import type { CanvasContainerHandle } from '../components/CanvasContainer';
-import { items } from '../items';
 import type { Status } from '../lib/status';
+import { itemsById } from '../lib/tileInfo';
 import { buildHighlightEntries, getTileInfoFrom, type SearchableInfo } from '../lib/tileSearch';
 import { tiles } from '../tiles';
 import type { PlayerMap } from '../lib/readPlayerMap';
@@ -21,7 +21,7 @@ export function useBlockHighlight(
     for (const encoded of selectedBlocks) {
       const [value, u, v] = encoded.split('|');
       if (value.startsWith('item')) {
-        const item = items.find(it => `item${it.id}` === value);
+        const item = itemsById.get(Number(value.slice('item'.length)));
         if (item) infos.push(item);
       } else if (value.startsWith('wall')) {
         const wall = walls.find(w => `wall${w.id}` === value);
@@ -93,7 +93,7 @@ export function useBlockHighlight(
     }
     const infos = values.map((encoded) => {
       const [value, u, v] = encoded.split('|');
-      if (value.startsWith('item')) return items.find(it => `item${it.id}` === value);
+      if (value.startsWith('item')) return itemsById.get(Number(value.slice('item'.length)));
       if (value.startsWith('wall')) return walls.find(w => `wall${w.id}` === value);
       return getTileInfoFrom(value, u || undefined, v || undefined);
     }).filter((info): info is SearchableInfo => Boolean(info));

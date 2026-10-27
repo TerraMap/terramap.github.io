@@ -19,7 +19,7 @@ const table: BlockNameTable = {
 };
 
 describe('createBlockNames', () => {
-  const names = createBlockNames(table);
+  const names = createBlockNames(table, 'zh-CN');
 
   it('looks up tiles by English name and everything else by ID', () => {
     expect(names.tile('Lead Ore')).toBe('铅矿');
@@ -36,7 +36,7 @@ describe('createBlockNames', () => {
 });
 
 describe('display helpers', () => {
-  const names = createBlockNames(table);
+  const names = createBlockNames(table, 'zh-CN');
 
   it('getItemText translates the prefix and item', () => {
     const item = { id: 227, prefixId: 81, count: 2 };
@@ -56,8 +56,8 @@ describe('display helpers', () => {
 describe('generated tables', () => {
   const tables: Record<string, BlockNameTable> = { es, 'pt-BR': ptBR, ru, 'zh-CN': zhCN };
 
-  it.each(Object.entries(tables))('%s translates names from each source', (_language, generated) => {
-    const names = createBlockNames(generated);
+  it.each(Object.entries(tables))('%s translates names from each source', (language, generated) => {
+    const names = createBlockNames(generated, language);
     expect(names.tile('Lead Ore')).not.toBe('Lead Ore');
     expect(names.tile('Gold Chest')).not.toBe('Gold Chest');
     expect(names.wall(1, 'Stone Wall')).not.toBe('Stone Wall');
@@ -69,7 +69,7 @@ describe('generated tables', () => {
 
   it('keys items by ID, so items sharing an English name get their own translation', () => {
     // TEdit names both 226 and 227 "Restoration Potion"; the game calls 226 "Lesser Restoration Potion".
-    const names = createBlockNames(zhCN);
+    const names = createBlockNames(zhCN, 'zh-CN');
     expect(names.item(226, 'Restoration Potion')).toBe('弱效恢复药水');
     expect(names.item(227, 'Restoration Potion')).toBe('恢复药水');
   });

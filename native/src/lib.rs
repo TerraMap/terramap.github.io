@@ -416,6 +416,7 @@ fn read_file(path: String) -> Result<Vec<u8>, String> {
 
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_opener::init())
         .invoke_handler(generate_handler![discover_worlds, discover_players, read_file])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

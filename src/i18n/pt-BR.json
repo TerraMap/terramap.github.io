@@ -191,6 +191,7 @@
   "version": "Versão",
   "view": "Exibir",
   "walls": "Paredes",
+  "wiki_link": "Abrir {{name}} na wiki do Terraria",
   "world": "Mundo",
   "world_files_location": "Os arquivos de mundo e mapa do jogador do Terraria geralmente estão localizados em (clique para copiar o caminho):",
   "world_loaded_description": "Depois que um arquivo de mundo for carregado, você pode explorar e dar zoom no mapa, pesquisar blocos e itens, ver o conteúdo de baús e muito mais."
