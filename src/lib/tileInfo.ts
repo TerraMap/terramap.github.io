@@ -81,9 +81,11 @@ export function getTileAt(world: WorldData | null, x: number, y: number): WorldT
   return tile;
 }
 
+export const itemsById = new Map(items.map(it => [it.id, it]));
+
 /** The item's name without prefix or count, or undefined for an unknown item ID. */
 export function getItemName(id: number, names: BlockNames = englishBlockNames): string | undefined {
-  const itemSettings = items.find(it => it.id === id);
+  const itemSettings = itemsById.get(id);
   return itemSettings && names.item(id, itemSettings.name);
 }
 

@@ -56,3 +56,17 @@ export function openNativeDownload(): void {
   const opened = window.open(NATIVE_DOWNLOAD_URL, '_blank', 'noopener');
   if (!opened) window.location.href = NATIVE_DOWNLOAD_URL;
 }
+
+/**
+ * Opens a URL in the system browser via the opener plugin. Native builds from before the plugin
+ * was added don't have it, so those fall back to window.open; unlike openNativeDownload, this
+ * never navigates the window, which would lose the loaded world.
+ */
+export async function openExternalUrl(url: string): Promise<void> {
+  try {
+    const { openUrl } = await import('@tauri-apps/plugin-opener');
+    await openUrl(url);
+  } catch {
+    window.open(url, '_blank', 'noopener');
+  }
+}

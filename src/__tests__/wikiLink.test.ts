@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { englishBlockNames } from '../lib/blockNames';
+import { createBlockNames, englishBlockNames } from '../lib/blockNames';
 import { getItemName } from '../lib/tileInfo';
 import { wikiUrl } from '../lib/wikiLink';
 
@@ -13,6 +13,17 @@ describe('wikiUrl', () => {
   it('falls back to the English wiki', () => {
     expect(wikiUrl('Hermes Boots', 'en')).toBe('https://terraria.wiki.gg/wiki/Special:Search?search=Hermes%20Boots&go=Go');
     expect(wikiUrl('Hermes Boots', 'de')).toBe('https://terraria.wiki.gg/wiki/Special:Search?search=Hermes%20Boots&go=Go');
+  });
+
+  it('only uses an edition for the exact languages TerraMap has names in', () => {
+    // Regional variants without their own names table get English names, so they need the English wiki.
+    expect(wikiUrl('Starfury', 'zh-TW')).toBe('https://terraria.wiki.gg/wiki/Special:Search?search=Starfury&go=Go');
+    expect(wikiUrl('Starfury', 'pt-PT')).toBe('https://terraria.wiki.gg/wiki/Special:Search?search=Starfury&go=Go');
+  });
+
+  it('matches the language of the names table, which is English until a localized one loads', () => {
+    expect(wikiUrl('Starfury', englishBlockNames.language)).toBe('https://terraria.wiki.gg/wiki/Special:Search?search=Starfury&go=Go');
+    expect(createBlockNames({ tiles: {}, walls: {}, items: {}, prefixes: {}, npcs: {} }, 'es').language).toBe('es');
   });
 
   it('escapes characters that would break the query', () => {

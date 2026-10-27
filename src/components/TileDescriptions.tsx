@@ -1,7 +1,10 @@
 import { ExportOutlined } from "@ant-design/icons";
 import { Descriptions, Typography } from "antd";
+import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 import { useBlockNames } from "../hooks/useBlockNames";
+import type { BlockNames } from "../lib/blockNames";
+import { isNative, openExternalUrl } from "../lib/native";
 import { getTileDisplayFields, type WorldPosition } from "../lib/tileDisplayFields";
 import { getItemName, getItemText } from "../lib/tileInfo";
 import { wikiUrl } from "../lib/wikiLink";
@@ -21,19 +24,17 @@ const entityTypeKeys: Record<number, string> = {
   10: 'entity_types.critter_anchor',
 };
 
-/** Opens the item's page on the Terraria wiki, in the current language where the wiki has one. */
-function WikiLink({ item }: { item: WorldItem }) {
-  const { t, i18n } = useTranslation();
-  const names = useBlockNames();
-  const name = getItemName(item.id, names);
-  if (!name) return null;
+/** Opens a page on the Terraria wiki; native builds hand it to the system browser. */
+function WikiLink({ name, language, label }: { name: string; language: string; label: string }) {
+  const url = wikiUrl(name, language);
   return (
     <Typography.Link
-      href={wikiUrl(name, i18n.language)}
+      href={url}
       target="_blank"
       rel="noopener noreferrer"
-      title={t('wiki_link')}
-      aria-label={t('wiki_link')}
+      onClick={isNative() ? e => { e.preventDefault(); void openExternalUrl(url); } : undefined}
+      title={label}
+      aria-label={label}
       style={{ marginLeft: 6 }}
     >
       <ExportOutlined />
@@ -41,7 +42,19 @@ function WikiLink({ item }: { item: WorldItem }) {
   );
 }
 
+/** The item's text, followed by a link to its wiki page in the language its name is in. */
+function ItemEntry({ item, names, t }: { item: WorldItem; names: BlockNames; t: TFunction }) {
+  const name = getItemName(item.id, names);
+  return (
+    <>
+      {getItemText(item, names)}
+      {name && <WikiLink name={name} language={names.language} label={t('wiki_link', { name })} />}
+    </>
+  );
+}
+
 function ItemList({ label, items }: { label?: string; items: WorldItem[] }) {
+  const { t } = useTranslation();
   const names = useBlockNames();
   const nonEmpty = items.filter(i => i.id > 0);
   if (!nonEmpty.length) return null;
@@ -50,7 +63,7 @@ function ItemList({ label, items }: { label?: string; items: WorldItem[] }) {
       {label && (<strong>{label}</strong>)}
       <ul style={{ padding: 0, margin: 0, marginLeft: 16 }}>
         {nonEmpty.map((item, i) => (
-          <li key={i} style={{ padding: '4px 0' }}>{getItemText(item, names)}<WikiLink item={item} /></li>
+          <li key={i} style={{ padding: '4px 0' }}><ItemEntry item={item} names={names} t={t} /></li>
         ))}
       </ul>
     </div>
@@ -58,6 +71,7 @@ function ItemList({ label, items }: { label?: string; items: WorldItem[] }) {
 }
 
 function PairedItemList({ label, items, dyes }: { label?: string; items: WorldItem[]; dyes: WorldItem[] }) {
+  const { t } = useTranslation();
   const names = useBlockNames();
   const pairs: { item: WorldItem; dye: WorldItem | undefined }[] = [];
   for (let i = 0; i < items.length; i++) {
@@ -72,8 +86,8 @@ function PairedItemList({ label, items, dyes }: { label?: string; items: WorldIt
       <ul style={{ padding: 0, margin: 0, marginLeft: 16 }}>
         {pairs.map(({ item, dye }, i) => (
           <li key={i} style={{ padding: '4px 0' }}>
-            {getItemText(item, names)}<WikiLink item={item} />
-            {dye && <span style={{ opacity: 0.7 }}> — {getItemText(dye, names)}<WikiLink item={dye} /></span>}
+            <ItemEntry item={item} names={names} t={t} />
+            {dye && <span style={{ opacity: 0.7 }}> — <ItemEntry item={dye} names={names} t={t} /></span>}
           </li>
         ))}
       </ul>

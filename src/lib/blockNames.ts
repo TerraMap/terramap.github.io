@@ -11,6 +11,8 @@ export interface BlockNameTable {
 }
 
 export interface BlockNames {
+  /** The language these names are in; English until a localized table has loaded. */
+  language: string;
   tile(name: string): string;
   wall(id: number, name: string): string;
   item(id: number, name: string): string;
@@ -19,6 +21,7 @@ export interface BlockNames {
 }
 
 export const englishBlockNames: BlockNames = {
+  language: 'en',
   tile: name => name,
   wall: (_id, name) => name,
   item: (_id, name) => name,
@@ -26,8 +29,9 @@ export const englishBlockNames: BlockNames = {
   npc: (_id, name) => name,
 };
 
-export function createBlockNames(table: BlockNameTable): BlockNames {
+export function createBlockNames(table: BlockNameTable, language: string): BlockNames {
   return {
+    language,
     tile: name => table.tiles[name] ?? name,
     wall: (id, name) => table.walls[id] ?? name,
     item: (id, name) => table.items[id] ?? name,

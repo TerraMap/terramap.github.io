@@ -16,7 +16,7 @@ function load(language: string) {
   loading.add(language);
   loader()
     .then(table => {
-      loaded.set(language, createBlockNames(table));
+      loaded.set(language, createBlockNames(table, language));
       listeners.forEach(listener => listener());
     })
     .catch((error: unknown) => console.error(`Failed to load block names for ${language}`, error))

@@ -191,7 +191,7 @@
   "version": "版本",
   "view": "视图",
   "walls": "墙壁",
-  "wiki_link": "在 Terraria Wiki 中打开",
+  "wiki_link": "在 Terraria Wiki 中打开“{{name}}”",
   "world": "世界",
   "world_files_location": "Terraria 世界和玩家地图文件通常位于（点击复制路径）：",
   "world_loaded_description": "加载世界文件后，您可以平移和缩放地图、搜索方块和物品、查看宝箱内容等。"
