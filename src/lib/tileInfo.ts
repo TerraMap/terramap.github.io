@@ -89,12 +89,11 @@ export function getItemName(id: number, names: BlockNames = englishBlockNames): 
   return itemSettings && names.item(id, itemSettings.name);
 }
 
+/** The item's name with its prefix and count, as the game shows it, e.g. "Legendary Terra Blade" or "Torch (20)". */
 export function getItemText(item: WorldItem, names: BlockNames = englishBlockNames): string {
-  let prefix = "";
-
-  if (item.prefixId > 0 && item.prefixId < itemPrefixes.length)
-    prefix = names.prefix(item.prefixId, itemPrefixes[item.prefixId].name);
-
-  const itemName = getItemName(item.id, names) ?? item.id;
-  return `${prefix} ${itemName} ${item.count !== 1 ? `(${item.count})` : ''}`;
+  const englishName = itemsById.get(item.id)?.name ?? String(item.id);
+  const name = item.prefixId > 0 && item.prefixId < itemPrefixes.length
+    ? names.prefixedItem(item.id, englishName, item.prefixId, itemPrefixes[item.prefixId].name)
+    : names.item(item.id, englishName);
+  return item.count !== 1 ? `${name} (${item.count})` : name;
 }

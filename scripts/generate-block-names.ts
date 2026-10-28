@@ -8,10 +8,14 @@
 // names have no ID of their own, so they are keyed by TerraMap's English name. Names with no
 // in-game equivalent (e.g. TEdit tile group and variety names) are left out and stay English.
 //
+// Each table also carries what the game needs to put a prefix on an item name: the language's
+// format (prefix before or after the name, and any separator), the prefix's gendered forms and
+// each item's gender, which picks among them.
+//
 // Input is a decompiled copy of Terraria (e.g. from ILSpy), which contains
 // Terraria.Localization.Content.<culture>.*.json and Terraria.ID/*.cs.
 //
-// Usage: node scripts/generate-game-names.ts <decompiled Terraria dir> [--verbose]
+// Usage: node scripts/generate-block-names.ts <decompiled Terraria dir> [--verbose]
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -33,7 +37,11 @@ const languages: Record<string, string> = {
 
 type Section = Record<string, string>;
 type Category = "tiles" | "walls" | "items" | "prefixes" | "npcs";
-type BlockNameTable = Record<Category, Section>;
+type BlockNameTable = Record<Category, Section> & {
+  prefixFormat: string;
+  prefixVariants: Record<string, Section>;
+  itemGenders: Section;
+};
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const args = process.argv.slice(2);
@@ -41,7 +49,7 @@ const verbose = args.includes("--verbose");
 const sourceDir = args.find(a => !a.startsWith("--")) ?? "";
 
 if (!sourceDir) {
-  console.error("Usage: node scripts/generate-game-names.ts <decompiled Terraria dir> [--verbose]");
+  console.error("Usage: node scripts/generate-block-names.ts <decompiled Terraria dir> [--verbose]");
   process.exit(1);
 }
 
@@ -80,13 +88,19 @@ const englishMapObjects = invert(loadLocalization("en-US", "Game").MapObject);
 
 for (const [language, culture] of Object.entries(languages)) {
   const conflicts: string[] = [];
-  const itemNames = loadLocalization(culture, "Items").ItemName;
-  const prefixNames = loadLocalization(culture, "Items").Prefix;
+  const itemLocalization = loadLocalization(culture, "Items");
+  const itemNames = itemLocalization.ItemName;
+  const prefixNames = itemLocalization.Prefix;
   const npcNames = loadLocalization(culture, "NPCs").NPCName;
   const mapObjectNames = loadLocalization(culture, "Game").MapObject;
   const naturalWall: string = JSON.parse(readFileSync(resolve(root, `src/i18n/${language}.json`), "utf8")).game_names.natural_wall;
 
-  const table: BlockNameTable = { tiles: {}, walls: {}, items: {}, prefixes: {}, npcs: {} };
+  const table: BlockNameTable = {
+    tiles: {}, walls: {}, items: {}, prefixes: {}, npcs: {},
+    prefixFormat: itemLocalization.CombineFormat.Prefix,
+    prefixVariants: {},
+    itemGenders: {},
+  };
   // key is an ID, except for tiles where it is the English name.
   const add = (category: Category, key: string | number, english: string | undefined, localized: string | undefined) => {
     if (!english || !localized || localized === english || localized.includes("{")) return;
@@ -102,6 +116,21 @@ for (const [language, culture] of Object.entries(languages)) {
   for (const item of items) add("items", item.id, item.name, itemName(item.id));
   for (const npc of npcs) add("npcs", npc.id, npc.name, npcNames[npcIds.get(npc.id) ?? ""]);
   itemPrefixes.forEach((prefix, id) => add("prefixes", id, prefix.name, prefixNames[prefixIds.get(id) ?? ""]));
+
+  // Gendered prefix forms ("Legendary$FeminineSingular") and item genders ("TerraBlade$Gender"),
+  // as Lang.GetPrefixedItemName uses them. Forms that match the plain prefix are left out.
+  itemPrefixes.forEach((prefix, id) => {
+    const key = prefixIds.get(id);
+    if (!prefix.name || !key) return;
+    const forms = Object.entries(prefixNames)
+      .filter(([variantKey, value]) => variantKey.startsWith(`${key}$`) && value !== prefixNames[key])
+      .map(([variantKey, value]) => [variantKey.slice(key.length + 1), value]);
+    if (forms.length) table.prefixVariants[id] = Object.fromEntries(forms);
+  });
+  for (const item of items) {
+    const gender = itemNames[`${itemIds.get(item.id)}$Gender`];
+    if (gender) table.itemGenders[item.id] = gender;
+  }
 
   // Tile, frame and variety names: use an item that places this tile and has the same English
   // name, otherwise a map object with the same English name.

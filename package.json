@@ -14,7 +14,7 @@
     "vitest": "vitest run",
     "vitest:watch": "vitest",
     "perf": "NODE_OPTIONS=--max-old-space-size=8192 vitest run -c vitest.perf.config.ts --reporter=verbose",
-    "game-names": "node scripts/generate-game-names.ts",
+    "block-names": "node scripts/generate-block-names.ts",
     "native": "npx tauri dev --config native/tauri.conf.json",
     "native:build": "npx tauri build --config native/tauri.conf.json"
   },

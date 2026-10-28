@@ -9547,5 +9547,8 @@
     "638": "狗狗",
     "656": "兔兔",
     "663": "公主"
-  }
+  },
+  "prefixFormat": "‹{PrefixName}›{ItemName}",
+  "prefixVariants": {},
+  "itemGenders": {}
 }
