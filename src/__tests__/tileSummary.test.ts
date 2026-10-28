@@ -1,16 +1,19 @@
 import { describe, expect, it } from 'vitest';
-import { englishBlockNames } from '../lib/blockNames';
+import zhCN from '../i18n/blockNames/zh-CN.json';
+import { createBlockNames } from '../lib/blockNames';
 import { buildTileSummary, itemLabels } from '../lib/tileSummary';
 
 describe('itemLabels', () => {
-  it('skips empty slots and tidies item text', () => {
+  it('skips empty slots', () => {
     // Item 8 is Torch; prefix 0 means none.
     expect(itemLabels([{ id: 0, count: 0, prefixId: 0 }, { id: 8, count: 20, prefixId: 0 }])).toEqual(['Torch (20)']);
   });
 
-  it('joins a Chinese prefix to the item name', () => {
-    const zh = { ...englishBlockNames, prefix: () => '恶魔', item: () => '链锤' };
-    expect(itemLabels([{ id: 162, count: 1, prefixId: 1 }], zh)).toEqual(['恶魔链锤']);
+  it('puts the prefix on the item name the way the game does', () => {
+    // Legendary (81) Terra Blade (757).
+    const item = { id: 757, count: 1, prefixId: 81 };
+    expect(itemLabels([item])).toEqual(['Legendary Terra Blade']);
+    expect(itemLabels([item], createBlockNames(zhCN, 'zh-CN'))).toEqual(['‹传奇›泰拉刃']);
   });
 });
 

@@ -14,7 +14,7 @@
     "vitest": "vitest run",
     "vitest:watch": "vitest",
     "perf": "NODE_OPTIONS=--max-old-space-size=8192 vitest run -c vitest.perf.config.ts --reporter=verbose",
-    "game-names": "node scripts/generate-game-names.ts",
+    "block-names": "node scripts/generate-block-names.ts",
     "native": "npx tauri dev --config native/tauri.conf.json",
     "native:build": "npx tauri build --config native/tauri.conf.json"
   },
@@ -41,6 +41,7 @@
   "dependencies": {
     "@panzoom/panzoom": "^4.6.2",
     "@tauri-apps/api": "~2.12.4",
+    "@tauri-apps/plugin-opener": "~2.7.1",
     "antd": "^6.6.7",
     "color-convert": "^3.1.3",
     "file-saver": "^2.0.5",

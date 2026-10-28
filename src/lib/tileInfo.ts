@@ -81,19 +81,19 @@ export function getTileAt(world: WorldData | null, x: number, y: number): WorldT
   return tile;
 }
 
+export const itemsById = new Map(items.map(it => [it.id, it]));
+
+/** The item's name without prefix or count, or undefined for an unknown item ID. */
+export function getItemName(id: number, names: BlockNames = englishBlockNames): string | undefined {
+  const itemSettings = itemsById.get(id);
+  return itemSettings && names.item(id, itemSettings.name);
+}
+
+/** The item's name with its prefix and count, as the game shows it, e.g. "Legendary Terra Blade" or "Torch (20)". */
 export function getItemText(item: WorldItem, names: BlockNames = englishBlockNames): string {
-  let prefix = "";
-
-  if (item.prefixId > 0 && item.prefixId < itemPrefixes.length)
-    prefix = names.prefix(item.prefixId, itemPrefixes[item.prefixId].name);
-
-  let itemName: string | number = item.id;
-  for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
-    const itemSettings = items[itemIndex];
-    if (itemSettings.id === item.id) {
-      itemName = names.item(item.id, itemSettings.name);
-      break;
-    }
-  }
-  return `${prefix} ${itemName} ${item.count !== 1 ? `(${item.count})` : ''}`;
+  const englishName = itemsById.get(item.id)?.name ?? String(item.id);
+  const name = item.prefixId > 0 && item.prefixId < itemPrefixes.length
+    ? names.prefixedItem(item.id, englishName, item.prefixId, itemPrefixes[item.prefixId].name)
+    : names.item(item.id, englishName);
+  return item.count !== 1 ? `${name} (${item.count})` : name;
 }
