@@ -1,5 +1,5 @@
-import { ExportOutlined } from "@ant-design/icons";
-import { Descriptions, Typography } from "antd";
+import { CopyOutlined, ExportOutlined } from "@ant-design/icons";
+import { App, Button, Descriptions, Typography } from "antd";
 import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 import { useBlockNames } from "../hooks/useBlockNames";
@@ -7,8 +7,11 @@ import type { BlockNames } from "../lib/blockNames";
 import { isNative, openExternalUrl } from "../lib/native";
 import { getTileDisplayFields, type WorldPosition } from "../lib/tileDisplayFields";
 import { getItemName, getItemText } from "../lib/tileInfo";
+import { buildTileSummary, itemLabels } from "../lib/tileSummary";
 import { wikiUrl } from "../lib/wikiLink";
 import type { WorldItem, WorldTile } from "../types/settings";
+
+const POTS_TILE = 28;
 
 const entityTypeKeys: Record<number, string> = {
   0: 'entity_types.target_dummy',
@@ -100,9 +103,29 @@ export default function TileDescriptions({ selectedTile, world }: { selectedTile
   const names = useBlockNames();
   const fields = getTileDisplayFields(selectedTile, t, world, names);
   const { chest, tileEntity } = selectedTile;
+  const { notification } = App.useApp();
+
+  const copySummary = async () => {
+    const items = [
+      ...(chest ? chest.items : []),
+      ...(tileEntity?.item ? [tileEntity.item] : []),
+      ...(tileEntity?.items ?? []),
+    ];
+    const text = buildTileSummary(fields, itemLabels(items, names), t('tile_contents'));
+    try {
+      await navigator.clipboard.writeText(text);
+      notification.success({ key: 'copy', title: t('tile_info_copied'), placement: 'bottomRight' });
+    } catch {
+      // No clipboard access, e.g. permission denied or not a secure context.
+      notification.error({ key: 'copy', title: t('copy_failed'), placement: 'bottomRight' });
+    }
+  };
 
   return (
     <>
+      <Button size="small" icon={<CopyOutlined />} onClick={() => void copySummary()} style={{ marginBottom: 8 }}>
+        {t('copy_tile_info')}
+      </Button>
       <Descriptions column={1} colon={false}>
         {fields.map(({ label, value }, i) => (
           <Descriptions.Item key={i} label={label || undefined}>{value}</Descriptions.Item>
@@ -111,6 +134,11 @@ export default function TileDescriptions({ selectedTile, world }: { selectedTile
 
       {chest && chest.items.length > 0 && (
         <ItemList items={chest.items} />
+      )}
+
+      {/* Pot loot is rolled when the pot breaks, so the save has nothing to show. */}
+      {selectedTile.Type === POTS_TILE && (
+        <Typography.Paragraph type="secondary" style={{ marginTop: 8 }}>{t('pot_note')}</Typography.Paragraph>
       )}
 
       {tileEntity && (
