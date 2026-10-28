@@ -16,6 +16,9 @@ const table: BlockNameTable = {
   items: { 227: '恢复药水' },
   prefixes: { 81: '传奇' },
   npcs: { 17: '商人' },
+  prefixFormat: '‹{PrefixName}›{ItemName}',
+  prefixVariants: {},
+  itemGenders: {},
 };
 
 describe('createBlockNames', () => {
@@ -25,7 +28,6 @@ describe('createBlockNames', () => {
     expect(names.tile('Lead Ore')).toBe('铅矿');
     expect(names.wall(2, 'Dirt Wall (natural)')).toBe('土墙（天然）');
     expect(names.item(227, 'Restoration Potion')).toBe('恢复药水');
-    expect(names.prefix(81, 'Legendary')).toBe('传奇');
     expect(names.npc(17, 'Merchant')).toBe('商人');
   });
 
@@ -40,8 +42,13 @@ describe('display helpers', () => {
 
   it('getItemText translates the prefix and item', () => {
     const item = { id: 227, prefixId: 81, count: 2 };
-    expect(getItemText(item, names)).toBe('传奇 恢复药水 (2)');
+    expect(getItemText(item, names)).toBe('‹传奇›恢复药水 (2)');
     expect(getItemText(item)).toBe('Legendary Restoration Potion (2)');
+  });
+
+  it('getItemText leaves out a missing prefix and a count of 1', () => {
+    expect(getItemText({ id: 227, prefixId: 0, count: 1 }, names)).toBe('恢复药水');
+    expect(getItemText({ id: 227, prefixId: 0, count: 1 })).toBe('Restoration Potion');
   });
 
   it('getTileDisplayFields translates the tile and wall', () => {
@@ -63,7 +70,7 @@ describe('generated tables', () => {
     expect(names.wall(1, 'Stone Wall')).not.toBe('Stone Wall');
     expect(names.wall(2, 'Dirt Wall (natural)')).not.toBe('Dirt Wall (natural)');
     expect(names.item(12, 'Copper Ore')).not.toBe('Copper Ore');
-    expect(names.prefix(81, 'Legendary')).not.toBe('Legendary');
+    expect(names.prefixedItem(757, 'Terra Blade', 81, 'Legendary')).not.toBe('Legendary Terra Blade');
     expect(names.npc(22, 'Guide')).not.toBe('Guide');
   });
 
@@ -72,5 +79,17 @@ describe('generated tables', () => {
     const names = createBlockNames(zhCN, 'zh-CN');
     expect(names.item(226, 'Restoration Potion')).toBe('弱效恢复药水');
     expect(names.item(227, 'Restoration Potion')).toBe('恢复药水');
+  });
+
+  // Legendary (81) on the Terra Blade (757) and the Spear (280), as the game shows it.
+  it.each([
+    ['es', 757, 'Espada Terra Legendaria'],
+    ['pt-BR', 757, 'Lendária Lâmina da Terra'],
+    ['ru', 757, 'Легендарный Терра-клинок'],
+    ['ru', 280, 'Легендарное Копье'],
+    ['zh-CN', 757, '‹传奇›泰拉刃'],
+  ])('%s puts the prefix where the game does, in the item\'s gender', (language, itemId, expected) => {
+    const names = createBlockNames(tables[language], language);
+    expect(getItemText({ id: itemId, prefixId: 81, count: 1 }, names)).toBe(expected);
   });
 });

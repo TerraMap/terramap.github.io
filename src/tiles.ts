@@ -16543,7 +16543,7 @@ export const tiles: TileInfo[] = [
       {
         u: 540,
         v: 0,
-        name: "Web Coverd Chest"
+        name: "Web Covered Chest"
       },
       {
         u: 576,
@@ -43837,7 +43837,7 @@ export const tiles: TileInfo[] = [
       {
         u: 540,
         v: 0,
-        name: "Trapped Web Coverd Chest"
+        name: "Trapped Web Covered Chest"
       },
       {
         u: 576,

@@ -23,7 +23,7 @@ describe('wikiUrl', () => {
 
   it('matches the language of the names table, which is English until a localized one loads', () => {
     expect(wikiUrl('Starfury', englishBlockNames.language)).toBe('https://terraria.wiki.gg/wiki/Special:Search?search=Starfury&go=Go');
-    expect(createBlockNames({ tiles: {}, walls: {}, items: {}, prefixes: {}, npcs: {} }, 'es').language).toBe('es');
+    expect(createBlockNames({ tiles: {}, walls: {}, items: {}, prefixes: {}, npcs: {}, prefixFormat: '{ItemName} {PrefixName}', prefixVariants: {}, itemGenders: {} }, 'es').language).toBe('es');
   });
 
   it('escapes characters that would break the query', () => {
