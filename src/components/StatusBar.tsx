@@ -1,6 +1,7 @@
 import { Space, Spin, theme } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { fitPageToAnchorAd } from '../lib/anchorAd';
 import { isNative } from '../lib/native';
 import type { Status } from '../lib/status';
 import type { WorldPosition } from '../lib/tileDisplayFields';
@@ -93,6 +94,27 @@ export function StatusBar({ isLoading, selectedTile, status, world }: StatusBarP
       // ad blocker, or the script was blocked -- nothing to do.
     }
   }, [size]);
+
+  // Auto ads may add an anchor ad on top of our banner; keep the space it
+  // reserves matched to what it actually covers (see anchorAd.ts).
+  useEffect(() => {
+    if (isNative()) {
+      return;
+    }
+    return fitPageToAnchorAd();
+  }, []);
+
+  // Whatever space the anchor reserves shows the body's background; match the
+  // footer instead of the browser's default white.
+  useEffect(() => {
+    if (isNative()) {
+      return;
+    }
+    document.body.style.backgroundColor = colorBgLayout;
+    return () => {
+      document.body.style.backgroundColor = '';
+    };
+  }, [colorBgLayout]);
 
   return (
     <Space
