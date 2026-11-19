@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Where Are Terraria World Files Saved? | TerraMap</title>
+  <meta name="description"
+    content="Where Terraria saves world (.wld) and player map (.map) files on Windows, macOS, Linux, Steam Deck and Steam Cloud, and how to open them in TerraMap to view your world map.">
+  <meta name="author" content="Jason Coon">
+  <link rel="icon" href="favicon.ico">
+  <link rel="canonical" href="https://terramap.github.io/world-files.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="TerraMap">
+  <meta property="og:url" content="https://terramap.github.io/world-files.html">
+  <meta property="og:title" content="Where are Terraria world files saved?">
+  <meta property="og:description"
+    content="Terraria world and player map file locations on Windows, macOS, Linux and Steam Cloud.">
+  <meta property="og:image" content="https://terramap.github.io/resources/images/app-overview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="resources/css/site.css">
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html"><img src="resources/images/TerraMap32.png" alt="">TerraMap</a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="about.html">Features</a>
+        <a href="native.html">Desktop app</a>
+        <a href="guides.html" aria-current="page">Guides</a>
+        <a class="btn btn-primary btn-sm" href="index.html">Open TerraMap</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="wrap prose hero">
+      <p class="eyebrow"><a href="guides.html">Guides</a></p>
+      <h1>Where are Terraria world files saved?</h1>
+      <p class="lead">Terraria saves each world as a <code>.wld</code> file, and each character's explored map of a
+        world as a <code>.map</code> file. Here's where to find them, and how to view them with TerraMap.</p>
+
+      <h2 id="windows">Windows</h2>
+      <p>Worlds:</p>
+      <pre>%USERPROFILE%\Documents\My Games\Terraria\Worlds</pre>
+      <p>Player map files are in a folder named after each character, under:</p>
+      <pre>%USERPROFILE%\Documents\My Games\Terraria\Players</pre>
+      <p>Paste either path into the File Explorer address bar to go straight there. If your Documents folder is
+        backed up by OneDrive, look under <code>%USERPROFILE%\OneDrive\Documents\My Games\Terraria</code>
+        instead.</p>
+
+      <h2 id="macos">macOS</h2>
+      <pre>~/Library/Application Support/Terraria/Worlds
+~/Library/Application Support/Terraria/Players</pre>
+      <p>The Library folder is hidden by default. In Finder, choose <b>Go &rarr; Go to Folder…</b>
+        (<kbd>Shift</kbd>+<kbd>Cmd</kbd>+<kbd>G</kbd>) and paste the path.</p>
+
+      <h2 id="linux">Linux and Steam Deck</h2>
+      <pre>~/.local/share/Terraria/Worlds
+~/.local/share/Terraria/Players</pre>
+      <p><code>.local</code> is a hidden folder. Press <kbd>Ctrl</kbd>+<kbd>H</kbd> in most file managers to show
+        it.</p>
+
+      <div class="sponsor">
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4263195580051724"
+          data-ad-slot="9553900295" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      </div>
+
+      <h2 id="steam-cloud">Steam Cloud worlds</h2>
+      <p>Worlds and characters saved to the Steam Cloud are kept in Steam's own folder instead, under your Steam user
+        ID and Terraria's app ID (105600):</p>
+      <ul>
+        <li><b>Windows:</b> <code>C:\Program Files (x86)\Steam\userdata\{YOUR_USER_ID}\105600\remote</code></li>
+        <li><b>macOS:</b> <code>~/Library/Application Support/Steam/userdata/{YOUR_USER_ID}/105600/remote</code></li>
+        <li><b>Linux:</b> <code>~/.local/share/Steam/userdata/{YOUR_USER_ID}/105600/remote</code></li>
+      </ul>
+      <p>If there are several numbered folders under <code>userdata</code>, check each one for a <code>105600</code>
+        folder.</p>
+
+      <h2 id="open">Opening a world in TerraMap</h2>
+      <ul>
+        <li><b>Open a folder</b> (the <code>Terraria</code> folder above) to choose a world and a character. Only the
+          parts of the map that character has explored are shown, so there are no spoilers.</li>
+        <li><b>Open a world file</b>, or drag a <code>.wld</code> file onto the page, to see the whole world.</li>
+      </ul>
+      <p>TerraMap is read-only and runs entirely in your browser, so your world files are never uploaded or changed.
+        The <a href="native.html">desktop app</a> finds your worlds and characters for you, including Steam Cloud
+        saves.</p>
+
+      <div class="btn-row">
+        <a class="btn btn-primary" href="index.html">Open a world in TerraMap</a>
+      </div>
+
+      <h2>More guides</h2>
+      <div class="grid">
+        <a class="card" href="find-shimmer.html">
+          <h3>How to find Shimmer</h3>
+          <p>Where the Aether generates, and how to spot it.</p>
+        </a>
+        <a class="card" href="find-enchanted-sword.html">
+          <h3>How to find an Enchanted Sword</h3>
+          <p>Find every Enchanted Sword Shrine in your world.</p>
+        </a>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <h4>TerraMap</h4>
+          <ul>
+            <li><a href="index.html">Open TerraMap</a></li>
+            <li><a href="about.html">Features</a></li>
+            <li><a href="native.html">Desktop app</a></li>
+            <li><a href="windows.html">Legacy Windows app</a></li>
+            <li><a href="https://github.com/TerraMap/terramap.github.io/commits/main">Recent changes</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Guides</h4>
+          <ul>
+            <li><a href="world-files.html">World file locations</a></li>
+            <li><a href="find-shimmer.html">Find Shimmer</a></li>
+            <li><a href="find-enchanted-sword.html">Find an Enchanted Sword</a></li>
+          </ul>
+        </div>
+        <div class="footer-support">
+          <h4>Support TerraMap</h4>
+          <p>TerraMap is free and open source. If it's useful to you, please consider supporting its development.</p>
+          <div class="btn-row">
+            <a class="btn btn-sm" href="https://www.paypal.com/donate/?hosted_button_id=BBGT962BZTLWQ">Donate</a>
+            <a class="btn btn-sm" href="https://github.com/terramap/terramap.github.io">Star on GitHub</a>
+          </div>
+        </div>
+      </div>
+      <p class="copyright">TerraMap &copy; 2015&ndash;2026 <a href="https://github.com/jasoncoon">Jason Coon</a>.
+        Not affiliated with Re-Logic. Terraria is a trademark of Re-Logic.</p>
+    </div>
+  </footer>
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4263195580051724"
+    crossorigin="anonymous"></script>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6BJH8276R"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-P6BJH8276R');
+  </script>
+</body>
+
+</html>

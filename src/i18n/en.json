@@ -18,6 +18,7 @@
   "copy_failed": "Couldn't copy to the clipboard",
   "copy_tile_info": "Copy info",
   "count": "Count",
+  "donate": "Donate",
   "drag_drop_description": "Drag and drop a Terraria .wld file from your computer into this page.",
   "drop_invalid": "Only Terraria world files are supported",
   "drop_valid": "Drop Terraria world file to open:",
@@ -45,6 +46,10 @@
   },
   "get_started_intro": "Get started by doing one of the following:",
   "getting_started": "Getting Started",
+  "guide_find_enchanted_sword": "How to find an Enchanted Sword",
+  "guide_find_shimmer": "How to find Shimmer",
+  "guide_world_files": "Where are world files saved?",
+  "guides": "Guides",
   "hide_info_pane": "Hide Info Pane",
   "highlighted_matches": "Highlighted {{n}} matches",
   "if_no_spoilers": "If you don't care about spoilers:",
@@ -116,6 +121,7 @@
     "hallowBlocks": "Hallow",
     "solidBlocks": "Solid"
   },
+  "star_on_github": "Star on GitHub",
   "status": {
     "choose_file": "Please choose a Terraria .wld file",
     "highlighting_progress": "Highlighting... {{value}}%",
@@ -130,6 +136,8 @@
     "rendering_progress": "Rendering world... {{value}}%"
   },
   "steam_cloud": "(Steam Cloud)",
+  "support_message": "TerraMap is free and open source. If it's useful to you, please consider supporting its development.",
+  "support_terramap": "Support TerraMap",
   "tab_spread": "Spread",
   "tab_tile": "Tile",
   "tab_world": "World",

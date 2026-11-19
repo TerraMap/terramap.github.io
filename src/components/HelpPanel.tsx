@@ -6,6 +6,7 @@ import { useDetectOS, type PathEntry } from '../hooks/useDetectOS';
 import { keyboardShortcuts } from '../lib/keyboardShortcuts';
 import LanguageSelect from './LanguageSelect';
 import PathOsTabs from './PathOsTabs';
+import { SupportLinks } from './SupportLinks';
 import ToolbarButton from './ToolbarButton';
 
 const { Title, Paragraph, Text } = Typography;
@@ -68,6 +69,7 @@ export function HelpPanel(
         <Paragraph>{t('world_files_location')}</Paragraph>
         <PathOsTabs userOS={userOS} paths={worldPaths} />
         <Paragraph>{t('world_loaded_description')}</Paragraph>
+        <Paragraph><SupportLinks /></Paragraph>
         <Title level={4}>{t('keyboard_shortcuts')}</Title>
       </Typography>
 

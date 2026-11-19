@@ -28,6 +28,9 @@ import { readPlayerMap, type PlayerMap } from './lib/readPlayerMap';
 import { toWorldPosition } from './lib/tileDisplayFields';
 import { sets } from './sets';
 
+// The descriptive <title> from index.html, which search results show.
+const DEFAULT_TITLE = document.title;
+
 function NotificationBridge({ notificationRef }: { notificationRef: React.RefObject<ReturnType<typeof App.useApp>['notification'] | null> }) {
   const { notification } = App.useApp();
   notificationRef.current = notification;
@@ -147,6 +150,13 @@ export default function AppContent() {
   // which also carries several multi-megabyte raw TypedArrays.
   const worldPosition = useMemo(() => world ? toWorldPosition(world) : undefined, [world]);
 
+  // Counts finished world loads (and reloads), so the footer can request an ad
+  // for the new content without being handed the WorldData itself.
+  const [worldLoadCount, setWorldLoadCount] = useState(0);
+  useEffect(() => {
+    if (world) setWorldLoadCount((count) => count + 1);
+  }, [world]);
+
   const {
     findBlock,
     goToTile,
@@ -188,7 +198,7 @@ export default function AppContent() {
     if (worldFile?.name) {
       document.title = `${worldFile.name} | TerraMap`;
     } else {
-      document.title = 'TerraMap';
+      document.title = DEFAULT_TITLE;
     }
   }, [worldFile]);
 
@@ -411,7 +421,7 @@ export default function AppContent() {
             </Drawer>
           </div>
           <Layout.Footer style={{ padding: 0 }}>
-            <StatusBar selectedTile={hoveredTile} status={highlightStatus ?? status} isLoading={isWorldLoading || !!highlightStatus} world={worldPosition} />
+            <StatusBar selectedTile={hoveredTile} status={highlightStatus ?? status} isLoading={isWorldLoading || !!highlightStatus} world={worldPosition} worldLoadCount={worldLoadCount} />
           </Layout.Footer>
         </Layout>
 

@@ -20,6 +20,7 @@
   "copy_failed": "Не удалось скопировать в буфер обмена",
   "copy_tile_info": "Копировать сведения",
   "count": "Количество",
+  "donate": "Пожертвовать",
   "drag_drop_description": "Перетащите файл Terraria .wld на эту страницу.",
   "drop_invalid": "Поддерживаются только файлы мира Terraria",
   "drop_valid": "Перетащите файл мира Terraria, чтобы открыть:",
@@ -47,6 +48,10 @@
   },
   "get_started_intro": "Для начала выполните одно из следующих действий:",
   "getting_started": "Начало работы",
+  "guide_find_enchanted_sword": "Как найти Зачарованный меч",
+  "guide_find_shimmer": "Как найти Мерцание",
+  "guide_world_files": "Где хранятся файлы миров?",
+  "guides": "Руководства",
   "hide_info_pane": "Скрыть панель информации",
   "highlighted_matches": "Выделено {{n}} совпадений",
   "if_no_spoilers": "Если вас не беспокоят спойлеры:",
@@ -118,6 +123,7 @@
     "hallowBlocks": "Освящение",
     "solidBlocks": "Твёрдые блоки"
   },
+  "star_on_github": "Поставить звезду на GitHub",
   "status": {
     "choose_file": "Выберите файл Terraria .wld",
     "highlighting_progress": "Подсветка... {{value}}%",
@@ -132,6 +138,8 @@
     "rendering_progress": "Отрисовка мира... {{value}}%"
   },
   "steam_cloud": "(Steam Cloud)",
+  "support_message": "TerraMap — бесплатный проект с открытым исходным кодом. Если он вам полезен, пожалуйста, поддержите его разработку.",
+  "support_terramap": "Поддержать TerraMap",
   "tab_spread": "Распространение",
   "tab_tile": "Блок",
   "tab_world": "Мир",

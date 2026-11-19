@@ -17,6 +17,7 @@
   "copy_failed": "无法复制到剪贴板",
   "copy_tile_info": "复制说明",
   "count": "数量",
+  "donate": "捐助",
   "drag_drop_description": "将 Terraria .wld 文件从您的计算机拖放到此页面。",
   "drop_invalid": "仅支持 Terraria 世界文件",
   "drop_valid": "将 Terraria 世界文件拖放到此处以打开：",
@@ -44,6 +45,10 @@
   },
   "get_started_intro": "请先执行以下操作之一：",
   "getting_started": "快速入门",
+  "guide_find_enchanted_sword": "如何找到附魔剑",
+  "guide_find_shimmer": "如何找到微光",
+  "guide_world_files": "世界文件保存在哪里？",
+  "guides": "指南",
   "hide_info_pane": "隐藏信息面板",
   "highlighted_matches": "已高亮 {{n}} 个匹配项",
   "if_no_spoilers": "如果您不介意剧透：",
@@ -115,6 +120,7 @@
     "hallowBlocks": "神圣",
     "solidBlocks": "实心方块"
   },
+  "star_on_github": "在 GitHub 上点星",
   "status": {
     "choose_file": "请选择一个 Terraria .wld 世界文件",
     "highlighting_progress": "正在高亮... {{value}}%",
@@ -129,6 +135,8 @@
     "rendering_progress": "正在绘制地图... {{value}}%"
   },
   "steam_cloud": "（Steam 云）",
+  "support_message": "TerraMap 免费且开源。如果它对你有帮助，欢迎支持它的开发。",
+  "support_terramap": "支持 TerraMap",
   "tab_spread": "蔓延",
   "tab_tile": "方块",
   "tab_world": "世界",

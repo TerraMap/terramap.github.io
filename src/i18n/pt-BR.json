@@ -18,6 +18,7 @@
   "copy_failed": "Não foi possível copiar para a área de transferência",
   "copy_tile_info": "Copiar informações",
   "count": "Contagem",
+  "donate": "Doar",
   "drag_drop_description": "Arraste e solte um arquivo Terraria .wld do seu computador nesta página.",
   "drop_invalid": "Apenas arquivos de mundo do Terraria são suportados",
   "drop_valid": "Solte o arquivo de mundo do Terraria para abrir:",
@@ -45,6 +46,10 @@
   },
   "get_started_intro": "Para começar, faça uma das seguintes ações:",
   "getting_started": "Primeiros passos",
+  "guide_find_enchanted_sword": "Como encontrar uma Espada Encantada",
+  "guide_find_shimmer": "Como encontrar Shimmer",
+  "guide_world_files": "Onde os arquivos de mundo ficam salvos?",
+  "guides": "Guias",
   "hide_info_pane": "Ocultar painel de informações",
   "highlighted_matches": "{{n}} correspondências destacadas",
   "if_no_spoilers": "Se você não se preocupa com spoilers:",
@@ -116,6 +121,7 @@
     "hallowBlocks": "Sagrado",
     "solidBlocks": "Blocos sólidos"
   },
+  "star_on_github": "Dar uma estrela no GitHub",
   "status": {
     "choose_file": "Escolha um arquivo Terraria .wld",
     "highlighting_progress": "Destacando... {{value}}%",
@@ -130,6 +136,8 @@
     "rendering_progress": "Renderizando o mundo... {{value}}%"
   },
   "steam_cloud": "(Steam Cloud)",
+  "support_message": "O TerraMap é gratuito e de código aberto. Se ele for útil para você, considere apoiar o seu desenvolvimento.",
+  "support_terramap": "Apoiar o TerraMap",
   "tab_spread": "Propagação",
   "tab_tile": "Bloco",
   "tab_world": "Mundo",

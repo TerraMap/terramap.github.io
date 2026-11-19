@@ -1,9 +1,12 @@
 import {
-    CameraOutlined,
-    GlobalOutlined,
-    MoonOutlined,
-    QuestionCircleOutlined,
-    SunOutlined
+  CameraOutlined,
+  GithubOutlined,
+  GlobalOutlined,
+  HeartOutlined,
+  MoonOutlined,
+  QuestionCircleOutlined,
+  ReadOutlined,
+  SunOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Button, Dropdown, Space, Spin, Switch, Tag, Tooltip } from 'antd';
@@ -14,9 +17,17 @@ import useThemeMenuItems from '../hooks/useThemeMenuItems';
 import { useThemeName } from '../hooks/useThemeName';
 import { getShortcutByHandler } from '../lib/keyboardShortcuts';
 import { truncateString } from '../lib/string';
+import { DONATE_URL, GITHUB_URL } from '../lib/support';
 import type { BlockSet, WorldNpc } from '../types/settings';
 import LanguageDropdown from './LanguageDropdown';
 import ToolbarButton, { ShortcutLabel } from './ToolbarButton';
+
+// The static guide pages in public/.
+const GUIDES = [
+  { href: 'find-shimmer.html', labelKey: 'guide_find_shimmer' },
+  { href: 'find-enchanted-sword.html', labelKey: 'guide_find_enchanted_sword' },
+  { href: 'world-files.html', labelKey: 'guide_world_files' },
+] as const;
 
 export interface DirectoryFiles { worldFiles: File[], mapFiles: File[] };
 
@@ -319,6 +330,31 @@ export function Navbar({
         <Dropdown menu={{
           items: [
             {
+              key: 'donate',
+              icon: <HeartOutlined />,
+              label: (
+                <a href={DONATE_URL} target="_blank" rel="noopener noreferrer">
+                  {t('donate')}
+                </a>
+              ),
+            },
+            {
+              key: 'github',
+              icon: <GithubOutlined />,
+              label: (
+                <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
+                  {t('star_on_github')}
+                </a>
+              ),
+            },
+          ]
+        }}>
+          <Button type="text" icon={<HeartOutlined />} aria-label={t('support_terramap')} />
+        </Dropdown>
+
+        <Dropdown menu={{
+          items: [
+            {
               key: 'version',
               label: `TerraMap v${__APP_VERSION__} (${__GIT_HASH__})`,
               disabled: true,
@@ -330,6 +366,19 @@ export function Navbar({
                   {t('about')}
                 </a>
               ),
+            },
+            {
+              key: 'guides',
+              icon: <ReadOutlined />,
+              label: t('guides'),
+              children: GUIDES.map(({ href, labelKey }) => ({
+                key: href,
+                label: (
+                  <a href={href} target="_blank" rel="noopener noreferrer">
+                    {t(labelKey)}
+                  </a>
+                ),
+              })),
             },
           ]
         }}>

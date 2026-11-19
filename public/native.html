@@ -1,150 +1,149 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <title>TerraMap Desktop App for Windows, macOS and Linux</title>
   <meta name="description"
-    content="TerraMap Native is an interactive Terraria v1.4.5 world map viewer that loads quickly and lets you pan, zoom, find blocks, ores, items in chests, dungeons, NPCs, etc.">
+    content="Download the free TerraMap desktop app for Windows, macOS and Linux: an interactive Terraria v1.4.5 world map viewer that finds your worlds and characters for you.">
   <meta name="author" content="Jason Coon">
   <link rel="icon" href="favicon.ico">
-
-  <title>TerraMap | Native</title>
-
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
-  <!-- Custom styles for this template -->
-  <link rel="stylesheet" href="resources/css/styles.css">
-
-  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-  <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+  <link rel="canonical" href="https://terramap.github.io/native.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TerraMap">
+  <meta property="og:url" content="https://terramap.github.io/native.html">
+  <meta property="og:title" content="TerraMap Desktop App">
+  <meta property="og:description"
+    content="Free Terraria world map viewer for Windows, macOS and Linux.">
+  <meta property="og:image" content="https://terramap.github.io/resources/images/app-overview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="resources/css/site.css">
 </head>
 
 <body>
-
-  <nav id="main-navbar" class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-top"
-          aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="index.html"><img alt="TerraMap" src="resources/images/TerraMap16.png" /></a>
-        <a class="navbar-brand" href="index.html">TerraMap</a>
-      </div>
-
-      <div class="collapse navbar-collapse" id="navbar-top">
-        <ul class="nav navbar-nav">
-          <li><a href="about.html">Web</a></li>
-          <li class="active"><a href="#">Native</a></li>
-          <li><a href="windows.html">Windows</a></li>
-        </ul>
-      </div>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html"><img src="resources/images/TerraMap32.png" alt="">TerraMap</a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="about.html">Features</a>
+        <a href="native.html" aria-current="page">Desktop app</a>
+        <a href="guides.html">Guides</a>
+        <a class="btn btn-primary btn-sm" href="index.html">Open TerraMap</a>
+      </nav>
     </div>
-  </nav>
+  </header>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <h1><img alt="TerraMap" src="resources/images/TerraMap64.png" />TerraMap Native</h1>
-        <p class="lead">TerraMap Native is a cross-platform, interactive Terraria v1.4.5 world map viewer that loads
-          quickly and lets you pan, zoom, find blocks, ores, items in chests, dungeons, NPCs, etc.</p>
-        <p>
-          It's the same as the web app, but with a better experience for viewing worlds without spoilers.
-          It makes it much easier than the web version to choose a world, then choose a player map for the chosen world.
-          Only the parts of the world that have been seen by the player are shown in TerraMap.
-        </p>
-        <p>
-          <a class="btn btn-primary btn-lg" href="https://github.com/TerraMap/terramap.github.io/releases"
-            role="button">Download</a>
-          <a class="btn btn-default" href="https://github.com/TerraMap/terramap.github.io/commits/main/"
-            role="button">
-            <span class="gh-ico2" aria-hidden="true"></span>View recent changes. »
-          </a>
-        </p>
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Windows &middot; macOS &middot; Linux</p>
+        <h1>TerraMap desktop app</h1>
+        <p class="lead">Everything in the web app, plus it finds your Terraria worlds and characters for you. Pick a
+          world, then a character, and see only what that character has explored. No spoilers.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="https://github.com/TerraMap/terramap.github.io/releases/latest">Download
+            the latest release</a>
+          <a class="btn" href="https://github.com/TerraMap/terramap.github.io/commits/main/">Recent changes</a>
+        </div>
       </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>Which download do I need?</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>System</th>
+              <th>File</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Windows</td>
+              <td><code>win-x64-setup.exe</code> or <code>win-x64.msi</code></td>
+            </tr>
+            <tr>
+              <td>Mac with Apple silicon (M1 or later)</td>
+              <td><code>mac-arm64.dmg</code></td>
+            </tr>
+            <tr>
+              <td>Mac with an Intel processor</td>
+              <td><code>mac-x64.dmg</code></td>
+            </tr>
+            <tr>
+              <td>Linux</td>
+              <td><code>.AppImage</code>, <code>.deb</code>, <code>.rpm</code> or <code>.flatpak</code></td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="muted">Windows builds are code signed, and macOS builds are signed and notarized by Apple.</p>
+
+        <div class="sponsor">
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4263195580051724"
+            data-ad-slot="9553900295" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        </div>
+
+        <h2>Features</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Finds your worlds</h3>
+            <p>Lists the worlds and characters in your Terraria folder, including Steam Cloud saves, so there's no
+              hunting for files.</p>
+          </div>
+          <div class="card">
+            <h3>Safe and private</h3>
+            <p>Completely read-only, so your world can't be changed or corrupted, and nothing is uploaded.</p>
+          </div>
+          <div class="card">
+            <h3>Same features as the web app</h3>
+            <p>Search blocks, walls and items, highlight matches, preview chests, see world details, and save
+              images. <a href="about.html">See all features</a>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <h4>TerraMap</h4>
+          <ul>
+            <li><a href="index.html">Open TerraMap</a></li>
+            <li><a href="about.html">Features</a></li>
+            <li><a href="native.html">Desktop app</a></li>
+            <li><a href="windows.html">Legacy Windows app</a></li>
+            <li><a href="https://github.com/TerraMap/terramap.github.io/commits/main">Recent changes</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Guides</h4>
+          <ul>
+            <li><a href="world-files.html">World file locations</a></li>
+            <li><a href="find-shimmer.html">Find Shimmer</a></li>
+            <li><a href="find-enchanted-sword.html">Find an Enchanted Sword</a></li>
+          </ul>
+        </div>
+        <div class="footer-support">
+          <h4>Support TerraMap</h4>
+          <p>TerraMap is free and open source. If it's useful to you, please consider supporting its development.</p>
+          <div class="btn-row">
+            <a class="btn btn-sm" href="https://www.paypal.com/donate/?hosted_button_id=BBGT962BZTLWQ">Donate</a>
+            <a class="btn btn-sm" href="https://github.com/terramap/terramap.github.io">Star on GitHub</a>
+          </div>
+        </div>
+      </div>
+      <p class="copyright">TerraMap &copy; 2015&ndash;2026 <a href="https://github.com/jasoncoon">Jason Coon</a>.
+        Not affiliated with Re-Logic. Terraria is a trademark of Re-Logic.</p>
     </div>
+  </footer>
 
-    <div class="row" style="margin-bottom: 200px;">
-      <div class="col-md-12">
-        <h3 id="features">Features</h3>
-        <ul>
-          <li>Completely read-only, making it completely safe to use, with no risk of corrupting or overwriting your
-            world files.</li>
-          <li>Cross-platform, supports <b>any modern browser</b> on <b>Windows</b>, <b>MacOS</b>, and <b>Linux</b>.</li>
-          <li>Completely client-side JavaScript, meaning your Terraria worlds are <b>not uploaded to any server</b>.
-          </li>
-          <li>Open your Terraria world files by browsing to the .wld file.</li>
-          <li>Interactive, smooth pan and zoom using the mouse.</li>
-          <li>Find and highlight ores, items in chests, Enchanted Swords, Shark Statues, Strange Plants, etc.</li>
-          <li>Find and highlight biomes such as Corruption, Crimson, Hallow, Spider Nests, Floating Islands, etc.</li>
-          <li>View the world's spawn and dungeon locations.</li>
-          <li>View the location of NPCs such as Merchant, Mechanic, Arms Dealer, etc.</li>
-          <li>View world properties such as name, version, revision, width, height, moon phase, orbs broken, altars
-            smashed, etc.</li>
-        </ul>
-      </div>
-    </div>
-
-  </div>
-
-  <nav class="navbar navbar-inverse navbar-fixed-bottom">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-bottom"
-          aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-      </div>
-
-      <div class="collapse navbar-collapse" id="navbar-bottom">
-        <p class="navbar-text navbar-left">
-          TerraMap © <a href="https://github.com/jasoncoon">Jason Coon</a> 2015
-        </p>
-        <p class="navbar-text navbar-left">
-          Support TerraMap development:
-        </p>
-        <p class="navbar-text navbar-left">
-          <span class="github-btn">
-            <a href="https://github.com/terramap/terramap.github.io" class="gh-btn">
-              <span class="gh-ico" aria-hidden="true"></span>
-              <span class="gh-text">View Source Code on GitHub</span>
-            </a>
-          </span>
-        </p>
-        <p class="navbar-text navbar-left">
-          <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=3FXFSZXHYJ9Y4">
-            <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" alt="Donate via PayPal"
-              title="Donate via PayPal" style="border:none">
-          </a>
-        </p>
-      </div>
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4263195580051724"
-        crossorigin="anonymous"></script>
-      <!-- TerraMap Responsive -->
-      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4263195580051724" data-ad-slot="9553900295"
-        data-ad-format="auto"></ins>
-      <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
-    </div>
-  </nav>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4263195580051724"
+    crossorigin="anonymous"></script>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6BJH8276R"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
