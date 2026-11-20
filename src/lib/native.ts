@@ -45,8 +45,20 @@ export async function getNativeVersion(): Promise<string> {
   return getVersion();
 }
 
+/** The live website. */
+const SITE_URL = 'https://terramap.github.io/';
+
+/**
+ * URL for one of the site's own pages, e.g. "about.html". Natively the bundled
+ * frontend has a local origin (tauri://localhost) that the system browser can't
+ * open, so native builds link to the live site instead.
+ */
+export function sitePageUrl(page: string): string {
+  return isNative() ? new URL(page, SITE_URL).href : page;
+}
+
 /** URL of the native app download page. */
-export const NATIVE_DOWNLOAD_URL = 'https://terramap.github.io/native.html';
+export const NATIVE_DOWNLOAD_URL = `${SITE_URL}native.html`;
 
 /**
  * Opens the native app download page. Tries to open in the system browser (via

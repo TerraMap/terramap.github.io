@@ -1,6 +1,7 @@
 {
   "about": "О программе",
   "all": "Все",
+  "android_from_computer": "С компьютера, через USB",
   "block_type": {
     "Item": "Предмет",
     "Tile": "Блок",
@@ -49,6 +50,9 @@
   "get_started_intro": "Для начала выполните одно из следующих действий:",
   "getting_started": "Начало работы",
   "guide_find_enchanted_sword": "Как найти Зачарованный меч",
+  "guide_find_floating_islands": "Как найти Парящие острова",
+  "guide_find_life_crystals": "Как найти Кристаллы жизни",
+  "guide_find_shadow_orbs": "Как найти Сферы тени и Багровые сердца",
   "guide_find_shimmer": "Как найти Мерцание",
   "guide_world_files": "Где хранятся файлы миров?",
   "guides": "Руководства",
@@ -201,6 +205,7 @@
   "tile_info_copied": "Сведения о блоке скопированы",
   "tiles": "Блоки",
   "to_avoid_spoilers": "Чтобы избежать спойлеров:",
+  "troubleshooting": "Мир не загружается?",
   "update_available": "Доступно обновление",
   "update_available_native_description": "Доступна более новая версия приложения TerraMap. Скачайте её по адресу:",
   "update_available_web_description": "Вышла более новая версия TerraMap. Перезагрузите страницу, чтобы обновить.",

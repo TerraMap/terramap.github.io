@@ -1,6 +1,7 @@
 {
   "about": "关于",
   "all": "全部",
+  "android_from_computer": "通过 USB 从电脑访问",
   "block_type": {
     "Item": "物品",
     "Tile": "方块",
@@ -46,6 +47,9 @@
   "get_started_intro": "请先执行以下操作之一：",
   "getting_started": "快速入门",
   "guide_find_enchanted_sword": "如何找到附魔剑",
+  "guide_find_floating_islands": "如何找到浮空岛",
+  "guide_find_life_crystals": "如何找到生命水晶",
+  "guide_find_shadow_orbs": "如何找到暗影珠和猩红之心",
   "guide_find_shimmer": "如何找到微光",
   "guide_world_files": "世界文件保存在哪里？",
   "guides": "指南",
@@ -198,6 +202,7 @@
   "tile_info_copied": "已复制方块说明",
   "tiles": "方块",
   "to_avoid_spoilers": "如需避免剧透：",
+  "troubleshooting": "世界无法加载？",
   "update_available": "有可用更新",
   "update_available_native_description": "TerraMap 应用有新版本可用。请从以下地址下载：",
   "update_available_web_description": "TerraMap 已发布新版本。请重新加载以更新。",

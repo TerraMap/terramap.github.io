@@ -18,6 +18,11 @@ const teditItems = JSON.parse(readFileSync(resolve(root, "scripts/tedit/items.js
 
 // --- Tiles ---
 
+// Frame names TEdit gets wrong, keyed by "tileId:u,v".
+const FRAME_NAME_OVERRIDES = {
+  "31:36,0": "Crimson Heart", // TEdit calls it "Demon Heart", which is a different item
+};
+
 const mergedTiles = [];
 
 for (const tedit of teditTiles.sort((a, b) => a.id - b.id)) {
@@ -37,7 +42,7 @@ for (const tedit of teditTiles.sort((a, b) => a.id - b.id)) {
         frame.u = f.uv[0];
         frame.v = f.uv[1];
       }
-      if (f.name) frame.name = f.name;
+      if (f.name) frame.name = FRAME_NAME_OVERRIDES[`${tedit.id}:${f.uv?.[0]},${f.uv?.[1]}`] ?? f.name;
       if (f.variety) frame.variety = f.variety;
       return frame;
     });

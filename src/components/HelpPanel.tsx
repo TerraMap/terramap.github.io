@@ -31,6 +31,7 @@ export function HelpPanel(
     { os: 'macos', label: t('steam_cloud'), path: '~/Library/Application Support/Steam/userdata/{YOUR_USER_ID}/105600/remote', copyPath: '~/Library/Application Support/Steam/userdata/' },
     { os: 'windows', label: '', path: '%USERPROFILE%\\Documents\\My Games\\Terraria\\Worlds' },
     { os: 'windows', label: t('steam_cloud'), path: 'C:\\Program Files (x86)\\Steam\\userdata\\{YOUR_USER_ID}\\105600\\remote', copyPath: 'C:\\Program Files (x86)\\Steam\\userdata\\' },
+    { os: 'android', label: t('android_from_computer'), path: 'Android/data/com.and.games505.TerrariaPaid/Worlds' },
   ];
 
   const openButton = checkingNative

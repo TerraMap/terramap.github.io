@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getNativeVersion, isNative } from '../lib/native';
+import { getNativeVersion, isNative, sitePageUrl } from '../lib/native';
 import { compareVersions, type VersionInfo } from '../lib/version';
 
 /** How often to poll for a newer version, in milliseconds. */
@@ -9,7 +9,10 @@ export type UpdateType = 'web' | 'native';
 
 async function fetchVersionInfo(): Promise<VersionInfo | null> {
   try {
-    const url = `${__BASE_URL__}version.json?ts=${Date.now()}`;
+    // Natively this is the live site's copy (which allows cross-origin
+    // requests) -- the bundled copy would always match the installed app.
+    const base = isNative() ? sitePageUrl('version.json') : `${__BASE_URL__}version.json`;
+    const url = `${base}?ts=${Date.now()}`;
     const res = await fetch(url, { cache: 'no-store' });
     if (!res.ok) return null;
     return (await res.json()) as VersionInfo;
@@ -23,9 +26,9 @@ async function fetchVersionInfo(): Promise<VersionInfo | null> {
  *
  * - Web: compares the deployed commit hash against the one baked into this
  *   build. A mismatch means a newer build has been deployed → reload to update.
- * - Native: the app loads its frontend live from the site, so only the native
- *   shell can be out of date. Compares the latest released native version
- *   against the installed one → download the new app.
+ * - Native: the frontend is bundled into the app, so updates ship as new
+ *   native releases. Compares the latest released native version against the
+ *   installed one → download the new app. Offline, the check quietly fails.
  *
  * Returns the update type once detected, otherwise null.
  */

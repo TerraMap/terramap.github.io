@@ -47,6 +47,15 @@ export const sets: BlockSet[] = [
     ]
   },
   {
+    name: "Floating Islands",
+    entries: [
+      { id: 21, name: "Skyware Chest", u: 468, v: 0, isTile: true },
+      { id: 189, name: "Cloud Block", isTile: true },
+      { id: 196, name: "Rain Cloud Block", isTile: true },
+      { id: 202, name: "Sunplate Block", isTile: true }
+    ]
+  },
+  {
     name: "Hallow Blocks",
     entries: [
       { id: 109, name: "Hallowed Grass Block", isTile: true },
@@ -95,6 +104,13 @@ export const sets: BlockSet[] = [
       { id: 21, isTile: true, u: 1368, v: 0, name: "Pink Dungeon Chest", variety: "Locked" },
       { id: 21, isTile: true, u: 1440, v: 0, name: "Blue Dungeon Chest", variety: "Locked" },
       { id: 467, isTile: true, u: 468, v: 0, name: "Desert Chest", variety: "Locked" },
+    ]
+  },
+  {
+    name: "Shadow Orbs & Crimson Hearts",
+    entries: [
+      { id: 31, name: "Shadow Orb", u: 0, v: 0, isTile: true },
+      { id: 31, name: "Crimson Heart", u: 36, v: 0, isTile: true }
     ]
   },
   {

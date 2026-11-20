@@ -1,6 +1,7 @@
 {
   "about": "About",
   "all": "All",
+  "android_from_computer": "From a computer, over USB",
   "block_type": {
     "Item": "Item",
     "Tile": "Tile",
@@ -47,6 +48,9 @@
   "get_started_intro": "Get started by doing one of the following:",
   "getting_started": "Getting Started",
   "guide_find_enchanted_sword": "How to find an Enchanted Sword",
+  "guide_find_floating_islands": "How to find Floating Islands",
+  "guide_find_life_crystals": "How to find Life Crystals",
+  "guide_find_shadow_orbs": "How to find Shadow Orbs and Crimson Hearts",
   "guide_find_shimmer": "How to find Shimmer",
   "guide_world_files": "Where are world files saved?",
   "guides": "Guides",
@@ -199,6 +203,7 @@
   "tile_info_copied": "Block info copied",
   "tiles": "Tiles",
   "to_avoid_spoilers": "To avoid spoilers:",
+  "troubleshooting": "World won't load?",
   "update_available": "Update available",
   "update_available_native_description": "A newer version of the TerraMap app is available. Download it from:",
   "update_available_web_description": "A newer version of TerraMap has been released. Reload to update.",

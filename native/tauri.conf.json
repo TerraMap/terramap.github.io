@@ -1,13 +1,13 @@
 {
   "$schema": "https://raw.githubusercontent.com/nicedoc/schemas/refs/heads/master/tauri/2/tauri.conf.json",
   "productName": "TerraMap",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "identifier": "io.github.terramap.native",
   "build": {
-    "frontendDist": "https://terramap.github.io",
+    "frontendDist": "../dist",
     "devUrl": "http://localhost:5173",
     "beforeDevCommand": "npm run dev",
-    "beforeBuildCommand": ""
+    "beforeBuildCommand": "npm run build"
   },
   "app": {
     "windows": [

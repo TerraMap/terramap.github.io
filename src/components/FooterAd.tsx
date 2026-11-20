@@ -73,11 +73,11 @@ interface FooterAdProps {
  * sitting blank. Hiding unfilled slots is what AdSense recommends
  * (`data-ad-status="unfilled"`), and we fill the space with our own content.
  *
- * The ad is web-only -- the native (Tauri) build renders nothing here and
- * never fetches the remote script, so the desktop app stays offline-capable
- * and doesn't ship ads it isn't allowed to serve. The script is injected here
- * rather than from index.html for the same reason: index.html is shared by
- * both builds.
+ * The ad is web-only -- the native (Tauri) build always shows the support
+ * links and never fetches the remote script, so the desktop app stays
+ * offline-capable and doesn't ship ads it isn't allowed to serve. The script is
+ * injected here rather than from index.html for the same reason: index.html is
+ * shared by both builds.
  *
  * Nothing here uses "ad"-looking class names or ids, so blockers' cosmetic
  * filters leave the support links alone.
@@ -175,7 +175,8 @@ export function FooterAd({ contentKey }: FooterAdProps) {
   }, []);
 
   if (isNative()) {
-    return null;
+    // No slot to reserve space for, so the support links take only their own height.
+    return <SupportLinks size="small" />;
   }
 
   return (

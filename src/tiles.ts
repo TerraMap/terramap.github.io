@@ -17643,7 +17643,7 @@ export const tiles: TileInfo[] = [
       {
         u: 36,
         v: 0,
-        name: "Demon Heart"
+        name: "Crimson Heart"
       }
     ]
   },

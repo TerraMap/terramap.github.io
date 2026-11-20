@@ -135,7 +135,8 @@ kbd {
 
 /* Hero */
 
-.hero { padding: 56px 0 24px; }
+/* Top/bottom only, so it keeps .wrap's side gutter when both are on one element. */
+.hero { padding-top: 56px; padding-bottom: 24px; }
 .hero .lead { font-size: 1.2rem; color: var(--text-muted); max-width: 680px; margin: 0; }
 .eyebrow { color: var(--accent); font-weight: 600; font-size: .9rem; text-transform: uppercase; letter-spacing: .06em; margin: 0 0 .6em; }
 

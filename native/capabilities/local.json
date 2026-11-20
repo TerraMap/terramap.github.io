@@ -1,6 +1,6 @@
 {
   "identifier": "local-dev",
-  "description": "Allow localhost dev server to access Tauri IPC",
+  "description": "Allow the bundled frontend (and the localhost dev server) to access Tauri IPC",
   "windows": ["main"],
   "remote": {
     "urls": ["http://localhost:*"]
@@ -9,7 +9,12 @@
     "core:default",
     {
       "identifier": "opener:allow-open-url",
-      "allow": [{ "url": "https://terraria.wiki.gg/*" }]
+      "allow": [
+        { "url": "https://terramap.github.io/*" },
+        { "url": "https://terraria.wiki.gg/*" },
+        { "url": "https://www.paypal.com/*" },
+        { "url": "https://github.com/terramap/*" }
+      ]
     }
   ]
 }

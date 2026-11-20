@@ -4,6 +4,13 @@ import Copyable from "./Copyable";
 
 const { Text } = Typography;
 
+const OS_TABS: { key: OS, label: string }[] = [
+  { key: 'linux', label: "Linux" },
+  { key: 'macos', label: "MacOS" },
+  { key: 'windows', label: "Windows" },
+  { key: 'android', label: "Android" },
+];
+
 function PathEntryItem({ item: { label, path, copyPath } }: { item: PathEntry }) {
   return (
     <li>
@@ -14,36 +21,14 @@ function PathEntryItem({ item: { label, path, copyPath } }: { item: PathEntry })
 
 export default function PathOsTabs({ userOS, paths }: { userOS: OS, paths: PathEntry[] }) {
   return (
-    <Tabs defaultActiveKey={userOS} items={[
-      {
-        key: 'linux',
-        label: "Linux",
-        children:
-          <ul>
-            {paths.filter(p => p.os === 'linux').map(p => (
-              <PathEntryItem item={p} key={p.label} />
-            ))}
-          </ul>
-      },
-      {
-        key: 'macos',
-        label: "MacOS",
-        children:
-          <ul>
-            {paths.filter(p => p.os === 'macos').map(p => (
-              <PathEntryItem item={p} key={p.label} />
-            ))}
-          </ul>
-      },
-      {
-        key: 'windows',
-        label: "Windows",
-        children:
-          <ul>
-            {paths.filter(p => p.os === 'windows').map(p => (
-              <PathEntryItem item={p} key={p.label} />
-            ))}
-          </ul>
-      }
-    ]} />);
+    <Tabs defaultActiveKey={userOS} items={OS_TABS.map(({ key, label }) => ({
+      key,
+      label,
+      children:
+        <ul>
+          {paths.filter(p => p.os === key).map(p => (
+            <PathEntryItem item={p} key={p.label} />
+          ))}
+        </ul>
+    }))} />);
 }

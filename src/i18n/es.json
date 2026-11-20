@@ -1,6 +1,7 @@
 {
   "about": "Acerca de",
   "all": "Todo",
+  "android_from_computer": "Desde una computadora, por USB",
   "block_type": {
     "Item": "Objeto",
     "Tile": "Bloque",
@@ -47,6 +48,9 @@
   "get_started_intro": "Para comenzar, realiza una de las siguientes acciones:",
   "getting_started": "Primeros pasos",
   "guide_find_enchanted_sword": "Cómo encontrar una Espada encantada",
+  "guide_find_floating_islands": "Cómo encontrar Islas flotantes",
+  "guide_find_life_crystals": "Cómo encontrar Cristales de vida",
+  "guide_find_shadow_orbs": "Cómo encontrar Orbes sombríos y Corazones carmesí",
   "guide_find_shimmer": "Cómo encontrar Shimmer",
   "guide_world_files": "¿Dónde se guardan los archivos de mundo?",
   "guides": "Guías",
@@ -199,6 +203,7 @@
   "tile_info_copied": "Información del bloque copiada",
   "tiles": "Bloques",
   "to_avoid_spoilers": "Para evitar spoilers:",
+  "troubleshooting": "¿El mundo no carga?",
   "update_available": "Actualización disponible",
   "update_available_native_description": "Hay una versión más reciente de la aplicación TerraMap disponible. Descárgala desde:",
   "update_available_web_description": "Se ha publicado una versión más reciente de TerraMap. Recarga para actualizar.",

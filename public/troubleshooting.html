@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Terraria World Won't Load? TerraMap Troubleshooting</title>
+  <meta name="description"
+    content="Fix a Terraria world that won't load in TerraMap: refresh after a Terraria update, check the file type, modded and console worlds, and how to report a problem.">
+  <meta name="author" content="Jason Coon">
+  <link rel="icon" href="favicon.ico">
+  <link rel="canonical" href="https://terramap.github.io/troubleshooting.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="TerraMap">
+  <meta property="og:url" content="https://terramap.github.io/troubleshooting.html">
+  <meta property="og:title" content="World won't load? Troubleshooting TerraMap">
+  <meta property="og:description"
+    content="Fix a Terraria world that won't load in TerraMap: refresh after a Terraria update, check the file type, modded and console worlds, and how to report a problem.">
+  <meta property="og:image" content="https://terramap.github.io/resources/images/app-overview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="resources/css/site.css">
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html"><img src="resources/images/TerraMap32.png" alt="">TerraMap</a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="about.html">Features</a>
+        <a href="native.html">Desktop app</a>
+        <a href="guides.html">Guides</a>
+        <a class="btn btn-primary btn-sm" href="index.html">Open TerraMap</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="wrap prose hero">
+      <p class="eyebrow">Help</p>
+      <h1>World won't load? Troubleshooting TerraMap</h1>
+      <p class="lead">If your map stays blank, never finishes loading, or looks wrong, one of these will usually fix
+        it.</p>
+
+      <h2 id="refresh">1. Refresh after a Terraria update</h2>
+      <p>When Terraria updates, its world files sometimes change, and TerraMap needs an update to read them. TerraMap
+        usually catches up quickly, but your browser may still be running the old version.</p>
+      <ul>
+        <li><b>Web app:</b> refresh the page. If TerraMap shows an <b>Update available</b> notice, click
+          <b>Reload</b>. If that doesn't help, do a hard refresh: <kbd>Ctrl</kbd>+<kbd>F5</kbd> on Windows and
+          Linux, or <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd> on a Mac.</li>
+        <li><b>Desktop app:</b> install the <a href="native.html">latest release</a>. The app tells you when a newer
+          version is available.</li>
+      </ul>
+
+      <h2 id="file">2. Make sure it's a world file</h2>
+      <p>TerraMap opens Terraria world files, which end in <code>.wld</code>. Other files in your Terraria folder
+        won't work:</p>
+      <ul>
+        <li><code>.wld.bak</code> is a backup of a world. To open one, copy it and rename the copy so it ends in
+          <code>.wld</code>.</li>
+        <li><code>.plr</code> files are characters, and <code>.map</code> files are a character's explored map. To
+          use a character's map for a spoiler-free view, open the whole <code>Terraria</code> folder with
+          <b>Folder</b> and choose the world and character there.</li>
+        <li><code>.twld</code> files hold tModLoader's modded data. Open the <code>.wld</code> file next to it
+          instead.</li>
+      </ul>
+      <p>Not sure where your worlds are? See <a href="world-files.html">where Terraria world files are saved</a>.</p>
+
+      <div class="sponsor">
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4263195580051724"
+          data-ad-slot="9553900295" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      </div>
+
+      <h2 id="platforms">3. Check where the world came from</h2>
+      <ul>
+        <li><b>PC, Mac and Linux</b> (Steam or GOG): supported, up to the latest Terraria version.</li>
+        <li><b>Android:</b> you can copy worlds to a computer over USB. See
+          <a href="world-files.html#mobile">mobile world files</a>.</li>
+        <li><b>Consoles</b> (Switch, PlayStation, Xbox): not supported. Console saves can't normally be copied off
+          the console, and Switch worlds use a different file format. If you have a Switch world file, please attach
+          it to <a href="https://github.com/TerraMap/terramap.github.io/issues/52">issue #52</a> to help add
+          support.</li>
+      </ul>
+
+      <h2 id="modded">4. Modded worlds (tModLoader)</h2>
+      <p>TerraMap shows the vanilla parts of a tModLoader world. Blocks, walls and items added by mods aren't shown,
+        so those areas look empty. tModLoader keeps its worlds in its own folder:</p>
+      <ul>
+        <li><b>Windows:</b> <code>%USERPROFILE%\Documents\My Games\Terraria\tModLoader\Worlds</code></li>
+        <li><b>macOS:</b> <code>~/Library/Application Support/Terraria/tModLoader/Worlds</code></li>
+        <li><b>Linux:</b> <code>~/.local/share/Terraria/tModLoader/Worlds</code></li>
+      </ul>
+      <p>The desktop app's world list doesn't include tModLoader worlds yet, so use <b>Open World File</b> to open
+        them.</p>
+
+      <h2 id="windows-app">5. Using the old Windows app?</h2>
+      <p>TerraMap for Windows is no longer updated and can't open worlds from Terraria v1.4.5.7 or later. Use
+        <a href="index.html">TerraMap in your browser</a> or the <a href="native.html">desktop app</a>
+        instead.</p>
+
+      <h2 id="report">Still stuck? Report it</h2>
+      <p>The quickest way to get a loading problem fixed is to share the world file, so the bug can be reproduced.
+        <a href="https://github.com/TerraMap/terramap.github.io/issues/new">Open an issue on GitHub</a> and
+        include:</p>
+      <ul>
+        <li>The world file, zipped. GitHub only accepts certain file types, so add the <code>.wld</code> file to a
+          <code>.zip</code> first.</li>
+        <li>Your Terraria version, and whether the world is modded.</li>
+        <li>Whether you're using the web app or the desktop app, and a screenshot of what you see.</li>
+      </ul>
+
+      <div class="btn-row">
+        <a class="btn btn-primary" href="index.html">Open TerraMap</a>
+        <a class="btn" href="https://github.com/TerraMap/terramap.github.io/issues/new">Report a problem</a>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <h4>TerraMap</h4>
+          <ul>
+            <li><a href="index.html">Open TerraMap</a></li>
+            <li><a href="about.html">Features</a></li>
+            <li><a href="native.html">Desktop app</a></li>
+            <li><a href="troubleshooting.html">Troubleshooting</a></li>
+            <li><a href="windows.html">Legacy Windows app</a></li>
+            <li><a href="https://github.com/TerraMap/terramap.github.io/commits/main">Recent changes</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Guides</h4>
+          <ul>
+            <li><a href="world-files.html">World file locations</a></li>
+            <li><a href="find-shimmer.html">Find Shimmer</a></li>
+            <li><a href="find-enchanted-sword.html">Find an Enchanted Sword</a></li>
+            <li><a href="find-life-crystals.html">Find Life Crystals</a></li>
+            <li><a href="find-shadow-orbs.html">Find Shadow Orbs &amp; Crimson Hearts</a></li>
+            <li><a href="find-floating-islands.html">Find Floating Islands</a></li>
+          </ul>
+        </div>
+        <div class="footer-support">
+          <h4>Support TerraMap</h4>
+          <p>TerraMap is free and open source. If it's useful to you, please consider supporting its development.</p>
+          <div class="btn-row">
+            <a class="btn btn-sm" href="https://www.paypal.com/donate/?hosted_button_id=BBGT962BZTLWQ">Donate</a>
+            <a class="btn btn-sm" href="https://github.com/terramap/terramap.github.io">Star on GitHub</a>
+          </div>
+        </div>
+      </div>
+      <p class="copyright">TerraMap &copy; 2015&ndash;2026 <a href="https://github.com/jasoncoon">Jason Coon</a>.
+        Not affiliated with Re-Logic. Terraria is a trademark of Re-Logic.</p>
+    </div>
+  </footer>
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4263195580051724"
+    crossorigin="anonymous"></script>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6BJH8276R"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-P6BJH8276R');
+  </script>
+</body>
+
+</html>

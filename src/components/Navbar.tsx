@@ -16,6 +16,7 @@ import { useBlockNames } from '../hooks/useBlockNames';
 import useThemeMenuItems from '../hooks/useThemeMenuItems';
 import { useThemeName } from '../hooks/useThemeName';
 import { getShortcutByHandler } from '../lib/keyboardShortcuts';
+import { sitePageUrl } from '../lib/native';
 import { truncateString } from '../lib/string';
 import { DONATE_URL, GITHUB_URL } from '../lib/support';
 import type { BlockSet, WorldNpc } from '../types/settings';
@@ -26,7 +27,11 @@ import ToolbarButton, { ShortcutLabel } from './ToolbarButton';
 const GUIDES = [
   { href: 'find-shimmer.html', labelKey: 'guide_find_shimmer' },
   { href: 'find-enchanted-sword.html', labelKey: 'guide_find_enchanted_sword' },
+  { href: 'find-life-crystals.html', labelKey: 'guide_find_life_crystals' },
+  { href: 'find-shadow-orbs.html', labelKey: 'guide_find_shadow_orbs' },
+  { href: 'find-floating-islands.html', labelKey: 'guide_find_floating_islands' },
   { href: 'world-files.html', labelKey: 'guide_world_files' },
+  { href: 'troubleshooting.html', labelKey: 'troubleshooting' },
 ] as const;
 
 export interface DirectoryFiles { worldFiles: File[], mapFiles: File[] };
@@ -362,7 +367,7 @@ export function Navbar({
             {
               key: 'about',
               label: (
-                <a href="about.html" target="_blank" rel="noopener noreferrer">
+                <a href={sitePageUrl('about.html')} target="_blank" rel="noopener noreferrer">
                   {t('about')}
                 </a>
               ),
@@ -374,7 +379,7 @@ export function Navbar({
               children: GUIDES.map(({ href, labelKey }) => ({
                 key: href,
                 label: (
-                  <a href={href} target="_blank" rel="noopener noreferrer">
+                  <a href={sitePageUrl(href)} target="_blank" rel="noopener noreferrer">
                     {t(labelKey)}
                   </a>
                 ),
