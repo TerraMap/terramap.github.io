@@ -20,8 +20,8 @@ The native (Tauri-based) desktop app is built and released by [.github/workflows
 
 - **Tagged release**: push a tag matching `native-v*`, e.g.:
   ```
-  git tag native-v0.2.0
-  git push origin native-v0.2.0
+  git tag native-v0.1.12
+  git push origin native-v0.1.12
   ```
   This builds, signs, and publishes a GitHub Release named `TerraMap Native App 0.2.0`.
 - **Manual dry run**: run the workflow via `workflow_dispatch` in the Actions tab and leave the `tag` input blank. This builds all platform artifacts without setting a version or publishing a release, useful for verifying the build still works.

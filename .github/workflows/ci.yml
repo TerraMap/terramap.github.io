@@ -1,0 +1,46 @@
+name: CI
+
+# Pushes to main are already tested by deploy.yml; this covers pull requests,
+# including Dependabot's.
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+
+  # Compiles the Tauri app (Linux only, debug, no installers) so Rust/npm
+  # dependency bumps are caught on the PR rather than at release time. `tauri
+  # build` also fails if the npm and Rust Tauri packages drift apart on
+  # major.minor (e.g. @tauri-apps/api 2.12 vs tauri 2.13).
+  native:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: native
+      - run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+      - run: npm ci
+      - run: npx tauri build --config native/tauri.conf.json --debug --no-bundle --ci

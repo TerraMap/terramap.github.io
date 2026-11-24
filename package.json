@@ -16,14 +16,16 @@
     "perf": "NODE_OPTIONS=--max-old-space-size=8192 vitest run -c vitest.perf.config.ts --reporter=verbose",
     "block-names": "node scripts/generate-block-names.ts",
     "native": "npx tauri dev --config native/tauri.conf.json",
-    "native:build": "npx tauri build --config native/tauri.conf.json"
+    "native:build": "npx tauri build --config native/tauri.conf.json",
+    "native:update": "npm update && cargo update --manifest-path native/Cargo.toml && npx tauri info",
+    "native:audit": "npm audit; cargo audit --file native/Cargo.lock"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^9.39.4",
-    "@tauri-apps/cli": "~2.12.3",
+    "@tauri-apps/cli": "^2.12.3",
     "@types/file-saver": "^2.0.7",
     "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",
@@ -40,8 +42,8 @@
   },
   "dependencies": {
     "@panzoom/panzoom": "^4.6.2",
-    "@tauri-apps/api": "~2.12.4",
-    "@tauri-apps/plugin-opener": "~2.7.1",
+    "@tauri-apps/api": "^2.12.4",
+    "@tauri-apps/plugin-opener": "^2.7.1",
     "antd": "^6.7.0",
     "color-convert": "^3.1.3",
     "file-saver": "^2.0.5",
