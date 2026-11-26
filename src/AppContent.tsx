@@ -23,6 +23,7 @@ import { useNative } from './hooks/useNative';
 import { useTileSelection } from './hooks/useTileSelection';
 import { useUpdateCheck } from './hooks/useUpdateCheck';
 import { useWorldLoader } from './hooks/useWorldLoader';
+import { canUseOpenFilePicker, isFileChangedError, openWorldFileWithPicker, rereadFile } from './lib/fileSource';
 import { NATIVE_DOWNLOAD_URL, openNativeDownload } from './lib/native';
 import { readPlayerMap, type PlayerMap } from './lib/readPlayerMap';
 import { toWorldPosition } from './lib/tileDisplayFields';
@@ -90,11 +91,14 @@ export default function AppContent() {
   const directoryInputRef = useRef<HTMLInputElement>(null);
   const worldFileInputRef = useRef<HTMLInputElement>(null);
   const playerMapRef = useRef<PlayerMap | null>(null);
-  const { world, worldRef, status, loadWorldFile, isWorldLoading } = useWorldLoader(canvasRef, () => {
-    if (playerMapRef.current) canvasRef.current?.renderFogOverlay(playerMapRef.current);
+  const notificationRef = useRef<ReturnType<typeof App.useApp>['notification'] | null>(null);
+  const { world, worldRef, status, loadWorldFile, isWorldLoading } = useWorldLoader(canvasRef, {
+    onWorldSized: () => {
+      if (playerMapRef.current) canvasRef.current?.renderFogOverlay(playerMapRef.current);
+    },
+    onError: (error) => showLoadError(error),
   });
   const blockOptions = useBlockOptions();
-  const notificationRef = useRef<ReturnType<typeof App.useApp>['notification'] | null>(null);
 
   const [showWires, setShowWires] = useState(false);
   const [infoPaneCollapsed, setInfoPaneCollapsed] = useState(true);
@@ -185,6 +189,7 @@ export default function AppContent() {
   });
 
   const handleWorldFileSelect = useCallback((f: File) => {
+    notificationRef.current?.destroy('error');
     setWorldFile(f);
     setMapFile(null);
     setPlayerMap(null);
@@ -234,19 +239,75 @@ export default function AppContent() {
     }
   }, [handleWorldFileSelect, setPlayerMap, t]);
 
+  // Prefer the File System Access picker where available: its file handle lets
+  // reload read the world again after Terraria saves it (see fileSource.ts).
+  const handleOpenWorld = useCallback(() => {
+    if (!canUseOpenFilePicker()) {
+      worldFileInputRef.current?.click();
+      return;
+    }
+    openWorldFileWithPicker().then(
+      (file) => { if (file) handleWorldFileSelect(file); },
+      (e: unknown) => {
+        console.error(e);
+        worldFileInputRef.current?.click();
+      },
+    );
+  }, [handleWorldFileSelect]);
+
+  const showLoadError = useCallback((error: unknown) => {
+    const notification = notificationRef.current;
+    if (!notification) return;
+    if (isFileChangedError(error)) {
+      // Only a file picked again can be read: with a player map, that means the
+      // folder, so the map is picked again too.
+      const reopenFolder = !!mapFile;
+      notification.error({
+        key: 'error',
+        title: t('file_changed_on_disk'),
+        description: t('file_changed_on_disk_description'),
+        placement: 'bottomRight',
+        duration: 0,
+        actions: (
+          <Button type="primary" size="small" onClick={() => {
+            notification.destroy('error');
+            if (reopenFolder) directoryInputRef.current?.click();
+            else handleOpenWorld();
+          }}>
+            {reopenFolder ? t('shortcuts.open_folder') : t('open_world_file')}
+          </Button>
+        ),
+      });
+    } else {
+      const message = !!error && typeof error === 'object' && 'message' in error && typeof error.message === 'string' ? error.message : 'unknown';
+      notification.error({ key: 'error', title: t('error_loading_world', { message }), placement: 'bottomRight', duration: 0 });
+    }
+  }, [mapFile, handleOpenWorld, t]);
+
   const handleReloadWorld = useCallback(async () => {
-    if (worldFile) {
-      setSelectedBlocks([]);
-      loadWorldFile(worldFile);
-    }
-    if (mapFile) {
-      const playerMap = await readPlayerMap(mapFile);
-      setPlayerMap(playerMap);
-      if (playerMap?.percent !== undefined) {
-        notificationRef.current?.info({ key: 'explored', title: t('explored_percent', { percent: playerMap?.percent.toLocaleString(undefined, { style: 'percent' }) }), placement: 'bottomRight' });
+    notificationRef.current?.destroy('error');
+    try {
+      if (worldFile) {
+        // Read the file again where its source allows it (native, or a picked or
+        // dropped file handle), so changes saved since it was opened are loaded.
+        const freshWorldFile = await rereadFile(worldFile);
+        setWorldFile(freshWorldFile);
+        setSelectedBlocks([]);
+        loadWorldFile(freshWorldFile);
       }
+      if (mapFile) {
+        const freshMapFile = await rereadFile(mapFile);
+        const playerMap = await readPlayerMap(freshMapFile);
+        setMapFile(freshMapFile);
+        setPlayerMap(playerMap);
+        if (playerMap?.percent !== undefined) {
+          notificationRef.current?.info({ key: 'explored', title: t('explored_percent', { percent: playerMap?.percent.toLocaleString(undefined, { style: 'percent' }) }), placement: 'bottomRight' });
+        }
+      }
+    } catch (e) {
+      showLoadError(e);
     }
-  }, [worldFile, mapFile, loadWorldFile, setPlayerMap, notificationRef, t]);
+  }, [worldFile, mapFile, loadWorldFile, setPlayerMap, showLoadError, t]);
 
   const handleSaveImage = useCallback(() => {
     const w = worldRef.current;
@@ -281,14 +342,14 @@ export default function AppContent() {
     onHighlight: () => { if (!isWorldLoading) handleHighlightAll(); },
     onOpenBlocks: () => { if (!isWorldLoading) setBlocksModalOpen(true); },
     onOpenFolder: () => directoryInputRef.current?.click(),
-    onOpenWorld: () => worldFileInputRef.current?.click(),
+    onOpenWorld: handleOpenWorld,
     onReloadWorld: () => { if (!isWorldLoading) void handleReloadWorld(); },
     onResetZoom: () => canvasRef.current?.resetZoom(),
     onToggleInfoPane: () => setInfoPaneCollapsed((siderCollapsed) => !siderCollapsed),
     onToggleWires: () => { if (!isWorldLoading) setShowWires((showWires) => !showWires); },
     onZoomIn: () => canvasRef.current?.zoomIn(),
     onZoomOut: () => canvasRef.current?.zoomOut(),
-  }), [isWorldLoading, handleFindNext, handleFindPrev, goToTile, hideTileIndicator, handleHighlightAll, handleClearHighlight, handleReloadWorld, worldProperties]);
+  }), [isWorldLoading, handleFindNext, handleFindPrev, goToTile, hideTileIndicator, handleHighlightAll, handleClearHighlight, handleReloadWorld, handleOpenWorld, worldProperties]);
 
   useKeyboardShortcuts(shortcutHandlers);
 
@@ -323,6 +384,7 @@ export default function AppContent() {
               onHighlightAll={handleHighlightAll}
               onNextBlock={handleFindNext}
               onOpenBlocks={() => setBlocksModalOpen(true)}
+              onOpenWorld={handleOpenWorld}
               onPrevBlock={handleFindPrev}
               onReloadWorld={handleReloadWorld}
               onResetZoom={() => canvasRef.current?.resetZoom()}
@@ -350,11 +412,11 @@ export default function AppContent() {
                 overflow: 'auto',
               }}>
               {!world && !isWorldLoading && <HelpPanel
-                worldFileInputRef={worldFileInputRef}
                 directoryInputRef={directoryInputRef}
                 checkingNative={checkingNativeAccess}
                 nativeAvailable={nativeAvailable}
-                onChooseWorld={() => setWorldPickerOpen(true)} />}
+                onChooseWorld={() => setWorldPickerOpen(true)}
+                onOpenWorld={handleOpenWorld} />}
               <div style={{ display: world || isWorldLoading ? 'block' : 'none', height: '100%' }}>
                 <CanvasContainer
                   ref={canvasRef}

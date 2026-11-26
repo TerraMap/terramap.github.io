@@ -44,7 +44,20 @@ interface WorldRecord {
 }
 
 self.addEventListener('message', function (e: MessageEvent<File>) {
-  start(e.data);
+  try {
+    start(e.data);
+  } catch (error) {
+    // Report failures (e.g. a NotReadableError because the file changed on disk
+    // since it was picked) instead of leaving the page waiting forever.
+    console.error(error);
+    const { name, message } = (error ?? {}) as { name?: unknown; message?: unknown };
+    self.postMessage({
+      error: {
+        name: typeof name === 'string' ? name : 'Error',
+        message: typeof message === 'string' ? message : String(error),
+      },
+    });
+  }
 }, false);
 
 const start = function (file: File): void {

@@ -52,6 +52,7 @@ interface NavbarProps {
   onHighlightAll: () => void;
   onNextBlock: () => void;
   onOpenBlocks: () => void;
+  onOpenWorld: () => void;
   onPrevBlock: () => void;
   onReloadWorld: () => void;
   onResetZoom: () => void;
@@ -86,6 +87,7 @@ export function Navbar({
   onHighlightAll,
   onNextBlock,
   onOpenBlocks,
+  onOpenWorld,
   onPrevBlock,
   onReloadWorld,
   onResetZoom,
@@ -108,8 +110,11 @@ export function Navbar({
   const { t } = useTranslation();
   const names = useBlockNames();
 
+  // Each change handler clears its input afterwards: otherwise picking the same
+  // file again (e.g. to load a newer save) isn't a change, and nothing happens.
   const handleWorldFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    e.target.value = '';
     if (file) onWorldFileSelect(file);
   };
 
@@ -124,10 +129,11 @@ export function Navbar({
   };
 
   const handleDirectoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
-    const worldFiles = dedupeByPath(Array.from(files).filter(f => /\.wld$/.test(f.name)));
-    const mapFiles = dedupeByPath(Array.from(files).filter(f => f.name.endsWith('.map')));
+    const files = Array.from(e.target.files ?? []);
+    e.target.value = '';
+    if (!files.length) return;
+    const worldFiles = dedupeByPath(files.filter(f => /\.wld$/.test(f.name)));
+    const mapFiles = dedupeByPath(files.filter(f => f.name.endsWith('.map')));
     onWorldFilesFromDirectory({ worldFiles, mapFiles });
   };
 
@@ -166,7 +172,7 @@ export function Navbar({
           <ToolbarButton
             loading={isWorldLoading}
             shortcutHandler="onOpenWorld"
-            onClick={() => worldFileInputRef.current?.click()}>
+            onClick={onOpenWorld}>
             {typeof worldProperties.name === 'string'
               ? <span title={worldProperties.name}>
                 {truncateString(worldProperties.name)}

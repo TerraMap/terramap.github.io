@@ -38,6 +38,8 @@
   "error_loading_world": "加载世界时出错：{{message}}",
   "explored_percent": "已探索：{{percent}}",
   "file": "文件",
+  "file_changed_on_disk": "文件在打开后已被更改",
+  "file_changed_on_disk_description": "文件被保存后（例如被 Terraria 保存），浏览器无法再次读取它。请重新打开以加载最新版本。",
   "filter_tile_composition": "筛选方块...",
   "filter_world_properties": "筛选世界属性...",
   "folder": "文件夹",

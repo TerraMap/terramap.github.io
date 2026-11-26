@@ -39,6 +39,8 @@
   "error_loading_world": "Error al cargar el mundo: {{message}}",
   "explored_percent": "Explorado: {{percent}}",
   "file": "Archivo",
+  "file_changed_on_disk": "El archivo ha cambiado desde que se abrió",
+  "file_changed_on_disk_description": "Tu navegador no puede volver a leer un archivo después de que se haya guardado (por ejemplo, por Terraria). Ábrelo de nuevo para cargar la versión más reciente.",
   "filter_tile_composition": "Filtrar bloques...",
   "filter_world_properties": "Filtrar propiedades del mundo...",
   "folder": "Carpeta",

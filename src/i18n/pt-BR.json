@@ -39,6 +39,8 @@
   "error_loading_world": "Erro ao carregar o mundo: {{message}}",
   "explored_percent": "Explorado: {{percent}}",
   "file": "Arquivo",
+  "file_changed_on_disk": "O arquivo mudou desde que foi aberto",
+  "file_changed_on_disk_description": "Seu navegador não consegue ler um arquivo novamente depois que ele é salvo (por exemplo, pelo Terraria). Abra-o novamente para carregar a versão mais recente.",
   "filter_tile_composition": "Filtrar blocos...",
   "filter_world_properties": "Filtrar propriedades do mundo...",
   "folder": "Pasta",

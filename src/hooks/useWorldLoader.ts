@@ -98,9 +98,22 @@ interface WorkerMessage {
   signs?: Sign[];
   npcs?: WorldNpc[];
   tileEntities?: Map<{ x: number; y: number }, TileEntity>;
+  error?: WorldLoadError;
 }
 
-export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle | null>, onWorldSized?: () => void) {
+/** Why a world failed to load. `name` is e.g. "NotReadableError" (see isFileChangedError). */
+export interface WorldLoadError {
+  name: string;
+  message: string;
+}
+
+interface WorldLoaderCallbacks {
+  /** Called once the world's dimensions are known and the canvas has been sized. */
+  onWorldSized?: () => void;
+  onError?: (error: WorldLoadError) => void;
+}
+
+export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle | null>, callbacks: WorldLoaderCallbacks = {}) {
   const [world, setWorld] = useState<WorldData | null>(null);
   const [status, setStatus] = useState<Status | undefined>({ key: 'choose_file' });
   const [isLoading, setIsLoading] = useState(false);
@@ -108,6 +121,9 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
   const workerRef = useRef<Worker | null>(null);
   const statusRef = useRef(status);
   const lastStatusFlush = useRef(0);
+  const loadIdRef = useRef(0);
+  const callbacksRef = useRef(callbacks);
+  callbacksRef.current = callbacks;
 
   const loadWorldFile = useCallback((file: File) => {
     if (workerRef.current) {
@@ -120,8 +136,13 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
     const worker = new Worker(new URL('../WorldLoader.ts', import.meta.url), { type: 'module' });
     workerRef.current = worker;
 
+    // A newer load supersedes this one; its callbacks must then do nothing.
+    const loadId = ++loadIdRef.current;
+    const isCurrent = () => loadIdRef.current === loadId;
+
     let renderDone = false;
     let workerDone = false;
+    let worldSized = false;
     const tryFinishLoad = () => {
       if (renderDone && workerDone) {
         setIsLoading(false);
@@ -129,7 +150,39 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
       }
     };
 
+    const fail = (error: WorldLoadError) => {
+      if (!isCurrent()) return;
+      loadIdRef.current++; // stops this load's rendering, if it had started
+      worker.terminate();
+      if (workerRef.current === worker) workerRef.current = null;
+      if (worldSized) {
+        // The canvas was already resized for the new world, so the previous
+        // world's map is gone; don't leave it half-replaced.
+        worldRef.current = null;
+        setWorld(null);
+      }
+      setIsLoading(false);
+      setStatus(worldRef.current ? undefined : { key: 'choose_file' });
+      callbacksRef.current.onError?.(error);
+    };
+
+    // Uncaught errors in the worker, or the worker script failing to load.
+    worker.addEventListener('error', (e: ErrorEvent) => {
+      e.preventDefault();
+      fail({ name: 'Error', message: e.message || 'unknown' });
+    });
+    worker.addEventListener('messageerror', () => {
+      fail({ name: 'Error', message: 'unreadable message from world loader' });
+    });
+
     worker.addEventListener('message', (e: MessageEvent<WorkerMessage>) => {
+      if (!isCurrent()) return;
+
+      if (e.data.error) {
+        fail(e.data.error);
+        return;
+      }
+
       if (e.data.status) {
         statusRef.current = e.data.status;
         const now = performance.now();
@@ -149,7 +202,8 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
         w.entityByIdx = new Map();
         worldRef.current = w;
         canvasRef.current?.setWorldSize(w.width, w.height);
-        onWorldSized?.();
+        worldSized = true;
+        callbacksRef.current.onWorldSized?.();
         setStatus(statusRef.current);
       }
 
@@ -184,6 +238,7 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
         // Phase 1: render canvas columns directly from TypedArrays.
         let col = 0;
         const renderChunk = () => {
+          if (!isCurrent()) return;
           const msg: Status = { key: 'rendering_progress', value: Math.round(col / w.width * 100) };
           statusRef.current = msg;
           const now = performance.now();
@@ -275,7 +330,7 @@ export function useWorldLoader(canvasRef: React.RefObject<CanvasContainerHandle 
     });
 
     worker.postMessage(file);
-  }, [canvasRef, onWorldSized]);
+  }, [canvasRef]);
 
   return { world, worldRef, status, isWorldLoading: isLoading, loadWorldFile };
 }

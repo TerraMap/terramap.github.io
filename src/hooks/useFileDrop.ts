@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type DragEvent } from 'react';
+import { fileFromDrop } from '../lib/fileSource';
 import { isNative, readFile } from '../lib/native';
 
 const WORLD_FILE_PATTERN = /\.wld(\.bak\d*)?$/;
@@ -77,10 +78,13 @@ export function useFileDrop(onFileAccepted: (file: File) => void) {
     e.preventDefault();
     dragCounter.current = 0;
     setIsDragging(false);
-    const file = e.dataTransfer.files[0];
-    if (file && WORLD_FILE_PATTERN.test(file.name)) {
-      onFileAccepted(file);
-    } else if (file) {
+    const dropped = fileFromDrop(e.dataTransfer);
+    if (!dropped) return;
+    if (WORLD_FILE_PATTERN.test(dropped.file.name)) {
+      // Where the browser provides a file handle, this remembers it so the world
+      // can be reloaded after it changes on disk.
+      void dropped.withSource.then(onFileAccepted);
+    } else {
       flashInvalidDrop();
     }
   }, [onFileAccepted, flashInvalidDrop]);

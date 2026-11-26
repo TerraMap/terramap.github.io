@@ -41,6 +41,8 @@
   "error_loading_world": "Ошибка загрузки мира: {{message}}",
   "explored_percent": "Исследовано: {{percent}}",
   "file": "Файл",
+  "file_changed_on_disk": "Файл изменился с момента открытия",
+  "file_changed_on_disk_description": "Браузер не может повторно прочитать файл после его сохранения (например, игрой Terraria). Откройте его снова, чтобы загрузить последнюю версию.",
   "filter_tile_composition": "Фильтр блоков...",
   "filter_world_properties": "Фильтр свойств мира...",
   "folder": "Папка",

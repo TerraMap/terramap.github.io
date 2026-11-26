@@ -12,13 +12,13 @@ import ToolbarButton from './ToolbarButton';
 const { Title, Paragraph, Text } = Typography;
 
 export function HelpPanel(
-  { directoryInputRef, worldFileInputRef, checkingNative, nativeAvailable, onChooseWorld }:
+  { directoryInputRef, checkingNative, nativeAvailable, onChooseWorld, onOpenWorld }:
     {
       directoryInputRef: React.RefObject<HTMLInputElement | null>;
-      worldFileInputRef: React.RefObject<HTMLInputElement | null>;
       checkingNative?: boolean;
       nativeAvailable?: boolean;
       onChooseWorld: () => void;
+      onOpenWorld: () => void;
     }
 ) {
   const userOS = useDetectOS();
@@ -40,7 +40,7 @@ export function HelpPanel(
       ? <ToolbarButton icon={<GlobalOutlined />} onClick={onChooseWorld}>{t('choose_world')}</ToolbarButton>
       : <ToolbarButton shortcutHandler="onOpenFolder" onClick={() => directoryInputRef.current?.click()}>{t('folder')}</ToolbarButton>;
 
-  const worldButton = <ToolbarButton shortcutHandler="onOpenWorld" onClick={() => worldFileInputRef.current?.click()}>{t('open_world_file')}</ToolbarButton>;
+  const worldButton = <ToolbarButton shortcutHandler="onOpenWorld" onClick={onOpenWorld}>{t('open_world_file')}</ToolbarButton>;
 
   return (
     <div style={{ padding: '0px 32px 32px', maxWidth: 900, margin: '0 auto' }}>

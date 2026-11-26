@@ -1,3 +1,4 @@
+import { rememberSource } from './fileSource';
 import type { WorldHeader } from './readWorldHeader';
 
 export interface FileEntry {
@@ -36,7 +37,9 @@ export async function discoverPlayers(world: { id: number; uniqueId: string }): 
 export async function readFile(path: string): Promise<File> {
   const bytes = await invoke<number[]>('read_file', { path });
   const name = path.split(/[\\/]/).pop() ?? path;
-  return new File([new Uint8Array(bytes)], name);
+  // Remember the path, so reloading reads the file from disk again rather than
+  // re-parsing these bytes.
+  return rememberSource(new File([new Uint8Array(bytes)], name), () => readFile(path));
 }
 
 /** The version of the running native (Tauri) app, from tauri.conf.json. */
