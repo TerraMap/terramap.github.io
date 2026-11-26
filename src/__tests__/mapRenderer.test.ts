@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { getTileColorRaw } from '../lib/mapRenderer';
+import { tileColors } from '../MapHelper';
 import type { WorldData } from '../types/settings';
 
 function makeWorld(overrides: Partial<WorldData> = {}): WorldData {
@@ -55,6 +56,28 @@ describe('getTileColorRaw', () => {
     // Dirt should produce a non-black color
     const nonZero = color.r > 0 || color.g > 0 || color.b > 0;
     expect(nonZero).toBe(true);
+  });
+
+  it('colors each kind of pylon with its own map color', () => {
+    const world = makeWorld();
+    world.rawFlags1!.fill(0x01);
+    world.rawTypes!.fill(597);
+    // Forest, Ocean and Aether pylons; u = kind * 54 + column * 18
+    world.rawTextureU![0] = 0;
+    world.rawTextureU![1] = 4 * 54 + 18;
+    world.rawTextureU![2] = 10 * 54 + 36;
+    expect(getTileColorRaw(6, 0, world)).toEqual(tileColors[597][0]);
+    expect(getTileColorRaw(6, 1, world)).toEqual(tileColors[597][4]);
+    expect(getTileColorRaw(6, 2, world)).toEqual(tileColors[597][10]);
+    expect(tileColors[597][4]).not.toEqual(tileColors[597][0]);
+  });
+
+  it('falls back to the first color for a frame without its own', () => {
+    const world = makeWorld();
+    world.rawFlags1![0] = 0x01;
+    world.rawTypes![0] = 597;
+    world.rawTextureU![0] = 20 * 54;
+    expect(getTileColorRaw(6, 0, world)).toEqual(tileColors[597][0]);
   });
 
   it('returns lava color for lava tiles', () => {

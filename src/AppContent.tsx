@@ -18,13 +18,16 @@ import { WorldSpread } from './components/WorldSpread';
 import { useBlockHighlight } from './hooks/useBlockHighlight';
 import { useBlockOptions } from './hooks/useBlockOptions';
 import { useFileDrop } from './hooks/useFileDrop';
+import { useDebouncedValue } from './hooks/useDebouncedValue';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
+import { useMaskOpacity } from './hooks/useMaskOpacity';
 import { useNative } from './hooks/useNative';
 import { useTileSelection } from './hooks/useTileSelection';
 import { useUpdateCheck } from './hooks/useUpdateCheck';
 import { useWorldLoader } from './hooks/useWorldLoader';
 import { canUseOpenFilePicker, isFileChangedError, openWorldFileWithPicker, rereadFile } from './lib/fileSource';
-import { NATIVE_DOWNLOAD_URL, openNativeDownload } from './lib/native';
+import { isNative, NATIVE_DOWNLOAD_URL, openNativeDownload, openWorldFileDialog } from './lib/native';
+import { findPylons } from './lib/pylons';
 import { readPlayerMap, type PlayerMap } from './lib/readPlayerMap';
 import { toWorldPosition } from './lib/tileDisplayFields';
 import { sets } from './sets';
@@ -101,6 +104,11 @@ export default function AppContent() {
   const blockOptions = useBlockOptions();
 
   const [showWires, setShowWires] = useState(false);
+  const [showPylons, setShowPylons] = useState(false);
+  const { maskOpacity, setMaskOpacity } = useMaskOpacity();
+  // The highlight mask follows the slider live (it's just CSS opacity), but the
+  // wire overlay has to be redrawn pixel by pixel, so it waits for a pause.
+  const wireMaskOpacity = useDebouncedValue(maskOpacity, 100);
   const [infoPaneCollapsed, setInfoPaneCollapsed] = useState(true);
   const [blocksModalOpen, setBlocksModalOpen] = useState(false);
   const [selectedBlocks, setSelectedBlocks] = useState<string[]>([]);
@@ -153,6 +161,9 @@ export default function AppContent() {
   // Only the scalar fields tile position display needs -- not the full WorldData,
   // which also carries several multi-megabyte raw TypedArrays.
   const worldPosition = useMemo(() => world ? toWorldPosition(world) : undefined, [world]);
+
+  // All of the world's pylons, for the Pylons menu (unexplored ones are disabled there).
+  const pylons = useMemo(() => world ? findPylons(world) : [], [world]);
 
   // Counts finished world loads (and reloads), so the footer can request an ad
   // for the new content without being handed the WorldData itself.
@@ -215,7 +226,17 @@ export default function AppContent() {
     } else {
       canvasRef.current?.clearWireOverlay();
     }
-  }, [showWires, world, worldRef]);
+  }, [showWires, world, worldRef, wireMaskOpacity]);
+
+  useEffect(() => {
+    const w = worldRef.current;
+    if (!w) return;
+    if (showPylons) {
+      canvasRef.current?.renderPylonOverlay(findPylons(w, playerMap));
+    } else {
+      canvasRef.current?.clearPylonOverlay();
+    }
+  }, [showPylons, world, worldRef, playerMap]);
 
   useEffect(() => {
     if (playerMap && world) {
@@ -239,9 +260,20 @@ export default function AppContent() {
     }
   }, [handleWorldFileSelect, setPlayerMap, t]);
 
-  // Prefer the File System Access picker where available: its file handle lets
-  // reload read the world again after Terraria saves it (see fileSource.ts).
+  // Prefer a picker that lets reload read the world again after Terraria saves
+  // it (see fileSource.ts): the native dialog, which gives a path, or the File
+  // System Access picker, which gives a file handle.
   const handleOpenWorld = useCallback(() => {
+    if (isNative()) {
+      openWorldFileDialog().then(
+        (file) => { if (file) handleWorldFileSelect(file); },
+        (e: unknown) => {
+          console.error(e);
+          worldFileInputRef.current?.click();
+        },
+      );
+      return;
+    }
     if (!canUseOpenFilePicker()) {
       worldFileInputRef.current?.click();
       return;
@@ -346,6 +378,7 @@ export default function AppContent() {
     onReloadWorld: () => { if (!isWorldLoading) void handleReloadWorld(); },
     onResetZoom: () => canvasRef.current?.resetZoom(),
     onToggleInfoPane: () => setInfoPaneCollapsed((siderCollapsed) => !siderCollapsed),
+    onTogglePylons: () => { if (!isWorldLoading) setShowPylons((showPylons) => !showPylons); },
     onToggleWires: () => { if (!isWorldLoading) setShowWires((showWires) => !showWires); },
     onZoomIn: () => canvasRef.current?.zoomIn(),
     onZoomOut: () => canvasRef.current?.zoomOut(),
@@ -367,11 +400,14 @@ export default function AppContent() {
             <Navbar
               directoryInputRef={directoryInputRef}
               infoPaneOpen={!infoPaneCollapsed}
+              maskOpacity={maskOpacity}
+              setMaskOpacity={setMaskOpacity}
               isHighlighting={isHighlighting}
               isWorldLoading={isWorldLoading}
               checkingNative={checkingNativeAccess}
               nativeAvailable={nativeAvailable}
               npcs={world?.npcs ?? []}
+              pylons={pylons}
               isTileExplored={(x, y) => {
                 const pm = playerMapRef.current;
                 if (!pm || !world) return true;
@@ -396,7 +432,9 @@ export default function AppContent() {
               onZoomOut={() => canvasRef.current?.zoomOut()}
               setInfoPaneOpen={(value) => setInfoPaneCollapsed(!value)}
               sets={sets}
+              setShowPylons={setShowPylons}
               setShowWires={setShowWires}
+              showPylons={showPylons}
               showWires={showWires}
               worldFileInputRef={worldFileInputRef}
               worldLoaded={!!world}
@@ -420,6 +458,7 @@ export default function AppContent() {
               <div style={{ display: world || isWorldLoading ? 'block' : 'none', height: '100%' }}>
                 <CanvasContainer
                   ref={canvasRef}
+                  maskOpacity={maskOpacity}
                   onTileHover={tileHover}
                   onTileClick={tileClick}
                   handleTileDoubleClick={hideTileIndicator}

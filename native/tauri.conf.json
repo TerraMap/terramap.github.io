@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/nicedoc/schemas/refs/heads/master/tauri/2/tauri.conf.json",
   "productName": "TerraMap",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "identifier": "io.github.terramap.native",
   "build": {
     "frontendDist": "../dist",

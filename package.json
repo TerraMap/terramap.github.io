@@ -1,6 +1,6 @@
 {
   "name": "terramap.github.io",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "TerraMap is an interactive Terraria v1.4.5 world map viewer that loads quickly and lets you pan, zoom, find blocks, ores, items in chests, dungeons, NPCs, etc.",
   "type": "module",
   "scripts": {
@@ -43,6 +43,7 @@
   "dependencies": {
     "@panzoom/panzoom": "^4.6.2",
     "@tauri-apps/api": "^2.12.4",
+    "@tauri-apps/plugin-dialog": "^2.8.4",
     "@tauri-apps/plugin-opener": "^2.7.1",
     "antd": "^6.7.0",
     "color-convert": "^3.1.3",

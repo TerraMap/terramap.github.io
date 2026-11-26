@@ -1,8 +1,13 @@
 import convert from 'color-convert';
-import { liquidColors, tileColors, wallColors, type Color } from '../MapHelper';
+import { liquidColors, wallColors, type Color } from '../MapHelper';
 import { walls } from '../walls';
 import type { WorldData } from '../types/settings';
 import { paintColors } from './paintColors';
+import { FIRST_TILE_COLORS, getTileMapColor, TILE_COLOR_VARIES } from './tileMapColor';
+
+// Module-local references for the per-tile hot path below.
+const tileColorVaries = TILE_COLOR_VARIES;
+const firstTileColors = FIRST_TILE_COLORS;
 
 /**
  * Directly blend two colors by weighted average.
@@ -92,16 +97,15 @@ export function getTileColorRaw(y: number, idx: number, world: WorldData): Color
   let bColor: Color | undefined;
   if ((f1 & 0x01) || (f3 & 0x08)) {
     const type = world.rawTypes![idx];
-    if (type < tileColors.length) {
-      const color = tileColors[type][0];
-      if (color) {
-        const tilePaint = world.rawTileColors![idx];
-        if (tilePaint) {
-          const paint = paintColors[tilePaint];
-          bColor = paint == null ? color : blendHue(color, paint);
-        } else {
-          bColor = color;
-        }
+    // Most tile types have a single map color; only look further for the rest.
+    const color = tileColorVaries[type] ? getTileMapColor(world, idx, y) : firstTileColors[type];
+    if (color) {
+      const tilePaint = type === 160 ? 0 : world.rawTileColors![idx]; // the map never paints rainbow brick
+      if (tilePaint) {
+        const paint = paintColors[tilePaint];
+        bColor = paint == null ? color : blendHue(color, paint);
+      } else {
+        bColor = color;
       }
     }
   }

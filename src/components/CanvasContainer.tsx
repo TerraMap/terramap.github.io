@@ -2,6 +2,7 @@ import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 
 import { usePanZoom } from '../hooks/usePanZoom';
 import { deviceAlignedSize } from '../lib/deviceAlignedSize';
 import { getTileColorRaw } from '../lib/mapRenderer';
+import { PYLON_COLORS, type Pylon } from '../lib/pylons';
 import type { PlayerMap } from '../lib/readPlayerMap';
 import type { IndexEntry } from '../lib/tileSearch';
 import type { WorldData } from '../types/settings';
@@ -13,6 +14,8 @@ export interface CanvasContainerHandle {
   highlightByIndex: (entries: IndexEntry[], world: WorldData, playerMap: PlayerMap | null, onProgress?: (pct: number, matchCount: number) => void) => void;
   renderWireOverlay: (world: WorldData) => void;
   clearWireOverlay: () => void;
+  renderPylonOverlay: (pylons: Pylon[]) => void;
+  clearPylonOverlay: () => void;
   renderFogOverlay: (playerMap: PlayerMap) => void;
   clearFogOverlay: () => void;
   drawSelection: (x: number, y: number) => void;
@@ -26,6 +29,8 @@ export interface CanvasContainerHandle {
 }
 
 interface CanvasContainerProps {
+  /** How dark (0-1) the mask over everything but highlighted blocks and wires is. */
+  maskOpacity: number;
   onTileHover?: (x: number, y: number) => void;
   onTileClick?: (x: number, y: number) => void;
   handleTileDoubleClick?: () => void;
@@ -34,23 +39,30 @@ interface CanvasContainerProps {
 const BUFFER_WIDTH = 200;
 
 export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainerProps>(
-  function CanvasContainer({ onTileHover, onTileClick, handleTileDoubleClick }, ref) {
+  function CanvasContainer({ maskOpacity, onTileHover, onTileClick, handleTileDoubleClick }, ref) {
     const wrapperRef = useRef<HTMLDivElement>(null);
     const panzoomRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    // Block highlights: a plain black layer (so its opacity can change instantly,
+    // without redoing the highlight) under a canvas of the highlighted tiles.
+    const highlightMaskRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLCanvasElement>(null);
     const wireRef = useRef<HTMLCanvasElement>(null);
+    const pylonRef = useRef<HTMLCanvasElement>(null);
     const fogRef = useRef<HTMLCanvasElement>(null);
     const selectionRef = useRef<HTMLCanvasElement>(null);
     const pixelsRef = useRef<Uint8ClampedArray | null>(null);
     const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
     const overlayCtxRef = useRef<CanvasRenderingContext2D | null>(null);
     const wireCtxRef = useRef<CanvasRenderingContext2D | null>(null);
+    const pylonCtxRef = useRef<CanvasRenderingContext2D | null>(null);
     const fogCtxRef = useRef<CanvasRenderingContext2D | null>(null);
     const selectionCtxRef = useRef<CanvasRenderingContext2D | null>(null);
     const highlightIdRef = useRef(0);
     const isDraggingRef = useRef(false);
     const dragStartRef = useRef<{ x: number; y: number } | null>(null);
+    const maskOpacityRef = useRef(maskOpacity);
+    maskOpacityRef.current = maskOpacity;
 
     const { zoomIn, zoomOut, reset, getLayoutSize, panToPoint, scalePan } = usePanZoom(panzoomRef);
 
@@ -128,7 +140,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
       if (!availableWidth) return; // hidden (display: none)
       const { width: displayWidth, height: displayHeight } =
         deviceAlignedSize(availableWidth, canvas.height / canvas.width, window.devicePixelRatio);
-      for (const c of [el, canvas, overlayRef.current!, wireRef.current!, fogRef.current!, selectionRef.current!]) {
+      for (const c of [el, canvas, highlightMaskRef.current!, overlayRef.current!, wireRef.current!, pylonRef.current!, fogRef.current!, selectionRef.current!]) {
         c.style.width = `${displayWidth}px`;
         c.style.height = `${displayHeight}px`;
       }
@@ -161,9 +173,11 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         const canvas = canvasRef.current!;
         const overlay = overlayRef.current!;
         const wire = wireRef.current!;
+        const pylon = pylonRef.current!;
         const fog = fogRef.current!;
         const selection = selectionRef.current!;
 
+        highlightMaskRef.current!.style.display = 'none';
         el.style.width = `${width}px`;
         el.style.height = `${height}px`;
         canvas.width = width;
@@ -172,6 +186,8 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         overlay.height = height;
         wire.width = width;
         wire.height = height;
+        pylon.width = width;
+        pylon.height = height;
         fog.width = width;
         fog.height = height;
         selection.width = width;
@@ -180,6 +196,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         ctxRef.current = canvas.getContext('2d')!;
         overlayCtxRef.current = overlay.getContext('2d')!;
         wireCtxRef.current = wire.getContext('2d')!;
+        pylonCtxRef.current = pylon.getContext('2d')!;
         fogCtxRef.current = fog.getContext('2d')!;
         selectionCtxRef.current = selection.getContext('2d')!;
 
@@ -233,8 +250,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         const data = imageData.data;
         const height = world.height;
 
-        for (let p = 3; p < data.length; p += 4) data[p] = 192;
-        ctx.putImageData(imageData, 0, 0);
+        highlightMaskRef.current!.style.display = 'block';
 
         const totalIndices = entries.reduce((sum, e) => sum + e.indices.length, 0);
         let processed = 0;
@@ -295,6 +311,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         const data = imageData.data;
 
         const rawFlags2 = world.rawFlags2!;
+        const maskAlpha = Math.round(255 * maskOpacityRef.current);
         let x = 0;
         let y = 0;
         const total = world.width * world.height;
@@ -312,7 +329,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
             data[pxIdx + 2] = Math.min(b, 255);
             data[pxIdx + 3] = 160;
           } else {
-            data[pxIdx + 3] = 192;
+            data[pxIdx + 3] = maskAlpha;
           }
           y++;
           if (y >= world.height) {
@@ -326,6 +343,45 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
       clearWireOverlay() {
         const wire = wireRef.current!;
         wireCtxRef.current!.clearRect(0, 0, wire.width, wire.height);
+      },
+
+      renderPylonOverlay(pylons: Pylon[]) {
+        const ctx = pylonCtxRef.current!;
+        const canvas = pylonRef.current!;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // Diamonds, like a pylon's crystal, in each kind of pylon's color over a
+        // dark outline, sized to the world so they're easy to spot with the
+        // whole world in view.
+        const halfHeight = Math.max(30, canvas.width / 120);
+        const halfWidth = halfHeight * 0.7;
+        for (const { x, y, kind } of pylons) {
+          const cx = x + 1.5; // pylons are 3x4 tiles
+          const cy = y + 2;
+          const color = PYLON_COLORS[kind] ?? '#ffffff';
+          ctx.beginPath();
+          ctx.moveTo(cx, cy - halfHeight);
+          ctx.lineTo(cx + halfWidth, cy);
+          ctx.lineTo(cx, cy + halfHeight);
+          ctx.lineTo(cx - halfWidth, cy);
+          ctx.closePath();
+          ctx.lineJoin = 'miter';
+          ctx.lineWidth = halfHeight * 0.4;
+          ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
+          ctx.stroke();
+          // A light fill, so it reads as a gem but the pylon still shows through when zoomed in.
+          ctx.globalAlpha = 0.3;
+          ctx.fillStyle = color;
+          ctx.fill();
+          ctx.globalAlpha = 1;
+          ctx.lineWidth = halfHeight * 0.22;
+          ctx.strokeStyle = color;
+          ctx.stroke();
+        }
+      },
+
+      clearPylonOverlay() {
+        const canvas = pylonRef.current;
+        pylonCtxRef.current?.clearRect(0, 0, canvas?.width ?? 0, canvas?.height ?? 0);
       },
 
       renderFogOverlay(playerMap: PlayerMap) {
@@ -376,6 +432,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
       },
 
       clearOverlay() {
+        highlightMaskRef.current!.style.display = 'none';
         const overlay = overlayRef.current!;
         overlayCtxRef.current!.clearRect(0, 0, overlay.width, overlay.height);
       },
@@ -389,6 +446,7 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         const canvas = canvasRef.current!;
         const overlay = overlayRef.current!;
         const wire = wireRef.current!;
+        const pylon = pylonRef.current!;
         const fog = fogRef.current!;
         const selection = selectionRef.current!;
         const newCanvas = document.createElement("canvas");
@@ -396,8 +454,15 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
         newCanvas.width = canvas.width;
         newCanvas.height = canvas.height;
         newCtx.drawImage(canvas, 0, 0);
+        if (highlightMaskRef.current!.style.display !== 'none') {
+          newCtx.globalAlpha = maskOpacityRef.current;
+          newCtx.fillStyle = '#000';
+          newCtx.fillRect(0, 0, newCanvas.width, newCanvas.height);
+          newCtx.globalAlpha = 1;
+        }
         newCtx.drawImage(overlay, 0, 0);
         newCtx.drawImage(wire, 0, 0);
+        newCtx.drawImage(pylon, 0, 0);
         newCtx.drawImage(fog, 0, 0);
         newCtx.drawImage(selection, 0, 0);
         newCanvas.toBlob((blob) => {
@@ -425,8 +490,11 @@ export const CanvasContainer = forwardRef<CanvasContainerHandle, CanvasContainer
       <div ref={wrapperRef} style={{ overflow: 'hidden', width: '100%', height: '100%', position: 'relative' }}>
         <div ref={panzoomRef} style={{ position: 'relative' }}>
           <canvas ref={canvasRef} style={{ position: 'absolute', left: 0, top: 0 }} />
+          {/* display is set imperatively, while a highlight is shown */}
+          <div ref={highlightMaskRef} style={{ position: 'absolute', left: 0, top: 0, background: '#000', opacity: maskOpacity }} />
           <canvas ref={overlayRef} style={{ position: 'absolute', left: 0, top: 0 }} />
           <canvas ref={wireRef} style={{ position: 'absolute', left: 0, top: 0 }} />
+          <canvas ref={pylonRef} style={{ position: 'absolute', left: 0, top: 0 }} />
           <canvas ref={fogRef} style={{ position: 'absolute', left: 0, top: 0 }} />
           <canvas ref={selectionRef} style={{ position: 'absolute', left: 0, top: 0 }} />
         </div>

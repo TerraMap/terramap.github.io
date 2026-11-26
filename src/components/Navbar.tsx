@@ -16,11 +16,13 @@ import { useBlockNames } from '../hooks/useBlockNames';
 import useThemeMenuItems from '../hooks/useThemeMenuItems';
 import { useThemeName } from '../hooks/useThemeName';
 import { getShortcutByHandler } from '../lib/keyboardShortcuts';
+import { pylonName, type Pylon } from '../lib/pylons';
 import { sitePageUrl } from '../lib/native';
 import { truncateString } from '../lib/string';
 import { DONATE_URL, GITHUB_URL } from '../lib/support';
 import type { BlockSet, WorldNpc } from '../types/settings';
 import LanguageDropdown from './LanguageDropdown';
+import { MaskOpacitySlider } from './MaskOpacitySlider';
 import ToolbarButton, { ShortcutLabel } from './ToolbarButton';
 
 // The static guide pages in public/.
@@ -41,9 +43,11 @@ interface NavbarProps {
   infoPaneOpen: boolean;
   isHighlighting: boolean;
   isWorldLoading: boolean;
+  maskOpacity: number;
   checkingNative: boolean;
   nativeAvailable?: boolean;
   npcs: WorldNpc[];
+  pylons: Pylon[];
   isTileExplored: (x: number, y: number) => boolean;
   onChooseWorld: () => void;
   onClearHighlight: () => void;
@@ -63,8 +67,11 @@ interface NavbarProps {
   onZoomIn: () => void;
   onZoomOut: () => void;
   setInfoPaneOpen: (value: boolean) => void;
+  setMaskOpacity: (value: number) => void;
   sets: BlockSet[];
+  setShowPylons: (value: boolean) => void;
   setShowWires: (value: boolean) => void;
+  showPylons: boolean;
   showWires: boolean;
   worldFileInputRef: React.RefObject<HTMLInputElement | null>;
   worldLoaded: boolean;
@@ -76,9 +83,11 @@ export function Navbar({
   infoPaneOpen,
   isHighlighting,
   isWorldLoading,
+  maskOpacity,
   checkingNative,
   nativeAvailable,
   npcs,
+  pylons,
   isTileExplored,
   onChooseWorld,
   onClearHighlight,
@@ -98,8 +107,11 @@ export function Navbar({
   onZoomIn,
   onZoomOut,
   setInfoPaneOpen,
+  setMaskOpacity,
   sets,
+  setShowPylons,
   setShowWires,
+  showPylons,
   showWires,
   worldFileInputRef,
   worldLoaded,
@@ -146,6 +158,14 @@ export function Navbar({
       onClick: () => onGoToTile({ x: npc.x, y: npc.y }),
     };
   }).sort(firstBy('label'));
+
+  const pylonMenuItems: MenuProps['items'] = pylons.map((pylon, i) => ({
+    key: `pylon-${i}`, // the NPC items in the same menu use numeric keys
+    label: names.tile(pylonName(pylon.kind)),
+    disabled: !isTileExplored(pylon.x, pylon.y),
+    // The middle of the 3x4 pylon, so the selected tile is the pylon itself.
+    onClick: () => onGoToTile({ x: pylon.x + 1, y: pylon.y + 2 }),
+  })).sort(firstBy('label'));
 
   const setMenuItems: MenuProps['items'] = sets.map((set, i) => ({
     key: i,
@@ -288,6 +308,12 @@ export function Navbar({
                     children: npcMenuItems
                   },
                   {
+                    key: "Pylons",
+                    label: t('pylons'),
+                    disabled: pylons.length === 0,
+                    children: pylonMenuItems
+                  },
+                  {
                     key: "Theme",
                     label: t('theme'),
                     children: themeMenuItems
@@ -300,6 +326,19 @@ export function Navbar({
                         <Switch checked={showWires} size="small" />
                       </Space>,
                     onClick: () => setShowWires(!showWires)
+                  },
+                  {
+                    key: 'onTogglePylons',
+                    label:
+                      <Space size="small">
+                        <ShortcutLabel handler="onTogglePylons" />
+                        <Switch checked={showPylons} size="small" />
+                      </Space>,
+                    onClick: () => setShowPylons(!showPylons)
+                  },
+                  {
+                    key: 'maskOpacity',
+                    label: <MaskOpacitySlider value={maskOpacity} onChange={setMaskOpacity} />,
                   }
                 ]
               }}>

@@ -36,6 +36,7 @@ export interface ShortcutHandlers {
   onReloadWorld: () => void;
   onResetZoom: () => void;
   onToggleInfoPane: () => void;
+  onTogglePylons: () => void;
   onToggleWires: () => void;
   onZoomIn: () => void;
   onZoomOut: () => void;
@@ -62,5 +63,6 @@ export const keyboardShortcuts: KeyboardShortcut[] = [
   { key: 's', labelKey: 'shortcuts.go_to_spawn', handler: 'onGoToSpawn' },
   { key: 'i', labelKey: 'shortcuts.toggle_info_pane', handler: 'onToggleInfoPane' },
   { key: 'w', labelKey: 'shortcuts.toggle_wires', handler: 'onToggleWires' },
+  { key: 'p', shift: true, labelKey: 'shortcuts.toggle_pylons', handler: 'onTogglePylons' },
   { key: 'escape', labelKey: 'shortcuts.hide_tile_indicator', handler: 'onHideTileIndicator' },
 ];

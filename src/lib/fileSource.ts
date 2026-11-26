@@ -3,7 +3,9 @@
 //  - Chromium browsers (Chrome, Edge, Brave...) record a file's modification
 //    time when it is picked, and reading it after it changes on disk (e.g.
 //    Terraria saving the world) fails with a NotReadableError.
-//  - Native builds read the file into memory, so the File never changes.
+//  - WebKit (Safari, and the native app's webview) does the same, failing with
+//    a NotFoundError ("The object can not be found here.").
+//  - Files the native app reads by path are read into memory, so they never change.
 // Wherever a file comes from a source that can be read again (a native path or
 // a File System Access handle), we remember how, so reload can get a fresh copy.
 
@@ -29,7 +31,8 @@ export async function rereadFile(file: File): Promise<File> {
 
 /** Whether reading the file failed because it changed on disk after it was picked. */
 export function isFileChangedError(error: unknown): boolean {
-  return !!error && typeof error === 'object' && 'name' in error && error.name === 'NotReadableError';
+  if (!error || typeof error !== 'object' || !('name' in error)) return false;
+  return error.name === 'NotReadableError' || error.name === 'NotFoundError';
 }
 
 // The File System Access API (Chromium only, and off by default in Brave)

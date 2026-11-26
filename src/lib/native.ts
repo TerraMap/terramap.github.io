@@ -42,6 +42,17 @@ export async function readFile(path: string): Promise<File> {
   return rememberSource(new File([new Uint8Array(bytes)], name), () => readFile(path));
 }
 
+/**
+ * Shows the system's open-file dialog for a world file and reads the file.
+ * Resolves to null if the user cancels. Unlike an <input type="file">, this
+ * gives us the file's path, so reload can read it again after Terraria saves it.
+ */
+export async function openWorldFileDialog(): Promise<File | null> {
+  const { open } = await import('@tauri-apps/plugin-dialog');
+  const path = await open({ filters: [{ name: 'Terraria world', extensions: ['wld'] }] });
+  return path ? readFile(path) : null;
+}
+
 /** The version of the running native (Tauri) app, from tauri.conf.json. */
 export async function getNativeVersion(): Promise<string> {
   const { getVersion } = await import('@tauri-apps/api/app');
